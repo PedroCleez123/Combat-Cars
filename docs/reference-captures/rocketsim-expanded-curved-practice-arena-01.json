@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "profile": "arsenal-expanded-curved-practice",
+  "geometry": {
+    "width": 144,
+    "depth": 108,
+    "height": 30,
+    "radius": 8,
+    "segments": 32,
+    "scale": 0.02434782608695652,
+    "kind": "original-four-floor-wall-quarter-pipes"
+  },
+  "sha256": "9b28ab0777c4b261b7edca126d2118f49a86bb0bcc0e9090a7a56836ba2ab6cf",
+  "trace": {
+    "fixedStepHz": 120,
+    "ticks": 360,
+    "cars": {
+      "1": {
+        "firstInclined": {
+          "tick": 225,
+          "normal": {
+            "x": -0.290283,
+            "y": 0.956941,
+            "z": 0
+          }
+        },
+        "firstSteep": {
+          "tick": 237,
+          "normal": {
+            "x": -0.844849,
+            "y": 0.535004,
+            "z": 0
+          }
+        },
+        "supportedTicks": 327,
+        "gapsBeforeSteep": 0,
+        "previous": {
+          "x": 0,
+          "y": -1,
+          "z": 0
+        },
+        "maxNormalStepDegrees": 4.219632529549043
+      },
+      "2": {
+        "firstInclined": {
+          "tick": 225,
+          "normal": {
+            "x": 0.290283,
+            "y": 0.956941,
+            "z": 0
+          }
+        },
+        "firstSteep": {
+          "tick": 237,
+          "normal": {
+            "x": 0.844849,
+            "y": 0.535004,
+            "z": 0
+          }
+        },
+        "supportedTicks": 327,
+        "gapsBeforeSteep": 0,
+        "previous": {
+          "x": 0,
+          "y": -1,
+          "z": 0
+        },
+        "maxNormalStepDegrees": 4.219632529549043
+      },
+      "3": {
+        "firstInclined": {
+          "tick": 186,
+          "normal": {
+            "x": 0,
+            "y": 0.95694,
+            "z": -0.290285
+          }
+        },
+        "firstSteep": {
+          "tick": 199,
+          "normal": {
+            "x": 0,
+            "y": 0.514101,
+            "z": -0.85773
+          }
+        },
+        "supportedTicks": 294,
+        "gapsBeforeSteep": 0,
+        "previous": {
+          "x": 0,
+          "y": -1,
+          "z": 0
+        },
+        "maxNormalStepDegrees": 4.219014613639441
+      },
+      "4": {
+        "firstInclined": {
+          "tick": 186,
+          "normal": {
+            "x": 0,
+            "y": 0.95694,
+            "z": 0.290285
+          }
+        },
+        "firstSteep": {
+          "tick": 199,
+          "normal": {
+            "x": 0,
+            "y": 0.514101,
+            "z": 0.85773
+          }
+        },
+        "supportedTicks": 294,
+        "gapsBeforeSteep": 0,
+        "previous": {
+          "x": 0,
+          "y": -1,
+          "z": 0
+        },
+        "maxNormalStepDegrees": 4.219014613639441
+      }
+    }
+  }
+}

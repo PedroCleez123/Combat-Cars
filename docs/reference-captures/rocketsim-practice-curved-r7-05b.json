@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "profile": "arsenal-curved-practice",
+  "backend": "rocketsim",
+  "port": 5205,
+  "snapshots": 120,
+  "inputSequences": 2,
+  "acknowledged": 2,
+  "snapshotTimeDeltas": {
+    "unique": [
+      0.02,
+      0.01
+    ],
+    "min": 0.01,
+    "max": 0.02,
+    "mean": 0.016638655462184886,
+    "expectedSeconds": 0.016666666666666666
+  },
+  "transition": {
+    "firstInclined": {
+      "time": 1.82,
+      "x": 57.6,
+      "h": 0.26,
+      "z": 0,
+      "speed": 54.64,
+      "grounded": true,
+      "surfaceType": "ground",
+      "surfaceNormal": {
+        "x": -0.26671299966060763,
+        "y": 0.9637759987735949,
+        "z": 0
+      },
+      "wheelCount": 4,
+      "pitch": -0.27,
+      "roll": 0
+    },
+    "firstSteep": {
+      "time": 1.9,
+      "x": 60.66,
+      "h": 2.58,
+      "z": 0.02,
+      "speed": 41.03,
+      "grounded": true,
+      "surfaceType": "ground",
+      "surfaceNormal": {
+        "x": -0.8245695077234928,
+        "y": 0.565760662235045,
+        "z": 0
+      },
+      "wheelCount": 4,
+      "pitch": -1.03,
+      "roll": 0.07
+    },
+    "firstWallRide": {
+      "time": 1.95,
+      "x": 61.48,
+      "h": 4.42,
+      "z": 0.17,
+      "speed": 40.52,
+      "grounded": true,
+      "surfaceType": "wall",
+      "surfaceNormal": {
+        "x": -0.9669692473459303,
+        "y": 0.2548930652003799,
+        "z": 0
+      },
+      "wheelCount": 4,
+      "pitch": -1.33,
+      "roll": 0.39
+    },
+    "samples": 6,
+    "contactGaps": 0
+  },
+  "assertions": {
+    "backendIsRocketSim": true,
+    "profileIsCurved": true,
+    "singlePilot": true,
+    "twoTicksPerSnapshot": true,
+    "inclinedSupportObserved": true,
+    "steepSupportObserved": true,
+    "wallRideObserved": true,
+    "noSupportGapBeforeWall": true
+  }
+}

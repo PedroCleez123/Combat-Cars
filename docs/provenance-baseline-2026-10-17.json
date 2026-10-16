@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "baseline": "2026-10-17",
+  "gitTag": "baseline-2026-10-17",
+  "capturedAt": "2026-10-17",
+  "runtime": {
+    "node": "24.18.0",
+    "npm": "11.16.0",
+    "electron": "35.7.5",
+    "electronBuilder": "26.15.3"
+  },
+  "source": [
+    {
+      "path": "package.json",
+      "bytes": 5841,
+      "sha256": "dc5b8c44c0b191d90bd0e6692648050b07fd8e576974fac46af50d7f1c9de838"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 148189,
+      "sha256": "828c8c6fa5cf5f97914e0923b431f10b5c947f62001232444b3cd32ed7bf827a"
+    }
+  ],
+  "bridges": [
+    {
+      "id": "rocketsim-r19-active",
+      "path": ".rocketsim-bridge-build-r9/rocketsim_bridge-r19.exe",
+      "bytes": 2976768,
+      "sha256": "00d998c293a15108c3502f4af95fa8038ec7a889c838eeb33ea2199f072b2d92"
+    },
+    {
+      "id": "rocketsim-r13-legacy",
+      "path": ".rocketsim-bridge-build-r9/rocketsim_bridge-r13.exe",
+      "bytes": 2969088,
+      "sha256": "de172155676b13a0fdf46523610595a6076f675f07d63339269aac67a546d91e"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "windows-portable-0.1.1",
+      "path": "dist/Car Soccer Arsenal 0.1.1.exe",
+      "bytes": 77453080,
+      "sha256": "bc12722d9a0c3d924a6e51676bd510bd7b8832eaff1f2284c4ce54e7c99e9a82",
+      "optional": true
+    }
+  ]
+}

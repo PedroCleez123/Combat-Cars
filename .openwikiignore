@@ -1,0 +1,17 @@
+# OpenWiki documents the current implementation and active decision records only.
+# Generated dependencies, native build products, diagnostics and closed history
+# remain outside the wiki's read boundary.
+
+/node_modules/
+/.git/
+/.agents/
+/.codex/
+/.tools/
+/_bmad/
+/_bmad-output/archive/
+/docs/archive/
+/docs/reference-captures/
+/.rocketsim-bridge-build*/
+/*.log
+/.tmp-*.mjs
+/.run-*.log

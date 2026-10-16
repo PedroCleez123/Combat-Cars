@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "story": "ARENA-07",
+  "generatedAt": "2026-10-14T08:32:38.477Z",
+  "profile": "combat-alpha",
+  "backend": "rocketsim",
+  "mode": "COMBATE ROCKETSIM",
+  "port": 5238,
+  "pilots": [
+    {
+      "name": "GAME-02-PILOT-1",
+      "id": "ef311c1b-c4ff-4d90-b111-30e414de0bd8",
+      "team": "blue",
+      "acknowledged": 4
+    },
+    {
+      "name": "GAME-02-PILOT-2",
+      "id": "a4e0dd90-6f60-4a31-b81a-473aeb8b0aa8",
+      "team": "red",
+      "acknowledged": 3
+    },
+    {
+      "name": "GAME-02-PILOT-3",
+      "id": "c0a7d8c1-4877-4092-9b73-186bd067a4e4",
+      "team": "blue",
+      "acknowledged": 3
+    },
+    {
+      "name": "GAME-02-PILOT-4",
+      "id": "410a57b3-3d06-4d7b-a121-c6781a9be7df",
+      "team": "red",
+      "acknowledged": 3
+    },
+    {
+      "name": "GAME-02-PILOT-5",
+      "id": "b7d0b748-92c3-4ae3-8ab6-73f047777673",
+      "team": "blue",
+      "acknowledged": 3
+    },
+    {
+      "name": "GAME-02-PILOT-6",
+      "id": "7abeb157-a759-4c8d-87c6-128c8a92b388",
+      "team": "red",
+      "acknowledged": 3
+    }
+  ],
+  "movement": [
+    {
+      "id": "ef311c1b-c4ff-4d90-b111-30e414de0bd8",
+      "travel": 5.981011620119125
+    },
+    {
+      "id": "a4e0dd90-6f60-4a31-b81a-473aeb8b0aa8",
+      "travel": 5.819965635637383
+    },
+    {
+      "id": "c0a7d8c1-4877-4092-9b73-186bd067a4e4",
+      "travel": 5.162363799656124
+    },
+    {
+      "id": "410a57b3-3d06-4d7b-a121-c6781a9be7df",
+      "travel": 4.798416405440446
+    },
+    {
+      "id": "b7d0b748-92c3-4ae3-8ab6-73f047777673",
+      "travel": 4.377864776349312
+    },
+    {
+      "id": "7abeb157-a759-4c8d-87c6-128c8a92b388",
+      "travel": 3.9378801403800976
+    }
+  ],
+  "inputs": {
+    "movementSequences": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "fireSequences": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  "observed": {
+    "fireEvents": [
+      {
+        "text": "GAME-02-PILOT-1 lanza un cohete.",
+        "kind": "fire",
+        "at": 0.53
+      },
+      {
+        "text": "GAME-02-PILOT-2 lanza un cohete.",
+        "kind": "fire",
+        "at": 0.58
+      },
+      {
+        "text": "GAME-02-PILOT-3 lanza un cohete.",
+        "kind": "fire",
+        "at": 0.61
+      },
+      {
+        "text": "GAME-02-PILOT-4 lanza un cohete.",
+        "kind": "fire",
+        "at": 0.64
+      },
+      {
+        "text": "GAME-02-PILOT-5 lanza un cohete.",
+        "kind": "fire",
+        "at": 0.68
+      },
+      {
+        "text": "GAME-02-PILOT-6 lanza un cohete.",
+        "kind": "fire",
+        "at": 0.71
+      }
+    ],
+    "maxRockets": 5,
+    "finalRockets": 4,
+    "score": {
+      "blue": 0,
+      "red": 0
+    },
+    "disconnect": {
+      "id": "7abeb157-a759-4c8d-87c6-128c8a92b388",
+      "humans": 5,
+      "cars": 5,
+      "recoverySequence": 4,
+      "recoveredCars": 5
+    },
+    "errors": []
+  },
+  "snapshotTimeDeltas": {
+    "values": [
+      0.02,
+      0.01
+    ],
+    "min": 0.01,
+    "max": 0.02
+  },
+  "assertions": {
+    "rocketsimCombat": true,
+    "sixPilotRoster": true,
+    "uniquePilotIds": true,
+    "alternatingTeams": true,
+    "finiteNativePoses": true,
+    "everyPilotMoved": true,
+    "movementInputsAcknowledged": true,
+    "movementInputsStayMappedToOwnCars": true,
+    "fireInputsAcknowledged": true,
+    "sixFireEdgesObserved": true,
+    "rocketsPublished": true,
+    "disconnectRebuildsCombatRoster": true,
+    "remainingPilotContinuesAfterDisconnect": true,
+    "nativeSnapshotCadence": true,
+    "runtimeHadNoErrors": true
+  },
+  "failedAssertions": []
+}

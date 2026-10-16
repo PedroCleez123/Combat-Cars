@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f3953a1f3afebc584afca64057af86a3ab3b1a8d846c39351b99f957d6748135",
+  "claims": [
+    {
+      "id": "claim_f20ab4286bbc4742bb73146dc590d8c8",
+      "statement": "La ruta recomendada de desarrollo es `npm run start:watch:combat`, que usa RocketSim R19 en `combat-alpha` y expone el cliente en localhost:5300; los cambios de cliente requieren Ctrl+F5 y debe mantenerse una sola instancia por puerto.",
+      "evidence": [
+        {
+          "resource": "repo://README.md",
+          "version": "repo-file-v1:sha256:42aacfd674b7bee8869d750174ce1dc1c40ede1aa94e17a3e5af04e7a1859230"
+        },
+        {
+          "resource": "repo://tools/start-rocketsim-combat-watch.ps1",
+          "version": "repo-file-v1:sha256:ca34cc6d726c5cf40ab1e0942d99b867326af8cd5b90a9fa19896e5f65e1436b"
+        }
+      ]
+    },
+    {
+      "id": "claim_f7616f192b82485996a76250b001427e",
+      "statement": "La misma URL puede abrirse en otros navegadores de la máquina o LAN; la capacidad humana es configurable entre uno y seis y el modo RocketSim de combate no añade bots implícitamente.",
+      "evidence": [
+        {
+          "resource": "repo://README.md",
+          "version": "repo-file-v1:sha256:42aacfd674b7bee8869d750174ce1dc1c40ede1aa94e17a3e5af04e7a1859230"
+        },
+        {
+          "resource": "repo://src/rocketsim-practice-match.js",
+          "version": "repo-file-v1:sha256:8cba2ff85fc1257781bc53cc66fb28eaecd4dcfd9e30813e3a587c84be39cea0"
+        }
+      ]
+    },
+    {
+      "id": "claim_6358d2fc2af94061a6a9044ea9c01611",
+      "statement": "La ruta manual requiere un ejecutable R19 existente, MOVEMENT_BACKEND=rocketsim y un ROCKETSIM_MODE permitido; sin esas variables el servidor selecciona el backend JavaScript.",
+      "evidence": [
+        {
+          "resource": "repo://README.md",
+          "version": "repo-file-v1:sha256:42aacfd674b7bee8869d750174ce1dc1c40ede1aa94e17a3e5af04e7a1859230"
+        },
+        {
+          "resource": "repo://server.mjs",
+          "version": "repo-file-v1:sha256:01aed9c25f65f83d46e3f2c7b7025e7d5fea5c8aae1014d449f2b67dbda8a5e5"
+        }
+      ]
+    },
+    {
+      "id": "claim_1cc3511eafa54211a8f6c568d6e192f4",
+      "statement": "El servidor HTTP publica únicamente los recursos del cliente necesarios para la aplicación y rechaza código del servidor, documentación interna, herramientas y traversal.",
+      "evidence": [
+        {
+          "resource": "repo://server.mjs",
+          "version": "repo-file-v1:sha256:01aed9c25f65f83d46e3f2c7b7025e7d5fea5c8aae1014d449f2b67dbda8a5e5"
+        },
+        {
+          "resource": "repo://src/http-static-boundary.js",
+          "version": "repo-file-v1:sha256:17c437481af9373e3b67be258e73659c1aa17f1ed294627a66907d345b5d6cb9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fe58ee1f640343deba16abbc1e77e6cf",
+      "statement": "En una sesión LAN, el primer peer autenticado es owner para restart/configure; LAN_ALLOWED_ORIGINS puede fijar la allowlist y el handshake de dos navegadores y la reconexión siguen pendientes de verificación en el host.",
+      "evidence": [
+        {
+          "resource": "repo://docs/local-server-browser-bridge.md",
+          "version": "repo-file-v1:sha256:c05a3c0d2ae64b53fcbeccf97189f67e0041fcbec48015ad07bb4d274ce8da4c"
+        },
+        {
+          "resource": "repo://server.mjs",
+          "version": "repo-file-v1:sha256:01aed9c25f65f83d46e3f2c7b7025e7d5fea5c8aae1014d449f2b67dbda8a5e5"
+        },
+        {
+          "resource": "repo://src/lan-session-control.js",
+          "version": "repo-file-v1:sha256:da2beb360e710dc4a052c302de0ef91036087e92b64cdf3a6c37ea1f29f2a3e2"
+        },
+        {
+          "resource": "repo://src/lan-session-protocol.js",
+          "version": "repo-file-v1:sha256:bcaf8e2010f0c64d50eab8427cd05bab04b1d29fbf9b8338926cb78cc4901414"
+        }
+      ]
+    },
+    {
+      "id": "claim_eda71e8a114f48c7bb23edeecffa18e5",
+      "statement": "Para comprobar el servidor ya iniciado sin comandos Node inline frágiles en PowerShell, el inicio rápido recomienda ejecutar npm run probe:lan-websocket; para usar una ventana de escritorio, npm run desktop arranca el servidor y la aplicación Electron.",
+      "evidence": [
+        {
+          "resource": "repo://docs/local-server-browser-bridge.md",
+          "version": "repo-file-v1:sha256:c05a3c0d2ae64b53fcbeccf97189f67e0041fcbec48015ad07bb4d274ce8da4c"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:0546cb0f0344233241f864d5dfa02a0aef1dd6765658264cec2ab8671032681e"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-16T21:36:10.526Z"
+  }
+}

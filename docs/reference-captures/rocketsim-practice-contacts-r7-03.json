@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "profile": "arsenal-practice",
+  "fixedStepHz": 120,
+  "ticks": 360,
+  "checkpoints": [
+    {
+      "tick": 60,
+      "position": {
+        "x": 220.089767,
+        "y": 17.013023,
+        "z": 0
+      },
+      "velocity": {
+        "x": 906.424255,
+        "y": 0.001849,
+        "z": 0
+      },
+      "grounded": true,
+      "wheelCount": 4,
+      "contact": {
+        "hasContact": false,
+        "normal": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    },
+    {
+      "tick": 120,
+      "position": {
+        "x": 853.014099,
+        "y": 17.012896,
+        "z": 0
+      },
+      "velocity": {
+        "x": 1551.076782,
+        "y": 0.000463,
+        "z": 0
+      },
+      "grounded": true,
+      "wheelCount": 4,
+      "contact": {
+        "hasContact": false,
+        "normal": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    },
+    {
+      "tick": 180,
+      "position": {
+        "x": 1754.572144,
+        "y": 17.012974,
+        "z": 0
+      },
+      "velocity": {
+        "x": 2046.891602,
+        "y": 0.000024,
+        "z": 0
+      },
+      "grounded": true,
+      "wheelCount": 4,
+      "contact": {
+        "hasContact": false,
+        "normal": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    },
+    {
+      "tick": 240,
+      "position": {
+        "x": 2474.346924,
+        "y": 26.271465,
+        "z": -7.952386
+      },
+      "velocity": {
+        "x": 26.826351,
+        "y": 13.122413,
+        "z": -23.660391
+      },
+      "grounded": false,
+      "wheelCount": 2,
+      "contact": {
+        "hasContact": true,
+        "normal": {
+          "x": -1,
+          "y": 0,
+          "z": 0
+        }
+      }
+    },
+    {
+      "tick": 300,
+      "position": {
+        "x": 2474.948242,
+        "y": 24.471956,
+        "z": -10.69251
+      },
+      "velocity": {
+        "x": 0.797659,
+        "y": -2.438096,
+        "z": -0.433957
+      },
+      "grounded": false,
+      "wheelCount": 2,
+      "contact": {
+        "hasContact": true,
+        "normal": {
+          "x": -1,
+          "y": 0,
+          "z": 0
+        }
+      }
+    },
+    {
+      "tick": 360,
+      "position": {
+        "x": 2474.226562,
+        "y": 23.297531,
+        "z": -10.828416
+      },
+      "velocity": {
+        "x": 1.169963,
+        "y": -2.41344,
+        "z": -0.218199
+      },
+      "grounded": false,
+      "wheelCount": 2,
+      "contact": {
+        "hasContact": true,
+        "normal": {
+          "x": -1,
+          "y": 0,
+          "z": 0
+        }
+      }
+    }
+  ],
+  "firstWallContact": {
+    "tick": 220,
+    "position": {
+      "x": 2481.276367,
+      "y": 17.012974,
+      "z": -2.70139
+    },
+    "velocity": {
+      "x": 1185.966797,
+      "y": 0.000015,
+      "z": -324.166809
+    },
+    "grounded": true,
+    "wheelCount": 4,
+    "contact": {
+      "hasContact": true,
+      "normal": {
+        "x": -1,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  "firstWallFollowUp": {
+    "tick": 221,
+    "position": {
+      "x": 2477.736816,
+      "y": 16.526224,
+      "z": -3.031239
+    },
+    "velocity": {
+      "x": 93.440971,
+      "y": -58.409859,
+      "z": -39.581833
+    },
+    "grounded": false,
+    "wheelCount": 2,
+    "contact": {
+      "hasContact": true,
+      "normal": {
+        "x": -1,
+        "y": 0,
+        "z": 0
+      }
+    }
+  },
+  "limitation": "La práctica usa seis planos sintéticos; esta captura valida el contacto nativo, no una transición curva de arena Soccar."
+}

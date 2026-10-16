@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0785b9e7994081692219c0f25d5c32475672430790d49501831379df47b167c2",
+  "claims": [
+    {
+      "id": "claim_6aaf275bd16546cfb781930b02145ee3",
+      "statement": "La interpolación de snapshots es solo de presentación: interpola poses y quaternions continuos, y se congela en el último estado conocido en lugar de extrapolar.",
+      "evidence": [
+        {
+          "resource": "repo://src/snapshot-interpolation.js#L1-L9",
+          "version": "repo-lines-v1:sha256:0f8903dc1ab1592621f3a644be1c00a7481720812eeab0f5b99dd479d782aac6:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjZmYWZmOTcwYzA0MzExY2E4M2YzYzg5ZTdlZWVmOTcxMzU1YzZhYmI1MTI3YmNhMGM2NDY2YWU5ZTY1NmIyZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWJhNGJkMDIxNmZhMjllNGFlNmUxZGIyOTQ0NDE5M2FhZDA0NTYwNzQxODNlYmJlMmI5MWQyY2ViNDc2M2RjMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTcwZWFlNTZhZjQ3MDQ1ZWJlMGYwZWZjMmZkZjBlNzY5OGIzOGE3MGE2Yjc4M2RkY2EyOTExYjZhMTFhYTFhMCJ9"
+        },
+        {
+          "resource": "repo://src/snapshot-interpolation.js#L39-L91",
+          "version": "repo-lines-v1:sha256:c498b49438201426d1bb54902f5cca6397058ec3e6cf2aab84ef7e92d6e2bedc:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZmNWVkMGY3MjdjYmMyOWFjMzEzZmMyMzRjODBkZjc0Yzk3ZDFmOTllMjZkOGUwZjRhZjdjZGZkZGM2MGYzYWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwNDU2ZjQ2OWFjNjZkN2JmYzgzYWIyM2MwNWY5YTU3YTYwMjAwMGExYzA1NWIyMDU0ZTEzMmYxODk1NWZhMTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2NjgwNjFhZDE3YTgwYmYxMmE3MmNmM2MyOTYxNzJkMmVhZTA4MzMzNDNlZDMwYjBlNGY5ZGEyMjllNWRhZGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bcf3891172814c3a91806f8620c7c002",
+      "statement": "Las acciones de teclado y mando se combinan en un único contrato de vehículo con throttle, steer, salto, boost, derrape, air roll, roll y disparo.",
+      "evidence": [
+        {
+          "resource": "repo://src/control-mapping.js#L1-L25",
+          "version": "repo-lines-v1:sha256:e8f67c8869873e3555b7fd2aa3e24faaf1e425a94e5307bbc8b6c019e290b391:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllMjdhNjY5ZDVjMWExMTg1Y2EyNmY5MDQ5ZWU1NmE3MzQ4ZmI1ODQyZmViYzZkOTkzZDdhNmMxOTZhYTMxYWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzNWZhMDUwN2RhYzRkYjhiZTk0YTZmNTgwYTZjZTcxODYyYjExYjg0ZTRlMDFkNDE1M2M3YmE3Zjg2N2JjZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRhOTg5MzkyMWVmMTk5OTg0NjRlOTA1MWFkODNiZjJlMjA4MWI0ODA5MjFlNDYyNjRmZmE3YTkyZmU0NGE2OTUifQ"
+        },
+        {
+          "resource": "repo://src/gamepad-input.js#L1-L48",
+          "version": "repo-lines-v1:sha256:6d4c7a88d60a11d29f527b032b8021e61fd89c86e9e6cc5e8937320df0756c4d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxZDE0NjFhNTZkYTM3Y2YwNWI4YmU3MDYxMGRkYjk0ZmI1Mzg1ZTBlNGY4MTVmM2RkNDViYTQ0OGU0NTE0MzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNmOGZkNGU4MjM2YWMyYjkwYTA2ODhmNjE3NzkwZGNmMzU3NjUzYWZjYWUwYTJiOWJjZDNhMjc4OTAwYTRiMDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ff2c09a2a1e14eba9c55501a22315468",
+      "statement": "La cámara sigue un rumbo horizontal amortiguado para conservar el horizonte durante el air roll, reinicia su estado al reaparecer y limita su posición en perfiles de práctica.",
+      "evidence": [
+        {
+          "resource": "repo://src/client.js#L781-L828",
+          "version": "repo-lines-v1:sha256:daa41630661f6b5a127edc6a8b33aceb6e8812bcab0dc90389565e48d43ea4ea:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2MDAwYWRkZTcyZWE4Zjc5YjRjNDYyNDQ4YWNiNWYyYmFmZDgwOWZhMjExZWE0ZTdhMDU5ZTQzZDYyZGU5NzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRiYTA3NDY4MjAxYzg0NGE2MWUzMjQ5ODdkNmE4NzY3NGZmY2IwN2M3ZGJjOTM5ZWNjNzVjYmI2Njk0YzZkMWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkZmNjZGYzYjYzNGIzNTRkNGYyYTJhNzYzOWVhYWYzMTYxZWNlZTdlNDZhMzg5MzBjYmU1MDkzMGVlYjA4MzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjliMzY4YjE3NDE3MDI0MzI0YzgyZjI1MjU1MDcxYWY4ZDI2ZWNkMzU0YTMxNDEwNmNkODkzMWM5MTI2OGI0OTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_587f0f52e5ad4bbe81bd8b8395e7773f",
+      "statement": "El cliente abre un WebSocket al host actual, envía hello y heartbeat, actualiza el buffer de snapshots y reconecta cuando el estado autoritativo se detiene.",
+      "evidence": [
+        {
+          "resource": "repo://src/client.js#L885-L907",
+          "version": "repo-lines-v1:sha256:9f50cd30dcd3b0fd5732309642469319532e82589a0a9d12fae7b107238ceac9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkxODI2ZGE2Mjk3Yzg5NmVhYjc3YmE0NWIwNGQxNjdjZmQ4ODhhMmMzYzRkMDI0ZGRjODFkNjZkMWQ4YWM4MGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjZDRlYTM4N2YzNjhkMGY1ZThhYjVkMTBlYmZjY2ZkODcxZTg1Y2M5NDRkMmJjODg2MmNmNGE2YTVkOTg1OGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhMzJiY2VjMDdhZjM5OWU0YjBhODEzZjIxN2FlMzkyNjA2NjJjN2ZkYzdjZWFmNTUzOGZhZGE3OWU0NTM1YTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU2ZTkwNmMzNjIyNjI3Yzc3YTMxZGJmNmRkMTg5NTkzMDkzMmZkMmZjYmYyZDVkMTZhYTY3YzE5ZjRlOTMwNDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_da9d19c611214852b62a55d565fb300a",
+      "statement": "El frame de presentación transmite entradas hasta 60 Hz y actualiza coches, cámara y HUD a partir del estado renderizado.",
+      "evidence": [
+        {
+          "resource": "repo://src/client.js#L981-L988",
+          "version": "repo-lines-v1:sha256:e3a5467ef08b9a26297156ad55c7e2cea309f14fc945b6d80e06e9d47ff86ec0:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzRmNjNhM2I0NzllNTA1NGUyZjhjNDU1MjZjYmM2NzJkN2FhNjU5YmIzZmVkNzg5YjA5ZTE2MTMxZDE5ZGJmMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjg2NDI3ODBlMzU4MzZiODRhYWI5M2Y3NmU3NjM4YzdiODNlNjAwODlmMDYwNjE1NWJhMjNiOTU5MjgzNzAyOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTdkMTRiZmRjYjQyZTYwMDkyNWM3ZDU0NGQ2YTM1YWE4NTE1Y2VlZmE5M2FhNjdjMDM3YjQ4Mjg1YTljYjU2MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0b2483f64d4543c7aa9dba28fe2569ee",
+      "statement": "Al recibir `settings.practiceArena`, el cliente resuelve el modo visual mediante `src/rocketsim-arena-profile.js` y usa sus dimensiones nominales para construir la piel Three.js, sin sustituir las colisiones ni el raycast autoritativos del bridge.",
+      "evidence": [
+        {
+          "resource": "repo://src/client.js#L353-L405",
+          "version": "repo-lines-v1:sha256:a296effe4964184d45a31fe30edd8c2fbc2f63c09c5305376d942b0d1b942c6c:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczNzgyZGYwYjFlMGFhMDVhYmYwNDEwZjMwNjc5NmVjZTY5YzQ4ZTExYTI1ZGUyYzVlZDEzMTlkMDg4MDNmZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkN2MwMjk4ZDEyZDlmODYwNzE5NmZiOGI0MzQ5MjY0YWMyOTI2Yzk3YWUxNDhjZmZhZGRkMTg5MTEwOGMxOGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1ODZhOWZhNDRlOWRiOTdkNGZiNzQ3YTIyODA3MDE3N2I2ODJjYmQ3NmEzZjQwZWUxNTIwMzFlZWM4MzlmOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiMjdhMTlkYTc1NmQwNGZiYWNmZjFjNTY0YWE1NTBlNTUyNWY0NzljYjMwZmY5YjE2MmY2MDNmNzZmMmM1NzIifQ"
+        },
+        {
+          "resource": "repo://src/rocketsim-arena-profile.js#L47-L59",
+          "version": "repo-lines-v1:sha256:f1d16e3c186874f12ba807fbda0f76bb031957b9547c31f32268fc086a0e53b0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRhNTI2N2ExMmRjNDIwMWRjNGJiZTE1ZDUxOTI3MGQ4ZDQ1NmQ5NWNmZjM0ODIzYzY3YjdiNjMxNWEyNDEyNzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0NTFlMjA1YmMzMGMzYWEyOTMwOTU1ZTg4MzIyNzE0ZDkzYjAwYWMyNmMxMzNiZWIwOTg3MGEyMTZjMjAzZWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwNjY3MmFjNTI2YjBjMDI1NzkxNWI3OTdjZDg5M2QwY2YzMTZkYmNiMDcyYWEyNDk5MWYwMTBkMjBhMzEyMmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0MjJlZjc5OWQ4ZmZlY2E2NjM3YTc3MzU0MzlhOWQyNTc0YjRhMjhiNzZiZGNiODZjZDRkMDlmNmVlN2MwOGEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-16T21:36:10.526Z"
+  }
+}

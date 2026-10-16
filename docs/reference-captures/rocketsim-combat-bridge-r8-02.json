@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "profile": "clean-six-planes",
+  "fixedStepHz": 120,
+  "assertions": {
+    "readyHasTwoCars": true,
+    "initialHasTwoCars": true,
+    "inactiveCarLeavesArena": true,
+    "respawnReturnsNativeSpawn": true,
+    "tickContinuesAfterRespawn": true
+  },
+  "samples": {
+    "initial": [
+      {
+        "id": 1,
+        "position": {
+          "x": 0.162913,
+          "y": 17.031986,
+          "z": 0
+        }
+      },
+      {
+        "id": 2,
+        "position": {
+          "x": -699.837219,
+          "y": 17.031986,
+          "z": -650
+        }
+      }
+    ],
+    "inactive": {
+      "id": 2,
+      "position": {
+        "x": 0,
+        "y": -10000,
+        "z": 0
+      }
+    },
+    "respawned": {
+      "id": 2,
+      "position": {
+        "x": -700,
+        "y": 17,
+        "z": -650
+      }
+    },
+    "continuedTick": 2
+  }
+}

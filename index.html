@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#070b12" />
+    <title>Car Soccer: Arsenal</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main>
+      <canvas id="game" tabindex="0" aria-label="Car Soccer Arsenal: zona de juego y controles"></canvas>
+      <section id="hud" aria-live="polite">
+        <div class="scoreboard"><strong id="blue">0</strong><span>AZUL</span><b>VS</b><span>ROJO</span><strong id="red">0</strong></div>
+        <button id="controls-button" type="button" aria-expanded="false">⚙ PARTIDA Y CONTROLES</button>
+        <div id="objective">PRIMERO A 15 · DESGUACE INDUSTRIAL</div>
+        <div id="status">Conectando al servidor de arena…</div>
+        <div id="readout"></div>
+        <div id="events"></div>
+      </section>
+      <aside id="calibration-coach" hidden aria-live="polite" aria-label="Sesión de calibración de movilidad">
+        <div class="coach-heading"><strong>FIS-14D.1 · CALIBRACIÓN</strong><span id="calibration-step-count">0/6</span></div>
+        <strong id="calibration-step-title">Sesión guiada</strong>
+        <p id="calibration-step-instruction">Inicia una sesión para registrar las seis maniobras de vuelo.</p>
+        <p id="calibration-step-expected" class="coach-expected"></p>
+        <label for="calibration-result">RESULTADO OBSERVADO</label>
+        <select id="calibration-result">
+          <option value="correcto">Correcto</option>
+          <option value="lento">Lento</option>
+          <option value="nervioso">Rápido o nervioso</option>
+          <option value="invertido">Invertido</option>
+          <option value="nitro">Nitro no asciende</option>
+          <option value="camara">Discrepancia de cámara</option>
+          <option value="retardo">Retardo perceptible</option>
+          <option value="contacto">Contacto o aterrizaje</option>
+          <option value="sin-evidencia">Sin evidencia</option>
+        </select>
+        <label for="calibration-note">NOTA BREVE</label>
+        <textarea id="calibration-note" rows="2" maxlength="240" placeholder="Qué ocurrió y durante qué entrada"></textarea>
+        <div class="coach-actions">
+          <button id="calibration-start" type="button">Iniciar sesión</button>
+          <button id="calibration-next" type="button" disabled>Registrar y seguir</button>
+        </div>
+        <button id="calibration-copy" type="button" disabled>Copiar informe</button>
+        <div class="coach-history">
+          <span id="calibration-history-status">Historial local: 0 sesiones</span>
+          <button id="calibration-history-copy" type="button" disabled>Comparar 2 sesiones</button>
+          <button id="calibration-history-clear" type="button" disabled>Borrar historial</button>
+        </div>
+        <textarea id="calibration-report" rows="11" readonly hidden aria-label="Informe de calibración para copiar"></textarea>
+        <p id="calibration-session-status" class="coach-status">Solo registra snapshots autoritativos; no cambia la física.</p>
+      </aside>
+      <aside id="controls-panel" hidden aria-label="Configurar partida y controles">
+        <div class="panel-heading"><strong>PARTIDA Y CONTROLES</strong><button id="controls-close" type="button" aria-label="Cerrar controles">×</button></div>
+        <section class="match-config" aria-label="Configuración de partida">
+          <div class="range-row"><label for="arena-mode">ENTORNO</label></div>
+          <select id="arena-mode">
+            <option value="calibration" selected>Calibración limpia</option>
+            <option value="scrapyard">Desguace y combate</option>
+            <option value="rocketsim">Sesión RocketSim LAN</option>
+          </select>
+          <div class="range-row"><label for="vehicle-limit">CAPACIDAD DE PILOTOS</label><output id="vehicle-limit-value">1</output></div>
+          <input id="vehicle-limit" type="range" min="1" max="6" step="1" value="1" />
+          <div class="range-row"><label for="bot-count">BOTS IA</label><output id="bot-count-value">0</output></div>
+          <input id="bot-count" type="range" min="0" max="6" step="1" value="0" />
+          <p id="match-summary" class="match-summary">Calibración: 1 coche, sin bots, pads, combate ni obstáculos.</p>
+          <button id="match-apply" type="button" class="reset-button">Aplicar y reiniciar</button>
+        </section>
+        <p class="panel-note">Pulsa una acción y después la tecla o botón que quieras asignar.</p>
+        <div id="bindings"></div>
+        <button id="controls-reset" type="button" class="reset-button">Restaurar predeterminados</button>
+        <section class="controller-help" aria-label="Controles de mando estándar">
+          <strong>MANDO ESTÁNDAR</strong>
+          <p>Stick izq. · giro/yaw · RT/LT · acelerar, frenar y pitch · A · salto · RB · nitro · LB · derrape/free air roll · X/B · roll izq./der. · cruceta arriba · cohete</p>
+          <p>Y queda reservado para cámara de objetivo cuando exista un objetivo que seguir.</p>
+        </section>
+      </aside>
+      <section id="help">
+        <b>ARSENAL</b><br />
+        WASD · conducir/pitch aéreo &nbsp; Shift izq. · derrape/air roll<br />
+        Ctrl izq./Espacio · roll izq./der. &nbsp; clic derecho · saltar &nbsp; clic izquierdo · nitro
+      </section>
+    </main>
+    <script>
+      (() => {
+        const showClientFailure = detail => {
+          const status = document.querySelector("#status");
+          if (status) status.textContent = `ERROR DE CLIENTE · ${detail}`;
+        };
+        window.addEventListener("error", event => {
+          const detail = event.error?.message || event.message || "No se pudo cargar el cliente";
+          console.error("[Arsenal] client error", event.error || event);
+          showClientFailure(detail);
+        });
+        window.addEventListener("unhandledrejection", event => {
+          const detail = event.reason?.message || String(event.reason || "Promesa rechazada");
+          console.error("[Arsenal] unhandled rejection", event.reason);
+          showClientFailure(detail);
+        });
+        window.arsenalClientLoadFailed = () => showClientFailure("No se pudo cargar /src/client.js");
+      })();
+    </script>
+    <script type="module" src="/src/client.js" onerror="window.arsenalClientLoadFailed()"></script>
+  </body>
+</html>

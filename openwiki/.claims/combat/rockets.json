@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:3e0d1e655f1f9a95801240be1a820736faa1077b9ce15d8cc80470574db9f7b1",
+  "claims": [
+    {
+      "id": "claim_4d4bed51d74f4af6b94c6b08cca3db2f",
+      "statement": "El disparo de RocketSim combate solo crea un cohete en el flanco de pulsación si el jugador está activo, tiene vida y el cooldown ha terminado.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-combat.js#L96-L117",
+          "version": "repo-lines-v1:sha256:aca1345bf2acdf86fc6c192290eb159108d6fdc1bf4df83c52b824893efe7fe5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjZWY0MTFiMjI2ZWU3MWU0ODFjZmE4NWU4YTBmMmRjNjYzOThkM2U4ZThlNTFlNGU5MTU0NjJiZjM0MTExMDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViNDRhMTJkZjE1NjE3ZjhkMTIxYjc1ZWZlM2YyMDgxNzIwMWE3OTlkMTY4MTZkMjA0NTgwMmVjMDU3MGE0NjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYzMjBmZWMzZmY5MWYzZDlhZGE5ZmNlYjFjZmNiMDk4NGI1MjBjYjFhNTQ1OGRjY2QyOGM1ZDZjYzYxM2VlNzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA1OTQ3MDEzZjJhNjA5MTY5ZDIyZmQzYzM0NGYyOGMzY2M3NTkxZjM0Y2RlNzZhMmQyZmE2ZTdhZmRiNGFjNWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ba873046b5e4da4b0cdd9b263e1bb2f",
+      "statement": "Los cohetes se prueban contra coches enemigos y contra raycasts estáticos; un impacto estático que ocurre antes intercepta el proyectil, mientras el límite nominal del perfil evita un descarte prematuro dentro de la arena.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-arena-profile.js#L54-L61",
+          "version": "repo-lines-v1:sha256:b14e9fbab3ec53083bd6c0d0237a8cb23260f42d740f7092896d4c6424ec9603:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjM5YmZjNTk2NWEwMDE5ZGQxYzI0YWE3ZmJjNTFjZDNkNWJhMTE3N2UxODQxNWQ4M2U3ZmRkMTI2OTk2Mjg3MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDJhMmNiMjVhMTIyYjQ0MjIxYTYyMzRlYzY2MGE3YjVmYjdmOWJkZTdiM2I5ZTJiM2M1NTlhMGQ5NmZhYzczOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjZlZDgzMmY5NGQxNDdlNzA1YTUzMjc1NzM4MjczZmYxZTFkMGE5MmVhODRlMDRlZDZmOTQ2MTZkZDNhODcyOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        },
+        {
+          "resource": "repo://src/rocketsim-combat.js#L121-L141",
+          "version": "repo-lines-v1:sha256:cb8109cc89bb74cf39fb265bde50e17f5b904f669d1b44e851429006c719f59c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjMDdkYjM0NjI0NmJjNmU5YWE3YzZhZDM0YmQ4NWRkNmQxMmYyZDFiMTNkY2ZiNGEyYWVlYjE2NWU1MmNlMjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA1OTQ3MDEzZjJhNjA5MTY5ZDIyZmQzYzM0NGYyOGMzY2M3NTkxZjM0Y2RlNzZhMmQyZmE2ZTdhZmRiNGFjNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwM2EwNTJlMWYxMjllMmYzNmU1ODlhZTEyZTQ2ODA2M2Y4Y2EwZjkzYzNiODkzOTI4MGU2NmM4OGVmZTRiNjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8e309ebe283647c097fd00e543d64ac7",
+      "statement": "El daño reduce la salud y una eliminación registra muerte, kill, respawn y punto para el equipo atacante.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-combat.js#L142-L164",
+          "version": "repo-lines-v1:sha256:03061e21d853de914114a395f6b99755555e339c02ace79735ac348f0094346b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3MGZiZGYxMmYwYmVlYzBhMzg5M2RjNzhjYjA1YTUxOTVhZDFlYmY0YzNhNWFjMDczZWQyNjBjMmNlYjFmNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIzZDMwYWIxYWQzZjEyMjdkNmQ1OTgwZDhkMDBhY2Q1NTRlOGJlYmY1NmJkOGRjYmMwOTE4YjViMzdjMTRkMGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU5MDM0MDY4YjE5YTdjYTdmZTAxNGJmZTkxNTEyNTU2MDNhMTEwYmQ2MjU4MjczNTllZjdhYmFhMDQ3ZTRlMzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_27932de1e5784c62976efc70eb93de6b",
+      "statement": "El adaptador convierte poses y velocidades nativas, consulta raycasts y solicita desactivación o respawn nativo al resolver transiciones de combate; además pasa los límites nominales de la arena a la regla Node.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-arena-profile.js#L54-L61",
+          "version": "repo-lines-v1:sha256:b14e9fbab3ec53083bd6c0d0237a8cb23260f42d740f7092896d4c6424ec9603:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjM5YmZjNTk2NWEwMDE5ZGQxYzI0YWE3ZmJjNTFjZDNkNWJhMTE3N2UxODQxNWQ4M2U3ZmRkMTI2OTk2Mjg3MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDJhMmNiMjVhMTIyYjQ0MjIxYTYyMzRlYzY2MGE3YjVmYjdmOWJkZTdiM2I5ZTJiM2M1NTlhMGQ5NmZhYzczOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjZlZDgzMmY5NGQxNDdlNzA1YTUzMjc1NzM4MjczZmYxZTFkMGE5MmVhODRlMDRlZDZmOTQ2MTZkZDNhODcyOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSJ9"
+        },
+        {
+          "resource": "repo://src/rocketsim-practice-match.js#L461-L516",
+          "version": "repo-lines-v1:sha256:49c93b2cf58682816134fe2f3937e83de8b05e5d771ec90345b1466ff5e2fbf1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4NDBjMjUyYjQzNTM5NzY0MTUzNjAyNzc3OWJhOTIzM2ZjNmU2N2ZkM2Q2YzY5Y2IzMmE1OTQwY2FjZDNlMGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYzNTIxYTM1MmM5NDczMzdkNGI0YmI4ZDc4ZWQwN2IyYTBiOTMzYmNhMThmNmI2OTk5MzJhNmNlM2UyZWQ1NzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzMjA5NWRlNzZlMjNjNWRmY2MwYzA4NjZhODRmNWI3MDM1ZjY4ZGI1OTQxYzQ1ODM1MGM4NDM0M2JiNWZmYzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f139fc9dc0564719aae6dba148a4d9e4",
+      "statement": "La puntuación cierra la ronda al alcanzar 15 eliminaciones y vacía los cohetes pendientes.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-combat.js#L8-L23",
+          "version": "repo-lines-v1:sha256:0b2c66b626533d8e96699610784d03f4874772dfeeff03037435fb7e1e9608db:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhYTcwOWZmOTdkNmE1YWE5ZGY1NWY1YWRiNTI5MzUxYzE0ZDAxMjYzYzU3YzkxMjEzZWU0MzVmZDY5ZTRiODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQzZDg4NjljYmEyMjJlMDAwM2IwZjI1YmExODMxM2I1Nzc3YTU1MDkxZDdmZjE4NjA5OTZkODg3NzY1OTI0ODgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRkODMxNzM0ZmNkNTBmZTkzZDg3YTE0OWY2OTMxNzc2NWYyOTFhY2E4MjQ5YTk5NWY2M2VhNWI4MTNkY2I2MWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjMzBhNTQxZGY2N2I3NWFmN2IzMWFkYjJmMjkxMWEwOTQ0YTY3ODU0N2I4Mjk0MTRhODA0MTQzNjZkOGU2MTMifQ"
+        },
+        {
+          "resource": "repo://src/rocketsim-practice-match.js#L514-L526",
+          "version": "repo-lines-v1:sha256:4bd89e7a953e907ee4e2f523747427228e12bef8f1a85c189a14a20f11b0f576:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlYWRmZDg3ZmEzNTc5NTE2MTk2MDEwN2U5OWZiNjkzYzYzNzg4NTQ5ZDc2NzgyYTM3NWE0NTg4ZmE4ZTEzNTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJiNGI1NGJmYThjNWY1NzJmYTFmMGJmYTBhOTFhYjdlN2I2MTRmMTdmMmQ3MWQ4NGU0ZTIyODE4NWNjODFhODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk2Y2U1YzJlNDUxYWU5NGU3ZjM0N2MxYTkwNmEyOTYyMDczMzI4NWQ2OTVjODhmMDkxOWFiYWI2YmM3ZjgyMDAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a10788a841314863bcde9a03d03d6fd0",
+      "statement": "El perfil `combat-alpha` usa como fallback de proyectiles 72 × 54 × 30 unidades Arsenal; una regresión reproduce que un cohete que cruza x=62 permanece vivo dentro de ese volumen.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-arena-profile.js#L27-L45",
+          "version": "repo-lines-v1:sha256:8905ff5418f151e7a26a6614f59f7367ffa18734aaf46c2b6d41915f0f2e9a4b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2ZWZmNGI5ZmQ3Yjc2MWUwZTkxNDRiZGM1Nzc2ZDYwM2M2ODBiMzU4YTJkMjI4YWNkNjU0NmFhNTk3NWNhZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlZWRmN2FiYTZmNjVmYmIwNjVkNTcyNzRiYTc0MzYyMTgxODFhMmFmMWQ5NjcxYzBjNDkyZWRiODQxYWUwYWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlMTYzNDYxNTg0NTIxZTZiNTVkMDUzYmIwODE5NzM1OTY5NzZlNjAyMTNlY2U3Njg1YTY3YTdkM2Q0Mjk1NzMifQ"
+        },
+        {
+          "resource": "repo://tests/rocketsim-combat.test.mjs#L15-L25",
+          "version": "repo-lines-v1:sha256:2438e88dcf07352bf758245850f3c5a58476e400381045f30e9a8dcbfe2697ee:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4MGIwZmUyZmIwNWFkMTkzZWJmYjRhOTUyMmFjNGIzMDMxOTIyN2FlMzMwNzg1OWQwY2NkNTc2M2I3MDEyNjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlMTk1MWI3MmJlNDNkMWE3YjZjOTM2ZDk1Y2U2OWQ2YTEyMTNlMDQxYTYwYzNjOWVjZTlmOTI0ZjVlZDQyZWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI5NzNjNDUxOGQ1M2E0YzZjNzk3MjQyMjJmM2NiNWQ5YzQ4NjBkMjk0NmQ5MmI0MTNiMGZkYzUwYTBiN2RhNjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIzYjBkNzA1YWJhZWIwM2Y1MzJjNDVkYzNmMGE1YzRhMDNhMjIzNzM0Mjk2Yzk4MWFlOTZlNjQyMjMwZTFiMmMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-16T21:36:10.526Z"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "sourceRepository": "https://github.com/ZealanL/RocketSim",
+  "sourceCommit": "c2baacb8f4b441dd8505e63c2aeb5a1679b60b02",
+  "license": "MIT",
+  "capture": "rocketsim-r4-contact-transitions-c2baacb8.json",
+  "fixedStepHz": 120,
+  "profile": "THE_VOID with one synthetic Bullet floor",
+  "scope": "Development-only R4 contact oracle with internal wheel suspension telemetry; no Rocket League executable, assets, meshes, or production integration.",
+  "deterministicSha256": "975DF9500555AB18ECC4E772E250FE33A8DAA5BBC07F1DA6EB5B353AE58C814E",
+  "verifiedOn": "2026-10-11"
+}

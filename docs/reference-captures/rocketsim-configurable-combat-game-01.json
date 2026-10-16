@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "story": "GAME-01",
+  "generatedAt": "2026-10-13T10:29:47.841Z",
+  "profile": "COMBATE ROCKETSIM",
+  "arena": "arsenal-expanded-curved-practice",
+  "configured": {
+    "vehicleLimit": 3,
+    "bots": 0,
+    "combat": true
+  },
+  "pilots": [
+    {
+      "name": "GAME-01-BLUE",
+      "id": "59bc8ade-7e85-47aa-85cf-8a5e025d3f28",
+      "team": "blue",
+      "acknowledged": 2
+    },
+    {
+      "name": "GAME-01-RED",
+      "id": "38636410-6431-4310-b314-8f9bd8007ba9",
+      "team": "red",
+      "acknowledged": 0
+    },
+    {
+      "name": "GAME-01-BLUE-2",
+      "id": "59817621-99c5-490e-89db-c4cea30381b2",
+      "team": "blue",
+      "acknowledged": 0
+    }
+  ],
+  "rejected": {
+    "errors": [
+      "La capacidad de esta arena ya está completa."
+    ]
+  },
+  "movement": {
+    "inputSequence": 1,
+    "releaseSequence": 2,
+    "travel": 4.3056474542163805
+  },
+  "cadence": {
+    "values": [
+      0.02,
+      0.01
+    ],
+    "count": 30
+  },
+  "expectedConfigurationErrors": [
+    "La capacidad no puede ser inferior a los pilotos conectados."
+  ],
+  "unexpectedErrors": [],
+  "assertions": {
+    "combatSessionConfigured": true,
+    "threePilotsAssigned": true,
+    "fourthPilotRejected": true,
+    "activeRosterCannotShrink": true,
+    "inputAcknowledgedAndMoved": true,
+    "nativeSnapshotCadence": true,
+    "acceptedPilotsHadNoUnexpectedErrors": true
+  },
+  "failedAssertions": []
+}

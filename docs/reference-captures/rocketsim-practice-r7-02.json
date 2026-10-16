@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "profile": "arsenal-practice",
+  "backend": "rocketsim",
+  "port": 5204,
+  "generatedAt": "2026-10-12T18:14:03.537Z",
+  "snapshots": 114,
+  "inputSequences": 18,
+  "acknowledged": 18,
+  "snapshotTimeDeltas": {
+    "unique": [
+      0.01,
+      0.02
+    ],
+    "min": 0.01,
+    "max": 0.02,
+    "mean": 0.016636363636363647,
+    "expectedSeconds": 0.016666666666666666
+  },
+  "phases": [
+    {
+      "name": "first-jump",
+      "sampleCount": 16,
+      "actionSerials": {
+        "jump": 1,
+        "doubleJump": 0,
+        "dodge": 0,
+        "respawn": 1
+      },
+      "maxHeight": 1.98,
+      "maxAngular": {
+        "pitch": 0,
+        "yaw": 0,
+        "roll": 0
+      },
+      "final": {
+        "grounded": false,
+        "h": 1.98,
+        "jumps": 1,
+        "actionSerials": {
+          "jump": 1,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 1
+        }
+      }
+    },
+    {
+      "name": "vertical-double-jump",
+      "sampleCount": 30,
+      "actionSerials": {
+        "jump": 1,
+        "doubleJump": 1,
+        "dodge": 0,
+        "respawn": 2
+      },
+      "maxHeight": 5.05,
+      "maxAngular": {
+        "pitch": 0,
+        "yaw": 0,
+        "roll": 0
+      },
+      "final": {
+        "grounded": false,
+        "h": 5.05,
+        "jumps": 0,
+        "actionSerials": {
+          "jump": 1,
+          "doubleJump": 1,
+          "dodge": 0,
+          "respawn": 2
+        }
+      }
+    },
+    {
+      "name": "directed-dodge",
+      "sampleCount": 31,
+      "actionSerials": {
+        "jump": 1,
+        "doubleJump": 0,
+        "dodge": 1,
+        "respawn": 3
+      },
+      "maxHeight": 2.43,
+      "maxAngular": {
+        "pitch": 3.643,
+        "yaw": 0.076,
+        "roll": 4.167
+      },
+      "final": {
+        "grounded": false,
+        "h": 2.4,
+        "jumps": 0,
+        "actionSerials": {
+          "jump": 1,
+          "doubleJump": 0,
+          "dodge": 1,
+          "respawn": 3
+        }
+      }
+    },
+    {
+      "name": "flight-axes-and-boost",
+      "sampleCount": 37,
+      "actionSerials": {
+        "jump": 1,
+        "doubleJump": 0,
+        "dodge": 0,
+        "respawn": 4
+      },
+      "maxHeight": 3.14,
+      "maxAngular": {
+        "pitch": 2.457,
+        "yaw": 0,
+        "roll": 4.921
+      },
+      "final": {
+        "grounded": false,
+        "h": 3.14,
+        "jumps": 1,
+        "actionSerials": {
+          "jump": 1,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 4
+        }
+      }
+    }
+  ],
+  "assertions": {
+    "backendIsRocketSim": true,
+    "singlePilot": true,
+    "twoTicksPerSnapshot": true,
+    "jumpObserved": true,
+    "verticalDoubleJumpObserved": true,
+    "directedDodgeObserved": true,
+    "flightProducedAngularMotion": true
+  }
+}

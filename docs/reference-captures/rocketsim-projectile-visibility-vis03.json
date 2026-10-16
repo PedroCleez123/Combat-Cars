@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "story": "VIS-03.1",
+  "generatedAt": "2026-10-13T12:59:55.007Z",
+  "profile": "combat-lineup",
+  "backend": "rocketsim",
+  "roster": [
+    {
+      "id": "0135fa20-dae2-4816-afb3-2b4b1bcc5c16",
+      "team": "blue"
+    },
+    {
+      "id": "f54e2ab7-3166-4c1c-b8e8-97c2006fc8ca",
+      "team": "red"
+    }
+  ],
+  "projectile": {
+    "id": 1,
+    "team": "red",
+    "position": {
+      "x": -10.871570485332755,
+      "h": 1.0649914643511245,
+      "z": 0
+    },
+    "velocity": {
+      "x": 73.99660006355185,
+      "h": -0.7093552909284083,
+      "z": 0
+    },
+    "distanceFromShooter": 3.8775499306885233
+  },
+  "assertions": {
+    "nativeCombatProfile": true,
+    "redFireAcknowledged": true,
+    "twoPilotRoster": true,
+    "projectilePublishedToClient": true,
+    "projectileHasFinitePoseAndVelocity": true,
+    "projectileHasLeftShooter": true,
+    "runtimeHadNoErrors": true
+  },
+  "failedAssertions": []
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "story": "COMBAT-GEO-01",
+  "profile": "arsenal-expanded-block-practice",
+  "sha256": "a11588fe9e2632afb145a0c6733ab8fc927297922e6096989958a5b0045c19e3",
+  "readyFeatures": {
+    "staticRaycast": true
+  },
+  "tick": 0,
+  "hits": [
+    {
+      "id": 1,
+      "hit": true,
+      "fraction": 0.420139,
+      "point": {
+        "x": -287.5,
+        "y": 82.14286,
+        "z": 0
+      },
+      "normal": {
+        "x": -1,
+        "y": 0,
+        "z": 0
+      },
+      "kind": "static"
+    },
+    {
+      "id": 2,
+      "hit": false,
+      "fraction": 1,
+      "point": {
+        "x": 1800,
+        "y": 82.14286,
+        "z": 900
+      },
+      "normal": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "kind": "static"
+    }
+  ]
+}

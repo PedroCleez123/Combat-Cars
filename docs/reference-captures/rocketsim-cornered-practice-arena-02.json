@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "profile": "arsenal-expanded-cornered-practice",
+  "geometry": {
+    "width": 144,
+    "depth": 108,
+    "height": 30,
+    "radius": 8,
+    "pipeSegments": 32,
+    "cornerSegments": 16,
+    "kind": "floor-wall-ceiling-curves-plus-lower-upper-spherical-and-vertical-corner-patches"
+  },
+  "sha256": "cee24afabe3640dcc2eaaaffe312a010d8568d244fe36980ae29c6549667e5f2",
+  "trace": {
+    "fixedStepHz": 120,
+    "ticks": 720,
+    "cars": {
+      "1": {
+        "supportedTicks": 390,
+        "firstInclined": {
+          "tick": 98,
+          "normal": {
+            "x": -0.149643,
+            "y": 0.953007,
+            "z": -0.26341
+          }
+        },
+        "firstSteep": {
+          "tick": 117,
+          "normal": {
+            "x": -0.575459,
+            "y": 0.515483,
+            "z": -0.634921
+          }
+        },
+        "firstVerticalCorner": {
+          "tick": 134,
+          "height": 8.812082939130434,
+          "normal": {
+            "x": -0.724217,
+            "y": 0,
+            "z": -0.689573
+          }
+        },
+        "maxHeight": 29.652751349565218,
+        "gapsBeforeSteep": 0,
+        "maxNormalStepDegrees": 3.1237017459956413,
+        "maxStep": {
+          "tick": 190,
+          "degrees": 3.1237017459956413,
+          "from": {
+            "x": -0.664687,
+            "y": -0.597561,
+            "z": -0.448456
+          },
+          "to": {
+            "x": -0.650164,
+            "y": -0.637153,
+            "z": -0.413911
+          },
+          "fromTick": 189
+        },
+        "minNormalY": -1,
+        "maxNormalY": 1,
+        "previous": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "previousTick": 720
+      },
+      "2": {
+        "supportedTicks": 495,
+        "firstInclined": {
+          "tick": 98,
+          "normal": {
+            "x": 0.149643,
+            "y": 0.953007,
+            "z": -0.26341
+          }
+        },
+        "firstSteep": {
+          "tick": 117,
+          "normal": {
+            "x": 0.575459,
+            "y": 0.515483,
+            "z": -0.634921
+          }
+        },
+        "firstVerticalCorner": {
+          "tick": 134,
+          "height": 8.81208739478261,
+          "normal": {
+            "x": 0.724217,
+            "y": 0,
+            "z": -0.689573
+          }
+        },
+        "maxHeight": 29.65275432,
+        "gapsBeforeSteep": 0,
+        "maxNormalStepDegrees": 3.124385289750616,
+        "maxStep": {
+          "tick": 190,
+          "degrees": 3.124385289750616,
+          "from": {
+            "x": 0.664686,
+            "y": -0.597561,
+            "z": -0.448456
+          },
+          "to": {
+            "x": 0.650164,
+            "y": -0.637153,
+            "z": -0.413911
+          },
+          "fromTick": 189
+        },
+        "minNormalY": -1,
+        "maxNormalY": 1,
+        "previous": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "previousTick": 720
+      },
+      "3": {
+        "supportedTicks": 390,
+        "firstInclined": {
+          "tick": 98,
+          "normal": {
+            "x": 0.149643,
+            "y": 0.953007,
+            "z": 0.26341
+          }
+        },
+        "firstSteep": {
+          "tick": 117,
+          "normal": {
+            "x": 0.575459,
+            "y": 0.515483,
+            "z": 0.634921
+          }
+        },
+        "firstVerticalCorner": {
+          "tick": 134,
+          "height": 8.812089634782609,
+          "normal": {
+            "x": 0.724217,
+            "y": 0,
+            "z": 0.689573
+          }
+        },
+        "maxHeight": 29.65275731478261,
+        "gapsBeforeSteep": 0,
+        "maxNormalStepDegrees": 3.1237017459956413,
+        "maxStep": {
+          "tick": 190,
+          "degrees": 3.1237017459956413,
+          "from": {
+            "x": 0.664687,
+            "y": -0.597561,
+            "z": 0.448456
+          },
+          "to": {
+            "x": 0.650164,
+            "y": -0.637153,
+            "z": 0.413911
+          },
+          "fromTick": 189
+        },
+        "minNormalY": -1,
+        "maxNormalY": 1,
+        "previous": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "previousTick": 720
+      },
+      "4": {
+        "supportedTicks": 495,
+        "firstInclined": {
+          "tick": 98,
+          "normal": {
+            "x": -0.149643,
+            "y": 0.953007,
+            "z": 0.26341
+          }
+        },
+        "firstSteep": {
+          "tick": 117,
+          "normal": {
+            "x": -0.575459,
+            "y": 0.515483,
+            "z": 0.634921
+          }
+        },
+        "firstVerticalCorner": {
+          "tick": 134,
+          "height": 8.812079968695652,
+          "normal": {
+            "x": -0.724217,
+            "y": 0,
+            "z": 0.689573
+          }
+        },
+        "maxHeight": 29.652748379130436,
+        "gapsBeforeSteep": 0,
+        "maxNormalStepDegrees": 3.124385289750616,
+        "maxStep": {
+          "tick": 190,
+          "degrees": 3.124385289750616,
+          "from": {
+            "x": -0.664686,
+            "y": -0.597561,
+            "z": 0.448456
+          },
+          "to": {
+            "x": -0.650164,
+            "y": -0.637153,
+            "z": 0.413911
+          },
+          "fromTick": 189
+        },
+        "minNormalY": -1,
+        "maxNormalY": 1,
+        "previous": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        },
+        "previousTick": 720
+      }
+    }
+  }
+}

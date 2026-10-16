@@ -1,0 +1,65 @@
+---
+type: client
+title: Cliente, cámara y controles
+description: Presentación Three.js de snapshots autoritativos, controles unificados, cámara de persecución y HUD.
+tags: [client, camera, controls, threejs]
+sources:
+  - id: openwiki-source-4c3989ef3101af67d167f4b8
+    resource: repo://src/client.js
+  - id: openwiki-source-4917001f2b43a164ea0117c9
+    resource: repo://src/control-mapping.js
+  - id: openwiki-source-5af9f27f776567d7d3b05a59
+    resource: repo://src/gamepad-input.js
+  - id: openwiki-source-e8234c4d5cfb74d2788b408a
+    resource: repo://src/rocketsim-arena-profile.js
+  - id: openwiki-source-ea70ee0e8d5788455e7409e5
+    resource: repo://src/snapshot-interpolation.js
+generated: { by: "codex", at: "2026-10-16T20:19:08.736Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-10-16T21:36:10.526Z
+---
+
+# Cliente, cámara y controles
+
+El cliente Three.js presenta snapshots del servidor; no integra física local ni
+envía poses. Mantiene un buffer corto de estados y renderiza una muestra
+interpolada para reducir el salto entre snapshots sin extrapolar un vehículo
+cuando la red se detiene.
+
+## Controles
+
+Teclado, ratón y mando estándar se convierten al mismo contrato semántico. El
+teclado se puede reasignar y se guarda en `localStorage`. En mando, el stick
+izquierdo dirige, RT/LT controlan aceleración y freno, A salta, RB usa nitro,
+LB activa derrape o free air roll, X/B son air rolls direccionales y el D-pad
+arriba dispara. Las fuentes se combinan antes de generar el frame de entrada.
+
+## Cámara
+
+La cámara conserva el horizonte: el chasis puede tener pitch y roll completos,
+pero el seguimiento usa un rumbo horizontal amortiguado. Reinicia su estado al
+cambiar de vehículo o reaparecer, limita la posición dentro de la arena activa,
+evita coberturas y otros coches y amplía suavemente el FOV con la velocidad.
+
+## Arena visual
+
+Al cambiar `settings.practiceArena`, `client.js` resuelve el modo visual en
+`src/rocketsim-arena-profile.js`. Así, ancho, profundidad, altura, radio de
+curva y esquinas de la piel Three.js siguen el perfil nominal de Node. Esta
+tabla de presentación no sustituye al bridge: las colisiones y el raycast
+estático continúan siendo autoritativos en RocketSim.
+
+## Red y HUD
+
+El cliente abre un WebSocket al mismo host, envía `hello`, heartbeats y entradas
+hasta 60 Hz. Cada snapshot actualiza el ACK de input, el modo visual de arena,
+la interpolación y los paneles. El HUD presenta integridad, nitro, velocidad,
+saltos, estados aéreos de calibración, ACK y eventos autoritativos.
+
+## Fuentes
+
+- `src/client.js`: ciclo de render, WebSocket, cámara, HUD y bindings.
+- `src/control-mapping.js`: contrato unificado de entrada.
+- `src/gamepad-input.js`: adaptador XInput/Gamepad API.
+- `src/snapshot-interpolation.js`: interpolación exclusivamente visual.

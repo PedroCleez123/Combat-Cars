@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:1dc7edc44d3b50075665f5610cd341107ce08cdef55d4afe2240b34ece5c231f",
+  "claims": [
+    {
+      "id": "claim_828db3ec3467418685df2f12994878a8",
+      "statement": "El backend RocketSim aplica el mismo input a los pasos fijos de un snapshot, avanza dos ticks nativos y rechaza frames cuyo tick o conjunto de IDs no coincide con la alineación esperada.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-practice-match.js#L246-L269",
+          "version": "repo-lines-v1:sha256:3196492c25ce0c400ee1580e71bcd1719c52398b413bc4fbc6f5ef576ed6b942:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwMmQ0MTMzMjA2OTc1M2Q2NTlkNTcwZDE3YTgyMmZiYTlmZmYyNTNjMzQ0YjkzNzczNzEyZTdlZjc3NzZlMTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5OTZlYWU0YmQ5NTIyMTc0ZjdmOTM3Mzk2ZjEwNThkNTUyYTczMmEzZDU4M2M5YmJhYWE5MzBjODNiMjgyM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlMTJiNjExODk0M2UzMGMwMDY4MzNlNzgxNjMwYTUzYjMyZjQxN2VmNWY5Nzk1YzNmMTJmMzMwODAyNGM1ZDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ2Yjg0YWRkYmJiZTZiYWQwNDk5ZDI1NTY0NzRjOGY2Njg5NWJhY2RiZTQ2YmIyYWM3MjI5YzdhODdmMTgyYjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0233a14ef9684de7b9c60849dd4de1b1",
+      "statement": "La vista de coche publica estado de apoyo, contactos, salto, ventana del segundo salto, dodge, velocidades angulares, boost y contacto con pared o techo; los seriales de acciones se incrementan con flags ascendentes del coche nativo.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-practice-match.js#L330-L415",
+          "version": "repo-lines-v1:sha256:b5accb569cc9c94d38f7b309f4f1c056244fdb428a9857a5b8bcaabe33f234f8:eyJzZWxlY3RlZExpbmVDb3VudCI6ODYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlNTNkNGQ2ZTJhZWMyZTNmMWIxNDNkMTk4ZDk3NTFjOWEyZmRjNDc3ZmEzZTRlNGI1YjFlZjA3ZWEyOWNmODAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3NmZlNTc5M2YwZjI2M2U2OGM5ZjJiMjIxZTljMmYyMjg2YzNjZjEwM2I4NTEyNjFjZTk5OWNjNTc5NTU0MTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc2YzBmMjk4ZmUzNjdjYmFhMGI2OThkMzNlNmVkNjM2NjVkMmRiNThjZTIxZDM4ODgzMGQ5NTEyMmUyOTVhMGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiYjk1NTk1YmRlODNlM2JiNGM4MGYzYzgwM2I0NjQ0OTk3MjI0NTc3MjM3ZTBmY2MxYTFlN2VmMGMwMTY3ODkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_692634a5cab941e7b0e725fd121894db",
+      "statement": "El solver legado distingue segundo salto vertical de dodge direccional: la dirección WASD o roll normalizada convierte el segundo edge en burst horizontal con torque de pitch o roll, mientras que un edge sin dirección aplica impulso vertical.",
+      "evidence": [
+        {
+          "resource": "repo://src/simulation.js#L1343-L1414",
+          "version": "repo-lines-v1:sha256:608f9be340636411f9632825ae4c56df491bcf1f4ec9de616f9c0477df75a307:eyJzZWxlY3RlZExpbmVDb3VudCI6NzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3NWFmMzdhYzI5NTAxMGRiN2YxNWM3NGU1M2MyZTk2NmNjNjY0N2E1MzkzNDQ5MWI2MWY1NTEzZGE5ZTE5Y2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5MTA2Nzk2OTNlOGQ1NjYzMmY1MTEwNGFkODFhNjM5NzQzY2UyNDk4ZDRhNDc4NmJkNGU5ZTZhYWY3NDQ0ZmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE0NjAwMjY4ODc1ODBkNmU0YzQ4OTU1MDQzMmJkMDkwYTBkMjZkYTU4ZTViZGE4ZWIzMDJmZjdkMTQ5YTgyMDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM3NWMwNDljYzEwMzY0MmMyYWNkMTJiZmEwNThjMWUzOTU3NjM4MTZhZWU2M2FlNzdhNjAwZTlhNGZjMWEwZmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_df2564912fe7406291f5fd8e54af450c",
+      "statement": "En vuelo, airRoll cambia el papel de steer de yaw a roll; el dodge conserva su dirección comprometida y el boost aplica empuje en el eje delantero del coche.",
+      "evidence": [
+        {
+          "resource": "repo://src/simulation.js#L1247-L1294",
+          "version": "repo-lines-v1:sha256:b94790e742f21f282339da354cefbe14ccf9ed2e993f655f08c7db949046c349:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2NmFkZWU3NDgxYjI3ODkwNjA1YmU3Mjk2N2JiOWU1MTQzODBhMzZlNTRkOWM0YmE3NDhmMGU0NzcyNWIxOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyNjlhZDNjMzY5NzdiMzU1MThkOGMxZWE1MzM1ZWQ4MjE5NjJiM2M0MWJjMmU2MzdhOTgzZmIwYzUwNjhkOTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJhYzcwNzAyOTRmMmEyZjQ1NTA5MDA5ZTM5MDg0ZDI1MzE2M2I1NTk4OGVkYzYwMWM1ZmJhOTNjNzY5MDRhZGQifQ"
+        },
+        {
+          "resource": "repo://src/simulation.js#L1414-L1420",
+          "version": "repo-lines-v1:sha256:60fecfaa077e6e885a46c64b8be8c273e9101b1f47ac8d230b95d85505872f7d:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzkxMDY3OTY5M2U4ZDU2NjMyZjUxMTA0YWQ4MWE2Mzk3NDNjZTI0OThkNGE0Nzg2YmQ0ZTllNmFhZjc0NDRmYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWYzZjVhYWY0NWQ0Zjg3NTU1ODM4ZDIzN2Q1YjZlMGU5M2QzOWY1NjEyNzc4MDljZWM1YzI4ZWMyZWZkNTZjOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2QyZmIxZjZmMzQ2Y2I3M2FkMGJjYjg4NjZjYjFiNGVjMDFhOWZmNTFmOGJiNTc3MjQxNDA5MmFjZDM0OTI0YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjNmZTE4Mzc1OGYyYmZlZDhmNDg1ZmI3Y2U3NGI5NGYzODUyMzRiMTQ1NDNjNDRjMWZkOWQ0ODhhZWFkYjlmZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ec7cb0180c2483ebba8680710a8e693",
+      "statement": "El contrato de observación MOB-AIR-02 exige separar variantes de dodge, comprobar ACKs y snapshots autoritativos, registrar seriales J/2/D y no ajustar el solver sin un defecto reproducible.",
+      "evidence": [
+        {
+          "resource": "repo://_bmad-output/implementation-artifacts/mob-air-02-isolated-observation-story.md#L9-L46",
+          "version": "repo-lines-v1:sha256:fe3b2290cb410102fb844728288182538e6c16ddce417b909cadff0090ef6b97:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzg3NTA5ODc4MDlmZmQ2NjEyNjk5YzNjMTcxOWU0YzZiYWEwOWJkMjQ3ZDFjMGIzNDc0ZGI3MjVhMDMwMGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2YmQ3MjgwNzgxYjBjMjhjZjZkODFlYzE3ZTViOGNjNGJiOTM1OTA3MmE2YjM2YjNkMTM2OTJiODU2NTM2ZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2MWYxMjNmMjRmZDc3NzQ3ZGY4NmYzOTZkMDM4ODRjYzk5NWYxMTkzOWNhM2Y1ZjYzOGMyY2RhYTMyMjc4YzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg5ZTZlOWU1OWQ5N2ExNzk0NjgxYjNlN2QzODFlZTc4ZWJhZWM5OTRlOTNjNmZjNGM4ZTNhYTU0NjMxZTExMzgifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-16T21:36:10.526Z"
+  }
+}

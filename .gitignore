@@ -1,0 +1,13 @@
+node_modules/
+.tools/
+.rocketsim-bridge-build*/
+/archive/rocketsim-builds/
+/.agents/
+/.codex/
+/_bmad/
+/work/
+/docs/archive/2026-10-15/openwiki-update.yml
+/docs/archive/2026-10-16/openwiki-update-workflow.yml
+*.log
+.tmp-*.mjs
+dist/

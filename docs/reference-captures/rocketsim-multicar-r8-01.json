@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "profile": "arsenal-practice",
+  "fixedStepHz": 120,
+  "cars": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }
+  ],
+  "ticks": 180,
+  "initial": [
+    {
+      "id": 1,
+      "position": {
+        "x": 0.162913,
+        "y": 17.031986,
+        "z": 0
+      },
+      "velocity": {
+        "x": 0.000001,
+        "y": 0.000039,
+        "z": 0
+      }
+    },
+    {
+      "id": 2,
+      "position": {
+        "x": -699.837219,
+        "y": 17.031986,
+        "z": -650
+      },
+      "velocity": {
+        "x": 0.000002,
+        "y": 0.000027,
+        "z": 0
+      }
+    }
+  ],
+  "final": [
+    {
+      "id": 1,
+      "position": {
+        "x": 1000.306885,
+        "y": 17.031965,
+        "z": -500.102325
+      },
+      "velocity": {
+        "x": 863.362915,
+        "y": 0.000068,
+        "z": -857.783813
+      }
+    },
+    {
+      "id": 2,
+      "position": {
+        "x": -1734.107178,
+        "y": 17.031952,
+        "z": -222.405289
+      },
+      "velocity": {
+        "x": -937.614624,
+        "y": 0.000075,
+        "z": 778.44165
+      }
+    }
+  ],
+  "assertions": {
+    "readyHasTwoCars": true,
+    "stableIds": true,
+    "independentThrottle": true,
+    "statesRemainDistinct": true,
+    "duplicateInitRejected": true,
+    "nativeRecoveredAfterRejection": true,
+    "duplicateTickRejected": true
+  }
+}

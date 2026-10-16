@@ -1,0 +1,143 @@
+{
+  "first-jump": {
+    "schemaVersion": 1,
+    "scenario": "first-jump",
+    "referenceSamples": 144,
+    "candidateSamples": 144,
+    "referenceFixedStepHz": 120,
+    "candidateFixedStepHz": 120,
+    "activationFrame": {
+      "reference": 1,
+      "candidate": 1
+    },
+    "directionDelta": null,
+    "signals": {
+      "height": {
+        "shapeRms": 0.0039,
+        "referencePeakAbs": 231.7964,
+        "candidatePeakAbs": 5.538
+      },
+      "speed": {
+        "shapeRms": 0.0229,
+        "referencePeakAbs": 434.0426,
+        "candidatePeakAbs": 10.7989
+      },
+      "verticalVelocity": {
+        "shapeRms": 0.0127,
+        "referencePeakAbs": 434.0364,
+        "candidatePeakAbs": 10.7989
+      },
+      "pitchRate": {
+        "shapeRms": 0.9429,
+        "referencePeakAbs": 0,
+        "candidatePeakAbs": 0.0012
+      },
+      "yawRate": {
+        "shapeRms": 0,
+        "referencePeakAbs": 0,
+        "candidatePeakAbs": 0
+      },
+      "rollRate": {
+        "shapeRms": 0.3371,
+        "referencePeakAbs": 0.0002,
+        "candidatePeakAbs": 0
+      }
+    },
+    "note": "shapeRms usa tiempo normalizado; peakAbs conserva las unidades de cada fuente"
+  },
+  "ground-control": {
+    "schemaVersion": 1,
+    "scenario": "ground-control",
+    "referenceSamples": 144,
+    "candidateSamples": 144,
+    "referenceFixedStepHz": 120,
+    "candidateFixedStepHz": 120,
+    "activationFrame": {
+      "reference": null,
+      "candidate": null
+    },
+    "directionDelta": null,
+    "signals": {
+      "height": {
+        "shapeRms": 0.3804,
+        "referencePeakAbs": 17.032,
+        "candidatePeakAbs": 0
+      },
+      "speed": {
+        "shapeRms": 0.0546,
+        "referencePeakAbs": 786.8581,
+        "candidatePeakAbs": 19.369
+      },
+      "verticalVelocity": {
+        "shapeRms": 0.2455,
+        "referencePeakAbs": 0.0227,
+        "candidatePeakAbs": 0
+      },
+      "pitchRate": {
+        "shapeRms": 0.2287,
+        "referencePeakAbs": 0.0056,
+        "candidatePeakAbs": 0.0012
+      },
+      "yawRate": {
+        "shapeRms": 0.1005,
+        "referencePeakAbs": 2.8891,
+        "candidatePeakAbs": 2.0716
+      },
+      "rollRate": {
+        "shapeRms": 0.3343,
+        "referencePeakAbs": 0.0021,
+        "candidatePeakAbs": 0
+      }
+    },
+    "note": "shapeRms usa tiempo normalizado; peakAbs conserva las unidades de cada fuente"
+  },
+  "dodge-diagonal-roll": {
+    "schemaVersion": 1,
+    "scenario": "dodge-diagonal-roll",
+    "referenceSamples": 144,
+    "candidateSamples": 144,
+    "referenceFixedStepHz": 120,
+    "candidateFixedStepHz": 120,
+    "activationFrame": {
+      "reference": 12,
+      "candidate": 12
+    },
+    "directionDelta": {
+      "forward": 0,
+      "side": 0
+    },
+    "signals": {
+      "height": {
+        "shapeRms": 0.7481,
+        "referencePeakAbs": 77.76,
+        "candidatePeakAbs": 1.6448
+      },
+      "speed": {
+        "shapeRms": 1.176,
+        "referencePeakAbs": 556.8532,
+        "candidatePeakAbs": 13.6851
+      },
+      "verticalVelocity": {
+        "shapeRms": 0.2192,
+        "referencePeakAbs": 299.1877,
+        "candidatePeakAbs": 7.3851
+      },
+      "pitchRate": {
+        "shapeRms": 0.5954,
+        "referencePeakAbs": 5.3938,
+        "candidatePeakAbs": 2.3479
+      },
+      "yawRate": {
+        "shapeRms": 0.3237,
+        "referencePeakAbs": 1.463,
+        "candidatePeakAbs": 0.1
+      },
+      "rollRate": {
+        "shapeRms": 1.0491,
+        "referencePeakAbs": 2.5808,
+        "candidatePeakAbs": 4.6957
+      }
+    },
+    "note": "shapeRms usa tiempo normalizado; peakAbs conserva las unidades de cada fuente"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "name": "car-soccer-arsenal",
+  "version": "0.1.1",
+  "main": "desktop/main.cjs",
+  "type": "module",
+  "private": true,
+  "description": "3D 3v3 vehicle-arena shooter prototype with a LAN server.",
+  "scripts": {
+    "start": "node server.mjs",
+    "start:watch": "node --watch server.mjs",
+    "start:watch:combat": "powershell -NoProfile -ExecutionPolicy Bypass -File tools/start-rocketsim-combat-watch.ps1",
+    "start:rocketsim": "node tools/start-rocketsim-practice.mjs",
+    "test": "node --test tests/simulation.test.mjs tests/control-mapping.test.mjs tests/gamepad-input.test.mjs tests/snapshot-interpolation.test.mjs tests/input-ack.test.mjs tests/calibration-session.test.mjs tests/calibration-history.test.mjs tests/mobility-envelope.test.mjs tests/mobility-curves.test.mjs tests/camera-follow.test.mjs tests/arena-visual-profile.test.mjs tests/vehicle-visual-alignment.test.mjs tests/mob02-browser-playback.test.mjs tests/mob-air-01-browser-playback.test.mjs tests/vis03-browser-playback.test.mjs tests/rocketsim-bridge.test.mjs tests/rocketsim-curve-capture.test.mjs tests/rocketsim-practice-match.test.mjs tests/rocketsim-combat.test.mjs tests/lan-client-liveness.test.mjs tests/http-static-boundary.test.mjs tests/rocketsim-arena-profile.test.mjs tests/lan-session-control.test.mjs tests/lan-session-protocol.test.mjs tests/lan-outbound-queue.test.mjs",
+    "probe": "node tools/mobility-probes.mjs",
+    "probe:envelope": "node tools/mobility-envelope.mjs",
+    "probe:curves": "node tools/mobility-curves.mjs",
+    "probe:contacts": "node tools/contact-transition-probes.mjs",
+    "compare:contacts": "node tools/compare-contact-transitions.mjs",
+    "normalize:contacts": "node tools/normalize-contact-transitions.mjs",
+    "probe:curve-manifest": "node tools/mobility-curves.mjs --manifest",
+    "capture:curves": "node tools/capture-mobility-curves.mjs",
+    "compare:curves": "node tools/compare-mobility-curves.mjs",
+    "calibrate:network": "node tools/calibration-network-trace.mjs",
+    "probe:rocketsim-bridge": "node tools/rocketsim-bridge/smoke.mjs",
+    "capture:rocketsim-ground": "node tools/rocketsim-bridge/capture-ground-curves.mjs",
+    "probe:rocketsim-free-air-roll": "node tools/rocketsim-bridge/probe-free-air-roll.mjs",
+    "capture:rocketsim-curves": "node tools/rocketsim-bridge/capture-curves.mjs",
+    "probe:rocketsim-curved-arena": "node tools/rocketsim-bridge/probe-curved-practice.mjs",
+    "probe:rocketsim-expanded-arena": "node tools/rocketsim-bridge/probe-expanded-curved-practice.mjs",
+    "probe:rocketsim-cornered-arena": "node tools/rocketsim-bridge/probe-cornered-practice.mjs",
+    "probe:rocketsim-block-arena": "node tools/rocketsim-bridge/probe-block-practice.mjs",
+    "probe:rocketsim-ramp-arena": "node tools/rocketsim-bridge/probe-ramp-practice.mjs",
+    "probe:rocketsim-ramp-combat": "node tools/rocketsim-ramp-combat-occlusion-probe.mjs",
+    "probe:rocketsim-combat-alpha-geometry": "node tools/rocketsim-bridge/probe-combat-alpha-geometry.mjs",
+    "probe:rocketsim-combat-alpha-lan": "node tools/rocketsim-combat-six-pilot-probe.mjs",
+    "probe:rocketsim-static-raycast": "node tools/rocketsim-bridge/probe-static-raycast.mjs",
+    "probe:rocketsim-cornered-camera": "node tools/rocketsim-cornered-camera-probe.mjs",
+    "probe:rocketsim-expanded-mobility": "node tools/rocketsim-expanded-mobility-probe.mjs",
+    "test:mob02": "node --test tests/mob02-browser-playback.test.mjs",
+    "test:mobair01": "node --test tests/mob-air-01-browser-playback.test.mjs",
+    "probe:rocketsim-contacts": "node tools/rocketsim-bridge/probe-practice-contacts.mjs",
+    "probe:rocketsim-practice": "node tools/rocketsim-practice-probe.mjs",
+    "probe:rocketsim-curved-practice": "node tools/rocketsim-curved-practice-probe.mjs",
+    "probe:rocketsim-wall-actions": "node tools/rocketsim-wall-actions-probe.mjs",
+    "probe:rocketsim-multicar": "node tools/rocketsim-bridge/probe-multicar.mjs",
+    "probe:rocketsim-combat-state": "node tools/rocketsim-bridge/probe-combat-state.mjs",
+    "probe:rocketsim-combat-websocket": "node tools/rocketsim-combat-websocket-probe.mjs",
+    "probe:rocketsim-projectile-visibility": "node tools/rocketsim-projectile-visibility-probe.mjs",
+    "probe:rocketsim-two-pilot": "node tools/rocketsim-two-pilot-campaign.mjs",
+    "probe:rocketsim-six-pilot": "node tools/rocketsim-six-pilot-lan-probe.mjs",
+    "probe:rocketsim-combat-session": "node tools/rocketsim-configurable-combat-probe.mjs",
+    "probe:rocketsim-combat-six": "node tools/rocketsim-combat-six-pilot-probe.mjs",
+    "probe:lan-session": "node tools/lan-session-probe.mjs",
+    "probe:lan-websocket": "node tools/lan-websocket-probe.mjs",
+    "verify:provenance": "node tools/provenance-check.mjs",
+    "desktop": "electron .",
+    "package:windows": "electron-builder --win portable"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.carsoccer.arsenal",
+    "productName": "Car Soccer Arsenal",
+    "electronDist": "node_modules/electron/dist",
+    "asar": true,
+    "files": [
+      "desktop/**/*",
+      "src/**/*",
+      "node_modules/three/**/*",
+      "server.mjs",
+      "index.html",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": ".rocketsim-bridge-build-r9/rocketsim_bridge-r19.exe",
+        "to": "bridge/rocketsim_bridge-r19.exe"
+      }
+    ],
+    "win": {
+      "signAndEditExecutable": false,
+      "signExecutable": false,
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  }
+}
+
+

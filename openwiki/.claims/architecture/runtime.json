@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:6816c3d45593da8146079c2515112f6b7f69fa06a05cba1874742a760f5fac80",
+  "claims": [
+    {
+      "id": "claim_6e2fb8ad3b6c45c59ae4ea0734e2c356",
+      "statement": "El servidor selecciona el backend JavaScript o RocketSim antes de escuchar conexiones, y en RocketSim valida ejecutable, modo, arena y timeout antes de iniciar la partida.",
+      "evidence": [
+        {
+          "resource": "repo://server.mjs#L35-L54",
+          "version": "repo-lines-v1:sha256:fb618495e384713805491a05fb8afb9998f6d12680f36ec5a4acc59965e8ea7f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkMTgxMTEyMjVjYWRkMmMxMTE0OTkzMjRhNGFiMzBhMjI2MmQ3ZGFmM2JjNTM4NDIxZDUyMGExNzQyZTE3NzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE5ZWU5ZWE3OWIyM2JjNTY5OTVlMDE1N2FlYjEzOGE5OWE0NDljNTM1MWUxZWZlZDk4MDcyMWEzYTFlZjIzYzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE3YjM1M2E2YzcwMzQ5MTRjYmZmZjM3YjUyY2Y4NDdlNzYzYjgyOTcyZDBhZWFkODA2ZTFkZDI4YWZkMzIyNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhZmE3MDY1MGNjNTdjNjkyN2E2MWJmZWE0NGZlNDE4MWFkYmM1MmE4MWI1MDYwNGJiYmZiZGNmMGVhODU1MTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_984bb581eb8b4963922abd63b6a4ff4b",
+      "statement": "El tick del servidor evita solapamientos, obtiene un estado autoritativo de la partida y lo publica a cada peer junto con el último input aceptado.",
+      "evidence": [
+        {
+          "resource": "repo://server.mjs#L242-L258",
+          "version": "repo-lines-v1:sha256:42a62387e0e3d3ee99fd7b4117a81e573d9baee8d70f1f4a70478d62884837ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4ZTcyNDUyMTY0M2ZlYzM2YzJlNWRhZWNiYjE1MjkyM2MwNmMxMjZiOTE0MzBmYzlhNjQxNTU3MDQ5Y2QxZDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhY2YyZjlhMmQ3MzQ3ZjZhMzAzOGU5MWMwMWRkNTY0M2E1ZThjYzU4ZTZmYjE1Njg0MzQ1NzUxZDFiNWY1YzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0NTMxZjMwY2ZkNWFmMWU4Zjk3YWJhNjFiYmQxOTlmYjczNTQyZmMzNTY4YzAwMmQwOTkwODkwNDM2NzJlM2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6b41f3d4872048c5b68f2c455e3c6096",
+      "statement": "El bridge RocketSim valida el frame ready y el roster esperado, y normaliza las respuestas nativas antes de exponerlas a la partida.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-backend.js#L36-L99",
+          "version": "repo-lines-v1:sha256:d3faf13cf8268919cb1e8c3d960b65214ef568e43f6dcbfaa01ae4664f6eec77:eyJzZWxlY3RlZExpbmVDb3VudCI6NjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxYTNiYTEwNDBiNTAwMWY2NTFiN2QzZmFmYzJmZTJiNmYzZTZhOTM2YjlkNGUyNjcxYzNlNGZkNDhlMTI2ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZjYTg0YzYyNDk4NzBhYmYwNGM2YzUxODQ4YmNiMzlmNzI1MWViYzZiZWMyZmE1MWY1YjFkYjJkNTY2YzM0ZmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU4M2RiODM5MjY0ZjM4ODQzNGQzN2E0MzM1OTU4MWIxZjhiNjAxYTBmOWRiMTAwNzA0NTM5Nzc4NTVlYjc5YWUifQ"
+        },
+        {
+          "resource": "repo://src/rocketsim-protocol.js#L1-L12",
+          "version": "repo-lines-v1:sha256:eff8cb9bd28b5b4ed3f8f08dbcdf70a29aa1f08e098cb83412dd5eeb33a57f2c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhMmEwYTExOTI3NGE1MmZmZWVmMWQ0NGRiOWE5ZTExNjE1NThiOGVjOTQxMjJkYjA1NGExZGM5MDFhNmJiZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2MDg3YWJiZmIyMWI1YzNlODVmZDA4ZWFmZDYwZDFjMTVhNDNkZGE2YzA4YmZhOTMzOWM1ZmVkMDY4N2RiZDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkyMjZmNzE5ZWMzMmIwMzYxYmMzZjkxZTdiOTA4MjIxN2MwZTlkODg2ZTNjMTAwMmI1NDY0NDQ4NWUyNDRmYzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6d88997c0dc2448f914e85a46982a40c",
+      "statement": "Ante un fallo de tick, el runtime intenta reiniciar la partida hasta tres veces y avisa a los clientes de la recuperación o de la parada.",
+      "evidence": [
+        {
+          "resource": "repo://server.mjs#L207-L256",
+          "version": "repo-lines-v1:sha256:f60241fe98f2d79db4fd8f2b5128fe65bb322604793e16e92a9b67ef51aeade2:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjMjhhZmRhNzEzZGNhN2UzOTE5NTAwMTY2MjNhMmFlNjZhMTAyMDk4OGZlMGNkNWZjMWI3YWQxN2EwYTgxMzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjNWE0YmRmZTA1ZTczMmJkMDk5NTBlNTRkYjg1MDNlNDNkNDY0ZGVmZjJmNmJmNWI3NmQ5ZmM4YmIxYzJhMDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ4NjcwNTgwYWZhZjUwNzg2NmMzYzhhYzdlNTA2OTJlYzQwOGJmMDkxODBiMzJlNjliNjllMmZlMzk2NmFiYWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBiN2IwNjRkNTk3MDI4NmQ5MjZkMDY2MTJiNjQyZDRlNzFlODk2Yjg4ZTkwYTdmNWUxMDQ1OWU0NzQ4ZDI5NjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_69b96532800e48d5a80be41d354e4fc1",
+      "statement": "El servidor conserva la autoridad de sesión: el primer peer autenticado es owner para restart/configure y la salida WebSocket se limita con una cola de backpressure.",
+      "evidence": [
+        {
+          "resource": "repo://server.mjs",
+          "version": "repo-file-v1:sha256:5bac54b7463124c4e3340090085aa7a983dfee4eb0e336b3d027bd58d6fbf3f1"
+        },
+        {
+          "resource": "repo://src/lan-outbound-queue.js",
+          "version": "repo-file-v1:sha256:b82316d099a3a515a055d1112eae051c50aa18f1bcb87f13300a8271020d5850"
+        },
+        {
+          "resource": "repo://src/lan-session-control.js",
+          "version": "repo-file-v1:sha256:da2beb360e710dc4a052c302de0ef91036087e92b64cdf3a6c37ea1f29f2a3e2"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-16T21:36:10.526Z"
+  }
+}

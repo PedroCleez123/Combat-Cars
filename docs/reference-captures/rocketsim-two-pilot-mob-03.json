@@ -1,0 +1,573 @@
+{
+  "schemaVersion": 1,
+  "story": "MOB-03",
+  "generatedAt": "2026-10-13T10:02:32.202Z",
+  "movement": {
+    "arena": "arsenal-expanded-curved-practice",
+    "pilots": [
+      {
+        "type": "welcome",
+        "id": "a94196b5-f4c8-4403-acc6-90215bdb832b",
+        "team": "blue"
+      },
+      {
+        "type": "welcome",
+        "id": "5e0ed88e-a73f-4aaa-8020-15e22512e293",
+        "team": "red"
+      }
+    ],
+    "inputs": {
+      "blueSequence": 1,
+      "redSequence": 1,
+      "blueRelease": 2,
+      "redRelease": 2,
+      "blueAcknowledged": 2,
+      "redAcknowledged": 2
+    },
+    "initial": {
+      "blue": {
+        "id": "a94196b5-f4c8-4403-acc6-90215bdb832b",
+        "team": "blue",
+        "x": 0,
+        "h": 0,
+        "z": -29.22,
+        "speed": 0,
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "hp": 100,
+        "respawn": 0,
+        "deaths": 0,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 1
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": -0.004793002461224172,
+          "w": 0.9999885134977334
+        }
+      },
+      "red": {
+        "id": "5e0ed88e-a73f-4aaa-8020-15e22512e293",
+        "team": "red",
+        "x": 0,
+        "h": 0,
+        "z": 29.22,
+        "speed": 0,
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "hp": 100,
+        "respawn": 0,
+        "deaths": 0,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 1
+        },
+        "orientation": {
+          "x": -0.004793002461224172,
+          "y": 0.9999885134977334,
+          "z": 0,
+          "w": 0
+        }
+      }
+    },
+    "final": {
+      "blue": {
+        "id": "a94196b5-f4c8-4403-acc6-90215bdb832b",
+        "team": "blue",
+        "x": 29.79,
+        "h": 0,
+        "z": -29.22,
+        "speed": 35.3,
+        "velocity": {
+          "x": 35.3,
+          "y": 0,
+          "z": 0
+        },
+        "hp": 100,
+        "respawn": 0,
+        "deaths": 0,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 1
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": -0.004818001895238506,
+          "w": 0.9999883933615117
+        }
+      },
+      "red": {
+        "id": "5e0ed88e-a73f-4aaa-8020-15e22512e293",
+        "team": "red",
+        "x": -29.33,
+        "h": 0,
+        "z": 29.22,
+        "speed": 36.13,
+        "velocity": {
+          "x": -36.13,
+          "y": 0,
+          "z": 0
+        },
+        "hp": 100,
+        "respawn": 0,
+        "deaths": 0,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 1
+        },
+        "orientation": {
+          "x": -0.004817001918051065,
+          "y": 0.9999883981789597,
+          "z": 0,
+          "w": 0
+        }
+      }
+    },
+    "movement": {
+      "blueTravel": 29.79,
+      "redTravel": 29.33,
+      "minSeparation": 58.44,
+      "finalSeparation": 83.12886381997531
+    },
+    "cadence": {
+      "values": [
+        0.02,
+        0.01
+      ],
+      "count": 72
+    },
+    "errors": [],
+    "assertions": {
+      "expandedArena": true,
+      "opposingTeams": true,
+      "stableRoster": true,
+      "independentAcks": true,
+      "finiteNativePoses": true,
+      "bothPilotsMoved": true,
+      "nativeSnapshotCadence": true,
+      "runtimeHadNoErrors": true
+    }
+  },
+  "combat": {
+    "arena": "combat-lineup",
+    "pilots": [
+      {
+        "type": "welcome",
+        "id": "e1eb26b6-3f8c-4d99-a96c-bf424c1ba6ea",
+        "team": "blue"
+      },
+      {
+        "type": "welcome",
+        "id": "a9d9d820-bf6d-408d-8b3f-a4787388e774",
+        "team": "red"
+      }
+    ],
+    "initial": {
+      "blue": {
+        "id": "e1eb26b6-3f8c-4d99-a96c-bf424c1ba6ea",
+        "team": "blue",
+        "x": 0,
+        "h": 0,
+        "z": 0,
+        "speed": 0,
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "hp": 100,
+        "respawn": 0,
+        "deaths": 0,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 1
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": -0.004793002461224172,
+          "w": 0.9999885134977334
+        }
+      },
+      "red": {
+        "id": "a9d9d820-bf6d-408d-8b3f-a4787388e774",
+        "team": "red",
+        "x": -14.6,
+        "h": 0,
+        "z": 0,
+        "speed": 0,
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "hp": 100,
+        "respawn": 0,
+        "deaths": 0,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 1
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": -0.004793002461224172,
+          "w": 0.9999885134977334
+        }
+      }
+    },
+    "contact": {
+      "inputs": {
+        "contactDrive": 1,
+        "contactRelease": 2
+      },
+      "start": {
+        "blue": {
+          "id": "e1eb26b6-3f8c-4d99-a96c-bf424c1ba6ea",
+          "team": "blue",
+          "x": 0,
+          "h": 0,
+          "z": 0,
+          "speed": 0,
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "hp": 100,
+          "respawn": 0,
+          "deaths": 0,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 1
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": -0.004793002461224172,
+            "w": 0.9999885134977334
+          }
+        },
+        "red": {
+          "id": "a9d9d820-bf6d-408d-8b3f-a4787388e774",
+          "team": "red",
+          "x": -14.6,
+          "h": 0,
+          "z": 0,
+          "speed": 0,
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "hp": 100,
+          "respawn": 0,
+          "deaths": 0,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 1
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": -0.004793002461224172,
+            "w": 0.9999885134977334
+          }
+        }
+      },
+      "end": {
+        "blue": {
+          "id": "e1eb26b6-3f8c-4d99-a96c-bf424c1ba6ea",
+          "team": "blue",
+          "x": 0,
+          "h": 0,
+          "z": 0,
+          "speed": 0,
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "hp": 100,
+          "respawn": 0,
+          "deaths": 0,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 1
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": -0.004793002461224172,
+            "w": 0.9999885134977334
+          }
+        },
+        "red": {
+          "id": "a9d9d820-bf6d-408d-8b3f-a4787388e774",
+          "team": "red",
+          "x": -9.44,
+          "h": 0,
+          "z": 0,
+          "speed": 16.56,
+          "velocity": {
+            "x": 16.56,
+            "y": 0,
+            "z": 0
+          },
+          "hp": 100,
+          "respawn": 0,
+          "deaths": 0,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 1
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": -0.004802002258507045,
+            "w": 0.9999884703206879
+          }
+        }
+      },
+      "minSeparation": 9.44,
+      "reset": {
+        "blue": {
+          "id": "e1eb26b6-3f8c-4d99-a96c-bf424c1ba6ea",
+          "team": "blue",
+          "x": 0,
+          "h": 0,
+          "z": 0,
+          "speed": 0,
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "hp": 100,
+          "respawn": 0,
+          "deaths": 0,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 2
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": -0.004793002461224172,
+            "w": 0.9999885134977334
+          }
+        },
+        "red": {
+          "id": "a9d9d820-bf6d-408d-8b3f-a4787388e774",
+          "team": "red",
+          "x": -14.6,
+          "h": 0,
+          "z": 0,
+          "speed": 0,
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "hp": 100,
+          "respawn": 0,
+          "deaths": 0,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 2
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": -0.004793002461224172,
+            "w": 0.9999885134977334
+          }
+        }
+      }
+    },
+    "inputs": {
+      "fireStart": 3,
+      "fireRelease": 4,
+      "fireCooldown": 5,
+      "cooldownRelease": 6,
+      "fireElimination": 7,
+      "finalSequence": 8,
+      "redAcknowledged": 8
+    },
+    "observed": {
+      "healthAfterCooldown": 35,
+      "eliminated": {
+        "id": "e1eb26b6-3f8c-4d99-a96c-bf424c1ba6ea",
+        "team": "blue",
+        "x": 0,
+        "h": -218.35,
+        "z": 0,
+        "speed": 0.11,
+        "velocity": {
+          "x": 0,
+          "y": -0.11,
+          "z": 0
+        },
+        "hp": 0,
+        "respawn": 2.341666666666667,
+        "deaths": 1,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 2
+        },
+        "orientation": {
+          "x": 0.703206348973621,
+          "y": 0.0000010000004962608695,
+          "z": -0.6762713356068345,
+          "w": -0.21944910890395156
+        }
+      },
+      "inactive": {
+        "id": "e1eb26b6-3f8c-4d99-a96c-bf424c1ba6ea",
+        "team": "blue",
+        "x": 0,
+        "h": -218.35,
+        "z": 0,
+        "speed": 0.11,
+        "velocity": {
+          "x": 0,
+          "y": -0.11,
+          "z": 0
+        },
+        "hp": 0,
+        "respawn": 2.341666666666667,
+        "deaths": 1,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 2
+        },
+        "orientation": {
+          "x": 0.703206348973621,
+          "y": 0.0000010000004962608695,
+          "z": -0.6762713356068345,
+          "w": -0.21944910890395156
+        }
+      },
+      "respawned": {
+        "id": "e1eb26b6-3f8c-4d99-a96c-bf424c1ba6ea",
+        "team": "blue",
+        "x": 0,
+        "h": 0,
+        "z": 0,
+        "speed": 0,
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "hp": 100,
+        "respawn": 0,
+        "deaths": 1,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 3
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+        }
+      },
+      "fireEvents": [
+        {
+          "text": "MOB-03-RED-comba lanza un cohete.",
+          "kind": "fire",
+          "at": 0.03
+        },
+        {
+          "text": "MOB-03-RED-comba lanza un cohete.",
+          "kind": "fire",
+          "at": 0.94
+        }
+      ],
+      "errors": []
+    },
+    "cadence": {
+      "values": [
+        0.02,
+        0.01
+      ],
+      "count": 232
+    },
+    "assertions": {
+      "combatLineup": true,
+      "nativeVehicleContactObserved": true,
+      "contactRestartedNatively": true,
+      "inputsAcknowledged": true,
+      "cooldownRejected": true,
+      "twoFireEdges": true,
+      "eliminationObserved": true,
+      "nativeDeactivationObserved": true,
+      "nativeRespawnObserved": true,
+      "nativeSnapshotCadence": true,
+      "runtimeHadNoErrors": true
+    }
+  },
+  "assertions": {
+    "movement.expandedArena": true,
+    "movement.opposingTeams": true,
+    "movement.stableRoster": true,
+    "movement.independentAcks": true,
+    "movement.finiteNativePoses": true,
+    "movement.bothPilotsMoved": true,
+    "movement.nativeSnapshotCadence": true,
+    "movement.runtimeHadNoErrors": true,
+    "combat.combatLineup": true,
+    "combat.nativeVehicleContactObserved": true,
+    "combat.contactRestartedNatively": true,
+    "combat.inputsAcknowledged": true,
+    "combat.cooldownRejected": true,
+    "combat.twoFireEdges": true,
+    "combat.eliminationObserved": true,
+    "combat.nativeDeactivationObserved": true,
+    "combat.nativeRespawnObserved": true,
+    "combat.nativeSnapshotCadence": true,
+    "combat.runtimeHadNoErrors": true
+  },
+  "failedAssertions": []
+}

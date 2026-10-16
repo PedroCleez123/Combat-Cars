@@ -1,0 +1,979 @@
+{
+  "schemaVersion": 1,
+  "source": "Arsenal M4-02 contact comparison",
+  "fixedStepHz": 120,
+  "ownCapture": "docs/reference-captures/arsenal-m4-01-contact-transitions.json",
+  "referenceCapture": "C:\\Users\\Pedro José\\Documents\\Codex\\2026-10-09\\files-pasted-by-the-user-help\\outputs\\CarSoccerArsenal\\docs\\reference-captures\\rocketsim-r4-contact-transitions-c2baacb8.json",
+  "scenarios": {
+    "flat-drop": {
+      "arsenal": {
+        "firstAirborneFrame": 1,
+        "firstBodyContactFrame": 119,
+        "firstWheelSupportFrame": 119,
+        "firstGroundedFrame": 119,
+        "bodyToWheelSupportFrames": 0,
+        "maximumTangentSpeedAfterContact": 0,
+        "firstSupportUpAngleDegrees": 0,
+        "settledFrame": 120,
+        "final": {
+          "grounded": true,
+          "jumps": 2,
+          "jumpState": "grounded",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "angularVelocity": {
+            "pitch": 0.002,
+            "yaw": 0,
+            "roll": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "loadedWheelCount": 4,
+          "lastLanding": {
+            "frame": 119,
+            "pitch": 0,
+            "roll": 0,
+            "pitchRate": -0.05,
+            "rollRate": 0,
+            "normalSpeed": -11.25
+          }
+        }
+      },
+      "rocketsim": {
+        "firstAirborneFrame": 1,
+        "firstBodyContactFrame": null,
+        "firstWheelSupportFrame": 29,
+        "firstGroundedFrame": 30,
+        "bodyToWheelSupportFrames": null,
+        "maximumTangentSpeedAfterContact": 2.465,
+        "firstSupportUpAngleDegrees": 0,
+        "settledFrame": 81,
+        "final": {
+          "position": {
+            "x": 0.182246,
+            "y": 17.031984,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0.000001,
+            "y": 0.000074,
+            "z": 0
+          },
+          "angularVelocity": {
+            "pitch": 0,
+            "yaw": 0,
+            "roll": 0
+          },
+          "localAngularVelocity": {
+            "pitch": 0,
+            "yaw": 0,
+            "roll": 0
+          },
+          "orientation": {
+            "forward": {
+              "x": 0.999954,
+              "y": -0.009586,
+              "z": 0
+            },
+            "up": {
+              "x": 0.009586,
+              "y": 0.999954,
+              "z": 0
+            }
+          },
+          "grounded": true,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "bodyContact": false,
+          "wheelSupport": true,
+          "loadedWheelCount": 4,
+          "normalSpeed": 0.000074,
+          "tangentSpeed": 0.000001,
+          "contacts": [
+            {
+              "kind": "floor",
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "wheelCount": 4,
+              "bodyContact": false
+            }
+          ],
+          "wheels": [
+            {
+              "id": "frontLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163212,
+              "suspensionForce": 700.20929
+            },
+            {
+              "id": "frontRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163212,
+              "suspensionForce": 700.20929
+            },
+            {
+              "id": "rearLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161975,
+              "suspensionForce": 1054.790771
+            },
+            {
+              "id": "rearRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161975,
+              "suspensionForce": 1054.790771
+            }
+          ]
+        }
+      },
+      "deltas": {
+        "firstWheelSupportFrames": -90,
+        "firstGroundedFrames": -89,
+        "settledFrames": -39,
+        "firstSupportUpAngleDegrees": 0,
+        "maximumTangentSpeed": 2.465
+      }
+    },
+    "pitch-drop": {
+      "arsenal": {
+        "firstAirborneFrame": 1,
+        "firstBodyContactFrame": 108,
+        "firstWheelSupportFrame": 130,
+        "firstGroundedFrame": 130,
+        "bodyToWheelSupportFrames": 22,
+        "maximumTangentSpeedAfterContact": 2.21,
+        "firstSupportUpAngleDegrees": 6.8673,
+        "settledFrame": null,
+        "final": {
+          "grounded": true,
+          "jumps": 2,
+          "jumpState": "grounded",
+          "position": {
+            "x": 0,
+            "y": 0.09,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "angularVelocity": {
+            "pitch": -0.128,
+            "yaw": 0,
+            "roll": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": -0.03,
+            "w": 1
+          },
+          "loadedWheelCount": 4,
+          "lastLanding": {
+            "frame": 130,
+            "pitch": 0.13,
+            "roll": 0,
+            "pitchRate": 1.03,
+            "rollRate": 0,
+            "normalSpeed": -2.02
+          }
+        }
+      },
+      "rocketsim": {
+        "firstAirborneFrame": 1,
+        "firstBodyContactFrame": null,
+        "firstWheelSupportFrame": 22,
+        "firstGroundedFrame": 38,
+        "bodyToWheelSupportFrames": null,
+        "maximumTangentSpeedAfterContact": 59.5252,
+        "firstSupportUpAngleDegrees": 16.0428,
+        "settledFrame": 85,
+        "final": {
+          "position": {
+            "x": 5.971647,
+            "y": 17.031984,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0.000075,
+            "z": 0
+          },
+          "angularVelocity": {
+            "pitch": 0,
+            "yaw": 0,
+            "roll": 0
+          },
+          "localAngularVelocity": {
+            "pitch": 0,
+            "yaw": 0,
+            "roll": 0
+          },
+          "orientation": {
+            "forward": {
+              "x": 0.999954,
+              "y": -0.009586,
+              "z": 0
+            },
+            "up": {
+              "x": 0.009586,
+              "y": 0.999954,
+              "z": 0
+            }
+          },
+          "grounded": true,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "bodyContact": false,
+          "wheelSupport": true,
+          "loadedWheelCount": 4,
+          "normalSpeed": 0.000075,
+          "tangentSpeed": 0,
+          "contacts": [
+            {
+              "kind": "floor",
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "wheelCount": 4,
+              "bodyContact": false
+            }
+          ],
+          "wheels": [
+            {
+              "id": "frontLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163212,
+              "suspensionForce": 700.209229
+            },
+            {
+              "id": "frontRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163212,
+              "suspensionForce": 700.209229
+            },
+            {
+              "id": "rearLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161975,
+              "suspensionForce": 1054.790771
+            },
+            {
+              "id": "rearRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161975,
+              "suspensionForce": 1054.790771
+            }
+          ]
+        }
+      },
+      "deltas": {
+        "firstWheelSupportFrames": -108,
+        "firstGroundedFrames": -92,
+        "settledFrames": null,
+        "firstSupportUpAngleDegrees": 9.1755,
+        "maximumTangentSpeed": 57.3152
+      }
+    },
+    "roll-drop": {
+      "arsenal": {
+        "firstAirborneFrame": 1,
+        "firstBodyContactFrame": 109,
+        "firstWheelSupportFrame": 109,
+        "firstGroundedFrame": 109,
+        "bodyToWheelSupportFrames": 0,
+        "maximumTangentSpeedAfterContact": 0,
+        "firstSupportUpAngleDegrees": 13.8225,
+        "settledFrame": 193,
+        "final": {
+          "grounded": true,
+          "jumps": 2,
+          "jumpState": "grounded",
+          "position": {
+            "x": 0,
+            "y": 0.02,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "angularVelocity": {
+            "pitch": 0.022,
+            "yaw": 0,
+            "roll": -0.002
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "loadedWheelCount": 4,
+          "lastLanding": {
+            "frame": 109,
+            "pitch": 0,
+            "roll": -0.23,
+            "pitchRate": -0.01,
+            "rollRate": 0.73,
+            "normalSpeed": -13.38
+          }
+        }
+      },
+      "rocketsim": {
+        "firstAirborneFrame": 1,
+        "firstBodyContactFrame": null,
+        "firstWheelSupportFrame": 26,
+        "firstGroundedFrame": 34,
+        "bodyToWheelSupportFrames": null,
+        "maximumTangentSpeedAfterContact": 18.1454,
+        "firstSupportUpAngleDegrees": 13.7446,
+        "settledFrame": 103,
+        "final": {
+          "position": {
+            "x": 0.169495,
+            "y": 17.031984,
+            "z": 4.28959
+          },
+          "velocity": {
+            "x": 0.000002,
+            "y": 0.000054,
+            "z": 0
+          },
+          "angularVelocity": {
+            "pitch": 0,
+            "yaw": 0,
+            "roll": 0
+          },
+          "localAngularVelocity": {
+            "pitch": 0,
+            "yaw": 0,
+            "roll": 0
+          },
+          "orientation": {
+            "forward": {
+              "x": 0.999954,
+              "y": -0.009586,
+              "z": 0.00039
+            },
+            "up": {
+              "x": 0.009586,
+              "y": 0.999954,
+              "z": 0.000004
+            }
+          },
+          "grounded": true,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "bodyContact": false,
+          "wheelSupport": true,
+          "loadedWheelCount": 4,
+          "normalSpeed": 0.000054,
+          "tangentSpeed": 0.000002,
+          "contacts": [
+            {
+              "kind": "floor",
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "wheelCount": 4,
+              "bodyContact": false
+            }
+          ],
+          "wheels": [
+            {
+              "id": "frontLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163212,
+              "suspensionForce": 700.209839
+            },
+            {
+              "id": "frontRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163212,
+              "suspensionForce": 700.20874
+            },
+            {
+              "id": "rearLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161974,
+              "suspensionForce": 1054.789795
+            },
+            {
+              "id": "rearRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161974,
+              "suspensionForce": 1054.789673
+            }
+          ]
+        }
+      },
+      "deltas": {
+        "firstWheelSupportFrames": -83,
+        "firstGroundedFrames": -75,
+        "settledFrames": -90,
+        "firstSupportUpAngleDegrees": -0.0779,
+        "maximumTangentSpeed": 18.1454
+      }
+    },
+    "dodge-forward-landing": {
+      "arsenal": {
+        "firstAirborneFrame": 1,
+        "firstBodyContactFrame": 32,
+        "firstWheelSupportFrame": 182,
+        "firstGroundedFrame": 182,
+        "bodyToWheelSupportFrames": 150,
+        "maximumTangentSpeedAfterContact": 13.293,
+        "firstSupportUpAngleDegrees": 0,
+        "settledFrame": 298,
+        "final": {
+          "grounded": true,
+          "jumps": 2,
+          "jumpState": "grounded",
+          "position": {
+            "x": 22.14,
+            "y": 0,
+            "z": 0
+          },
+          "velocity": {
+            "x": 0.03,
+            "y": 0,
+            "z": 0
+          },
+          "angularVelocity": {
+            "pitch": 0.007,
+            "yaw": 0,
+            "roll": 0
+          },
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          },
+          "loadedWheelCount": 4,
+          "lastLanding": {
+            "frame": 182,
+            "pitch": -0.01,
+            "roll": 0,
+            "pitchRate": 0.11,
+            "rollRate": 0,
+            "normalSpeed": -2.17
+          }
+        }
+      },
+      "rocketsim": {
+        "firstAirborneFrame": 6,
+        "firstBodyContactFrame": 36,
+        "firstWheelSupportFrame": 144,
+        "firstGroundedFrame": 149,
+        "bodyToWheelSupportFrames": 108,
+        "maximumTangentSpeedAfterContact": 474.2936,
+        "firstSupportUpAngleDegrees": 13.0467,
+        "settledFrame": 249,
+        "final": {
+          "position": {
+            "x": 704.894348,
+            "y": 17.031986,
+            "z": 4.594837
+          },
+          "velocity": {
+            "x": 0.000001,
+            "y": 0.000035,
+            "z": 0.000001
+          },
+          "angularVelocity": {
+            "pitch": 0,
+            "yaw": 0,
+            "roll": 0
+          },
+          "localAngularVelocity": {
+            "pitch": 0,
+            "yaw": 0,
+            "roll": 0
+          },
+          "orientation": {
+            "forward": {
+              "x": 0.99989,
+              "y": -0.009586,
+              "z": 0.011298
+            },
+            "up": {
+              "x": 0.009585,
+              "y": 0.999954,
+              "z": 0.000108
+            }
+          },
+          "grounded": true,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "bodyContact": false,
+          "wheelSupport": true,
+          "loadedWheelCount": 4,
+          "normalSpeed": 0.000035,
+          "tangentSpeed": 0.000002,
+          "contacts": [
+            {
+              "kind": "floor",
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "wheelCount": 4,
+              "bodyContact": false
+            }
+          ],
+          "wheels": [
+            {
+              "id": "frontLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163212,
+              "suspensionForce": 700.209473
+            },
+            {
+              "id": "frontRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163212,
+              "suspensionForce": 700.209351
+            },
+            {
+              "id": "rearLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161974,
+              "suspensionForce": 1054.791138
+            },
+            {
+              "id": "rearRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161974,
+              "suspensionForce": 1054.790771
+            }
+          ]
+        }
+      },
+      "deltas": {
+        "firstWheelSupportFrames": -38,
+        "firstGroundedFrames": -33,
+        "settledFrames": -49,
+        "firstSupportUpAngleDegrees": 13.0467,
+        "maximumTangentSpeed": 461.0006
+      }
+    },
+    "dodge-side-landing": {
+      "arsenal": {
+        "firstAirborneFrame": 1,
+        "firstBodyContactFrame": 45,
+        "firstWheelSupportFrame": 135,
+        "firstGroundedFrame": 135,
+        "bodyToWheelSupportFrames": 90,
+        "maximumTangentSpeedAfterContact": 12.7444,
+        "firstSupportUpAngleDegrees": 42.3374,
+        "settledFrame": null,
+        "final": {
+          "grounded": true,
+          "jumps": 2,
+          "jumpState": "grounded",
+          "position": {
+            "x": -0.02,
+            "y": 0.4,
+            "z": 14.33
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "angularVelocity": {
+            "pitch": -0.065,
+            "yaw": 0,
+            "roll": 0.137
+          },
+          "orientation": {
+            "x": -0.18,
+            "y": -0.01,
+            "z": -0.02,
+            "w": 0.98
+          },
+          "loadedWheelCount": 2,
+          "lastLanding": {
+            "frame": 135,
+            "pitch": 0.01,
+            "roll": -0.73,
+            "pitchRate": 0,
+            "rollRate": 0.57,
+            "normalSpeed": -2.79
+          }
+        }
+      },
+      "rocketsim": {
+        "firstAirborneFrame": 6,
+        "firstBodyContactFrame": null,
+        "firstWheelSupportFrame": 122,
+        "firstGroundedFrame": 133,
+        "bodyToWheelSupportFrames": null,
+        "maximumTangentSpeedAfterContact": 476.5624,
+        "firstSupportUpAngleDegrees": 32.7925,
+        "settledFrame": 286,
+        "final": {
+          "position": {
+            "x": 2.210209,
+            "y": 17.031982,
+            "z": 600.547852
+          },
+          "velocity": {
+            "x": 0.000032,
+            "y": 0.000079,
+            "z": 0.003287
+          },
+          "angularVelocity": {
+            "pitch": 0.000001,
+            "yaw": -0.000001,
+            "roll": 0
+          },
+          "localAngularVelocity": {
+            "pitch": 0,
+            "yaw": -0.000001,
+            "roll": -0.000001
+          },
+          "orientation": {
+            "forward": {
+              "x": 0.999897,
+              "y": -0.009586,
+              "z": -0.01064
+            },
+            "up": {
+              "x": 0.009585,
+              "y": 0.999954,
+              "z": -0.000102
+            }
+          },
+          "grounded": true,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "bodyContact": false,
+          "wheelSupport": true,
+          "loadedWheelCount": 4,
+          "normalSpeed": 0.000079,
+          "tangentSpeed": 0.003287,
+          "contacts": [
+            {
+              "kind": "floor",
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "wheelCount": 4,
+              "bodyContact": false
+            }
+          ],
+          "wheels": [
+            {
+              "id": "frontLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163212,
+              "suspensionForce": 700.209229
+            },
+            {
+              "id": "frontRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163212,
+              "suspensionForce": 700.20813
+            },
+            {
+              "id": "rearLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161975,
+              "suspensionForce": 1054.789795
+            },
+            {
+              "id": "rearRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161974,
+              "suspensionForce": 1054.790039
+            }
+          ]
+        }
+      },
+      "deltas": {
+        "firstWheelSupportFrames": -13,
+        "firstGroundedFrames": -2,
+        "settledFrames": null,
+        "firstSupportUpAngleDegrees": -9.5449,
+        "maximumTangentSpeed": 463.818
+      }
+    },
+    "dodge-diagonal-roll-landing": {
+      "arsenal": {
+        "firstAirborneFrame": 1,
+        "firstBodyContactFrame": 38,
+        "firstWheelSupportFrame": 178,
+        "firstGroundedFrame": 178,
+        "bodyToWheelSupportFrames": 140,
+        "maximumTangentSpeedAfterContact": 13.4597,
+        "firstSupportUpAngleDegrees": 25.5188,
+        "settledFrame": null,
+        "final": {
+          "grounded": true,
+          "jumps": 2,
+          "jumpState": "grounded",
+          "position": {
+            "x": 10.49,
+            "y": 0.26,
+            "z": 16.91
+          },
+          "velocity": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "angularVelocity": {
+            "pitch": -0.031,
+            "yaw": 0,
+            "roll": 0.147
+          },
+          "orientation": {
+            "x": -0.11,
+            "y": 0.01,
+            "z": -0.02,
+            "w": 0.99
+          },
+          "loadedWheelCount": 2,
+          "lastLanding": {
+            "frame": 178,
+            "pitch": 0,
+            "roll": -0.45,
+            "pitchRate": 0.46,
+            "rollRate": 0.07,
+            "normalSpeed": -0.74
+          }
+        }
+      },
+      "rocketsim": {
+        "firstAirborneFrame": 6,
+        "firstBodyContactFrame": 40,
+        "firstWheelSupportFrame": 135,
+        "firstGroundedFrame": 135,
+        "bodyToWheelSupportFrames": 95,
+        "maximumTangentSpeedAfterContact": 486.1481,
+        "firstSupportUpAngleDegrees": 10.5828,
+        "settledFrame": 197,
+        "final": {
+          "position": {
+            "x": 297.77301,
+            "y": 17.031986,
+            "z": 470.429413
+          },
+          "velocity": {
+            "x": 0.000003,
+            "y": 0.000031,
+            "z": 0
+          },
+          "angularVelocity": {
+            "pitch": 0,
+            "yaw": 0,
+            "roll": 0
+          },
+          "localAngularVelocity": {
+            "pitch": 0,
+            "yaw": 0,
+            "roll": 0
+          },
+          "orientation": {
+            "forward": {
+              "x": 0.986956,
+              "y": -0.009586,
+              "z": 0.160702
+            },
+            "up": {
+              "x": 0.009461,
+              "y": 0.999954,
+              "z": 0.001541
+            }
+          },
+          "grounded": true,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "bodyContact": false,
+          "wheelSupport": true,
+          "loadedWheelCount": 4,
+          "normalSpeed": 0.000031,
+          "tangentSpeed": 0.000003,
+          "contacts": [
+            {
+              "kind": "floor",
+              "normal": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              "wheelCount": 4,
+              "bodyContact": false
+            }
+          ],
+          "wheels": [
+            {
+              "id": "frontLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163211,
+              "suspensionForce": 700.208435
+            },
+            {
+              "id": "frontRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.495929,
+              "restLength": 0.5351,
+              "compression": 0.039171,
+              "normalizedCompression": 0.163212,
+              "suspensionForce": 700.209595
+            },
+            {
+              "id": "rearLeft",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161974,
+              "suspensionForce": 1054.790771
+            },
+            {
+              "id": "rearRight",
+              "kind": "floor",
+              "loaded": true,
+              "suspensionLength": 0.462226,
+              "restLength": 0.5011,
+              "compression": 0.038874,
+              "normalizedCompression": 0.161974,
+              "suspensionForce": 1054.791016
+            }
+          ]
+        }
+      },
+      "deltas": {
+        "firstWheelSupportFrames": -43,
+        "firstGroundedFrames": -43,
+        "settledFrames": null,
+        "firstSupportUpAngleDegrees": -14.936,
+        "maximumTangentSpeed": 472.6884
+      }
+    }
+  },
+  "interpretation": {
+    "purpose": "Comparar orden de contacto, apoyo, recuperación y tendencia tangencial en un suelo sintético.",
+    "units": "Los frames y ángulos se comparan directamente; posición y velocidad conservan las unidades propias de cada motor.",
+    "limitations": [
+      "RocketSim expone contacto de carrocería solo cuando Bullet informa una colisión del chasis; el apoyo de rueda se observa mediante wheelsWithContact.",
+      "RocketSim no publica compresión de muelle en CarState; el harness R4 conserva telemetría interna de longitud y fuerza solo para normalize:contacts.",
+      "Las alturas iniciales no son equivalentes en unidades internas: R4 usa 30 UU sobre CAR_SPAWN_REST_Z para mantener las caídas inequívocamente aéreas.",
+      "Esta comparación no justifica copiar código o constantes ni declara equivalencia exacta con Rocket League o Car Soccer."
+    ]
+  }
+}

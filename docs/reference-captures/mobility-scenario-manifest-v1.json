@@ -1,0 +1,443 @@
+{
+  "version": 1,
+  "fixedStepHz": 120,
+  "durationFrames": 144,
+  "scenarios": [
+    {
+      "id": "ground-control",
+      "traceKey": "groundControl",
+      "purpose": "Aceleración, giro con agarre y powerslide en suelo.",
+      "initialCondition": "grounded",
+      "phases": [
+        {
+          "frames": 48,
+          "input": {
+            "throttle": 1,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 24,
+          "input": {
+            "throttle": 1,
+            "steer": 1,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 24,
+          "input": {
+            "throttle": 1,
+            "steer": 1,
+            "jump": false,
+            "boost": false,
+            "drift": true,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 48,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "first-jump",
+      "traceKey": "firstJump",
+      "purpose": "Salto sostenido y liberación.",
+      "initialCondition": "grounded",
+      "phases": [
+        {
+          "frames": 1,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": true,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 23,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": true,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 120,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "double-jump",
+      "traceKey": "doubleJump",
+      "purpose": "Segundo salto vertical sin dirección.",
+      "initialCondition": "grounded",
+      "phases": [
+        {
+          "frames": 1,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": true,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 10,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 1,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": true,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 132,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "dodge-forward",
+      "traceKey": "dodgeForward",
+      "purpose": "Dodge frontal con dirección comprometida.",
+      "initialCondition": "grounded",
+      "phases": [
+        {
+          "frames": 1,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": true,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 10,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 1,
+          "input": {
+            "throttle": 1,
+            "steer": 0,
+            "jump": true,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 132,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "dodge-side",
+      "traceKey": "dodgeSide",
+      "purpose": "Dodge lateral con dirección comprometida.",
+      "initialCondition": "grounded",
+      "phases": [
+        {
+          "frames": 1,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": true,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 10,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 1,
+          "input": {
+            "throttle": 0,
+            "steer": 1,
+            "jump": true,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 132,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "dodge-diagonal-roll",
+      "traceKey": "dodgeDiagonalRoll",
+      "purpose": "Dodge diagonal con throttle, giro y alabeo direccional.",
+      "initialCondition": "grounded",
+      "phases": [
+        {
+          "frames": 1,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": true,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 10,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 1,
+          "input": {
+            "throttle": 1,
+            "steer": 1,
+            "jump": true,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 1
+          }
+        },
+        {
+          "frames": 132,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "air-axes",
+      "traceKey": "airAxes",
+      "purpose": "Pitch, yaw y roll combinados, liberación e inversión.",
+      "initialCondition": "airborne",
+      "phases": [
+        {
+          "frames": 36,
+          "input": {
+            "throttle": 1,
+            "steer": 1,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 1
+          }
+        },
+        {
+          "frames": 36,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 36,
+          "input": {
+            "throttle": -1,
+            "steer": -1,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": -1
+          }
+        },
+        {
+          "frames": 36,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "free-air-roll",
+      "traceKey": "freeAirRoll",
+      "purpose": "Free air roll separando el modificador de la guiñada.",
+      "initialCondition": "airborne",
+      "phases": [
+        {
+          "frames": 36,
+          "input": {
+            "throttle": 0,
+            "steer": 1,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": true,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 36,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 36,
+          "input": {
+            "throttle": 0,
+            "steer": -1,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": true,
+            "roll": 0
+          }
+        },
+        {
+          "frames": 36,
+          "input": {
+            "throttle": 0,
+            "steer": 0,
+            "jump": false,
+            "boost": false,
+            "drift": false,
+            "airRoll": false,
+            "roll": 0
+          }
+        }
+      ]
+    }
+  ]
+}

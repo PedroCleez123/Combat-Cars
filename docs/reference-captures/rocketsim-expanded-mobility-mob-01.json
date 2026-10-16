@@ -1,0 +1,1125 @@
+{
+  "schemaVersion": 1,
+  "profile": "arsenal-expanded-curved-practice",
+  "backend": "rocketsim",
+  "port": 5330,
+  "generatedAt": "2026-10-13T13:18:01.811Z",
+  "snapshots": 829,
+  "inputSequences": 25,
+  "acknowledged": 25,
+  "snapshotTimeDeltas": {
+    "unique": [
+      0.01,
+      0.02
+    ],
+    "min": 0.01,
+    "max": 0.02,
+    "mean": 0.01667878787878762,
+    "expectedSeconds": 0.016666666666666666
+  },
+  "phases": [
+    {
+      "name": "wall-jump",
+      "source": {
+        "x": 71.59,
+        "h": 22.58,
+        "z": -29.22,
+        "speed": 47.83,
+        "grounded": true,
+        "wallRide": true,
+        "surfaceType": "wall",
+        "wheelCount": 4,
+        "jumpState": "grounded",
+        "jumps": 2,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 1
+        },
+        "boost": 32.78,
+        "angularVelocity": {
+          "pitch": -0.001,
+          "yaw": 0,
+          "roll": 0
+        },
+        "surfaceNormal": {
+          "x": -1,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "result": {
+        "source": {
+          "id": "c7268676-68b3-4f57-bafa-e031b8e95326",
+          "name": "MOB-01-EXPANDED-",
+          "team": "blue",
+          "bot": false,
+          "x": 71.59,
+          "z": -29.22,
+          "h": 22.58,
+          "yaw": 0,
+          "pitch": -1.56,
+          "roll": 0,
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0.7036800177014229,
+            "w": 0.710517017873411
+          },
+          "angularVelocity": {
+            "pitch": -0.001,
+            "yaw": 0,
+            "roll": 0
+          },
+          "impactSerial": 0,
+          "impactSpin": 0,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 1
+          },
+          "speed": 47.83,
+          "velocity": {
+            "x": 0,
+            "y": 47.83,
+            "z": 0
+          },
+          "forwardSpeed": 47.83,
+          "steer": 0,
+          "powerslide": 0,
+          "grounded": true,
+          "surfaceNormal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          },
+          "contacts": [
+            {
+              "kind": "wall",
+              "normal": {
+                "x": -1,
+                "y": 0,
+                "z": 0
+              },
+              "point": {
+                "x": 71.59,
+                "y": 22.58,
+                "z": -29.22
+              },
+              "wheelCount": 4,
+              "normalVelocity": 0,
+              "separation": 0
+            }
+          ],
+          "wheels": [],
+          "surfaceType": "wall",
+          "jumpState": "grounded",
+          "jumpHoldRemaining": 0,
+          "jumpHeldFor": 0,
+          "jumpWindowRemaining": 0,
+          "dodging": false,
+          "dodgeRemaining": 0,
+          "dodgePitchLockRemaining": 0,
+          "dodgeCancelling": false,
+          "dodgeDirection": {
+            "forward": 0,
+            "side": 0
+          },
+          "lastLanding": null,
+          "supersonic": false,
+          "hp": 100,
+          "boost": 32.78,
+          "jumps": 2,
+          "respawn": 0,
+          "kills": 0,
+          "deaths": 0,
+          "boosting": false,
+          "wallNormal": {
+            "x": -1,
+            "z": 0
+          },
+          "wallRide": true,
+          "ceilingContact": false
+        },
+        "jumped": {
+          "x": 70.61,
+          "h": 28.05,
+          "z": -29.22,
+          "speed": 47.14,
+          "grounded": false,
+          "wallRide": false,
+          "surfaceType": "air",
+          "wheelCount": 0,
+          "jumpState": "first-jump",
+          "jumps": 1,
+          "actionSerials": {
+            "jump": 1,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 1
+          },
+          "boost": 32.78,
+          "angularVelocity": {
+            "pitch": -0.001,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          }
+        },
+        "leftSupport": true
+      },
+      "approach": {
+        "sampleCount": 154,
+        "curveSupportObserved": true,
+        "wallSupportObserved": true,
+        "firstCurve": {
+          "x": 64.21,
+          "h": 0.03,
+          "z": -29.22,
+          "speed": 56,
+          "grounded": true,
+          "wallRide": false,
+          "surfaceType": "ground",
+          "wheelCount": 4,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 1
+          },
+          "boost": 38.89,
+          "angularVelocity": {
+            "pitch": -3.023,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": -0.061320009678628454,
+            "y": 0.9981181575409862,
+            "z": 0
+          }
+        },
+        "firstWall": {
+          "x": 71.51,
+          "h": 5.74,
+          "z": -29.22,
+          "speed": 53.65,
+          "grounded": true,
+          "wallRide": true,
+          "surfaceType": "wall",
+          "wheelCount": 4,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 1
+          },
+          "boost": 32.78,
+          "angularVelocity": {
+            "pitch": -5.5,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": -0.963774899423348,
+            "y": 0.26671697216621837,
+            "z": 0
+          }
+        }
+      },
+      "final": {
+        "x": 70.37,
+        "h": 28.16,
+        "z": -29.16,
+        "speed": 2.45,
+        "grounded": false,
+        "wallRide": false,
+        "surfaceType": "air",
+        "wheelCount": 0,
+        "jumpState": "airborne",
+        "jumps": 1,
+        "actionSerials": {
+          "jump": 1,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 1
+        },
+        "boost": 32.78,
+        "angularVelocity": {
+          "pitch": -2.414,
+          "yaw": 0.251,
+          "roll": -1.167
+        },
+        "surfaceNormal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        }
+      },
+      "sampleCount": 154
+    },
+    {
+      "name": "wall-directed-dodge",
+      "source": {
+        "x": 71.59,
+        "h": 22.58,
+        "z": -29.22,
+        "speed": 47.83,
+        "grounded": true,
+        "wallRide": true,
+        "surfaceType": "wall",
+        "wheelCount": 4,
+        "jumpState": "grounded",
+        "jumps": 2,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 2
+        },
+        "boost": 32.78,
+        "angularVelocity": {
+          "pitch": -0.001,
+          "yaw": 0,
+          "roll": 0
+        },
+        "surfaceNormal": {
+          "x": -1,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "result": {
+        "source": {
+          "id": "c7268676-68b3-4f57-bafa-e031b8e95326",
+          "name": "MOB-01-EXPANDED-",
+          "team": "blue",
+          "bot": false,
+          "x": 71.59,
+          "z": -29.22,
+          "h": 22.58,
+          "yaw": 0,
+          "pitch": -1.56,
+          "roll": 0,
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0.7036800177014229,
+            "w": 0.710517017873411
+          },
+          "angularVelocity": {
+            "pitch": -0.001,
+            "yaw": 0,
+            "roll": 0
+          },
+          "impactSerial": 0,
+          "impactSpin": 0,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 2
+          },
+          "speed": 47.83,
+          "velocity": {
+            "x": 0,
+            "y": 47.83,
+            "z": 0
+          },
+          "forwardSpeed": 47.83,
+          "steer": 0,
+          "powerslide": 0,
+          "grounded": true,
+          "surfaceNormal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          },
+          "contacts": [
+            {
+              "kind": "wall",
+              "normal": {
+                "x": -1,
+                "y": 0,
+                "z": 0
+              },
+              "point": {
+                "x": 71.59,
+                "y": 22.58,
+                "z": -29.22
+              },
+              "wheelCount": 4,
+              "normalVelocity": 0,
+              "separation": 0
+            }
+          ],
+          "wheels": [],
+          "surfaceType": "wall",
+          "jumpState": "grounded",
+          "jumpHoldRemaining": 0,
+          "jumpHeldFor": 0,
+          "jumpWindowRemaining": 0,
+          "dodging": false,
+          "dodgeRemaining": 0,
+          "dodgePitchLockRemaining": 0,
+          "dodgeCancelling": false,
+          "dodgeDirection": {
+            "forward": 0,
+            "side": 0
+          },
+          "lastLanding": null,
+          "supersonic": false,
+          "hp": 100,
+          "boost": 32.78,
+          "jumps": 2,
+          "respawn": 0,
+          "kills": 0,
+          "deaths": 0,
+          "boosting": false,
+          "wallNormal": {
+            "x": -1,
+            "z": 0
+          },
+          "wallRide": true,
+          "ceilingContact": false
+        },
+        "firstJump": {
+          "x": 70.62,
+          "h": 28.05,
+          "z": -29.22,
+          "speed": 47.01,
+          "grounded": false,
+          "wallRide": false,
+          "surfaceType": "air",
+          "wheelCount": 0,
+          "jumpState": "airborne",
+          "jumps": 1,
+          "actionSerials": {
+            "jump": 1,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 2
+          },
+          "boost": 32.78,
+          "angularVelocity": {
+            "pitch": -0.001,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          }
+        },
+        "dodged": {
+          "x": 69.77,
+          "h": 27.96,
+          "z": -29.99,
+          "speed": 12.99,
+          "grounded": false,
+          "wallRide": false,
+          "surfaceType": "air",
+          "wheelCount": 0,
+          "jumpState": "dodge",
+          "jumps": 0,
+          "actionSerials": {
+            "jump": 1,
+            "doubleJump": 0,
+            "dodge": 1,
+            "respawn": 2
+          },
+          "boost": 32.78,
+          "angularVelocity": {
+            "pitch": 3.421,
+            "yaw": 0.063,
+            "roll": 4.307
+          },
+          "surfaceNormal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          }
+        },
+        "leftSupport": true
+      },
+      "approach": {
+        "sampleCount": 167,
+        "curveSupportObserved": true,
+        "wallSupportObserved": true,
+        "firstCurve": {
+          "x": 64.21,
+          "h": 0.03,
+          "z": -29.22,
+          "speed": 56,
+          "grounded": true,
+          "wallRide": false,
+          "surfaceType": "ground",
+          "wheelCount": 4,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 2
+          },
+          "boost": 38.89,
+          "angularVelocity": {
+            "pitch": -3.023,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": -0.061320009678628454,
+            "y": 0.9981181575409862,
+            "z": 0
+          }
+        },
+        "firstWall": {
+          "x": 71.51,
+          "h": 5.74,
+          "z": -29.22,
+          "speed": 53.65,
+          "grounded": true,
+          "wallRide": true,
+          "surfaceType": "wall",
+          "wheelCount": 4,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 2
+          },
+          "boost": 32.78,
+          "angularVelocity": {
+            "pitch": -5.5,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": -0.963774899423348,
+            "y": 0.26671697216621837,
+            "z": 0
+          }
+        }
+      },
+      "final": {
+        "x": 68.85,
+        "h": 27.68,
+        "z": -31.15,
+        "speed": 12.64,
+        "grounded": false,
+        "wallRide": false,
+        "surfaceType": "air",
+        "wheelCount": 0,
+        "jumpState": "dodge",
+        "jumps": 0,
+        "actionSerials": {
+          "jump": 1,
+          "doubleJump": 0,
+          "dodge": 1,
+          "respawn": 2
+        },
+        "boost": 32.78,
+        "angularVelocity": {
+          "pitch": 3.588,
+          "yaw": 0.001,
+          "roll": 4.169
+        },
+        "surfaceNormal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        }
+      },
+      "sampleCount": 167
+    },
+    {
+      "name": "wall-air-roll-boost",
+      "source": {
+        "x": 71.59,
+        "h": 22.58,
+        "z": -29.22,
+        "speed": 47.83,
+        "grounded": true,
+        "wallRide": true,
+        "surfaceType": "wall",
+        "wheelCount": 4,
+        "jumpState": "grounded",
+        "jumps": 2,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 3
+        },
+        "boost": 32.78,
+        "angularVelocity": {
+          "pitch": -0.001,
+          "yaw": 0,
+          "roll": 0
+        },
+        "surfaceNormal": {
+          "x": -1,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "result": {
+        "source": {
+          "id": "c7268676-68b3-4f57-bafa-e031b8e95326",
+          "name": "MOB-01-EXPANDED-",
+          "team": "blue",
+          "bot": false,
+          "x": 71.59,
+          "z": -29.22,
+          "h": 22.58,
+          "yaw": 0,
+          "pitch": -1.56,
+          "roll": 0,
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0.7036800177014229,
+            "w": 0.710517017873411
+          },
+          "angularVelocity": {
+            "pitch": -0.001,
+            "yaw": 0,
+            "roll": 0
+          },
+          "impactSerial": 0,
+          "impactSpin": 0,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 3
+          },
+          "speed": 47.83,
+          "velocity": {
+            "x": 0,
+            "y": 47.83,
+            "z": 0
+          },
+          "forwardSpeed": 47.83,
+          "steer": 0,
+          "powerslide": 0,
+          "grounded": true,
+          "surfaceNormal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          },
+          "contacts": [
+            {
+              "kind": "wall",
+              "normal": {
+                "x": -1,
+                "y": 0,
+                "z": 0
+              },
+              "point": {
+                "x": 71.59,
+                "y": 22.58,
+                "z": -29.22
+              },
+              "wheelCount": 4,
+              "normalVelocity": 0,
+              "separation": 0
+            }
+          ],
+          "wheels": [],
+          "surfaceType": "wall",
+          "jumpState": "grounded",
+          "jumpHoldRemaining": 0,
+          "jumpHeldFor": 0,
+          "jumpWindowRemaining": 0,
+          "dodging": false,
+          "dodgeRemaining": 0,
+          "dodgePitchLockRemaining": 0,
+          "dodgeCancelling": false,
+          "dodgeDirection": {
+            "forward": 0,
+            "side": 0
+          },
+          "lastLanding": null,
+          "supersonic": false,
+          "hp": 100,
+          "boost": 32.78,
+          "jumps": 2,
+          "respawn": 0,
+          "kills": 0,
+          "deaths": 0,
+          "boosting": false,
+          "wallNormal": {
+            "x": -1,
+            "z": 0
+          },
+          "wallRide": true,
+          "ceilingContact": false
+        },
+        "jumped": {
+          "x": 70.78,
+          "h": 27.28,
+          "z": -29.22,
+          "speed": 47.27,
+          "grounded": false,
+          "wallRide": false,
+          "surfaceType": "air",
+          "wheelCount": 0,
+          "jumpState": "first-jump",
+          "jumps": 1,
+          "actionSerials": {
+            "jump": 1,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 3
+          },
+          "boost": 32.78,
+          "angularVelocity": {
+            "pitch": -0.001,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          }
+        },
+        "flight": {
+          "x": 70.11,
+          "h": 28.38,
+          "z": -29.23,
+          "speed": 3.69,
+          "grounded": false,
+          "wallRide": false,
+          "surfaceType": "air",
+          "wheelCount": 0,
+          "jumpState": "airborne",
+          "jumps": 1,
+          "actionSerials": {
+            "jump": 1,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 3
+          },
+          "boost": 24.44,
+          "angularVelocity": {
+            "pitch": -4.258,
+            "yaw": 0.059,
+            "roll": 3.481
+          },
+          "surfaceNormal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          }
+        },
+        "angularMotion": 4.258,
+        "boostSpent": 8.34
+      },
+      "approach": {
+        "sampleCount": 171,
+        "curveSupportObserved": true,
+        "wallSupportObserved": true,
+        "firstCurve": {
+          "x": 64.21,
+          "h": 0.03,
+          "z": -29.22,
+          "speed": 56,
+          "grounded": true,
+          "wallRide": false,
+          "surfaceType": "ground",
+          "wheelCount": 4,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 3
+          },
+          "boost": 38.89,
+          "angularVelocity": {
+            "pitch": -3.023,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": -0.061320009678628454,
+            "y": 0.9981181575409862,
+            "z": 0
+          }
+        },
+        "firstWall": {
+          "x": 71.51,
+          "h": 5.74,
+          "z": -29.22,
+          "speed": 53.65,
+          "grounded": true,
+          "wallRide": true,
+          "surfaceType": "wall",
+          "wheelCount": 4,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 3
+          },
+          "boost": 32.78,
+          "angularVelocity": {
+            "pitch": -5.5,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": -0.963774899423348,
+            "y": 0.26671697216621837,
+            "z": 0
+          }
+        }
+      },
+      "final": {
+        "x": 69.62,
+        "h": 28.29,
+        "z": -29.27,
+        "speed": 4.02,
+        "grounded": false,
+        "wallRide": false,
+        "surfaceType": "air",
+        "wheelCount": 0,
+        "jumpState": "airborne",
+        "jumps": 1,
+        "actionSerials": {
+          "jump": 1,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 3
+        },
+        "boost": 24.44,
+        "angularVelocity": {
+          "pitch": -2.888,
+          "yaw": 0.046,
+          "roll": 1.813
+        },
+        "surfaceNormal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        }
+      },
+      "sampleCount": 171
+    },
+    {
+      "name": "wall-jump-recovery",
+      "source": {
+        "x": 71.59,
+        "h": 22.58,
+        "z": -29.22,
+        "speed": 47.83,
+        "grounded": true,
+        "wallRide": true,
+        "surfaceType": "wall",
+        "wheelCount": 4,
+        "jumpState": "grounded",
+        "jumps": 2,
+        "actionSerials": {
+          "jump": 0,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 4
+        },
+        "boost": 32.78,
+        "angularVelocity": {
+          "pitch": -0.001,
+          "yaw": 0,
+          "roll": 0
+        },
+        "surfaceNormal": {
+          "x": -1,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "result": {
+        "source": {
+          "id": "c7268676-68b3-4f57-bafa-e031b8e95326",
+          "name": "MOB-01-EXPANDED-",
+          "team": "blue",
+          "bot": false,
+          "x": 71.59,
+          "z": -29.22,
+          "h": 22.58,
+          "yaw": 0,
+          "pitch": -1.56,
+          "roll": 0,
+          "orientation": {
+            "x": 0,
+            "y": 0,
+            "z": 0.7036800177014229,
+            "w": 0.710517017873411
+          },
+          "angularVelocity": {
+            "pitch": -0.001,
+            "yaw": 0,
+            "roll": 0
+          },
+          "impactSerial": 0,
+          "impactSpin": 0,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 4
+          },
+          "speed": 47.83,
+          "velocity": {
+            "x": 0,
+            "y": 47.83,
+            "z": 0
+          },
+          "forwardSpeed": 47.83,
+          "steer": 0,
+          "powerslide": 0,
+          "grounded": true,
+          "surfaceNormal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          },
+          "contacts": [
+            {
+              "kind": "wall",
+              "normal": {
+                "x": -1,
+                "y": 0,
+                "z": 0
+              },
+              "point": {
+                "x": 71.59,
+                "y": 22.58,
+                "z": -29.22
+              },
+              "wheelCount": 4,
+              "normalVelocity": 0,
+              "separation": 0
+            }
+          ],
+          "wheels": [],
+          "surfaceType": "wall",
+          "jumpState": "grounded",
+          "jumpHoldRemaining": 0,
+          "jumpHeldFor": 0,
+          "jumpWindowRemaining": 0,
+          "dodging": false,
+          "dodgeRemaining": 0,
+          "dodgePitchLockRemaining": 0,
+          "dodgeCancelling": false,
+          "dodgeDirection": {
+            "forward": 0,
+            "side": 0
+          },
+          "lastLanding": null,
+          "supersonic": false,
+          "hp": 100,
+          "boost": 32.78,
+          "jumps": 2,
+          "respawn": 0,
+          "kills": 0,
+          "deaths": 0,
+          "boosting": false,
+          "wallNormal": {
+            "x": -1,
+            "z": 0
+          },
+          "wallRide": true,
+          "ceilingContact": false
+        },
+        "jumped": {
+          "x": 70.78,
+          "h": 27.28,
+          "z": -29.22,
+          "speed": 47.15,
+          "grounded": false,
+          "wallRide": false,
+          "surfaceType": "air",
+          "wheelCount": 0,
+          "jumpState": "airborne",
+          "jumps": 1,
+          "actionSerials": {
+            "jump": 1,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 4
+          },
+          "boost": 32.78,
+          "angularVelocity": {
+            "pitch": -0.001,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          }
+        },
+        "supported": {
+          "x": 62.16,
+          "h": 0.12,
+          "z": -29.19,
+          "speed": 6.48,
+          "grounded": true,
+          "wallRide": false,
+          "surfaceType": "ground",
+          "wheelCount": 3,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "actionSerials": {
+            "jump": 1,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 4
+          },
+          "boost": 32.78,
+          "angularVelocity": {
+            "pitch": -4.612,
+            "yaw": -0.254,
+            "roll": -0.916
+          },
+          "surfaceNormal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          }
+        },
+        "recovered": true
+      },
+      "approach": {
+        "sampleCount": 337,
+        "curveSupportObserved": true,
+        "wallSupportObserved": true,
+        "firstCurve": {
+          "x": 64.21,
+          "h": 0.03,
+          "z": -29.22,
+          "speed": 56,
+          "grounded": true,
+          "wallRide": false,
+          "surfaceType": "ground",
+          "wheelCount": 4,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 4
+          },
+          "boost": 38.89,
+          "angularVelocity": {
+            "pitch": -3.023,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": -0.061320009678628454,
+            "y": 0.9981181575409862,
+            "z": 0
+          }
+        },
+        "firstWall": {
+          "x": 71.51,
+          "h": 5.74,
+          "z": -29.22,
+          "speed": 53.65,
+          "grounded": true,
+          "wallRide": true,
+          "surfaceType": "wall",
+          "wheelCount": 4,
+          "jumpState": "grounded",
+          "jumps": 2,
+          "actionSerials": {
+            "jump": 0,
+            "doubleJump": 0,
+            "dodge": 0,
+            "respawn": 4
+          },
+          "boost": 32.78,
+          "angularVelocity": {
+            "pitch": -5.5,
+            "yaw": 0,
+            "roll": 0
+          },
+          "surfaceNormal": {
+            "x": -0.963774899423348,
+            "y": 0.26671697216621837,
+            "z": 0
+          }
+        }
+      },
+      "final": {
+        "x": 61.88,
+        "h": -0.02,
+        "z": -29.22,
+        "speed": 2.31,
+        "grounded": true,
+        "wallRide": false,
+        "surfaceType": "ground",
+        "wheelCount": 4,
+        "jumpState": "grounded",
+        "jumps": 2,
+        "actionSerials": {
+          "jump": 1,
+          "doubleJump": 0,
+          "dodge": 0,
+          "respawn": 4
+        },
+        "boost": 32.78,
+        "angularVelocity": {
+          "pitch": 0.095,
+          "yaw": -0.038,
+          "roll": -0.018
+        },
+        "surfaceNormal": {
+          "x": 0,
+          "y": 1,
+          "z": 0
+        }
+      },
+      "sampleCount": 337
+    }
+  ],
+  "assertions": {
+    "backendIsRocketSim": true,
+    "profileIsExpanded": true,
+    "singlePilot": true,
+    "twoTicksPerSnapshot": true,
+    "everyPhaseObservedCurve": true,
+    "everyPhaseReachedWall": true,
+    "everyPhaseStartedOnWall": true,
+    "wallJumpObserved": true,
+    "wallDirectedDodgeObserved": true,
+    "wallAirRollProducedAngularMotion": true,
+    "wallAirRollSpentBoost": true,
+    "wallJumpRecoveredToSupport": true
+  },
+  "failedAssertions": []
+}

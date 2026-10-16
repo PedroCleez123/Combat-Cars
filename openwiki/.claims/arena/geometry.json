@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:18e393c3905a623d04d8364b43ef6fba276c0767c0b7c84cc29fc1ce4bf6c5d1",
+  "claims": [
+    {
+      "id": "claim_ceaac8f8f8474c98aa1b2e7a7a542b46",
+      "statement": "El bridge valida un conjunto explícito de perfiles de arena, que incluye práctica curva, ampliada, con esquinas, bloque, rampa y combat-alpha.",
+      "evidence": [
+        {
+          "resource": "repo://tools/rocketsim-bridge/main.cpp#L303-L312",
+          "version": "repo-lines-v1:sha256:95c6a5600e527b9d0bf9b1b5e7e07e32ef06541b74f6b1ef70be24edcf886589:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhNGQ5MjA5N2MwNDI3ODI0N2U1NGFlM2E1ZDI1NTNjODRlOGZjODE3OGFkYjRmY2JmMzhjMWM2N2FlNmM1ZWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3YTgyOTIyODNiYzU0ZGYyMWNiZWMxYzhjOThkYzU4Yzk3Y2FjN2Q5OWNmOTc4MzAxZjgwODYzZjJkYzk0ZjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRmY2ZmN2JjZjk1ZmE0NGRiYjU5YTk2YzcyMzE4ODAxYjY5NTllZWRjMTk0MWU5MTRjOTliYTBhOGY5ZTBkOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmNDlkMzg4ZTM1ODA5NGEyODkyMTM1OTAyYTlkNWU1M2RmODcyMDQ2MmUzNzg5YWE5Y2Q0MmE4YWQwY2E2ZTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_40fb19531ab349199a849655cf662f8f",
+      "statement": "La arena ampliada con esquinas incorpora transiciones suelo-pared y pared-techo en cuatro lados, fillets de suelo y techo y cuatro tramos curvos verticales.",
+      "evidence": [
+        {
+          "resource": "repo://tools/rocketsim-bridge/main.cpp#L728-L744",
+          "version": "repo-lines-v1:sha256:2226740080e0cae850e78f6ffae25e7eae5bd3971991f182956c7e590245cf0f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkNTRhY2NmNzY0MGFjNGJkOTFlNjI1MzVmN2E1MjdhZjUyZGE3ODZjOGI3Y2FiNmJiZjViMmVhZGZhMmMwMzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0YzVkOGU3ZDIxMjI4MjgzYzk5NmExNGYyZjIzNGViODQ3NWJhOWNkMTRmZmNiMmNkMmYzZjBjOGYxYTYwNzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc1MWY0Y2FjM2VkNWYwMzZlZWQzYmExYjc2OTNlN2RmY2ViNGJiMzkzMzA3ZGNmNWFhNzE4NGEwNjQzNTZjZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVhOWVmYWE4ZjNlNjU3MTZjOTc5ZTBiNTRmNjU2M2Y1MTZlMWNjYWU5YjEzMGMxYzIyYmVhOWM3MmM2NjRkZjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f1bc539eb136445fa3c9f3453ea8a1ca",
+      "statement": "combat-alpha reutiliza la arena ampliada con esquinas y añade un bloque y una rampa para escenarios de combate reproducibles.",
+      "evidence": [
+        {
+          "resource": "repo://tools/rocketsim-bridge/main.cpp#L759-L765",
+          "version": "repo-lines-v1:sha256:85dd4008be7e97faf94793534b031aae2a5f2178a9a3cbcc78bc438d7ceaac95:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmM4YjU2YTgwZmM1YmY0NmQyZTdkNWM1YzdkNjdiYmI0OTE4MDA4MzNjZTExNWUwYTA3MjZkYjRlNGQzNmM5ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjRjNWQ4ZTdkMjEyMjgyODNjOTk2YTE0ZjJmMjM0ZWI4NDc1YmE5Y2QxNGZmY2IyY2QyZjNmMGM4ZjFhNjA3MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzUxZjRjYWMzZWQ1ZjAzNmVlZDNiYTFiNzY5M2U3ZGZjZWI0YmIzOTMzMDdkY2Y1YWE3MTg0YTA2NDM1NmNkNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDgzZDY1ODMzY2FiMTMzZDJlYTA5ZDc2MmM3ZmRkYmIzMmVhZGI5N2QyYjhmZDg0ZGQ2ZTQzMWM4NzVkZTE1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_34acfbc4092146048e00490f4a8ca134",
+      "statement": "El cliente construye la presentación de cada arena desde el perfil nominal resuelto por `settings.practiceArena`; para el perfil ampliado usa 144 × 108 × 30 unidades, radio de curva 8 y superficies transparentes con rejilla de techo.",
+      "evidence": [
+        {
+          "resource": "repo://src/client.js#L353-L405",
+          "version": "repo-lines-v1:sha256:a296effe4964184d45a31fe30edd8c2fbc2f63c09c5305376d942b0d1b942c6c:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczNzgyZGYwYjFlMGFhMDVhYmYwNDEwZjMwNjc5NmVjZTY5YzQ4ZTExYTI1ZGUyYzVlZDEzMTlkMDg4MDNmZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkN2MwMjk4ZDEyZDlmODYwNzE5NmZiOGI0MzQ5MjY0YWMyOTI2Yzk3YWUxNDhjZmZhZGRkMTg5MTEwOGMxOGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1ODZhOWZhNDRlOWRiOTdkNGZiNzQ3YTIyODA3MDE3N2I2ODJjYmQ3NmEzZjQwZWUxNTIwMzFlZWM4MzlmOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiMjdhMTlkYTc1NmQwNGZiYWNmZjFjNTY0YWE1NTBlNTUyNWY0NzljYjMwZmY5YjE2MmY2MDNmNzZmMmM1NzIifQ"
+        },
+        {
+          "resource": "repo://src/rocketsim-arena-profile.js#L27-L59",
+          "version": "repo-lines-v1:sha256:82a497cf57975951bba6da13d8b2dda754ce8803cdc80fe591a0f6ed9c9cee41:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2ZWZmNGI5ZmQ3Yjc2MWUwZTkxNDRiZGM1Nzc2ZDYwM2M2ODBiMzU4YTJkMjI4YWNkNjU0NmFhNTk3NWNhZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0NTFlMjA1YmMzMGMzYWEyOTMwOTU1ZTg4MzIyNzE0ZDkzYjAwYWMyNmMxMzNiZWIwOTg3MGEyMTZjMjAzZWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdlZWRmN2FiYTZmNjVmYmIwNjVkNTcyNzRiYTc0MzYyMTgxODFhMmFmMWQ5NjcxYzBjNDkyZWRiODQxYWUwYWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0MjJlZjc5OWQ4ZmZlY2E2NjM3YTc3MzU0MzlhOWQyNTc0YjRhMjhiNzZiZGNiODZjZDRkMDlmNmVlN2MwOGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ede25055604342369b6f33e88f3bf742",
+      "statement": "El cliente dibuja arcos de suelo-pared y pared-techo y, en perfiles con esquinas, añade superficies inferiores, superiores y verticales.",
+      "evidence": [
+        {
+          "resource": "repo://src/client.js#L545-L639",
+          "version": "repo-lines-v1:sha256:1a6648fe5b6e6561bf1de44976757f8f62c4267785d3299afcc88470f2eda9d1:eyJzZWxlY3RlZExpbmVDb3VudCI6OTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0YjUxYjNkMGNlMjEyMWYzMzkzODdjMWE1OWYwODE0ODcxOWEwYTU2ZmY3Mjg4MGY5MjAxMzc2NTM3MzZjMmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwNTA5YjU1NTAwMWQ2ZmUyZDY0MTJiZDUwYmVmOTgyOTA1MjEwYjdlNWQ4NTVhMDYzN2E5ZGYxMjJhYmQ0ODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1NmQzNTk4Njc3NTRmYTJjNWQ4MDI1M2NlZDI2YTZiMjg5NGFkY2VjZDA4ZjdkOTIyMTI2OTk5NDhiZjY4YjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8d3d9376daba4ce8a6983a2e9d7230d9",
+      "statement": "El registro `src/rocketsim-arena-profile.js` alinea en el plano JavaScript las dimensiones nominales de las arenas limpias (62 × 46 × 24) y ampliadas, incluida `combat-alpha` (72 × 54 × 30), mientras el bridge nativo conserva la autoridad de colisiones.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-arena-profile.js#L1-L45",
+          "version": "repo-lines-v1:sha256:b5988058d6d06a2e3eb67d7de98a9cad69fcaa3c9b9fd356eb1129a6b4824281:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhNzRjZTUwNDEwZDY5OGY0MDhhOGI2NmVmZjc4OTE5ZGY3NDEzNGUyZjI1NmZlYWFkNmM5NTI1YTZkOTFjYzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlMTYzNDYxNTg0NTIxZTZiNTVkMDUzYmIwODE5NzM1OTY5NzZlNjAyMTNlY2U3Njg1YTY3YTdkM2Q0Mjk1NzMifQ"
+        },
+        {
+          "resource": "repo://tools/rocketsim-bridge/main.cpp#L30-L45",
+          "version": "repo-lines-v1:sha256:e43ac8435e638843b49849ec7d0fda8d448d703a64b0f19a77a83b1e786ebb41:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwMWNjMzEzZDIzZjIyNjcxNTE4NDhjNWVmZjUwZTA4ODc4NmI0NGMyOGU2ODhkYjA4YWRlODc4MTllZGQzMTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyY2JlNWI3ZDI3OGM1NmRmMDU0N2MxYjFlMjJiOWZmNTNlNWI3ODMxYjRjMmNlNmZkMzRhZjk0NGU2MzM2ODYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJhMzdkOWQ5YzM5YTYwMzM5MjQ0Y2IxNjYzZTk1ZDlkMzZhOTdlYTg2Yzc0YjAwZmRlYTVkNGFjNjBmZDIxYWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc4ZTBiYjg0M2NmZTczNzU3ZWJlMTE0YjRiYTZlN2U1YzM2OTZmNmYzMjk3MmY2MTUyMmIwYzQ4ZmEwMmM1Y2MifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-16T21:36:10.526Z"
+  }
+}

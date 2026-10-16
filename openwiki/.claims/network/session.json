@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0dbd975075a6000bea5d0a50643f65d9346e8469df22cd95a00bdaf32c00b7bb",
+  "claims": [
+    {
+      "id": "claim_29df8cbac4524d83a9b6283dc6694792",
+      "statement": "La sesión LAN exige un saludo inicial con versión de protocolo, sala y nombre, y asigna identidad y equipo al aceptar la conexión.",
+      "evidence": [
+        {
+          "resource": "repo://server.mjs",
+          "version": "repo-file-v1:sha256:10a12e45ba8f3848c7d2c7a139929ffbf184463d48354ebe9a7c4025ad39c827"
+        },
+        {
+          "resource": "repo://src/lan-session-protocol.js",
+          "version": "repo-file-v1:sha256:bcaf8e2010f0c64d50eab8427cd05bab04b1d29fbf9b8338926cb78cc4901414"
+        }
+      ]
+    },
+    {
+      "id": "claim_f449db0e4d5248f2a68c0df8fa2559c5",
+      "statement": "Los marcos WebSocket tienen un límite de 8192 bytes; los inputs se validan por secuencia y frecuencia, y los snapshots incluyen el ACK de input del piloto.",
+      "evidence": [
+        {
+          "resource": "repo://server.mjs#L139-L157",
+          "version": "repo-lines-v1:sha256:b1c6319275c3f7f27650c1495d0f4263ebdca6abacf60554f6da0c3753be669e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmODczZmMzZWU1NGM4ZDZhYmFkN2YyMzE2OTQ0MGY3ZmM2ZmUyZGFlZDE3OWI2ZDZhNGFhNjY0MzFiYjk4NWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjNTA4ZWZkMDY4MDBjMTMyMGYwZDFhYzEyYmMyMzQwNzI3ZWIyNGUyMGMwMGQwYjExNmQzMGJkMWVkMjY1YTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhYmMxZDIxNTg1ZTJkZTdkYjM2ZTI4M2RjMGRhNGU2YWIzN2UyNWM0NTQ2MzUyMDI4ODBlMmIxNTdhNjFhMzAifQ"
+        },
+        {
+          "resource": "repo://server.mjs#L248-L264",
+          "version": "repo-lines-v1:sha256:42a62387e0e3d3ee99fd7b4117a81e573d9baee8d70f1f4a70478d62884837ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4ZTcyNDUyMTY0M2ZlYzM2YzJlNWRhZWNiYjE1MjkyM2MwNmMxMjZiOTE0MzBmYzlhNjQxNTU3MDQ5Y2QxZDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhY2YyZjlhMmQ3MzQ3ZjZhMzAzOGU5MWMwMWRkNTY0M2E1ZThjYzU4ZTZmYjE1Njg0MzQ1NzUxZDFiNWY1YzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0NTMxZjMwY2ZkNWFmMWU4Zjk3YWJhNjFiYmQxOTlmYjczNTQyZmMzNTY4YzAwMmQwOTkwODkwNDM2NzJlM2MifQ"
+        },
+        {
+          "resource": "repo://server.mjs#L75-L83",
+          "version": "repo-lines-v1:sha256:fd948a93644a45282af3d0fe21cb9ca6e26b301f60c5749c65d91e3595cd50e6:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjU4ZDM0ZWM0MGY2OTg0ZmIwMzc4OGUxYTIyM2M1ZDI5ZGU1ZTEyZjExN2ZjNDg4MGM0MmEwZDM0N2IwNTc2NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTEwYmM0NGI3NTRkZGNiZWYwZWNiYjgyZWI5YWE2MDk5NDliMDkxZjc4YjFiMjM5MjI0Mzk1NjljY2E3NjBjZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTQxMDZjYjAxMTljZGUzM2FlNzRkM2Y2NmJkMGJmMWE3NzRmZTRmOTIxMWM0ODNhNTk1MzdmMjdiMTM1OGUzZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmJmYjc0MDhhYTM0M2FmODk1ZDI3ZmZiMTU4NDNkZDViYzVjZGNjOTRlOWZiYzRhOTgzNmIyMTZkZDQ1YWQ5YyJ9"
+        },
+        {
+          "resource": "repo://src/lan-session-protocol.js#L3-L12",
+          "version": "repo-lines-v1:sha256:b50969f6400456e99c19699866c8fd5510371161cff1d24e9cd42ddaf5a789e1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmMGRkZDFmYzBjYjgzMzI2Zjk2YmRiOGNlY2ZmNWVkMDFiYWJjOTgxYmQyODA4NDRiOWE0OGVjMzliMWE4OTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1NDc5YmRmMmY2NmM5MzQ5YzdkNDQ4MTc5Y2FmODU1MWVhOTM0ZDAzZjEwMTVmZGRhNzJiNmE2MjRkMDc4ZDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjoyLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmOGJhMTU1NDIzNmFlZWQ5Y2ZiY2M4ZTJjMDJmZjRmN2IwZjU0YmNlNTgyZDI5ZDY3ODI0NmY0MDgwZDYxMzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY4N2MzNTE5N2NlMDNkYTczN2Y1YjE1YmUyYTBjMzZlYmY3ZjJiZTdjNDE2ZDFkOWMyZWQ1NTEzMTExMjUzYjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c112acc4d8be4a17bbf2ca7dd56b20bc",
+      "statement": "La vitalidad combina heartbeat cada 5 segundos con timeout de heartbeat de 20 segundos, gracia de reconexión de 4 segundos y detección de bloqueo de estados autoritativos a los 8 segundos.",
+      "evidence": [
+        {
+          "resource": "repo://server.mjs#L266-L272",
+          "version": "repo-lines-v1:sha256:a1e3d2d47bf2be995aa999dfd0fc84c6d3319af92e3e42926fc39b5bac0ed4c0:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDBmNzY2ZGViN2UxZjU4YjY1NmNhZjgwYWQ5YjNlNzBlMTdhYzA5ZDc0MTNlODllNWRmNmUwZTY1YzEzZGFmNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmEwNDBjMTAzY2NhZTBiNWQzODAwMjllNjFkMGMxMzRkY2JhMzEzNTcwN2E1ZjFmZTlkODQyODNhNjc2ZjhkOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGI3YjA2NGQ1OTcwMjg2ZDkyNmQwNjYxMmI2NDJkNGU3MWU4OTZiODhlOTBhN2Y1ZTEwNDU5ZTQ3NDhkMjk2MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDZlZTgzNmQ2ZGNjYzVhMzRmMDFhYjg3ZGUyZjlkNDY0MmJjZmZlMTcwOThlNzBjMjEyN2JhZDNmZjc5N2FkMyJ9"
+        },
+        {
+          "resource": "repo://src/client.js#L885-L912",
+          "version": "repo-lines-v1:sha256:3d111820ce1fad34bbad8079eb905e7b8a884574c67a7b0529168db7660765da:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkxODI2ZGE2Mjk3Yzg5NmVhYjc3YmE0NWIwNGQxNjdjZmQ4ODhhMmMzYzRkMDI0ZGRjODFkNjZkMWQ4YWM4MGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjZDRlYTM4N2YzNjhkMGY1ZThhYjVkMTBlYmZjY2ZkODcxZTg1Y2M5NDRkMmJjODg2MmNmNGE2YTVkOTg1OGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhMzJiY2VjMDdhZjM5OWU0YjBhODEzZjIxN2FlMzkyNjA2NjJjN2ZkYzdjZWFmNTUzOGZhZGE3OWU0NTM1YTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU2ZTkwNmMzNjIyNjI3Yzc3YTMxZGJmNmRkMTg5NTkzMDkzMmZkMmZjYmYyZDVkMTZhYTY3YzE5ZjRlOTMwNDAifQ"
+        },
+        {
+          "resource": "repo://src/lan-session-protocol.js#L5-L12",
+          "version": "repo-lines-v1:sha256:84caa44d2a58edc6c5050ba11189daff81a4096247e738e1794c55f1aab2c4b7:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGZjMjVjMTI5ODAzZDk4NWQxN2NjZmQxZGJmYjliZDg2ZjZmODI3ZmRjOGY4NzhhOTM0OWNlMjFkNGIwNjQ0NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTU0NzliZGYyZjY2YzkzNDljN2Q0NDgxNzljYWY4NTUxZWE5MzRkMDNmMTAxNWZkZGE3MmI2YTYyNGQwNzhkMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTFmMGNmNTNiYTdmYzY5YmI2MDVkMjkzNTZjYWQxNmIzMDQ0OWM1M2NmNWE4NjRkMWM3NDE4ZjY4M2RlMGI5ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjg3YzM1MTk3Y2UwM2RhNzM3ZjViMTViZTJhMGMzNmViZjdmMmJlN2M0MTZkMWQ5YzJlZDU1MTMxMTEyNTNiMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3d602af2e50e46779f8155358a789ec9",
+      "statement": "El owner de la sesión es el único peer que puede pedir restart o configure; configure mantiene la capacidad RocketSim entre una y seis plazas, sin bots y sin reducirla por debajo de los pilotos conectados.",
+      "evidence": [
+        {
+          "resource": "repo://server.mjs",
+          "version": "repo-file-v1:sha256:10a12e45ba8f3848c7d2c7a139929ffbf184463d48354ebe9a7c4025ad39c827"
+        },
+        {
+          "resource": "repo://src/rocketsim-practice-match.js",
+          "version": "repo-file-v1:sha256:8cba2ff85fc1257781bc53cc66fb28eaecd4dcfd9e30813e3a587c84be39cea0"
+        }
+      ]
+    },
+    {
+      "id": "claim_01ccdbf1efff4ac4b5f8caa61ee3f312",
+      "statement": "El servidor exige hello en cinco segundos, acepta por defecto solo orígenes locales o el mismo Host y limita la salida WebSocket con una cola acotada que cierra conexiones que no drenan.",
+      "evidence": [
+        {
+          "resource": "repo://server.mjs",
+          "version": "repo-file-v1:sha256:10a12e45ba8f3848c7d2c7a139929ffbf184463d48354ebe9a7c4025ad39c827"
+        },
+        {
+          "resource": "repo://src/lan-outbound-queue.js",
+          "version": "repo-file-v1:sha256:b82316d099a3a515a055d1112eae051c50aa18f1bcb87f13300a8271020d5850"
+        },
+        {
+          "resource": "repo://src/lan-session-control.js",
+          "version": "repo-file-v1:sha256:da2beb360e710dc4a052c302de0ef91036087e92b64cdf3a6c37ea1f29f2a3e2"
+        },
+        {
+          "resource": "repo://src/lan-session-protocol.js",
+          "version": "repo-file-v1:sha256:bcaf8e2010f0c64d50eab8427cd05bab04b1d29fbf9b8338926cb78cc4901414"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-16T21:36:10.526Z"
+  }
+}

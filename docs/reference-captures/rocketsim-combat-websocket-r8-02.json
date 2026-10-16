@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "profile": "combat-lineup",
+  "backend": "rocketsim",
+  "mode": "COMBATE ROCKETSIM",
+  "port": 5316,
+  "generatedAt": "2026-10-14T19:33:27.158Z",
+  "pilots": [
+    {
+      "type": "welcome",
+      "id": "aa3752ff-e389-4f2d-b64a-54b8077f8fc9",
+      "team": "blue",
+      "protocolVersion": 1,
+      "roomId": "local"
+    },
+    {
+      "type": "welcome",
+      "id": "0f019763-c864-4156-9c6a-ece4737c29d6",
+      "team": "red",
+      "protocolVersion": 1,
+      "roomId": "local"
+    }
+  ],
+  "inputs": {
+    "fireStart": 1,
+    "fireRelease": 2,
+    "fireDuringCooldown": 3,
+    "cooldownRelease": 4,
+    "fireElimination": 5,
+    "finalSequence": 6,
+    "acknowledged": 6
+  },
+  "snapshotTimeDeltas": {
+    "count": 197,
+    "min": 0.01,
+    "max": 0.02,
+    "values": [
+      0.02,
+      0.01
+    ]
+  },
+  "observed": {
+    "cars": [
+      {
+        "id": "aa3752ff-e389-4f2d-b64a-54b8077f8fc9",
+        "team": "blue",
+        "hp": 100,
+        "x": 0,
+        "h": 0,
+        "z": 0,
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 1
+        }
+      },
+      {
+        "id": "0f019763-c864-4156-9c6a-ece4737c29d6",
+        "team": "red",
+        "hp": 100,
+        "x": -14.6,
+        "h": 0,
+        "z": 0,
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": -0.004793002461224172,
+          "w": 0.9999885134977334
+        }
+      }
+    ],
+    "rockets": 0,
+    "fireEvents": [
+      {
+        "text": "R8-02-RED lanza un cohete.",
+        "kind": "fire",
+        "at": 0.03
+      },
+      {
+        "text": "R8-02-RED lanza un cohete.",
+        "kind": "fire",
+        "at": 0.82
+      }
+    ],
+    "healthAfterCooldown": 35,
+    "eliminated": {
+      "hp": 0,
+      "respawn": 2.341666666666667,
+      "deaths": 1
+    },
+    "inactive": {
+      "h": -218.35
+    },
+    "respawned": {
+      "hp": 100,
+      "respawn": 0,
+      "deaths": 1,
+      "actionSerials": {
+        "jump": 0,
+        "doubleJump": 0,
+        "dodge": 0,
+        "respawn": 2
+      }
+    },
+    "errors": []
+  },
+  "assertions": {
+    "rocketSimCombatProfile": true,
+    "opposingTeams": true,
+    "nativeRosterVisible": true,
+    "bothCarsHaveNativePose": true,
+    "inputsAcknowledged": true,
+    "cooldownRejectsSecondFireEdge": true,
+    "twoAcceptedFireEdges": true,
+    "eliminationObserved": true,
+    "nativeDeactivationObserved": true,
+    "nativeRespawnObserved": true,
+    "snapshotCadenceIsNativePairing": true,
+    "runtimeHadNoErrors": true
+  }
+}

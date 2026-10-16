@@ -1,0 +1,2907 @@
+{
+  "schemaVersion": 1,
+  "profile": "arsenal-curved-practice",
+  "geometry": {
+    "kind": "original-quarter-pipe",
+    "radiusUU": 256,
+    "segments": 32,
+    "note": "Geometría propia de entrenamiento; no es una malla ni una medición de la arena Soccar."
+  },
+  "sha256": "7da59d6caacd75a3ab9e24d302c203913f1d342fad3d1a51f822791ed6c0757d",
+  "trace": {
+    "fixedStepHz": 120,
+    "ticks": 480,
+    "checkpoints": [
+      {
+        "tick": 60,
+        "position": {
+          "x": 213.167526,
+          "y": 17.012955,
+          "z": 0
+        },
+        "velocity": {
+          "x": 888.444641,
+          "y": 0.004018,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": -0.004752998595180178,
+          "w": 0.9999887044383823
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 120,
+        "position": {
+          "x": 839.22522,
+          "y": 17.01289,
+          "z": 0
+        },
+        "velocity": {
+          "x": 1540.524048,
+          "y": 0.000267,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": -0.004793002461224172,
+          "w": 0.9999885134977334
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 180,
+        "position": {
+          "x": 1735.506592,
+          "y": 17.012974,
+          "z": 0
+        },
+        "velocity": {
+          "x": 2036.338623,
+          "y": 0.00003,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": -0.0047940024387576,
+          "w": 0.9999885087042836
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 240,
+        "position": {
+          "x": 2528.32251,
+          "y": 242.811249,
+          "z": 44.019283
+        },
+        "velocity": {
+          "x": 151.661087,
+          "y": 1253.245605,
+          "z": 312.983856
+        },
+        "orientation": {
+          "x": 0.04629400618937016,
+          "y": -0.1098800146906293,
+          "z": 0.7034190940450289,
+          "w": 0.7007030936819078
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -0.992482,
+            "y": 0.122392,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 300,
+        "position": {
+          "x": 2527.157715,
+          "y": 838.503906,
+          "z": 190.635406
+        },
+        "velocity": {
+          "x": 17.294397,
+          "y": 1126.178955,
+          "z": 280.2034
+        },
+        "orientation": {
+          "x": 0.07263803004491139,
+          "y": -0.09170803793274503,
+          "z": 0.7196412976616933,
+          "w": 0.6844192830929845
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 360,
+        "position": {
+          "x": 2528.988037,
+          "y": 926.780212,
+          "z": 292.746124
+        },
+        "velocity": {
+          "x": -6.134758,
+          "y": 66.858597,
+          "z": 39.854839
+        },
+        "orientation": {
+          "x": -0.001791000657086919,
+          "y": -0.0003920001438180191,
+          "z": 0.7149792623134273,
+          "w": 0.6991432565034728
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 420,
+        "position": {
+          "x": 2529.641357,
+          "y": 926.964355,
+          "z": 293.346344
+        },
+        "velocity": {
+          "x": -0.563538,
+          "y": 2.047379,
+          "z": -2.472537
+        },
+        "orientation": {
+          "x": 0.00047200009041044593,
+          "y": 0.00023400004482212786,
+          "z": 0.7073661354942278,
+          "w": 0.7068471353948146
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 480,
+        "position": {
+          "x": 2529.680664,
+          "y": 927.100098,
+          "z": 293.673859
+        },
+        "velocity": {
+          "x": -0.703961,
+          "y": 0.074326,
+          "z": -2.872519
+        },
+        "orientation": {
+          "x": -0.0012009999593455517,
+          "y": -0.0009099999691960466,
+          "z": 0.7071639760621463,
+          "w": 0.707047976066073
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "firstInclinedSupport": {
+      "tick": 215,
+      "position": {
+        "x": 2368.975586,
+        "y": 28.423628,
+        "z": 0
+      },
+      "velocity": {
+        "x": 2129.069824,
+        "y": 497.389984,
+        "z": 0
+      },
+      "orientation": {
+        "x": 0,
+        "y": 0,
+        "z": 0.14809306431846084,
+        "w": 0.9889734295221324
+      },
+      "grounded": true,
+      "wheelCount": 4,
+      "worldContact": {
+        "hasContact": false,
+        "normal": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      "wheelContact": {
+        "hasContact": true,
+        "normal": {
+          "x": -0.290285,
+          "y": 0.95694,
+          "z": 0
+        }
+      }
+    },
+    "firstSteepSupport": {
+      "tick": 229,
+      "position": {
+        "x": 2493.791016,
+        "y": 131.992905,
+        "z": 16.607903
+      },
+      "velocity": {
+        "x": 702.274231,
+        "y": 1102.147217,
+        "z": 268.491852
+      },
+      "orientation": {
+        "x": 0.016677007349908977,
+        "y": -0.1193680526080191,
+        "z": 0.5161862274941605,
+        "w": 0.847953373710941
+      },
+      "grounded": true,
+      "wheelCount": 4,
+      "worldContact": {
+        "hasContact": false,
+        "normal": {
+          "x": -0.357108,
+          "y": 0.934063,
+          "z": -0.00002
+        }
+      },
+      "wheelContact": {
+        "hasContact": true,
+        "normal": {
+          "x": -0.844853,
+          "y": 0.534999,
+          "z": 0
+        }
+      }
+    },
+    "contactGapsBeforeSteep": 0,
+    "transitionSamples": [
+      {
+        "tick": 211,
+        "position": {
+          "x": 2295.551514,
+          "y": 18.029446,
+          "z": 0
+        },
+        "velocity": {
+          "x": 2275.577881,
+          "y": 84.0037,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0.01376900279245043,
+          "w": 0.9999052027877949
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -0.06132,
+            "y": 0.998118,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 215,
+        "position": {
+          "x": 2368.975586,
+          "y": 28.423628,
+          "z": 0
+        },
+        "velocity": {
+          "x": 2129.069824,
+          "y": 497.389984,
+          "z": 0
+        },
+        "orientation": {
+          "x": 0,
+          "y": 0,
+          "z": 0.14809306431846084,
+          "w": 0.9889734295221324
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -0.290285,
+            "y": 0.95694,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 219,
+        "position": {
+          "x": 2416.10791,
+          "y": 52.088295,
+          "z": 0.714409
+        },
+        "velocity": {
+          "x": 1178.937256,
+          "y": 747.949951,
+          "z": 56.564449
+        },
+        "orientation": {
+          "x": -0.026102006444716698,
+          "y": -0.09489502343005865,
+          "z": 0.2979310735606808,
+          "w": 0.9495002344363844
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -0.524611,
+            "y": 0.851342,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 223,
+        "position": {
+          "x": 2451.874023,
+          "y": 80.574982,
+          "z": 4.95325
+        },
+        "velocity": {
+          "x": 1000.892151,
+          "y": 919.744995,
+          "z": 168.494614
+        },
+        "orientation": {
+          "x": -0.006373002954974151,
+          "y": -0.11300705239804862,
+          "z": 0.3851551785851356,
+          "w": 0.9158844246686875
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -0.671563,
+            "y": 0.740947,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 227,
+        "position": {
+          "x": 2481.431885,
+          "y": 113.952888,
+          "z": 12.233996
+        },
+        "velocity": {
+          "x": 808.754333,
+          "y": 1047.514404,
+          "z": 244.61171
+        },
+        "orientation": {
+          "x": 0.011154002936882823,
+          "y": -0.11832203115454987,
+          "z": 0.47276512448049196,
+          "w": 0.8731372298996825
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -0.788349,
+            "y": 0.615228,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 231,
+        "position": {
+          "x": 2504.2146,
+          "y": 150.941818,
+          "z": 21.284559
+        },
+        "velocity": {
+          "x": 583.511475,
+          "y": 1153.878784,
+          "z": 284.939941
+        },
+        "orientation": {
+          "x": 0.021371006847453345,
+          "y": -0.11962203832792401,
+          "z": 0.5572231785390713,
+          "w": 0.8214232631910378
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -0.893225,
+            "y": 0.44961,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 235,
+        "position": {
+          "x": 2519.069824,
+          "y": 190.908493,
+          "z": 31.171497
+        },
+        "velocity": {
+          "x": 348.901215,
+          "y": 1223.846069,
+          "z": 302.643555
+        },
+        "orientation": {
+          "x": 0.02873600706163035,
+          "y": -0.11959802939020275,
+          "z": 0.6320491553207266,
+          "w": 0.7651041880178739
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -0.960436,
+            "y": 0.278501,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 239,
+        "position": {
+          "x": 2527.058594,
+          "y": 232.367538,
+          "z": 41.411083
+        },
+        "velocity": {
+          "x": 170.693939,
+          "y": 1251.551514,
+          "z": 309.742065
+        },
+        "orientation": {
+          "x": 0.041371005066541816,
+          "y": -0.11341301388923902,
+          "z": 0.6912530846550055,
+          "w": 0.712457087251775
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -0.990914,
+            "y": 0.134498,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 243,
+        "position": {
+          "x": 2530.586426,
+          "y": 274.236847,
+          "z": 51.973351
+        },
+        "velocity": {
+          "x": 57.66293,
+          "y": 1257.743164,
+          "z": 320.101349
+        },
+        "orientation": {
+          "x": 0.06274800307700527,
+          "y": -0.0961960047172117,
+          "z": 0.7237540354910894,
+          "w": 0.6804330333667357
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -0.998796,
+            "y": 0.049059,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 247,
+        "position": {
+          "x": 2529.05542,
+          "y": 315.995911,
+          "z": 62.547066
+        },
+        "velocity": {
+          "x": -59.840965,
+          "y": 1248.89502,
+          "z": 314.217651
+        },
+        "orientation": {
+          "x": 0.0689459747112761,
+          "y": -0.09213596620540908,
+          "z": 0.7333997309959954,
+          "w": 0.6699867542552685
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 251,
+        "position": {
+          "x": 2527.581299,
+          "y": 357.39798,
+          "z": 72.906021
+        },
+        "velocity": {
+          "x": -34.350559,
+          "y": 1237.989624,
+          "z": 308.848846
+        },
+        "orientation": {
+          "x": 0.07428297378598889,
+          "y": -0.08830696883700605,
+          "z": 0.7343767408429002,
+          "w": 0.6688607639630914
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 255,
+        "position": {
+          "x": 2526.926025,
+          "y": 398.442963,
+          "z": 83.103447
+        },
+        "velocity": {
+          "x": -11.372689,
+          "y": 1227.40979,
+          "z": 304.233826
+        },
+        "orientation": {
+          "x": 0.07745296455354268,
+          "y": -0.08623696053353466,
+          "z": 0.7328886645924799,
+          "w": 0.6704016931897296
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 259,
+        "position": {
+          "x": 2526.95874,
+          "y": 439.14212,
+          "z": 93.158684
+        },
+        "velocity": {
+          "x": 8.03691,
+          "y": 1217.149048,
+          "z": 300.187714
+        },
+        "orientation": {
+          "x": 0.07945899180821539,
+          "y": -0.08501799123511315,
+          "z": 0.7279599249513394,
+          "w": 0.6756719303419438
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 263,
+        "position": {
+          "x": 2527.59082,
+          "y": 479.504395,
+          "z": 103.091919
+        },
+        "velocity": {
+          "x": 25.351452,
+          "y": 1207.125,
+          "z": 296.756134
+        },
+        "orientation": {
+          "x": 0.0810900191201773,
+          "y": -0.08391601978651868,
+          "z": 0.7188391694947482,
+          "w": 0.685312161589431
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 267,
+        "position": {
+          "x": 2527.17334,
+          "y": 519.574829,
+          "z": 112.761307
+        },
+        "velocity": {
+          "x": -12.134496,
+          "y": 1199.216797,
+          "z": 285.768799
+        },
+        "orientation": {
+          "x": 0.06904098698391108,
+          "y": -0.09606198188972444,
+          "z": 0.7214518639868572,
+          "w": 0.6822848713708922
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 271,
+        "position": {
+          "x": 2527.085693,
+          "y": 559.339722,
+          "z": 122.269356
+        },
+        "velocity": {
+          "x": 4.83602,
+          "y": 1189.02771,
+          "z": 285.767365
+        },
+        "orientation": {
+          "x": 0.06785196302418461,
+          "y": -0.09702394712695997,
+          "z": 0.718983608191068,
+          "w": 0.6848686267819709
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 275,
+        "position": {
+          "x": 2527.63501,
+          "y": 598.755432,
+          "z": 131.84874
+        },
+        "velocity": {
+          "x": 22.842873,
+          "y": 1178.598267,
+          "z": 288.278625
+        },
+        "orientation": {
+          "x": 0.07122399579646672,
+          "y": -0.09344599448495773,
+          "z": 0.7132719579037602,
+          "w": 0.6909689592200497
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 279,
+        "position": {
+          "x": 2527.052246,
+          "y": 637.872375,
+          "z": 141.334839
+        },
+        "velocity": {
+          "x": -16.633484,
+          "y": 1170.577759,
+          "z": 281.978241
+        },
+        "orientation": {
+          "x": 0.06361902408915716,
+          "y": -0.1009320382176207,
+          "z": 0.7186642721201222,
+          "w": 0.6850452593903814
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 283,
+        "position": {
+          "x": 2526.872559,
+          "y": 676.693787,
+          "z": 150.756195
+        },
+        "velocity": {
+          "x": 2.075171,
+          "y": 1161.000977,
+          "z": 283.549927
+        },
+        "orientation": {
+          "x": 0.06562602356073108,
+          "y": -0.0987740354613667,
+          "z": 0.7194672582995841,
+          "w": 0.6843272456837902
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 287,
+        "position": {
+          "x": 2527.304688,
+          "y": 715.195923,
+          "z": 160.260529
+        },
+        "velocity": {
+          "x": 19.062094,
+          "y": 1151.589844,
+          "z": 285.883179
+        },
+        "orientation": {
+          "x": 0.07089899970396124,
+          "y": -0.0934569996097703,
+          "z": 0.7165989970078409,
+          "w": 0.687549997129135
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 291,
+        "position": {
+          "x": 2527.075439,
+          "y": 753.422668,
+          "z": 169.708649
+        },
+        "velocity": {
+          "x": -17.528879,
+          "y": 1144.550903,
+          "z": 279.486145
+        },
+        "orientation": {
+          "x": 0.06599396130092146,
+          "y": -0.09839094230322398,
+          "z": 0.7203985775558766,
+          "w": 0.6833665992715519
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 295,
+        "position": {
+          "x": 2526.76416,
+          "y": 791.410767,
+          "z": 178.983093
+        },
+        "velocity": {
+          "x": -2.97941,
+          "y": 1136.496948,
+          "z": 278.50174
+        },
+        "orientation": {
+          "x": 0.06703201489619115,
+          "y": -0.09728102161827742,
+          "z": 0.722651160591172,
+          "w": 0.6810421513446089
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 299,
+        "position": {
+          "x": 2527.013428,
+          "y": 829.119141,
+          "z": 188.300385
+        },
+        "velocity": {
+          "x": 13.478093,
+          "y": 1128.165771,
+          "z": 280.030334
+        },
+        "orientation": {
+          "x": 0.07137803007278383,
+          "y": -0.09295303916270385,
+          "z": 0.7208333036993889,
+          "w": 0.6831282878136214
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 303,
+        "position": {
+          "x": 2527.42334,
+          "y": 866.563049,
+          "z": 197.63829
+        },
+        "velocity": {
+          "x": -13.842008,
+          "y": 1120.501465,
+          "z": 279.936829
+        },
+        "orientation": {
+          "x": 0.0716209639459442,
+          "y": -0.09280795328039526,
+          "z": 0.7182906384118652,
+          "w": 0.6857956547698684
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 307,
+        "position": {
+          "x": 2526.95752,
+          "y": 903.815674,
+          "z": 206.722778
+        },
+        "velocity": {
+          "x": -10.056047,
+          "y": 1115.207642,
+          "z": 270.798065
+        },
+        "orientation": {
+          "x": 0.06722697284081265,
+          "y": -0.09712396076265621,
+          "z": 0.7216617084541411,
+          "w": 0.6820937244393067
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": -0.357108,
+            "y": 0.934063,
+            "z": -0.00002
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 311,
+        "position": {
+          "x": 2526.784668,
+          "y": 919.015503,
+          "z": 219.251755
+        },
+        "velocity": {
+          "x": -20.06926,
+          "y": -140.148361,
+          "z": 442.023956
+        },
+        "orientation": {
+          "x": 0.0544799943268078,
+          "y": -0.05215099456933468,
+          "z": 0.7421789227143151,
+          "w": 0.6659449306528271
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 315,
+        "position": {
+          "x": 2525.551514,
+          "y": 914.767151,
+          "z": 232.275146
+        },
+        "velocity": {
+          "x": -35.875206,
+          "y": -107.857811,
+          "z": 363.323334
+        },
+        "orientation": {
+          "x": 0.03264601252444923,
+          "y": -0.02019600774807868,
+          "z": 0.7533082890022605,
+          "w": 0.6565462518800785
+        },
+        "grounded": true,
+        "wheelCount": 3,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 319,
+        "position": {
+          "x": 2524.76416,
+          "y": 912.054932,
+          "z": 243.266632
+        },
+        "velocity": {
+          "x": -16.539951,
+          "y": -67.243874,
+          "z": 312.093414
+        },
+        "orientation": {
+          "x": 0.016329005903304102,
+          "y": -0.004667001687226422,
+          "z": 0.7577402739402077,
+          "w": 0.652335235833908
+        },
+        "grounded": false,
+        "wheelCount": 2,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 323,
+        "position": {
+          "x": 2524.536133,
+          "y": 910.633484,
+          "z": 252.826111
+        },
+        "velocity": {
+          "x": -1.422327,
+          "y": -28.471682,
+          "z": 273.055389
+        },
+        "orientation": {
+          "x": 0.009237000829103996,
+          "y": -0.00004600000412891456,
+          "z": 0.7588790681162294,
+          "w": 0.6511660584480169
+        },
+        "grounded": false,
+        "wheelCount": 2,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 327,
+        "position": {
+          "x": 2524.776611,
+          "y": 909.814819,
+          "z": 261.334991
+        },
+        "velocity": {
+          "x": 12.580302,
+          "y": -29.268213,
+          "z": 245.800186
+        },
+        "orientation": {
+          "x": 0.009115998489711634,
+          "y": -0.0031779994734865693,
+          "z": 0.7555048748321179,
+          "w": 0.6550718914713008
+        },
+        "grounded": false,
+        "wheelCount": 2,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 331,
+        "position": {
+          "x": 2525.505371,
+          "y": 909.094238,
+          "z": 269.009277
+        },
+        "velocity": {
+          "x": 26.797575,
+          "y": -16.652151,
+          "z": 217.62262
+        },
+        "orientation": {
+          "x": 0.01363099590454745,
+          "y": -0.01071499678066363,
+          "z": 0.7470107755595257,
+          "w": 0.6645858003242294
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 335,
+        "position": {
+          "x": 2526.678955,
+          "y": 909.219849,
+          "z": 275.570648
+        },
+        "velocity": {
+          "x": 40.713959,
+          "y": 16.162481,
+          "z": 183.942154
+        },
+        "orientation": {
+          "x": 0.018366999883599144,
+          "y": -0.017692999887870615,
+          "z": 0.7330689953541754,
+          "w": 0.6796759956925534
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 339,
+        "position": {
+          "x": 2528.120117,
+          "y": 910.449951,
+          "z": 280.862152
+        },
+        "velocity": {
+          "x": 41.205536,
+          "y": 49.302761,
+          "z": 143.122513
+        },
+        "orientation": {
+          "x": 0.022807998316849612,
+          "y": -0.023001998302533095,
+          "z": 0.7169059470948522,
+          "w": 0.6964169486068684
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 343,
+        "position": {
+          "x": 2529.177002,
+          "y": 912.770935,
+          "z": 284.801422
+        },
+        "velocity": {
+          "x": 25.272434,
+          "y": 81.691895,
+          "z": 103.936211
+        },
+        "orientation": {
+          "x": 0.02643800317006218,
+          "y": -0.02674000320627365,
+          "z": 0.7062370846817159,
+          "w": 0.7069760847703261
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 347,
+        "position": {
+          "x": 2529.676514,
+          "y": 916.145813,
+          "z": 287.583069
+        },
+        "velocity": {
+          "x": 9.370093,
+          "y": 112.798462,
+          "z": 72.261833
+        },
+        "orientation": {
+          "x": 0.02897298409879047,
+          "y": -0.029154983998903674,
+          "z": 0.7017976148332226,
+          "w": 0.7111896096786248
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 351,
+        "position": {
+          "x": 2529.726074,
+          "y": 920.525391,
+          "z": 289.501343
+        },
+        "velocity": {
+          "x": -1.656753,
+          "y": 142.334732,
+          "z": 49.923588
+        },
+        "orientation": {
+          "x": 0.030498005769948756,
+          "y": -0.030481005766732506,
+          "z": 0.7016031327370108,
+          "w": 0.7112621345644071
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 355,
+        "position": {
+          "x": 2529.543945,
+          "y": 924.232361,
+          "z": 290.981812
+        },
+        "velocity": {
+          "x": -12.372777,
+          "y": 51.996113,
+          "z": 44.851898
+        },
+        "orientation": {
+          "x": 0.022818006704912533,
+          "y": -0.02119700622859282,
+          "z": 0.7119342091969145,
+          "w": 0.7015552061471169
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 359,
+        "position": {
+          "x": 2529.039307,
+          "y": 926.223083,
+          "z": 292.414001
+        },
+        "velocity": {
+          "x": -10.372644,
+          "y": 59.437828,
+          "z": 42.630753
+        },
+        "orientation": {
+          "x": 0.002470000542720929,
+          "y": -0.004385000963494443,
+          "z": 0.7153031571700035,
+          "w": 0.6987961535430017
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 363,
+        "position": {
+          "x": 2529.141846,
+          "y": 926.112244,
+          "z": 292.844391
+        },
+        "velocity": {
+          "x": 7.06686,
+          "y": -8.436879,
+          "z": 3.73999
+        },
+        "orientation": {
+          "x": -0.000026000012191759573,
+          "y": 0.0004620002166381894,
+          "z": 0.711522333642506,
+          "w": 0.7026633294883985
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 367,
+        "position": {
+          "x": 2529.363525,
+          "y": 926.70459,
+          "z": 292.943695
+        },
+        "velocity": {
+          "x": 5.922154,
+          "y": 29.510742,
+          "z": 2.434099
+        },
+        "orientation": {
+          "x": 0.0005719999928929002,
+          "y": 0.0006869999914640251,
+          "z": 0.7072089912129284,
+          "w": 0.7070039912154754
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": false,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 371,
+        "position": {
+          "x": 2529.493408,
+          "y": 926.819702,
+          "z": 293.04895
+        },
+        "velocity": {
+          "x": 3.576969,
+          "y": 4.61224,
+          "z": 2.845833
+        },
+        "orientation": {
+          "x": 0.0011149998425999434,
+          "y": -0.0019409997259968522,
+          "z": 0.7091988998852352,
+          "w": 0.7050049004772853
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 375,
+        "position": {
+          "x": 2529.502686,
+          "y": 926.976379,
+          "z": 293.218628
+        },
+        "velocity": {
+          "x": 1.442896,
+          "y": -4.147408,
+          "z": 4.736145
+        },
+        "orientation": {
+          "x": 0.0006599997669630333,
+          "y": 0.0012749995498149507,
+          "z": 0.7084617498517645,
+          "w": 0.7057477508100407
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 379,
+        "position": {
+          "x": 2529.537598,
+          "y": 927.031494,
+          "z": 293.335876
+        },
+        "velocity": {
+          "x": 0.544523,
+          "y": 4.570044,
+          "z": 2.511455
+        },
+        "orientation": {
+          "x": 0.001473000338260573,
+          "y": 0.0009750002238995645,
+          "z": 0.7069571623460148,
+          "w": 0.7072541624142182
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 383,
+        "position": {
+          "x": 2529.607422,
+          "y": 926.995544,
+          "z": 293.371094
+        },
+        "velocity": {
+          "x": 1.445447,
+          "y": -2.60165,
+          "z": -2.414216
+        },
+        "orientation": {
+          "x": 0.00004399998505650761,
+          "y": -0.00006799997690551176,
+          "z": 0.707270759793209,
+          "w": 0.7069427599046059
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 387,
+        "position": {
+          "x": 2529.632812,
+          "y": 926.960266,
+          "z": 293.343567
+        },
+        "velocity": {
+          "x": 0.595183,
+          "y": -0.218329,
+          "z": 0.821563
+        },
+        "orientation": {
+          "x": 0.0009429997776939583,
+          "y": 0.0006029998578467199,
+          "z": 0.7070228333239824,
+          "w": 0.7071898332846133
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 391,
+        "position": {
+          "x": 2529.612061,
+          "y": 926.983459,
+          "z": 293.381836
+        },
+        "velocity": {
+          "x": -1.223776,
+          "y": 1.927343,
+          "z": -0.247797
+        },
+        "orientation": {
+          "x": 0.0016609998221376572,
+          "y": 0.0010309998895989914,
+          "z": 0.7070159242916785,
+          "w": 0.7071949242725108
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 395,
+        "position": {
+          "x": 2529.585938,
+          "y": 926.965881,
+          "z": 293.426239
+        },
+        "velocity": {
+          "x": -1.074949,
+          "y": -0.725615,
+          "z": -0.381741
+        },
+        "orientation": {
+          "x": 0.0020199989869192523,
+          "y": 0.0021809989061737077,
+          "z": 0.7069766454332733,
+          "w": 0.7072306453058861
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 399,
+        "position": {
+          "x": 2529.586182,
+          "y": 926.947876,
+          "z": 293.481781
+        },
+        "velocity": {
+          "x": -0.821868,
+          "y": -0.290373,
+          "z": 2.791097
+        },
+        "orientation": {
+          "x": 0.0030190012551621088,
+          "y": 0.0025270010506110133,
+          "z": 0.7070012939386771,
+          "w": 0.7072012940218279
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 403,
+        "position": {
+          "x": 2529.619873,
+          "y": 926.929932,
+          "z": 293.591522
+        },
+        "velocity": {
+          "x": 2.603218,
+          "y": -3.472428,
+          "z": 3.635991
+        },
+        "orientation": {
+          "x": 0.0028329980132404376,
+          "y": 0.002603998173836251,
+          "z": 0.7068575042863076,
+          "w": 0.7073455039440771
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 407,
+        "position": {
+          "x": 2529.638428,
+          "y": 926.945007,
+          "z": 293.606567
+        },
+        "velocity": {
+          "x": 0.505111,
+          "y": -3.749892,
+          "z": -2.769855
+        },
+        "orientation": {
+          "x": 0.0015030007754298631,
+          "y": 0.0017640009100853484,
+          "z": 0.7069473647290855,
+          "w": 0.7072623648916007
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 411,
+        "position": {
+          "x": 2529.662109,
+          "y": 926.940613,
+          "z": 293.519073
+        },
+        "velocity": {
+          "x": -0.855192,
+          "y": -2.52937,
+          "z": -5.210586
+        },
+        "orientation": {
+          "x": 0.0009860002200767525,
+          "y": 0.0008730001948549747,
+          "z": 0.7072261578539568,
+          "w": 0.7069861578003884
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 415,
+        "position": {
+          "x": 2529.644531,
+          "y": 926.922913,
+          "z": 293.404541
+        },
+        "velocity": {
+          "x": 0.132954,
+          "y": 0.945188,
+          "z": -2.420671
+        },
+        "orientation": {
+          "x": 0.0005640000185347329,
+          "y": 0.0006090000200135679,
+          "z": 0.707249023242325,
+          "w": 0.706964023232959
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 419,
+        "position": {
+          "x": 2529.645996,
+          "y": 926.947327,
+          "z": 293.366943
+        },
+        "velocity": {
+          "x": 0.543883,
+          "y": -0.377508,
+          "z": -2.588
+        },
+        "orientation": {
+          "x": 0.00015900001792606053,
+          "y": 0.000707000079708961,
+          "z": 0.7072560797378231,
+          "w": 0.706957079704113
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 423,
+        "position": {
+          "x": 2529.662109,
+          "y": 926.948242,
+          "z": 293.322937
+        },
+        "velocity": {
+          "x": 0.116459,
+          "y": 3.220644,
+          "z": -1.622043
+        },
+        "orientation": {
+          "x": -0.00014899992988318247,
+          "y": -0.000544999743532446,
+          "z": 0.7071456672293488,
+          "w": 0.7070676672660542
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 427,
+        "position": {
+          "x": 2529.657959,
+          "y": 926.946716,
+          "z": 293.24057
+        },
+        "velocity": {
+          "x": -0.274067,
+          "y": -1.8775,
+          "z": -1.652722
+        },
+        "orientation": {
+          "x": -0.001346999688282083,
+          "y": -0.0009199997870968941,
+          "z": 0.7071818363464736,
+          "w": 0.707029836381649
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 431,
+        "position": {
+          "x": 2529.649658,
+          "y": 926.954956,
+          "z": 293.200806
+        },
+        "velocity": {
+          "x": -0.837499,
+          "y": 2.686319,
+          "z": -1.474135
+        },
+        "orientation": {
+          "x": -0.0015289997554991973,
+          "y": -0.0021039996635515445,
+          "z": 0.7071648869179791,
+          "w": 0.707043886937328
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 435,
+        "position": {
+          "x": 2529.638428,
+          "y": 926.962158,
+          "z": 293.210449
+        },
+        "velocity": {
+          "x": -1.211158,
+          "y": 2.119288,
+          "z": -1.382868
+        },
+        "orientation": {
+          "x": -0.0014699998947413963,
+          "y": -0.0017029998780575496,
+          "z": 0.7073499493505624,
+          "w": 0.7068599493856486
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 439,
+        "position": {
+          "x": 2529.605957,
+          "y": 926.904968,
+          "z": 293.304657
+        },
+        "velocity": {
+          "x": 1.465462,
+          "y": -1.653942,
+          "z": 2.016877
+        },
+        "orientation": {
+          "x": -0.0009079999047430969,
+          "y": -0.0012589998679202192,
+          "z": 0.7070359258259254,
+          "w": 0.7071759258112382
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 443,
+        "position": {
+          "x": 2529.629395,
+          "y": 926.957581,
+          "z": 293.349823
+        },
+        "velocity": {
+          "x": -0.104659,
+          "y": 3.554315,
+          "z": 0.464275
+        },
+        "orientation": {
+          "x": -0.0004059997501866036,
+          "y": -0.0013239991853375942,
+          "z": 0.7068735650576483,
+          "w": 0.7073385647715321
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 447,
+        "position": {
+          "x": 2529.637939,
+          "y": 926.996399,
+          "z": 293.468872
+        },
+        "velocity": {
+          "x": 0.618892,
+          "y": -2.13201,
+          "z": 2.90305
+        },
+        "orientation": {
+          "x": -0.0001409999546291829,
+          "y": 0.000026999991311971194,
+          "z": 0.7071517724534465,
+          "w": 0.7070617724824065
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 451,
+        "position": {
+          "x": 2529.675537,
+          "y": 927.045532,
+          "z": 293.606873
+        },
+        "velocity": {
+          "x": 1.157743,
+          "y": -2.505594,
+          "z": 3.136302
+        },
+        "orientation": {
+          "x": 0.0008630002063528671,
+          "y": 0.0009630002302639756,
+          "z": 0.7069341690357563,
+          "w": 0.7072781691180106
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 455,
+        "position": {
+          "x": 2529.65332,
+          "y": 927.126099,
+          "z": 293.755493
+        },
+        "velocity": {
+          "x": -1.978463,
+          "y": 6.204829,
+          "z": 5.641934
+        },
+        "orientation": {
+          "x": 0.0006859996591433181,
+          "y": 0.0015059992517053018,
+          "z": 0.707587648416767,
+          "w": 0.7066236488957551
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 459,
+        "position": {
+          "x": 2529.660156,
+          "y": 927.11554,
+          "z": 293.866394
+        },
+        "velocity": {
+          "x": -0.268772,
+          "y": -0.273563,
+          "z": 5.75945
+        },
+        "orientation": {
+          "x": 0.0015689994433332173,
+          "y": 0.0011199996026342914,
+          "z": 0.7076607489283797,
+          "w": 0.7065497493225523
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 463,
+        "position": {
+          "x": 2529.670898,
+          "y": 927.134033,
+          "z": 293.911987
+        },
+        "velocity": {
+          "x": 2.336933,
+          "y": 0.706119,
+          "z": 0.614422
+        },
+        "orientation": {
+          "x": 0.0008209997193064015,
+          "y": 0.0014719994967344982,
+          "z": 0.7069437583012725,
+          "w": 0.7072677581904994
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 467,
+        "position": {
+          "x": 2529.708008,
+          "y": 927.130859,
+          "z": 293.892029
+        },
+        "velocity": {
+          "x": 1.713388,
+          "y": -3.805839,
+          "z": -1.870712
+        },
+        "orientation": {
+          "x": 0.0012859994419470934,
+          "y": 0.001121999513114027,
+          "z": 0.7068186932796288,
+          "w": 0.7073926930305445
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 471,
+        "position": {
+          "x": 2529.692383,
+          "y": 927.158813,
+          "z": 293.857727
+        },
+        "velocity": {
+          "x": -1.218638,
+          "y": 2.63176,
+          "z": -2.105016
+        },
+        "orientation": {
+          "x": 0.0009810002662729385,
+          "y": 0.0007130001935296687,
+          "z": 0.7074191920148173,
+          "w": 0.7067931918449021
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 475,
+        "position": {
+          "x": 2529.685303,
+          "y": 927.132874,
+          "z": 293.796143
+        },
+        "velocity": {
+          "x": -0.50154,
+          "y": -0.529366,
+          "z": -1.972165
+        },
+        "orientation": {
+          "x": -0.0003649998558657828,
+          "y": -0.00008599996603960911,
+          "z": 0.7069837208203139,
+          "w": 0.7072297207231715
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      },
+      {
+        "tick": 479,
+        "position": {
+          "x": 2529.686523,
+          "y": 927.099487,
+          "z": 293.697815
+        },
+        "velocity": {
+          "x": 1.273991,
+          "y": -2.668249,
+          "z": -3.427327
+        },
+        "orientation": {
+          "x": -0.0010459997590006372,
+          "y": -0.0012539997110772455,
+          "z": 0.7071488370722194,
+          "w": 0.7070628370920339
+        },
+        "grounded": true,
+        "wheelCount": 4,
+        "worldContact": {
+          "hasContact": true,
+          "normal": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          }
+        },
+        "wheelContact": {
+          "hasContact": true,
+          "normal": {
+            "x": -1,
+            "y": 0,
+            "z": 0
+          }
+        }
+      }
+    ],
+    "maxNormalStepDegrees": 5.625197478796
+  }
+}

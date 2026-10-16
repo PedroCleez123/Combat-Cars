@@ -145,9 +145,13 @@ cd "C:\Users\Pedro José\Documents\Codex\2026-10-09\files-pasted-by-the-user-hel
 npm run probe:lan-session
 ```
 
-Debe informar tres aserciones verdaderas: rechazo antes de `hello`, recuperación
-dentro de la ventana de cuatro segundos y retirada después de la ventana. El
-sandbox de Codex no puede abrir esa conexión loopback hacia el servidor hijo;
+Debe devolver `schemaVersion: 1` y seis aserciones verdaderas: rechazo antes de
+`hello`, asignación del primer propietario, rechazo de control del invitado,
+transferencia de propietario, reconexión dentro de cuatro segundos y retirada
+después de la ventana. La sonda usa deliberadamente una arena JS de dos plazas
+(`VEHICLE_LIMIT=2`, `ARENA_PROFILE=scrapyard`) para probar sesión y transporte
+sin depender de RocketSim ni de la capacidad de una arena de calibración.
+El sandbox de Codex no puede abrir esa conexión loopback hacia el servidor hijo;
 por eso esa sonda se valida en el PowerShell anfitrión, mientras que la suite
 pura sigue ejecutándose dentro del sandbox.
 
@@ -254,6 +258,17 @@ El portable NSIS no se debe modificar después con 7-Zip ni reemplazando a mano
 su `app.asar`: el ejecutable lleva una comprobación de integridad. Si cambia el
 contenido, hay que volver a generar el portable completo con
 `npm run package:windows`.
+
+Después de empaquetar, validar el artefacto completo con:
+
+```powershell
+npm run verify:desktop-package
+```
+
+La comprobación calcula SHA-256, inspecciona los módulos críticos de `app.asar`
+y ejecuta la prueba de integridad NSIS con `7za.exe`. Si `7za.exe` no está en la
+caché de electron-builder, definir `SEVEN_ZIP_EXE` con su ruta absoluta; no se
+debe reparar el portable editándolo a mano.
 
 ### Dependencias de módulos del cliente
 

@@ -53,6 +53,7 @@
     "probe:lan-session": "node tools/lan-session-probe.mjs",
     "probe:lan-websocket": "node tools/lan-websocket-probe.mjs",
     "verify:provenance": "node tools/provenance-check.mjs",
+    "verify:desktop-package": "node tools/verify-desktop-package.mjs",
     "desktop": "electron .",
     "package:windows": "electron-builder --win portable"
   },

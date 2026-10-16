@@ -26,20 +26,18 @@ La fuente de orden es el [plan canónico](../_bmad-output/implementation-artifac
   emisivo con retícula. Es una capa Three.js; si una transición se ve pero no
   colisiona, hay que comprobar que `ROCKETSIM_BRIDGE_EXE` apunte a R19.
 - Suite después de la última edición de código: `npm test` 163/163.
-- `LAN-HARDEN-01`: frontera HTTP allowlist implementada. La prueba viva contra
-  el host PowerShell sigue pendiente por el aislamiento de red del sandbox.
-- `LAN-HARDEN-02`: propietario de sesión, timeout de `hello`, cola de salida
-  acotada (extraída a `src/lan-outbound-queue.js`) y origen LAN del mismo
-  `Host` implementados; handshake de dos peers y reconexión siguen pendientes
-  en el host. `tools/lan-session-probe.mjs` ya comprueba owner, rechazo de
-  `restart` del invitado, reasignación y reconexión cuando se ejecuta en el
-  PowerShell del host.
+- `LAN-HARDEN-01`: frontera HTTP allowlist implementada y aceptada en pruebas
+  unitarias; la prueba viva contra el host sigue pendiente.
+- `LAN-HARDEN-02`: aceptada en el host el 17/10/2026. La sonda valida
+  propietario de sesión, rechazo de `restart` del invitado, transferencia de
+  owner, reconexión dentro de cuatro segundos y expiración posterior, además
+  del timeout de `hello` y la cola de salida acotada.
 - Suite después de extraer y probar la cola: `npm test` 172/172.
 
 ## Historia activa
 
-`LAN-HARDEN-02` es la unidad operativa actual. Después de cerrar su prueba viva,
-la auditoría prioriza la observación de `HITBOX-01`; `COMBAT-BOUNDS-01` ya está
+`LAN-HARDEN-02` queda aceptada tras la prueba viva del 17/10/2026. La auditoría
+prioriza ahora la observación de `HITBOX-01`; `COMBAT-BOUNDS-01` ya está
 implementada y cubierta por regresión para que los límites de cohete compartan
 la arena nativa; luego la observación de cierre de `HITBOX-01`. Después,
 `MOB-AIR-02-OBS-ISOLATED` está preparada, pero todavía no iniciada en una
@@ -61,7 +59,7 @@ congelados. La ficha completa está en
 
 ## Secuencia siguiente
 
-`LAN-HARDEN-01` → `COMBAT-BOUNDS-01` → `LAN-HARDEN-02` → `HITBOX-01` invertida → observación web de `ARENA-CEILING-01` con R19 →
+`LAN-HARDEN-01` → `COMBAT-BOUNDS-01` → `LAN-HARDEN-02` (aceptada) → `HITBOX-01` invertida → observación web de `ARENA-CEILING-01` con R19 →
 `MOB-AIR-02-OBS-ISOLATED` → `LIVENESS-01-INTEGRATION` → `MOB-AIR-03` para
 comparar curvas web y nativas → cámara aérea/pared si procede → arena visual →
 regresión de combate → online.

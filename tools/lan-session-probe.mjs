@@ -11,7 +11,11 @@ const sessionId = "online01-session-probe";
 function startServer() {
   const child = spawn(process.execPath, ["server.mjs"], {
     cwd: root,
-    env: { ...process.env, MOVEMENT_BACKEND: "js", PORT: String(port) },
+    // The probe exercises two simultaneous authenticated peers (owner + guest).
+    // Keep the match otherwise minimal, but do not leave the default one-car
+    // capacity in place or the guest would be rejected before ownership can be
+    // tested.
+    env: { ...process.env, MOVEMENT_BACKEND: "js", PORT: String(port), VEHICLE_LIMIT: "2", ARENA_PROFILE: "scrapyard" },
     stdio: ["ignore", "pipe", "pipe"],
     windowsHide: true,
   });

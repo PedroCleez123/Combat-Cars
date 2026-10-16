@@ -37,7 +37,7 @@ esas notas se conservan como registro de decisiones y evidencias anteriores.
 | P0 | `LAN-HARDEN-01` | Allowlist HTTP de assets públicos, traversal e internals en 404; suite verde. Implementada y aceptada en unitarias; falta prueba viva en host. |
 | P0 | `BASELINE-01` | **Aceptada 17/10/2026.** Baseline Git etiquetado y hashes de bridge registrados en `docs/provenance-baseline-2026-10-17.json`; no modifica gameplay. |
 | P1 | `COMBAT-BOUNDS-01` | Unificar límites de cohete, arena nativa y malla; ningún cohete desaparece dentro del volumen jugable; prueba de regresión de combate. |
-| P1 | `LAN-HARDEN-02` | Propietario de sesión para `restart/configure`, timeout de hello, backpressure y origen LAN por host; implementada en código, con `tools/lan-session-probe.mjs` preparada y falta prueba LAN en host. |
+| P1 | `LAN-HARDEN-02` | **Aceptada 17/10/2026.** Propietario de sesión para `restart/configure`, timeout de hello, backpressure y origen LAN por host; `tools/lan-session-probe.mjs` valida owner, invitado, transferencia y reconexión. |
 | P1 | `HITBOX-01` | Cerrar observación invertida aislada con R19; no cambiar física sin captura. |
 | P1 | `ARENA-CEILING-01` | Observar la geometría R19 en host web y cerrar el desfase host/bridge. |
 | P1 | `MOB-AIR-02` → `MOB-AIR-03` | Aislar side/diagonal y comparar curvas web/nativas; solo después abordar cámara. |
@@ -45,7 +45,7 @@ esas notas se conservan como registro de decisiones y evidencias anteriores.
 
 ### Puerta de decisión inmediata
 
-La implementación actual es `LAN-HARDEN-02`, continuación operativa de
+`LAN-HARDEN-02` queda aceptada como continuación operativa de
 `COMBAT-BOUNDS-01`; no toca física ni protocolo de combate. La auditoría
 reprodujo que `stepRocketSimCombat` elimina un
 cohete en x=61,5 aunque el arena expandida usa media anchura 72. El arreglo

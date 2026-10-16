@@ -39,7 +39,14 @@ const debug = (...values) => { if (debugLan) console.log("[LAN]", ...values); };
 async function createMatch() {
   // Development starts in the clean CAL-01 arena. The simulation default
   // stays scrapyard so its existing regression cases can exercise ramps/covers.
-  if (movementBackend === "js") return new ArenaMatch(20261010, { vehicleLimit: 1, botCount: 0, arena: "calibration" });
+  if (movementBackend === "js") {
+    const configuredVehicleLimit = Number(process.env.VEHICLE_LIMIT || 1);
+    const vehicleLimit = Number.isInteger(configuredVehicleLimit) && configuredVehicleLimit >= 1 && configuredVehicleLimit <= 6
+      ? configuredVehicleLimit
+      : 1;
+    const arena = process.env.ARENA_PROFILE === "scrapyard" ? "scrapyard" : "calibration";
+    return new ArenaMatch(20261010, { vehicleLimit, botCount: 0, arena });
+  }
   if (movementBackend !== "rocketsim") throw new Error(`MOVEMENT_BACKEND no soportado: ${movementBackend}`);
   const executable = process.env.ROCKETSIM_BRIDGE_EXE;
   if (!executable || !existsSync(executable)) throw new Error("MOVEMENT_BACKEND=rocketsim requiere ROCKETSIM_BRIDGE_EXE válido");

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:6fd1f9014172dd4030943ee815c04a26cda889513c71d014eb974cb7d50e62b2",
+  "pageVersion": "sha256:5485bcfe0325c35abc8b9ac3aeb859a87e0b7b0384428d4a5582043e4f041e89",
   "claims": [
     {
       "id": "claim_fc10ac36f5a24c9b82619c53023e4bbb",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
+          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
         }
       ]
     },
@@ -74,7 +74,7 @@
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
+          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
         },
         {
           "resource": "repo://tests/lan-outbound-queue.test.mjs",
@@ -96,11 +96,11 @@
         },
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:6166021340305adcba5fa1b11e319205c53b4b949909b2a0a071bb6dd9c0f7e7"
+          "version": "repo-file-v1:sha256:5ecd6f3eeb311b434c53a7999e5c94da2ea4c48e5f8e8e2ef821855c9e32d983"
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
+          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
         }
       ]
     },
@@ -110,7 +110,7 @@
       "evidence": [
         {
           "resource": "repo://docs/operational-incident-prevention.md",
-          "version": "repo-file-v1:sha256:a39545d6c150d6da7fbdec3ef44ba789a1b04df128ad1cd46f60bfdb3a7af3c8"
+          "version": "repo-file-v1:sha256:22e6a1d428446a56534e776265bd108ec2fc572802e18476906c8d9800f4eaef"
         },
         {
           "resource": "repo://src/hitbox-01-browser-observation.js",
@@ -121,10 +121,24 @@
           "version": "repo-file-v1:sha256:d71e72473745ccc084ce65742f228e6d5be034acc498c68792424023e2483e89"
         }
       ]
+    },
+    {
+      "id": "claim_fc728fe968c34c81a7f4e31486923a5e",
+      "statement": "La sonda live-session se ejecutó con éxito contra los servidores 5298 y 5300 el 17/10/2026: recibió welcome y snapshot autoritativo, confirmó backend rocketsim, bridge R19 y los perfiles arsenal-expanded-cornered-practice y combat-alpha.",
+      "evidence": [
+        {
+          "resource": "repo://docs/continuation-handoff.md",
+          "version": "repo-file-v1:sha256:f849b58fdbf3ecd240f5d61921678c549e6ada55dd6594e8fa9b5244ede09fe0"
+        },
+        {
+          "resource": "repo://tools/live-session-probe.mjs",
+          "version": "repo-file-v1:sha256:c8df1d673282e739083a8924af8c85c40de721ba198668f2c8bb35721d353fd5"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T08:09:04.647Z"
+    "at": "2026-10-17T09:27:48.379Z"
   }
 }

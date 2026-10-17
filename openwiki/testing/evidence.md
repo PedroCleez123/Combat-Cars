@@ -10,6 +10,8 @@ sources:
     resource: repo://_bmad-output/implementation-artifacts/mob-air-02-isolated-observation-story.md
   - id: openwiki-source-9ab1339d1f3de2e0aca1ab42
     resource: repo://desktop/main.cjs
+  - id: openwiki-source-852c3396a863fa1ee247a682
+    resource: repo://docs/continuation-handoff.md
   - id: openwiki-source-54a6756693f62c6588171ee2
     resource: repo://docs/local-server-browser-bridge.md
   - id: openwiki-source-fc02c3893c209c930cbd4c49
@@ -30,12 +32,14 @@ sources:
     resource: repo://tests/rocketsim-combat.test.mjs
   - id: openwiki-source-78b434e28c33acc4be56d041
     resource: repo://tools/lan-session-probe.mjs
+  - id: openwiki-source-1e3c6fb4ec187cacb5117885
+    resource: repo://tools/live-session-probe.mjs
   - id: openwiki-source-0caa51ce896827d5c4c99cad
     resource: repo://tools/rocketsim-bridge/probe-hitbox-01.mjs
 generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T08:09:04.647Z
+    at: 2026-10-17T09:27:48.379Z
 ---
 
 # Pruebas y evidencia

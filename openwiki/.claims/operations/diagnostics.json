@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:de0c16a4159d2ceb419925053d7758dfb9e082f9a2097c1715f46505ee55169f",
+  "pageVersion": "sha256:eaebab18a22fef7fc61998a91a0e0c57a426c32ed34563e2e47478b236dd0229",
   "claims": [
     {
       "id": "claim_4ac868a92ebc4cc7afb388c1ea10f0a9",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
+          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
         },
         {
           "resource": "repo://tools/start-rocketsim-combat-watch.ps1",
@@ -64,7 +64,7 @@
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
+          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
         },
         {
           "resource": "repo://tools/rocketsim-bridge/probe-hitbox-01.mjs",
@@ -78,7 +78,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:dd0fee76f4ad3a01a2d7ecc11a9263dd6e0555eb895f0306262435a71883022f"
+          "version": "repo-file-v1:sha256:f849b58fdbf3ecd240f5d61921678c549e6ada55dd6594e8fa9b5244ede09fe0"
         },
         {
           "resource": "repo://tests/lan-outbound-queue.test.mjs",
@@ -104,11 +104,11 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:6166021340305adcba5fa1b11e319205c53b4b949909b2a0a071bb6dd9c0f7e7"
+          "version": "repo-file-v1:sha256:5ecd6f3eeb311b434c53a7999e5c94da2ea4c48e5f8e8e2ef821855c9e32d983"
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
+          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
         },
         {
           "resource": "repo://tools/lan-websocket-probe.mjs",
@@ -122,7 +122,7 @@
       "evidence": [
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
+          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
         },
         {
           "resource": "repo://tools/verify-desktop-package.mjs",
@@ -146,17 +146,35 @@
       "evidence": [
         {
           "resource": "repo://docs/operational-incident-prevention.md",
-          "version": "repo-file-v1:sha256:a39545d6c150d6da7fbdec3ef44ba789a1b04df128ad1cd46f60bfdb3a7af3c8"
+          "version": "repo-file-v1:sha256:22e6a1d428446a56534e776265bd108ec2fc572802e18476906c8d9800f4eaef"
         },
         {
           "resource": "repo://src/hitbox-01-browser-observation.js",
           "version": "repo-file-v1:sha256:24d0da57a682b648272eb62e6a6169e8b56b497721d3873ecb2d05deb9b12c7a"
         }
       ]
+    },
+    {
+      "id": "claim_dab9ee75b8374163a944626b2a3e8b0a",
+      "statement": "La sonda probe:live-session abre una sesión WebSocket de observación, espera welcome y el primer snapshot autoritativo, y puede exigir backend RocketSim y perfil de arena mediante variables de entorno sin enviar controles.",
+      "evidence": [
+        {
+          "resource": "repo://docs/local-server-browser-bridge.md",
+          "version": "repo-file-v1:sha256:5ecd6f3eeb311b434c53a7999e5c94da2ea4c48e5f8e8e2ef821855c9e32d983"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
+        },
+        {
+          "resource": "repo://tools/live-session-probe.mjs",
+          "version": "repo-file-v1:sha256:c8df1d673282e739083a8924af8c85c40de721ba198668f2c8bb35721d353fd5"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T08:09:04.647Z"
+    "at": "2026-10-17T09:27:48.379Z"
   }
 }

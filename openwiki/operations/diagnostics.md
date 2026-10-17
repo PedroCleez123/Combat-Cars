@@ -34,6 +34,8 @@ sources:
     resource: repo://tools/lan-session-probe.mjs
   - id: openwiki-source-a4d6da0f7e78863b3c2f4ee9
     resource: repo://tools/lan-websocket-probe.mjs
+  - id: openwiki-source-1e3c6fb4ec187cacb5117885
+    resource: repo://tools/live-session-probe.mjs
   - id: openwiki-source-0caa51ce896827d5c4c99cad
     resource: repo://tools/rocketsim-bridge/probe-hitbox-01.mjs
   - id: openwiki-source-d96abcae97f0c3a3e4d264c8
@@ -43,7 +45,7 @@ sources:
 generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T08:09:04.647Z
+    at: 2026-10-17T09:27:48.379Z
 ---
 
 # Operaciones y diagnóstico

@@ -18,6 +18,9 @@ La fuente de orden es el [plan canónico](../_bmad-output/implementation-artifac
   snapshot autoritativo, R19, el backend RocketSim y el perfil de arena
   esperado. Esta comprobación valida conectividad/configuración, pero no
   sustituye la inspección visual ni una campaña de liveness prolongada.
+- `LIVE-LIVENESS-PROBE`: `npm run probe:live-liveness` observó 1,8 s en ambos
+  hosts el 17/10/2026. 5298 entregó 52 snapshots y 5300 entregó 40; en ambos
+  el reloj autoritativo avanzó, no retrocedió y las poses finales fueron finitas.
 - `HITBOX-01`: la raíz visual RocketSim gira alrededor del pivote físico y el
   prototipo usa una envolvente vertical derivada de la hitbox Octane. La sonda
   R19 confirma `upY=-1` y contacto de carrocería invertida (normal de suelo,

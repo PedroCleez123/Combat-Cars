@@ -30,6 +30,10 @@ sus comillas dentro del repositorio. Para cambiar el puerto, usar
 `LAN_PROBE_PORT` o `LIVE_SESSION_PROBE_PORT` según
 `local-server-browser-bridge.md`.
 
+Para no confundir un único `welcome` con un stream sano, usar
+`npm run probe:live-liveness` fuera de campañas de piloto único: exige varios
+snapshots y un reloj autoritativo que progrese sin enviar controles.
+
 ### Puerto ocupado y sesión equivocada
 
 **Señal:** un servidor anuncia el arranque, pero el navegador sigue conectado a

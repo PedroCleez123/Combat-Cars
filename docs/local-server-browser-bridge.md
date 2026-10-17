@@ -164,6 +164,21 @@ La sonda es un espectador breve: se desconecta al recibir el primer snapshot.
 No se debe ejecutar durante una campaña que exija un único piloto, como
 `?hitbox01=1`, porque temporalmente ocuparía una plaza adicional.
 
+Para comprobar que el stream autoritativo se mantiene vivo, en vez de limitarse
+a contestar un único `welcome`, ejecutar durante una sesión sin campaña aislada:
+
+```powershell
+$env:LIVE_LIVENESS_PROBE_PORT = "5300"
+$env:LIVE_LIVENESS_EXPECT_BACKEND = "rocketsim"
+$env:LIVE_LIVENESS_EXPECT_ARENA = "combat-alpha"
+npm run probe:live-liveness
+```
+
+La sonda no envía controles, observa 1,8 segundos, exige al menos cinco
+snapshots con reloj autoritativo no decreciente y que el reloj avance. Se puede
+ajustar la ventana y el mínimo con `LIVE_LIVENESS_PROBE_OBSERVE_MS` y
+`LIVE_LIVENESS_PROBE_MIN_SNAPSHOTS`.
+
 Para diagnosticar una conexión visual, iniciar el servidor con
 `$env:DEBUG_LAN = "1"` antes de `node server.mjs`. El servidor imprimirá cada
 upgrade, rechazo de origen, rechazo de protocolo y `welcome`. El cliente muestra

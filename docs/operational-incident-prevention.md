@@ -25,8 +25,9 @@ que previene su repetición.
 
 **Prevención:** no distribuir diagnósticos JavaScript de una sola línea para
 PowerShell. Usar las sondas versionadas, por ejemplo `npm run
-probe:lan-websocket`, que contienen el código y sus comillas dentro del
-repositorio. Para cambiar el puerto, usar `LAN_PROBE_PORT` según
+probe:lan-websocket` o `npm run probe:live-session`, que contienen el código y
+sus comillas dentro del repositorio. Para cambiar el puerto, usar
+`LAN_PROBE_PORT` o `LIVE_SESSION_PROBE_PORT` según
 `local-server-browser-bridge.md`.
 
 ### Puerto ocupado y sesión equivocada

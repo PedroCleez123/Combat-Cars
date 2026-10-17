@@ -13,6 +13,11 @@ La fuente de orden es el [plan canónico](../_bmad-output/implementation-artifac
 - `BRIDGE-01`: arranque normal con bridge R13 aceptado; timeout configurable.
 - `LIVENESS-01`: watchdog de snapshots implementado y cubierto por pruebas
   unitarias; la observación de integración en host sigue pendiente.
+- `LIVE-SESSION-PROBE`: la sonda versionada `npm run probe:live-session` se
+  ejecutó el 17/10/2026 contra 5298 y 5300. Ambos devolvieron `welcome`, un
+  snapshot autoritativo, R19, el backend RocketSim y el perfil de arena
+  esperado. Esta comprobación valida conectividad/configuración, pero no
+  sustituye la inspección visual ni una campaña de liveness prolongada.
 - `HITBOX-01`: la raíz visual RocketSim gira alrededor del pivote físico y el
   prototipo usa una envolvente vertical derivada de la hitbox Octane. La sonda
   R19 confirma `upY=-1` y contacto de carrocería invertida (normal de suelo,

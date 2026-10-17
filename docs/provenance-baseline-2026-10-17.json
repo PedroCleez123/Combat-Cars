@@ -12,8 +12,8 @@
   "source": [
     {
       "path": "package.json",
-      "bytes": 6099,
-      "sha256": "62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
+      "bytes": 6163,
+      "sha256": "4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
     },
     {
       "path": "package-lock.json",

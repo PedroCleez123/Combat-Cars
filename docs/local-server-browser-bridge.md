@@ -150,6 +150,20 @@ $env:LAN_PROBE_PORT = "5300"
 npm run probe:lan-websocket
 ```
 
+Para confirmar también un snapshot autoritativo, backend, bridge y perfil de
+arena del servidor ya abierto —sin enviar controles ni usar `node -e`— ejecutar:
+
+```powershell
+$env:LIVE_SESSION_PROBE_PORT = "5298"
+$env:LIVE_SESSION_EXPECT_BACKEND = "rocketsim"
+$env:LIVE_SESSION_EXPECT_ARENA = "arsenal-expanded-cornered-practice"
+npm run probe:live-session
+```
+
+La sonda es un espectador breve: se desconecta al recibir el primer snapshot.
+No se debe ejecutar durante una campaña que exija un único piloto, como
+`?hitbox01=1`, porque temporalmente ocuparía una plaza adicional.
+
 Para diagnosticar una conexión visual, iniciar el servidor con
 `$env:DEBUG_LAN = "1"` antes de `node server.mjs`. El servidor imprimirá cada
 upgrade, rechazo de origen, rechazo de protocolo y `welcome`. El cliente muestra

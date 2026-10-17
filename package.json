@@ -54,6 +54,7 @@
     "probe:lan-session": "node tools/lan-session-probe.mjs",
     "probe:lan-http": "node tools/lan-http-probe.mjs",
     "probe:lan-websocket": "node tools/lan-websocket-probe.mjs",
+    "probe:live-session": "node tools/live-session-probe.mjs",
     "verify:provenance": "node tools/provenance-check.mjs",
     "verify:desktop-package": "node tools/verify-desktop-package.mjs",
     "desktop": "electron .",

@@ -41,6 +41,10 @@ El orden activo es P0 cierre de `HITBOX-01` → P1 `ARENA-CEILING-01` → P2
 P8 `ONLINE-02`. Las hojas antiguas conservan evidencia histórica y no reabren
 historias cerradas.
 
+Las observaciones in-game se agrupan por prioridad en
+[`playtest-batches.md`](playtest-batches.md); el lote actual se genera con
+`npm run plan:playtest-batch`.
+
 ## Referencias activas de diseño
 
 - [`car-soccer-rea-physics-contract.md`](car-soccer-rea-physics-contract.md)

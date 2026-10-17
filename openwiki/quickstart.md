@@ -6,6 +6,8 @@ tags: [quickstart, localhost, rocketsim, lan]
 sources:
   - id: openwiki-source-54a6756693f62c6588171ee2
     resource: repo://docs/local-server-browser-bridge.md
+  - id: openwiki-source-5b8da4b8f058960f14c324f6
+    resource: repo://docs/playtest-batches.md
   - id: openwiki-source-5b54a58d1b51cd490b0e7162
     resource: repo://package.json
   - id: openwiki-source-23775c3de52f3ab95a13cb8b
@@ -28,12 +30,14 @@ sources:
     resource: repo://tools/live-session-liveness-probe.mjs
   - id: openwiki-source-1e3c6fb4ec187cacb5117885
     resource: repo://tools/live-session-probe.mjs
+  - id: openwiki-source-2b75615674a7ba0614f20f97
+    resource: repo://tools/playtest-batch-plan.mjs
   - id: openwiki-source-d96abcae97f0c3a3e4d264c8
     resource: repo://tools/start-rocketsim-combat-watch.ps1
 generated: { by: "codex", at: "2026-10-17T10:18:51.966Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T10:50:35.429Z
+    at: 2026-10-17T11:09:23.067Z
 ---
 
 # Inicio rápido

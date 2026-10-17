@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:85020f8b6e66e567548cf5b27ad5534131c3e4b0759f3e6eefeb75f665996e34",
+  "pageVersion": "sha256:e024ef1a58247ea3394dc33f0ff16bab11afa2cf7ae998d757fba3d82c4af86b",
   "claims": [
     {
       "id": "claim_4ac868a92ebc4cc7afb388c1ea10f0a9",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
+          "version": "repo-file-v1:sha256:9bdc2a5308ee1b2d76dacdb016dc7bb7b2581ca4b31dd46d6bdf976c91fcedd4"
         },
         {
           "resource": "repo://tools/start-rocketsim-combat-watch.ps1",
@@ -52,7 +52,7 @@
     },
     {
       "id": "claim_bc0a369415524ebe8fa3a6a969706c2e",
-      "statement": "La regresión COMBAT-BOUNDS-01 y la cobertura LAN-HARDEN-02 forman parte de la suite npm test, que termina con 177 pruebas correctas; las sondas HTTP, WebSocket y HITBOX-01 de integración se ejecutan en el host PowerShell.",
+      "statement": "La regresión COMBAT-BOUNDS-01 y la cobertura LAN-HARDEN-02 forman parte de la suite `npm test`, que termina con 180 pruebas correctas; las sondas HTTP, WebSocket y HITBOX-01 de integración se ejecutan en el host PowerShell.",
       "evidence": [
         {
           "resource": "repo://_bmad-output/implementation-artifacts/combat-bounds-01-story.md",
@@ -64,7 +64,7 @@
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
+          "version": "repo-file-v1:sha256:9bdc2a5308ee1b2d76dacdb016dc7bb7b2581ca4b31dd46d6bdf976c91fcedd4"
         },
         {
           "resource": "repo://tools/rocketsim-bridge/probe-hitbox-01.mjs",
@@ -78,7 +78,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:82c3d6213a43d23d074f2d13977c356f6f6683d8bc4d8315a1c2263d19d705b2"
+          "version": "repo-file-v1:sha256:1223bd1b48a0ad3bce3ec00505802ed87ae20f385db590f084cd9e340e150fd8"
         },
         {
           "resource": "repo://tests/lan-outbound-queue.test.mjs",
@@ -108,7 +108,7 @@
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
+          "version": "repo-file-v1:sha256:9bdc2a5308ee1b2d76dacdb016dc7bb7b2581ca4b31dd46d6bdf976c91fcedd4"
         },
         {
           "resource": "repo://tools/lan-websocket-probe.mjs",
@@ -122,7 +122,7 @@
       "evidence": [
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
+          "version": "repo-file-v1:sha256:9bdc2a5308ee1b2d76dacdb016dc7bb7b2581ca4b31dd46d6bdf976c91fcedd4"
         },
         {
           "resource": "repo://tools/verify-desktop-package.mjs",
@@ -168,7 +168,7 @@
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
+          "version": "repo-file-v1:sha256:9bdc2a5308ee1b2d76dacdb016dc7bb7b2581ca4b31dd46d6bdf976c91fcedd4"
         },
         {
           "resource": "repo://tools/live-session-probe.mjs",
@@ -186,7 +186,7 @@
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
+          "version": "repo-file-v1:sha256:9bdc2a5308ee1b2d76dacdb016dc7bb7b2581ca4b31dd46d6bdf976c91fcedd4"
         },
         {
           "resource": "repo://tools/live-session-liveness-probe.mjs",
@@ -218,7 +218,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:82c3d6213a43d23d074f2d13977c356f6f6683d8bc4d8315a1c2263d19d705b2"
+          "version": "repo-file-v1:sha256:1223bd1b48a0ad3bce3ec00505802ed87ae20f385db590f084cd9e340e150fd8"
         },
         {
           "resource": "repo://docs/operational-incident-prevention.md",
@@ -229,10 +229,32 @@
           "version": "repo-file-v1:sha256:4535a07a4d406a3a980d091bd2f54f64cc0eb083bf37a0d81d111d23f48b698f"
         }
       ]
+    },
+    {
+      "id": "claim_ff2c324a7f00462291e6629c6519cce3",
+      "statement": "`npm run plan:playtest-batch` genera sin conectar al servidor el manifiesto PLAYTEST-BATCH-01, agrupando el gate de control, HITBOX visual, techo R19 y MOB-AIR side/diagonal, y dejando el corte de snapshots como sublote P2 desechable.",
+      "evidence": [
+        {
+          "resource": "repo://docs/playtest-batches.md",
+          "version": "repo-file-v1:sha256:6838277c2f0886c76111173adc84844585fc61056be508ba04728aec57b198b7"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:9bdc2a5308ee1b2d76dacdb016dc7bb7b2581ca4b31dd46d6bdf976c91fcedd4"
+        },
+        {
+          "resource": "repo://src/playtest-batch-plan.js",
+          "version": "repo-file-v1:sha256:3bec4fe62a1bbd979ac361c0a9afda138f037e206edcb1f30a433616ead7491a"
+        },
+        {
+          "resource": "repo://tools/playtest-batch-plan.mjs",
+          "version": "repo-file-v1:sha256:46c0a3f2cd6491b924920ff3c9e6b34b783558b35880a6010b86f316d0600d7b"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T10:50:35.429Z"
+    "at": "2026-10-17T11:09:23.067Z"
   }
 }

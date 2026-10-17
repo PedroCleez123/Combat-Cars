@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:fa755d1fe89be057a867b9349f53b9b900ccbe440db9a0570b499ce54d28c556",
+  "pageVersion": "sha256:70b10fed2e22c7056cecfb6e3c0340bf60096ee7b6ee0defcd2b02824d19b36e",
   "claims": [
     {
       "id": "claim_fc10ac36f5a24c9b82619c53023e4bbb",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
+          "version": "repo-file-v1:sha256:9bdc2a5308ee1b2d76dacdb016dc7bb7b2581ca4b31dd46d6bdf976c91fcedd4"
         }
       ]
     },
@@ -66,7 +66,7 @@
     },
     {
       "id": "claim_feabf839a5324e59ac03c8a2fcf14f20",
-      "statement": "La suite actual termina con 177 pruebas correctas y cubre propietario LAN, orígenes permitidos y backpressure mediante sockets falsos; la sonda host valida propietario, rechazo de control, reasignación y reconexión, mientras la presión TCP sostenida sigue siendo una frontera separada.",
+      "statement": "La suite actual termina con 180 pruebas correctas y cubre propietario LAN, orígenes permitidos y backpressure mediante sockets falsos; la sonda host valida propietario, rechazo de control, reasignación y reconexión, mientras la presión TCP sostenida sigue siendo una frontera separada.",
       "evidence": [
         {
           "resource": "repo://_bmad-output/implementation-artifacts/lan-harden-02-session-control-story.md",
@@ -74,7 +74,7 @@
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
+          "version": "repo-file-v1:sha256:9bdc2a5308ee1b2d76dacdb016dc7bb7b2581ca4b31dd46d6bdf976c91fcedd4"
         },
         {
           "resource": "repo://tests/lan-outbound-queue.test.mjs",
@@ -100,7 +100,7 @@
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
+          "version": "repo-file-v1:sha256:9bdc2a5308ee1b2d76dacdb016dc7bb7b2581ca4b31dd46d6bdf976c91fcedd4"
         }
       ]
     },
@@ -132,7 +132,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:82c3d6213a43d23d074f2d13977c356f6f6683d8bc4d8315a1c2263d19d705b2"
+          "version": "repo-file-v1:sha256:1223bd1b48a0ad3bce3ec00505802ed87ae20f385db590f084cd9e340e150fd8"
         },
         {
           "resource": "repo://tools/live-session-probe.mjs",
@@ -146,7 +146,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:82c3d6213a43d23d074f2d13977c356f6f6683d8bc4d8315a1c2263d19d705b2"
+          "version": "repo-file-v1:sha256:1223bd1b48a0ad3bce3ec00505802ed87ae20f385db590f084cd9e340e150fd8"
         },
         {
           "resource": "repo://tools/live-session-liveness-probe.mjs",
@@ -160,7 +160,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:82c3d6213a43d23d074f2d13977c356f6f6683d8bc4d8315a1c2263d19d705b2"
+          "version": "repo-file-v1:sha256:1223bd1b48a0ad3bce3ec00505802ed87ae20f385db590f084cd9e340e150fd8"
         },
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
@@ -178,7 +178,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:82c3d6213a43d23d074f2d13977c356f6f6683d8bc4d8315a1c2263d19d705b2"
+          "version": "repo-file-v1:sha256:1223bd1b48a0ad3bce3ec00505802ed87ae20f385db590f084cd9e340e150fd8"
         },
         {
           "resource": "repo://docs/physics-mobility-tracker.md",
@@ -189,10 +189,28 @@
           "version": "repo-file-v1:sha256:4535a07a4d406a3a980d091bd2f54f64cc0eb083bf37a0d81d111d23f48b698f"
         }
       ]
+    },
+    {
+      "id": "claim_fe9756885f284031b1fa65c2794208c4",
+      "statement": "PLAYTEST-BATCH-01 convierte las pruebas in-game P1/P2 en una campaña agrupada y reserva la ejecución inmediata solo para señales P0 de controles, conexión, estado autoritativo o regresión crítica; su contrato tiene tres pruebas unitarias.",
+      "evidence": [
+        {
+          "resource": "repo://docs/playtest-batches.md",
+          "version": "repo-file-v1:sha256:6838277c2f0886c76111173adc84844585fc61056be508ba04728aec57b198b7"
+        },
+        {
+          "resource": "repo://src/playtest-batch-plan.js",
+          "version": "repo-file-v1:sha256:3bec4fe62a1bbd979ac361c0a9afda138f037e206edcb1f30a433616ead7491a"
+        },
+        {
+          "resource": "repo://tests/playtest-batch-plan.test.mjs",
+          "version": "repo-file-v1:sha256:be53af233404b8a0de93e9a2a5474064eb34137b6713a71326292c1d603cf6cc"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T10:50:35.429Z"
+    "at": "2026-10-17T11:09:23.067Z"
   }
 }

@@ -29,6 +29,9 @@ esas notas se conservan como registro de decisiones y evidencias anteriores.
    de aceptado, fallido, aplazado o no verificado.
 4. No crear dependencias nuevas ni retocar constantes de física por sensación
    aislada. Toda discrepancia necesita una traza o prueba reproducible.
+5. Agrupar las observaciones in-game P1/P2 en lotes planificados. Solo una
+   señal P0 —controles normales bloqueados, conexión/estado autoritativo roto o
+   regresión crítica demostrada— justifica una prueba manual inmediata.
 
 ### Prioridades ejecutables
 
@@ -42,6 +45,17 @@ esas notas se conservan como registro de decisiones y evidencias anteriores.
 | P1 | `ARENA-CEILING-01` | Observar la geometría R19 en host web y cerrar el desfase host/bridge. |
 | P1 | `MOB-AIR-02` → `MOB-AIR-03` | Aislar side/diagonal y comparar curvas web/nativas; solo después abordar cámara. |
 | P2 | `LIVENESS-01-INTEGRATION` y online | Verificar watchdog en host y, con seis coches estables, abordar UX de combate, matchmaking y despliegue. |
+
+### PLAYTEST-BATCH-01 — lote de evidencia web R19
+
+La siguiente sesión manual reúne HITBOX visual, transición suelo-pared-techo y
+MOB-AIR lateral/diagonal. El gate de control normal se ejecuta primero y solo
+un fallo suyo eleva el trabajo a P0. Cada campaña de un piloto se cierra antes
+de la siguiente, por lo que el lote comparte preparación pero no roster. El
+corte de snapshots de `LIVENESS-01-INTEGRATION` se deja al final en un proceso
+desechable y no interrumpe los puertos de juego del usuario. El manifiesto
+reproducible es `npm run plan:playtest-batch` y la política está en
+`docs/playtest-batches.md`.
 
 ### Puerta de decisión inmediata
 

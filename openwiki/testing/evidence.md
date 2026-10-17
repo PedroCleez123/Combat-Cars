@@ -18,18 +18,24 @@ sources:
     resource: repo://docs/operational-incident-prevention.md
   - id: openwiki-source-faa18db0998ab6247a813ef3
     resource: repo://docs/physics-mobility-tracker.md
+  - id: openwiki-source-5b8da4b8f058960f14c324f6
+    resource: repo://docs/playtest-batches.md
   - id: openwiki-source-5b54a58d1b51cd490b0e7162
     resource: repo://package.json
   - id: openwiki-source-4c3989ef3101af67d167f4b8
     resource: repo://src/client.js
   - id: openwiki-source-e4cd14f0628c14ca9b892fd9
     resource: repo://src/hitbox-01-browser-observation.js
+  - id: openwiki-source-ead26fc3531a58db3a644a23
+    resource: repo://src/playtest-batch-plan.js
   - id: openwiki-source-b6a9dace199270121d821c89
     resource: repo://tests/arena-visual-profile.test.mjs
   - id: openwiki-source-6147aaf47ee7861dcae86c10
     resource: repo://tests/lan-outbound-queue.test.mjs
   - id: openwiki-source-7caae0236f68c8e56ee8efee
     resource: repo://tests/mob-air-01-browser-playback.test.mjs
+  - id: openwiki-source-cd02902527b9f54f359e8496
+    resource: repo://tests/playtest-batch-plan.test.mjs
   - id: openwiki-source-739a4a0b2067873176a3b006
     resource: repo://tests/rocketsim-arena-profile.test.mjs
   - id: openwiki-source-c8a2a7e26d22bc6a03824489
@@ -45,7 +51,7 @@ sources:
 generated: { by: "codex", at: "2026-10-17T10:18:51.966Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T10:50:35.429Z
+    at: 2026-10-17T11:09:23.067Z
 ---
 
 # Pruebas y evidencia

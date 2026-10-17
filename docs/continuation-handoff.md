@@ -82,11 +82,15 @@ congelados. La ficha completa está en
    verificado. Un estado congelado no prueba un defecto de física.
 5. Ejecutar `npm test` después de cualquier cambio de código; para cambios solo
    documentales, comprobar enlaces y `git diff --check`.
+6. Las pruebas in-game siguen `docs/playtest-batches.md`: solo señales P0
+   (controles, conexión, estado autoritativo o regresión crítica) justifican
+   una prueba inmediata. El resto se agrupa en un lote con precondiciones,
+   evidencia y una clasificación explícita.
 
 ## Secuencia siguiente
 
-`LAN-HARDEN-01` (aceptada) → `COMBAT-BOUNDS-01` → `LAN-HARDEN-02` (aceptada) → `HITBOX-01` visual → observación web de `ARENA-CEILING-01` con R19 →
-`MOB-AIR-02-OBS-ISOLATED` → `LIVENESS-01-INTEGRATION` → `MOB-AIR-03` para
+`PLAYTEST-BATCH-01` (HITBOX visual + techo R19 + MOB-AIR side/diagonal) →
+`LIVENESS-01-INTEGRATION` en sublote desechable → `MOB-AIR-03` para
 comparar curvas web y nativas → cámara aérea/pared si procede → arena visual →
 regresión de combate → online.
 

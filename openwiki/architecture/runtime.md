@@ -5,7 +5,7 @@ description: Flujo autoritativo entre servidor Node, simulación JavaScript o Ro
 tags: [architecture, authority, runtime, rocketsim]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T10:50:35.429Z
+    at: 2026-10-17T11:09:23.067Z
 sources:
   - id: openwiki-source-24082af6d1c2f2f04bbe5750
     resource: repo://server.mjs

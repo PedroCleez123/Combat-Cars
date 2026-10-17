@@ -12,6 +12,8 @@ sources:
     resource: repo://README.md
   - id: openwiki-source-24082af6d1c2f2f04bbe5750
     resource: repo://server.mjs
+  - id: openwiki-source-4c3989ef3101af67d167f4b8
+    resource: repo://src/client.js
   - id: openwiki-source-23eea40248129ac5dd5a8cfb
     resource: repo://src/http-static-boundary.js
   - id: openwiki-source-be334f6b30aff19bd6f46112
@@ -31,7 +33,7 @@ sources:
 generated: { by: "codex", at: "2026-10-16T20:52:30.790Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:38:24.568Z
+    at: 2026-10-17T09:48:31.775Z
 ---
 
 # Inicio rápido

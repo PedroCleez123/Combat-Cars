@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:510ebd2d63650e93d7f8b164c840921fbfaf0d571c2949948865f99959168076",
+  "pageVersion": "sha256:6feb578d7ab3de9c799338b82341647c01f607d632a70802595727484479db81",
   "claims": [
     {
       "id": "claim_fc10ac36f5a24c9b82619c53023e4bbb",
@@ -96,7 +96,7 @@
         },
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
+          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
         },
         {
           "resource": "repo://package.json",
@@ -106,15 +106,19 @@
     },
     {
       "id": "claim_840d66ea07744000bd42121892df87de",
-      "statement": "HITBOX-01 tiene una sonda R19 y una campaña de navegador que reconocen contacto de carrocería invertida sin auto-upright; la observación de penetración visual requiere navegador y permanece no verificada.",
+      "statement": "HITBOX-01 tiene una sonda R19 y una campaña de navegador que reconocen contacto de carrocería invertida sin auto-upright; la campaña devuelve los controles manuales después del contacto, en sesiones no aisladas o al terminar, y la observación de penetración visual requiere navegador y permanece no verificada.",
       "evidence": [
         {
           "resource": "repo://docs/operational-incident-prevention.md",
-          "version": "repo-file-v1:sha256:7c56da1242c8db86883d327a9cd966a2e0f4556a5cecb7ccc4811004ad836019"
+          "version": "repo-file-v1:sha256:9d263098e986f3a6b347f3d2f9c94080b6edce8f236a5f785e3ee4509f5d35e8"
+        },
+        {
+          "resource": "repo://src/client.js",
+          "version": "repo-file-v1:sha256:5276d60a0c1d7e9e92e2233428410b7a1f2cd511f7791148fb1a7dbaee33a814"
         },
         {
           "resource": "repo://src/hitbox-01-browser-observation.js",
-          "version": "repo-file-v1:sha256:24d0da57a682b648272eb62e6a6169e8b56b497721d3873ecb2d05deb9b12c7a"
+          "version": "repo-file-v1:sha256:6382b351f2097c386da77aae43d2cadb68daaef96b274b64d7d61a155edef101"
         },
         {
           "resource": "repo://tools/rocketsim-bridge/probe-hitbox-01.mjs",
@@ -128,7 +132,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:e0b3f9c5b67fd8f41ea784ce5d33df892f854b3a9e5e7f038ccf3d6e9f8102aa"
+          "version": "repo-file-v1:sha256:2d7215cc67418d929fbb11172a46777c3633eb607409e46300284f63b85cbb1f"
         },
         {
           "resource": "repo://tools/live-session-probe.mjs",
@@ -142,7 +146,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:e0b3f9c5b67fd8f41ea784ce5d33df892f854b3a9e5e7f038ccf3d6e9f8102aa"
+          "version": "repo-file-v1:sha256:2d7215cc67418d929fbb11172a46777c3633eb607409e46300284f63b85cbb1f"
         },
         {
           "resource": "repo://tools/live-session-liveness-probe.mjs",
@@ -153,6 +157,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T09:38:24.568Z"
+    "at": "2026-10-17T09:48:31.775Z"
   }
 }

@@ -12,6 +12,8 @@ sources:
     resource: repo://src/control-mapping.js
   - id: openwiki-source-5af9f27f776567d7d3b05a59
     resource: repo://src/gamepad-input.js
+  - id: openwiki-source-e4cd14f0628c14ca9b892fd9
+    resource: repo://src/hitbox-01-browser-observation.js
   - id: openwiki-source-aedc96b9dd22a156c5a1349e
     resource: repo://src/lan-client-liveness.js
   - id: openwiki-source-e8234c4d5cfb74d2788b408a
@@ -20,10 +22,12 @@ sources:
     resource: repo://src/snapshot-interpolation.js
   - id: openwiki-source-b9cdd59cb60c42d053ca0423
     resource: repo://src/vehicle-visual-alignment.js
+  - id: openwiki-source-66effc9b45839f69daeeccc3
+    resource: repo://tests/hitbox-01-browser-observation.test.mjs
 generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:38:24.568Z
+    at: 2026-10-17T09:48:31.775Z
 ---
 
 # Cliente, cámara y controles

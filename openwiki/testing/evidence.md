@@ -18,6 +18,8 @@ sources:
     resource: repo://docs/operational-incident-prevention.md
   - id: openwiki-source-5b54a58d1b51cd490b0e7162
     resource: repo://package.json
+  - id: openwiki-source-4c3989ef3101af67d167f4b8
+    resource: repo://src/client.js
   - id: openwiki-source-e4cd14f0628c14ca9b892fd9
     resource: repo://src/hitbox-01-browser-observation.js
   - id: openwiki-source-b6a9dace199270121d821c89
@@ -41,7 +43,7 @@ sources:
 generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:38:24.568Z
+    at: 2026-10-17T09:48:31.775Z
 ---
 
 # Pruebas y evidencia

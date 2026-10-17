@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:5b1d20c6b0072495cb395a95a63fda4cf8844519a684d23dce65503390cab371",
+  "pageVersion": "sha256:846266de5ef6104e829db46fca5133ba4885c02276eecb6e28278422efcefa25",
   "claims": [
     {
       "id": "claim_f20ab4286bbc4742bb73146dc590d8c8",
@@ -64,7 +64,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
+          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
         },
         {
           "resource": "repo://server.mjs",
@@ -90,7 +90,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
+          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
         },
         {
           "resource": "repo://package.json",
@@ -104,7 +104,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
+          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
         },
         {
           "resource": "repo://package.json",
@@ -122,7 +122,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
+          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
         },
         {
           "resource": "repo://package.json",
@@ -133,10 +133,24 @@
           "version": "repo-file-v1:sha256:4535a07a4d406a3a980d091bd2f54f64cc0eb083bf37a0d81d111d23f48b698f"
         }
       ]
+    },
+    {
+      "id": "claim_f92fa4ae143349e59f5f7cb7e6484f77",
+      "statement": "Para probar HITBOX-01, la guía indica una sola pestaña/piloto y Ctrl+F5 tras actualizar el cliente; durante la preparación la campaña usa controles automáticos y después del contacto, al terminar o si no puede aislar la sesión, el jugador conserva el control manual.",
+      "evidence": [
+        {
+          "resource": "repo://docs/local-server-browser-bridge.md",
+          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
+        },
+        {
+          "resource": "repo://src/client.js",
+          "version": "repo-file-v1:sha256:5276d60a0c1d7e9e92e2233428410b7a1f2cd511f7791148fb1a7dbaee33a814"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T09:38:24.568Z"
+    "at": "2026-10-17T09:48:31.775Z"
   }
 }

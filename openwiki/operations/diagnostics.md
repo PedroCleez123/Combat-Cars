@@ -18,6 +18,8 @@ sources:
     resource: repo://package.json
   - id: openwiki-source-24082af6d1c2f2f04bbe5750
     resource: repo://server.mjs
+  - id: openwiki-source-4c3989ef3101af67d167f4b8
+    resource: repo://src/client.js
   - id: openwiki-source-e4cd14f0628c14ca9b892fd9
     resource: repo://src/hitbox-01-browser-observation.js
   - id: openwiki-source-bfe26ac32051893068e960ee
@@ -47,7 +49,7 @@ sources:
 generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:38:24.568Z
+    at: 2026-10-17T09:48:31.775Z
 ---
 
 # Operaciones y diagnóstico

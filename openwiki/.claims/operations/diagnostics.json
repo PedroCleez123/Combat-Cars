@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:d1564c7437c74011453593dcc72bb49b5bf7e837098acc1e693105d3d8bf3da6",
+  "pageVersion": "sha256:67b5f48f3b133f69c4cae7faa29ad6cf593f0c2ee576b766532816c2a3721cbd",
   "claims": [
     {
       "id": "claim_4ac868a92ebc4cc7afb388c1ea10f0a9",
@@ -78,7 +78,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:e0b3f9c5b67fd8f41ea784ce5d33df892f854b3a9e5e7f038ccf3d6e9f8102aa"
+          "version": "repo-file-v1:sha256:2d7215cc67418d929fbb11172a46777c3633eb607409e46300284f63b85cbb1f"
         },
         {
           "resource": "repo://tests/lan-outbound-queue.test.mjs",
@@ -104,7 +104,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
+          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
         },
         {
           "resource": "repo://package.json",
@@ -142,15 +142,19 @@
     },
     {
       "id": "claim_c720eeca0b3a42c28b17fa7b191c3956",
-      "statement": "La campaña HITBOX-01 libera todos los controles tras detectar contacto de carrocería invertida y no aplica auto-upright; recuperar las ruedas sigue siendo una acción del jugador.",
+      "statement": "La campaña HITBOX-01 bloquea las entradas solo durante la maniobra automática; tras detectar contacto de carrocería invertida, una sesión compartida, un bridge incompatible o un resultado terminal, conserva o devuelve las entradas manuales y nunca aplica auto-upright.",
       "evidence": [
         {
           "resource": "repo://docs/operational-incident-prevention.md",
-          "version": "repo-file-v1:sha256:7c56da1242c8db86883d327a9cd966a2e0f4556a5cecb7ccc4811004ad836019"
+          "version": "repo-file-v1:sha256:9d263098e986f3a6b347f3d2f9c94080b6edce8f236a5f785e3ee4509f5d35e8"
+        },
+        {
+          "resource": "repo://src/client.js",
+          "version": "repo-file-v1:sha256:5276d60a0c1d7e9e92e2233428410b7a1f2cd511f7791148fb1a7dbaee33a814"
         },
         {
           "resource": "repo://src/hitbox-01-browser-observation.js",
-          "version": "repo-file-v1:sha256:24d0da57a682b648272eb62e6a6169e8b56b497721d3873ecb2d05deb9b12c7a"
+          "version": "repo-file-v1:sha256:6382b351f2097c386da77aae43d2cadb68daaef96b274b64d7d61a155edef101"
         }
       ]
     },
@@ -160,7 +164,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
+          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
         },
         {
           "resource": "repo://package.json",
@@ -178,7 +182,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
+          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
         },
         {
           "resource": "repo://package.json",
@@ -193,6 +197,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T09:38:24.568Z"
+    "at": "2026-10-17T09:48:31.775Z"
   }
 }

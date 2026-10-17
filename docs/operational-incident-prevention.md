@@ -34,6 +34,14 @@ Para no confundir un único `welcome` con un stream sano, usar
 `npm run probe:live-liveness` fuera de campañas de piloto único: exige varios
 snapshots y un reloj autoritativo que progrese sin enviar controles.
 
+### HITBOX-01 parecía bloquear los controles
+
+La campaña `?hitbox01=1` usa entradas automáticas durante el salto y la
+inversión para producir una observación determinista. Antes de detectar el
+contacto no es un modo de conducción libre; después del contacto invertido debe
+devolver las entradas manuales al jugador. Si vuelve a quedarse neutral tras
+`CONTACTO sí`, es una regresión de la campaña, no una propiedad de RocketSim.
+
 ### Puerto ocupado y sesión equivocada
 
 **Señal:** un servidor anuncia el arranque, pero el navegador sigue conectado a

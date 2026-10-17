@@ -885,6 +885,7 @@ function input() {
       playerCount: state?.settings?.humans,
       movementBackend: state?.settings?.movementBackend,
       bridgeRevision,
+      manualInput,
     });
     if (playback.phase !== hitbox01LastPhase) {
       hitbox01LastPhase = playback.phase;

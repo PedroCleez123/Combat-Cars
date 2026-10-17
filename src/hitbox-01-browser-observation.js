@@ -107,9 +107,11 @@ export function stepHitbox01BrowserObservation(playback, {
   playerCount = undefined,
   movementBackend = null,
   bridgeRevision = null,
+  manualInput = emptyInput(),
 } = {}) {
   if (!playback || typeof playback !== "object") throw new TypeError("playback must be an object");
   const at = finite(now);
+  const recoveryInput = manualInput && typeof manualInput === "object" ? manualInput : emptyInput();
   if (!car) return result(playback, emptyInput());
   if (movementBackend !== null && movementBackend !== "rocketsim") {
     finish(playback, "requires-rocketsim");
@@ -135,7 +137,7 @@ export function stepHitbox01BrowserObservation(playback, {
     playback.lastSnapshotAt = at;
     return result(playback, emptyInput(), true);
   }
-  if (playback.done) return result(playback, emptyInput());
+  if (playback.done) return result(playback, recoveryInput);
   if (playback.lastSnapshotToken === token) {
     if (at - playback.lastSnapshotAt >= playback.tuning.snapshotStallSeconds) finish(playback, "snapshot-stalled");
     return result(playback, playback.phase === "rotate" ? rotateInput() : emptyInput());
@@ -191,7 +193,7 @@ export function stepHitbox01BrowserObservation(playback, {
     if (playback.observed.invertedGroundContact) finish(playback, "inverted-ground-contact");
     else if (isFloorSupport(car)) finish(playback, "upright-ground-contact");
     else if (at - playback.phaseStartedAt >= playback.tuning.contactTimeoutSeconds) finish(playback, "no-ground-contact-after-inversion");
-    return result(playback, emptyInput());
+    return result(playback, playback.done ? recoveryInput : emptyInput());
   }
   throw new Error(`Unknown HITBOX-01 observation phase: ${playback.phase}`);
 }

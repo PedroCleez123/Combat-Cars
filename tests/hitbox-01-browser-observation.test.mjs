@@ -69,6 +69,7 @@ test("HITBOX-01 reports an inverted authoritative ground contact without judging
     ...options,
     now: .2,
     snapshotTime: 2,
+    manualInput: { throttle: 1, steer: -.5, jump: false, boost: true, drift: true, airRoll: false, roll: 0, fire: false },
     car: car({
       grounded: false,
       surfaceType: "air",
@@ -82,7 +83,7 @@ test("HITBOX-01 reports an inverted authoritative ground contact without judging
   assert.equal(contacted.report.outcome, "inverted-ground-contact");
   assert.equal(buildHitbox01Report(playback).outcome, "inverted-ground-contact");
   assert.deepEqual(contacted.input, {
-    throttle: 0, steer: 0, jump: false, boost: false, drift: false,
+    throttle: 1, steer: -.5, jump: false, boost: true, drift: true,
     airRoll: false, roll: 0, fire: false,
-  }, "the observation never auto-uprights or recovers the inverted car");
+  }, "the player regains control after contact; the observation never auto-uprights");
 });

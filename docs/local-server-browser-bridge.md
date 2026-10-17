@@ -84,8 +84,10 @@ debe inspeccionarse visualmente. Si aparece `requires-r19`, `session-not-isolate
 o `snapshot-stalled`, no hay evidencia de presentación que aceptar.
 
 La campaña no endereza el coche ni aplica una recuperación automática cuando
-queda boca abajo: al acabar solo emite entrada neutra. Recuperar ruedas, saltar
-o usar air-roll sigue siendo una decisión y una acción del jugador.
+queda boca abajo. Antes del contacto bloquea intencionadamente las entradas
+para hacer reproducible la maniobra; en cuanto detecta el contacto invertido
+devuelve las entradas manuales al jugador. Recuperar ruedas, saltar o usar
+air-roll sigue siendo una decisión y una acción del jugador.
 
 ## Límites y prevención
 

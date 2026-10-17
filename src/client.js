@@ -9,6 +9,7 @@ import { createCameraFollowState, resetCameraFollowState, stepCameraFollow, CAME
 import { getArenaVisualProfile } from "./arena-visual-profile.js";
 import { createMob02BrowserPlayback, stepMob02BrowserPlayback } from "./mob02-browser-playback.js";
 import { buildMobAir01Report, createMobAir01BrowserPlayback, stepMobAir01BrowserPlayback } from "./mob-air-01-browser-playback.js";
+import { buildHitbox01Report, createHitbox01BrowserObservation, stepHitbox01BrowserObservation } from "./hitbox-01-browser-observation.js";
 import { createVis03BrowserPlayback, stepVis03BrowserPlayback } from "./vis03-browser-playback.js";
 import { createClientHello, LAN_HEARTBEAT_INTERVAL_MS } from "./lan-session-protocol.js";
 import { createStateLiveness, recordAuthoritativeState, shouldReconnectForStateStall } from "./lan-client-liveness.js";
@@ -35,7 +36,11 @@ const mobAir01Direction = new URLSearchParams(location.search).get("dodge") || "
 const mobAir01Playback = mobAir01Enabled ? createMobAir01BrowserPlayback({ dodgeDirection: mobAir01Direction }) : null;
 let mobAir01LastPhase = null;
 let mobAir01ReportLogged = false;
-const vis03Enabled = !mob02Enabled && !mobAir01Enabled && new URLSearchParams(location.search).get("vis03") === "1";
+const hitbox01Enabled = !mob02Enabled && !mobAir01Enabled && new URLSearchParams(location.search).get("hitbox01") === "1";
+const hitbox01Playback = hitbox01Enabled ? createHitbox01BrowserObservation() : null;
+let hitbox01LastPhase = null;
+let hitbox01ReportLogged = false;
+const vis03Enabled = !mob02Enabled && !mobAir01Enabled && !hitbox01Enabled && new URLSearchParams(location.search).get("vis03") === "1";
 const vis03Playback = vis03Enabled ? createVis03BrowserPlayback() : null;
 let vis03LastPhase = null;
 const pendingInputTimes = new Map();
@@ -870,6 +875,31 @@ function input() {
     }
     return playback.input;
   }
+  if (hitbox01Playback) {
+    const me = localId ? state?.cars?.find(car => car.id === localId) || null : null;
+    const bridgeRevision = Number.parseInt(String(state?.settings?.bridgeLabel || "").replace(/^R/i, ""), 10);
+    const playback = stepHitbox01BrowserObservation(hitbox01Playback, {
+      now: performance.now() / 1000,
+      car: me,
+      snapshotTime: state?.time,
+      playerCount: state?.settings?.humans,
+      movementBackend: state?.settings?.movementBackend,
+      bridgeRevision,
+    });
+    if (playback.phase !== hitbox01LastPhase) {
+      hitbox01LastPhase = playback.phase;
+      console.info(`[HITBOX-01] phase=${playback.phase}`, { car: me, report: playback.report });
+    }
+    if (playback.restartRequested && !hitbox01Playback.restartSent && socket?.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify({ type: "restart" }));
+      hitbox01Playback.restartSent = true;
+    }
+    if (playback.done && !hitbox01ReportLogged) {
+      hitbox01ReportLogged = true;
+      console.info("[HITBOX-01] report", buildHitbox01Report(hitbox01Playback));
+    }
+    return playback.input;
+  }
   if (!vis03Playback) return manualInput;
   const playback = stepVis03BrowserPlayback(vis03Playback, {
     now: performance.now() / 1000,
@@ -957,6 +987,7 @@ function updateHud() {
       ? rocketsimCombat ? `COMBATE ROCKETSIM${inRocketSimCombatAlpha() ? " · COMBAT-ALPHA" : ""}${bridgeLabel}${ceilingPhysicsWarning} · PRIMERO A ${combatGoal} · ${state.settings.humans}/${state.settings.vehicleLimit} PILOTOS${combatPhase}` : inRocketSimRampPractice() ? `PRÁCTICA ROCKETSIM · RAMPA DE PRUEBA · ESQUINAS CURVAS${bridgeLabel}` : inRocketSimBlockPractice() ? `PRÁCTICA ROCKETSIM · BLOQUE DE PRUEBA · ESQUINAS CURVAS${bridgeLabel}` : inRocketSimCorneredPractice() ? `PRÁCTICA ROCKETSIM · ESQUINAS CURVAS · SUELO · PAREDES · TECHO${bridgeLabel}` : (inRocketSimCurvedPractice() || state.settings?.practiceArena === "arsenal-expanded-curved-practice") ? `PRÁCTICA ROCKETSIM · TRANSICIONES CURVAS · SUELO · PAREDES · TECHO${bridgeLabel}` : `PRÁCTICA ROCKETSIM · SUELO · PAREDES · TECHO${bridgeLabel}`
       : calibration ? "CALIBRACIÓN DE MOVILIDAD · SUELO · PAREDES · TECHO"
       : state.settings.vehicleLimit === 1 && state.settings.bots === 0 ? "PRÁCTICA DE FÍSICA · SIN BOTS" : `PRIMERO A 15 · ${state.settings.humans} PILOTOS · ${state.settings.bots} BOTS`;
+    if (hitbox01Playback) ui.objective.textContent = "HITBOX-01 · OBSERVACIÓN INVERTIDA · R19 · UN PILOTO";
   }
   const me = state.cars.find(car => car.id === localId);
   if (me) {
@@ -977,7 +1008,13 @@ function updateHud() {
         return `\nMOB-AIR    ${report.phase} · ${report.dodgeDirection} · J ${report.firstJumpObserved ? "sí" : "—"} · 2 ${report.directedSecondJumpObserved ? "sí" : "—"} · D ${report.dodgeObserved ? "sí" : "—"}${report.recoveryResult ? ` · R ${report.recoveryResult}` : ""}`;
       })()
       : "";
-    ui.readout.textContent = `INTEGRIDAD ${Math.ceil(me.hp)}%\nNITRO      ${calibration && !rocketsimPractice ? "∞ · CALIBRACIÓN" : `${Math.floor(me.boost)}%`}\nVELOCIDAD  ${Math.floor(me.speed || 0)}${me.supersonic ? " · SUPERSÓNICO" : ""}\nSALTOS     ${me.jumps}/2${supportReadout}${dodgeReadout}${calibrationReadout}${networkReadout}${mobAirReadout}${me.respawn > 0 ? `\nREAPARICIÓN ${me.respawn.toFixed(1)}s` : ""}`;
+    const hitboxReadout = hitbox01Playback
+      ? (() => {
+        const report = buildHitbox01Report(hitbox01Playback);
+        return `\nHITBOX-01  ${report.phase} · INV ${report.inversionObserved ? "sí" : "—"} · CONTACTO ${report.invertedGroundContact ? "sí" : "—"} · UP ${report.minimumUpY.toFixed(2)}${report.outcome ? ` · R ${report.outcome}` : ""}`;
+      })()
+      : "";
+    ui.readout.textContent = `INTEGRIDAD ${Math.ceil(me.hp)}%\nNITRO      ${calibration && !rocketsimPractice ? "∞ · CALIBRACIÓN" : `${Math.floor(me.boost)}%`}\nVELOCIDAD  ${Math.floor(me.speed || 0)}${me.supersonic ? " · SUPERSÓNICO" : ""}\nSALTOS     ${me.jumps}/2${supportReadout}${dodgeReadout}${calibrationReadout}${networkReadout}${mobAirReadout}${hitboxReadout}${me.respawn > 0 ? `\nREAPARICIÓN ${me.respawn.toFixed(1)}s` : ""}`;
   }
   if (state.winner) ui.status.textContent = `${state.winner === localTeam ? "VICTORIA" : "DERROTA"} · pulsa R para otra ronda`;
   else if (localTeam) ui.status.textContent = `TÚ · EQUIPO ${localTeam === "blue" ? "AZUL" : "ROJO"}`;

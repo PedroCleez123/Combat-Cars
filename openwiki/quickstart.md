@@ -20,12 +20,14 @@ sources:
     resource: repo://src/lan-session-protocol.js
   - id: openwiki-source-ed91f65a5e7a3852eeb9fc5e
     resource: repo://src/rocketsim-practice-match.js
+  - id: openwiki-source-78b434e28c33acc4be56d041
+    resource: repo://tools/lan-session-probe.mjs
   - id: openwiki-source-d96abcae97f0c3a3e4d264c8
     resource: repo://tools/start-rocketsim-combat-watch.ps1
 generated: { by: "codex", at: "2026-10-16T20:52:30.790Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-16T21:36:10.526Z
+    at: 2026-10-17T08:09:04.647Z
 ---
 
 # Inicio rápido

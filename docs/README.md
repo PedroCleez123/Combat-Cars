@@ -18,7 +18,10 @@ Lee estos archivos en este orden:
    sandbox/host, comprobación del servidor y solución del timeout del navegador.
 9. [`openwiki-codex-mcp.md`](openwiki-codex-mcp.md) — flujo recomendado para
     que Codex coordine OpenWiki por páginas sin una petición monolítica.
-10. [`../openwiki/quickstart.md`](../openwiki/quickstart.md) — wiki generada
+10. [`operational-incident-prevention.md`](operational-incident-prevention.md)
+    — incidencias conocidas, evidencia y prevención para host, navegador,
+    empaquetado y herramientas.
+11. [`../openwiki/quickstart.md`](../openwiki/quickstart.md) — wiki generada
     por páginas y fuentes de arquitectura, movilidad, red y pruebas.
 
 El plan operativo vigente es

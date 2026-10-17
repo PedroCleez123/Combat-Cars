@@ -1,7 +1,7 @@
 # HITBOX-01 — Alineación del chasis visible con el pivote físico
 
 **Fecha:** 14 de octubre de 2026  
-**Estado:** implementación aceptada; observación invertida pendiente
+**Estado:** implementación aceptada; contacto nativo invertido aceptado; verificación visual pendiente
 **Propietario:** cliente Three.js / contrato de coordenadas
 
 ## Problema
@@ -36,7 +36,17 @@ autoridad.
   plano superior de la hitbox Octane, sin alterar el solver.
 - Fallback JavaScript sin cambios de origen: prueba correspondiente.
 - `node --check src/client.js`: correcto.
-- `npm test`: **160/160**.
+- `npm test`: **177/177**.
+- `npm run probe:rocketsim-hitbox-01` con R19 y un solo coche: `upY=-1`,
+  inversión observada en el tick 96 y contacto de carrocería en el tick 170,
+  con normal de suelo `y=1`, `wheelCount=0` y sin ruedas apoyadas. La sonda
+  recorre 1200 ticks para distinguir contacto real de un salto largo.
+- La campaña navegable `?hitbox01=1` espera R19, un solo piloto y respawn
+  autoritativo; detecta ese contacto mediante `contacts` y `wheelCount`, sin
+  modificar el solver ni juzgar los píxeles por sí sola.
+- Al registrar el contacto, la campaña libera todos los controles. No existe
+  auto-upright, impulso de recuperación ni cambio de orientación: recuperar
+  ruedas sigue siendo responsabilidad del jugador y de RocketSim.
 - Host `http://localhost:5300/?arena=combat-alpha` recargado después del cambio,
   HUD y partida visibles, coche en suelo, sin warnings ni errores de consola
   observados. Esta es una comprobación visual de arranque y reposo, no del
@@ -44,14 +54,15 @@ autoridad.
 
 ## Limitación
 
-Todavía no se ha ejecutado una maniobra visual reproducible que termine boca
-abajo con contacto de suelo en una sesión aislada. Por ello el resultado de
-penetración invertida queda **no verificado visualmente**, aunque la
-transformación, escala y contactos límite están cubiertos de forma
+La traza nativa confirma el contacto invertido, pero la automatización de
+interfaz de esta sesión no pudo abrir el navegador para inspeccionar píxeles.
+Por ello la ausencia de penetración visual queda **no verificada visualmente**;
+la transformación, escala y contacto autoritativo sí están cubiertos de forma
 determinista.
 
 ## Siguiente decisión
 
-Observar un vuelco aislado. Si la carrocería sigue penetrando, medir el contacto
-nativo y abrir una corrección del bridge; si queda contenida, cerrar HITBOX-01 y
-pasar a `ARENA-CEILING-01`.
+Abrir `http://localhost:5300/?arena=combat-alpha&hitbox01=1` en una sesión
+R19 limpia. Si la carrocería queda contenida en el contacto marcado por el HUD,
+cerrar HITBOX-01 y pasar a `ARENA-CEILING-01`; si penetra, conservar la captura
+y corregir solo la presentación visual.

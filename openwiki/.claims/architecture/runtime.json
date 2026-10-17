@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:6816c3d45593da8146079c2515112f6b7f69fa06a05cba1874742a760f5fac80",
+  "pageVersion": "sha256:c471352de518f74722d48115bb2f7ada0da60c702194b4b63014faadad606b27",
   "claims": [
     {
       "id": "claim_6e2fb8ad3b6c45c59ae4ea0734e2c356",
-      "statement": "El servidor selecciona el backend JavaScript o RocketSim antes de escuchar conexiones, y en RocketSim valida ejecutable, modo, arena y timeout antes de iniciar la partida.",
+      "statement": "El servidor selecciona el backend JavaScript o RocketSim antes de escuchar conexiones; en RocketSim valida ejecutable, modo, arena y timeout antes de iniciar la partida.",
       "evidence": [
         {
-          "resource": "repo://server.mjs#L35-L54",
-          "version": "repo-lines-v1:sha256:fb618495e384713805491a05fb8afb9998f6d12680f36ec5a4acc59965e8ea7f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkMTgxMTEyMjVjYWRkMmMxMTE0OTkzMjRhNGFiMzBhMjI2MmQ3ZGFmM2JjNTM4NDIxZDUyMGExNzQyZTE3NzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE5ZWU5ZWE3OWIyM2JjNTY5OTVlMDE1N2FlYjEzOGE5OWE0NDljNTM1MWUxZWZlZDk4MDcyMWEzYTFlZjIzYzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE3YjM1M2E2YzcwMzQ5MTRjYmZmZjM3YjUyY2Y4NDdlNzYzYjgyOTcyZDBhZWFkODA2ZTFkZDI4YWZkMzIyNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhZmE3MDY1MGNjNTdjNjkyN2E2MWJmZWE0NGZlNDE4MWFkYmM1MmE4MWI1MDYwNGJiYmZiZGNmMGVhODU1MTUifQ"
+          "resource": "repo://server.mjs",
+          "version": "repo-file-v1:sha256:ef631fde665ed52a5f585ab74753160489ae7346ebef40c4863bf2a27110453b"
         }
       ]
     },
@@ -17,7 +17,7 @@
       "statement": "El tick del servidor evita solapamientos, obtiene un estado autoritativo de la partida y lo publica a cada peer junto con el último input aceptado.",
       "evidence": [
         {
-          "resource": "repo://server.mjs#L242-L258",
+          "resource": "repo://server.mjs#L264-L280",
           "version": "repo-lines-v1:sha256:42a62387e0e3d3ee99fd7b4117a81e573d9baee8d70f1f4a70478d62884837ab:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4ZTcyNDUyMTY0M2ZlYzM2YzJlNWRhZWNiYjE1MjkyM2MwNmMxMjZiOTE0MzBmYzlhNjQxNTU3MDQ5Y2QxZDciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhY2YyZjlhMmQ3MzQ3ZjZhMzAzOGU5MWMwMWRkNTY0M2E1ZThjYzU4ZTZmYjE1Njg0MzQ1NzUxZDFiNWY1YzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiNTgwZTk2NGY4M2E0NzNmNDNkNDQzODQ2Mjk0OWQ2OGI1NjAwZmRhNzg3ZjE2Mzc0NWQwMGRlODljYmYzNmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0NTMxZjMwY2ZkNWFmMWU4Zjk3YWJhNjFiYmQxOTlmYjczNTQyZmMzNTY4YzAwMmQwOTkwODkwNDM2NzJlM2MifQ"
         }
       ]
@@ -41,7 +41,7 @@
       "statement": "Ante un fallo de tick, el runtime intenta reiniciar la partida hasta tres veces y avisa a los clientes de la recuperación o de la parada.",
       "evidence": [
         {
-          "resource": "repo://server.mjs#L207-L256",
+          "resource": "repo://server.mjs#L229-L278",
           "version": "repo-lines-v1:sha256:f60241fe98f2d79db4fd8f2b5128fe65bb322604793e16e92a9b67ef51aeade2:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjMjhhZmRhNzEzZGNhN2UzOTE5NTAwMTY2MjNhMmFlNjZhMTAyMDk4OGZlMGNkNWZjMWI3YWQxN2EwYTgxMzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjNWE0YmRmZTA1ZTczMmJkMDk5NTBlNTRkYjg1MDNlNDNkNDY0ZGVmZjJmNmJmNWI3NmQ5ZmM4YmIxYzJhMDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ4NjcwNTgwYWZhZjUwNzg2NmMzYzhhYzdlNTA2OTJlYzQwOGJmMDkxODBiMzJlNjliNjllMmZlMzk2NmFiYWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBiN2IwNjRkNTk3MDI4NmQ5MjZkMDY2MTJiNjQyZDRlNzFlODk2Yjg4ZTkwYTdmNWUxMDQ1OWU0NzQ4ZDI5NjIifQ"
         }
       ]
@@ -52,7 +52,7 @@
       "evidence": [
         {
           "resource": "repo://server.mjs",
-          "version": "repo-file-v1:sha256:5bac54b7463124c4e3340090085aa7a983dfee4eb0e336b3d027bd58d6fbf3f1"
+          "version": "repo-file-v1:sha256:ef631fde665ed52a5f585ab74753160489ae7346ebef40c4863bf2a27110453b"
         },
         {
           "resource": "repo://src/lan-outbound-queue.js",
@@ -63,10 +63,28 @@
           "version": "repo-file-v1:sha256:da2beb360e710dc4a052c302de0ef91036087e92b64cdf3a6c37ea1f29f2a3e2"
         }
       ]
+    },
+    {
+      "id": "claim_2b932250fe1d478abc2238148688be3e",
+      "statement": "La frontera HTTP expone una allowlist de módulos públicos del navegador, añade nosniff y devuelve 404 para internals y rutas de traversal.",
+      "evidence": [
+        {
+          "resource": "repo://server.mjs",
+          "version": "repo-file-v1:sha256:ef631fde665ed52a5f585ab74753160489ae7346ebef40c4863bf2a27110453b"
+        },
+        {
+          "resource": "repo://src/http-static-boundary.js",
+          "version": "repo-file-v1:sha256:ae9edb5fff9d6f5d9ba0b28c1ebc6ba2f198067d4a637df671a39ec1ae215a8d"
+        },
+        {
+          "resource": "repo://tools/lan-http-probe.mjs",
+          "version": "repo-file-v1:sha256:a3dd2b9a54610cd205947bd3d6b7b29effa35c228af1da25b018062c547d6dfc"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-16T21:36:10.526Z"
+    "at": "2026-10-17T08:09:04.647Z"
   }
 }

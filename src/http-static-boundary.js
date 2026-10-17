@@ -12,6 +12,7 @@ const PUBLIC_ASSETS = new Set([
   "src/arena-visual-profile.js",
   "src/mob02-browser-playback.js",
   "src/mob-air-01-browser-playback.js",
+  "src/hitbox-01-browser-observation.js",
   "src/vis03-browser-playback.js",
   "src/lan-session-protocol.js",
   "src/lan-client-liveness.js",

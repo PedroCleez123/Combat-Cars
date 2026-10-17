@@ -6,9 +6,9 @@
 `BRIDGE-01` está aceptada para arranque normal y `LIVENESS-01` tiene la
 implementación y las pruebas unitarias aceptadas. `ARENA-CEILING-01` tiene la
 geometría nativa y visual implementada y la sonda R19 aceptada; falta verla
-en un host web que use esa build. `HITBOX-01` tiene
-implementada la alineación visual, pero requiere una observación invertida
-aislada para cerrarse. `LAN-HARDEN-01` se implementó como unidad operativa
+en un host web que use esa build. `HITBOX-01` tiene implementada la alineación
+visual y una traza nativa R19 de contacto invertido; requiere solo una
+observación visual aislada para cerrarse. `LAN-HARDEN-01` se implementó como unidad operativa
 previa y está aceptada en pruebas unitarias; queda verificarla en el host.
 No se cambian constantes de física hasta disponer de una traza reproducible.
 
@@ -38,7 +38,7 @@ esas notas se conservan como registro de decisiones y evidencias anteriores.
 | P0 | `BASELINE-01` | **Aceptada 17/10/2026.** Baseline Git etiquetado y hashes de bridge registrados en `docs/provenance-baseline-2026-10-17.json`; no modifica gameplay. |
 | P1 | `COMBAT-BOUNDS-01` | Unificar límites de cohete, arena nativa y malla; ningún cohete desaparece dentro del volumen jugable; prueba de regresión de combate. |
 | P1 | `LAN-HARDEN-02` | **Aceptada 17/10/2026.** Propietario de sesión para `restart/configure`, timeout de hello, backpressure y origen LAN por host; `tools/lan-session-probe.mjs` valida owner, invitado, transferencia y reconexión. |
-| P1 | `HITBOX-01` | Cerrar observación invertida aislada con R19; no cambiar física sin captura. |
+| P1 | `HITBOX-01` | **Contacto nativo aceptado.** Cerrar la observación visual invertida aislada con R19; no cambiar física sin captura. |
 | P1 | `ARENA-CEILING-01` | Observar la geometría R19 en host web y cerrar el desfase host/bridge. |
 | P1 | `MOB-AIR-02` → `MOB-AIR-03` | Aislar side/diagonal y comparar curvas web/nativas; solo después abordar cámara. |
 | P2 | `LIVENESS-01-INTEGRATION` y online | Verificar watchdog en host y, con seis coches estables, abordar UX de combate, matchmaking y despliegue. |
@@ -102,7 +102,7 @@ sobre el tacto y la autoridad:
 
 | Prioridad | Historia | Decisión | Criterio de salida |
 | --- | --- | --- | --- |
-| P0 | `HITBOX-01` | Alinear el modelo provisional con el pivote nativo; queda una observación invertida aislada. | La transformación está cubierta por pruebas; cerrar solo cuando una maniobra boca abajo confirme la ausencia de penetración visual. |
+| P0 | `HITBOX-01` | Alinear el modelo provisional con el pivote nativo; contacto invertido nativo aceptado. | La transformación y el contacto están cubiertos; cerrar solo cuando una maniobra boca abajo confirme la ausencia de penetración visual. |
 | P1 | `ARENA-CEILING-01` | Implementada en bridge R19 y Three.js como geometría original compartida: curva inferior y superior, techo central y parches de esquina. | **Bridge aceptado** por la sonda determinista; queda una observación visual con un host que arranque R19. |
 | P2 | `ARENA-VIS-01` | Ampliar y aclarar la arena después de que la geometría física esté cerrada. | Contraste, techo, perímetro y esquinas legibles sin modificar colisiones. |
 | P3 | `CAR-VIS-01` | Convertir una imagen proporcionada por el usuario en un modelo Three.js mediante `img2threejs`, aislado como piel visual. | El modelo cabe dentro del contrato de volumen renderizado y no cambia RocketSim ni la hitbox. |
@@ -115,7 +115,7 @@ resultados con esta corrección de contacto.
 
 ### HITBOX-01 — contrato de contacto y volumen visible
 
-**Implementación realizada; observación pendiente.** La autoridad de colisión sigue siendo RocketSim. Primero
+**Implementación realizada; contacto nativo aceptado; observación visual pendiente.** La autoridad de colisión sigue siendo RocketSim. Primero
 se registra una caída/dodge que produzca contacto de carrocería con la parte
 inferior del coche hacia arriba y se compara con el límite del modelo Three.js.
 Si el contacto nativo es correcto, se corrige solo el envolvente visual; si la

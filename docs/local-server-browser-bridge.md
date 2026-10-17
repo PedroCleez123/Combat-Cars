@@ -67,6 +67,26 @@ allowlist explícita cuando se necesite restringirla.
 Si se ve la página por defecto sin HUD autoritativo, hay que revisar el
 proceso del servidor y no la física.
 
+## Observación HITBOX-01
+
+Con el servidor apuntando a R19 y una sola pestaña/piloto, abrir:
+
+```text
+http://localhost:5300/?arena=combat-alpha&hitbox01=1
+```
+
+La campaña solicita un único respawn, salta y hace air-roll hasta que el estado
+autoritativo queda invertido. Después suelta el control y espera un contacto de
+carrocería con normal de suelo y `wheelCount=0`; el HUD muestra `INV sí` y
+`CONTACTO sí` cuando ese contacto nativo existe. Esta señal prueba la física y
+la clasificación de contacto, pero la ausencia de penetración de los píxeles
+debe inspeccionarse visualmente. Si aparece `requires-r19`, `session-not-isolated`
+o `snapshot-stalled`, no hay evidencia de presentación que aceptar.
+
+La campaña no endereza el coche ni aplica una recuperación automática cuando
+queda boca abajo: al acabar solo emite entrada neutra. Recuperar ruedas, saltar
+o usar air-roll sigue siendo una decisión y una acción del jugador.
+
 ## Límites y prevención
 
 - Codex puede editar archivos, ejecutar pruebas y compilar el bridge cuando el

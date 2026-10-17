@@ -4,20 +4,26 @@ title: Cliente, cámara y controles
 description: Presentación Three.js de snapshots autoritativos, controles unificados, cámara de persecución y HUD.
 tags: [client, camera, controls, threejs]
 sources:
+  - id: openwiki-source-8dd35fdff2b3211f8978962f
+    resource: repo://_bmad-output/implementation-artifacts/hitbox-01-visual-pivot-story.md
   - id: openwiki-source-4c3989ef3101af67d167f4b8
     resource: repo://src/client.js
   - id: openwiki-source-4917001f2b43a164ea0117c9
     resource: repo://src/control-mapping.js
   - id: openwiki-source-5af9f27f776567d7d3b05a59
     resource: repo://src/gamepad-input.js
+  - id: openwiki-source-aedc96b9dd22a156c5a1349e
+    resource: repo://src/lan-client-liveness.js
   - id: openwiki-source-e8234c4d5cfb74d2788b408a
     resource: repo://src/rocketsim-arena-profile.js
   - id: openwiki-source-ea70ee0e8d5788455e7409e5
     resource: repo://src/snapshot-interpolation.js
-generated: { by: "codex", at: "2026-10-16T20:19:08.736Z" }
+  - id: openwiki-source-b9cdd59cb60c42d053ca0423
+    resource: repo://src/vehicle-visual-alignment.js
+generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-16T21:36:10.526Z
+    at: 2026-10-17T08:09:04.647Z
 ---
 
 # Cliente, cámara y controles
@@ -49,6 +55,12 @@ Al cambiar `settings.practiceArena`, `client.js` resuelve el modo visual en
 curva y esquinas de la piel Three.js siguen el perfil nominal de Node. Esta
 tabla de presentación no sustituye al bridge: las colisiones y el raycast
 estático continúan siendo autoritativos en RocketSim.
+
+La raíz visual del vehículo se coloca en el pivote publicado por RocketSim y la
+malla provisional recibe una alineación y escala separadas. Esto conserva el
+plano de ruedas en reposo y el plano de contacto superior al invertir el coche;
+la observación visual boca abajo de `HITBOX-01` sigue pendiente y no se infiere
+como aceptación a partir de la prueba geométrica.
 
 ## Red y HUD
 

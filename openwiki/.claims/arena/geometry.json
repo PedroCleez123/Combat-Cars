@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:18e393c3905a623d04d8364b43ef6fba276c0767c0b7c84cc29fc1ce4bf6c5d1",
+  "pageVersion": "sha256:f53fe0a85c6ba839b916a52ea49861005502b12cfbc054c144fa0bcb857e9009",
   "claims": [
     {
       "id": "claim_ceaac8f8f8474c98aa1b2e7a7a542b46",
@@ -37,7 +37,7 @@
       "statement": "El cliente construye la presentación de cada arena desde el perfil nominal resuelto por `settings.practiceArena`; para el perfil ampliado usa 144 × 108 × 30 unidades, radio de curva 8 y superficies transparentes con rejilla de techo.",
       "evidence": [
         {
-          "resource": "repo://src/client.js#L353-L405",
+          "resource": "repo://src/client.js#L358-L410",
           "version": "repo-lines-v1:sha256:a296effe4964184d45a31fe30edd8c2fbc2f63c09c5305376d942b0d1b942c6c:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczNzgyZGYwYjFlMGFhMDVhYmYwNDEwZjMwNjc5NmVjZTY5YzQ4ZTExYTI1ZGUyYzVlZDEzMTlkMDg4MDNmZjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZkN2MwMjk4ZDEyZDlmODYwNzE5NmZiOGI0MzQ5MjY0YWMyOTI2Yzk3YWUxNDhjZmZhZGRkMTg5MTEwOGMxOGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1ODZhOWZhNDRlOWRiOTdkNGZiNzQ3YTIyODA3MDE3N2I2ODJjYmQ3NmEzZjQwZWUxNTIwMzFlZWM4MzlmOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiMjdhMTlkYTc1NmQwNGZiYWNmZjFjNTY0YWE1NTBlNTUyNWY0NzljYjMwZmY5YjE2MmY2MDNmNzZmMmM1NzIifQ"
         },
         {
@@ -51,7 +51,7 @@
       "statement": "El cliente dibuja arcos de suelo-pared y pared-techo y, en perfiles con esquinas, añade superficies inferiores, superiores y verticales.",
       "evidence": [
         {
-          "resource": "repo://src/client.js#L545-L639",
+          "resource": "repo://src/client.js#L550-L644",
           "version": "repo-lines-v1:sha256:1a6648fe5b6e6561bf1de44976757f8f62c4267785d3299afcc88470f2eda9d1:eyJzZWxlY3RlZExpbmVDb3VudCI6OTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM0YjUxYjNkMGNlMjEyMWYzMzkzODdjMWE1OWYwODE0ODcxOWEwYTU2ZmY3Mjg4MGY5MjAxMzc2NTM3MzZjMmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEwNTA5YjU1NTAwMWQ2ZmUyZDY0MTJiZDUwYmVmOTgyOTA1MjEwYjdlNWQ4NTVhMDYzN2E5ZGYxMjJhYmQ0ODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1NmQzNTk4Njc3NTRmYTJjNWQ4MDI1M2NlZDI2YTZiMjg5NGFkY2VjZDA4ZjdkOTIyMTI2OTk5NDhiZjY4YjkifQ"
         }
       ]
@@ -73,6 +73,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-16T21:36:10.526Z"
+    "at": "2026-10-17T08:09:04.647Z"
   }
 }

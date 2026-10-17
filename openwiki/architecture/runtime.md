@@ -5,10 +5,12 @@ description: Flujo autoritativo entre servidor Node, simulación JavaScript o Ro
 tags: [architecture, authority, runtime, rocketsim]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-16T21:36:10.526Z
+    at: 2026-10-17T08:09:04.647Z
 sources:
   - id: openwiki-source-24082af6d1c2f2f04bbe5750
     resource: repo://server.mjs
+  - id: openwiki-source-23eea40248129ac5dd5a8cfb
+    resource: repo://src/http-static-boundary.js
   - id: openwiki-source-e7b33f5367b97aad22fe9a03
     resource: repo://src/lan-outbound-queue.js
   - id: openwiki-source-be334f6b30aff19bd6f46112
@@ -17,16 +19,19 @@ sources:
     resource: repo://src/rocketsim-backend.js
   - id: openwiki-source-26f56283d037418651d142bb
     resource: repo://src/rocketsim-protocol.js
-generated: { by: "codex", at: "2026-10-16T20:52:30.790Z" }
+  - id: openwiki-source-b8683c98010c7eb67003515b
+    resource: repo://tools/lan-http-probe.mjs
+generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
 ---
 
 # Arquitectura y autoridad
 
 El servidor Node es el punto de entrada del runtime. Selecciona el backend a
-partir de `MOVEMENT_BACKEND`: por defecto crea `ArenaMatch` con el perfil de
-calibración; con `rocketsim` valida el ejecutable nativo, el perfil de arena y
-el modo `practice` o `combat`, crea `RocketSimPracticeMatch` y espera a que el
-bridge esté listo antes de abrir el servidor HTTP/WebSocket.
+partir de `MOVEMENT_BACKEND`: en JavaScript crea `ArenaMatch` con el perfil de
+calibración, con un límite de vehículos configurable para sondas aisladas; con
+`rocketsim` valida el ejecutable nativo, el perfil de arena y el modo `practice`
+o `combat`, crea `RocketSimPracticeMatch` y espera a que el bridge esté listo
+antes de abrir el servidor HTTP/WebSocket.
 
 ## Flujo de una partida
 
@@ -58,6 +63,11 @@ peer autenticado restante. La salida WebSocket usa una cola acotada con
 backpressure y cierra el socket si el cliente no drena, evitando crecimiento
 indefinido de memoria.
 
+La frontera HTTP usa una allowlist explícita de módulos de navegador. Expone
+`index.html`, el cliente y sus dependencias de Three.js, pero devuelve 404 para
+el servidor, documentación, herramientas, configuración y traversal; las
+respuestas públicas incluyen `X-Content-Type-Options: nosniff`.
+
 ## Fallos y recuperación
 
 El servidor evita ticks solapados. Si un `match.tick` falla, marca el runtime,
@@ -73,3 +83,4 @@ bridge.
 - `src/rocketsim-practice-match.js`: adaptación de roster, escala y snapshots.
 - `src/rocketsim-backend.js`: ciclo de vida y frontera JSONL del bridge.
 - `src/rocketsim-protocol.js`: validación de frames y límites de IDs.
+- `src/http-static-boundary.js`: allowlist de recursos estáticos públicos.

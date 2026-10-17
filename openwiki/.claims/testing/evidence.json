@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:8a503960124bb0471214c60c21a3c7bb62e5c283a411f79f7fb3318bf941838b",
+  "pageVersion": "sha256:6fd1f9014172dd4030943ee815c04a26cda889513c71d014eb974cb7d50e62b2",
   "claims": [
     {
       "id": "claim_fc10ac36f5a24c9b82619c53023e4bbb",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:0546cb0f0344233241f864d5dfa02a0aef1dd6765658264cec2ab8671032681e"
+          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
         }
       ]
     },
@@ -66,31 +66,23 @@
     },
     {
       "id": "claim_feabf839a5324e59ac03c8a2fcf14f20",
-      "statement": "La suite actual termina con 172 pruebas correctas y cubre propietario LAN, orígenes permitidos y backpressure mediante un socket falso; la sonda host para propietario, rechazo de control, reasignación y reconexión está preparada, pero la verificación viva y la presión TCP siguen no verificadas.",
+      "statement": "La suite actual termina con 177 pruebas correctas y cubre propietario LAN, orígenes permitidos y backpressure mediante sockets falsos; la sonda host valida propietario, rechazo de control, reasignación y reconexión, mientras la presión TCP sostenida sigue siendo una frontera separada.",
       "evidence": [
         {
           "resource": "repo://_bmad-output/implementation-artifacts/lan-harden-02-session-control-story.md",
-          "version": "repo-file-v1:sha256:78b1c182ac03ea75b84749cff3fe8ee6f4c393876f35175e7439a943ba563555"
+          "version": "repo-file-v1:sha256:0176f7c32a6c156fe5ad8295f9f82310a24ae3b1f75c8fb0807acf8d53292f48"
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:0546cb0f0344233241f864d5dfa02a0aef1dd6765658264cec2ab8671032681e"
+          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
         },
         {
           "resource": "repo://tests/lan-outbound-queue.test.mjs",
           "version": "repo-file-v1:sha256:1a4271750ea3a4e0f88fa7642f70acc1e23447b2c520e250bac1269065fc486a"
         },
         {
-          "resource": "repo://tests/lan-session-control.test.mjs",
-          "version": "repo-file-v1:sha256:7955340237999d5a8144057cfb35ed008280f24b482dca0bc3204c2e8d78ba27"
-        },
-        {
-          "resource": "repo://tests/lan-session-protocol.test.mjs",
-          "version": "repo-file-v1:sha256:eabc52a37c9f5e01f57840f677c60df270baad88ef629c8dbe1d0fddffd5bb11"
-        },
-        {
           "resource": "repo://tools/lan-session-probe.mjs",
-          "version": "repo-file-v1:sha256:04a92520114d312a91b06d6d9a0e83ad9109339b85c2ac407fc3e98315cb5b18"
+          "version": "repo-file-v1:sha256:8f92f1aef0d3e6562e1389b12b40acc5e4b86c843576fa66055dd54da079d920"
         }
       ]
     },
@@ -104,17 +96,35 @@
         },
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:c05a3c0d2ae64b53fcbeccf97189f67e0041fcbec48015ad07bb4d274ce8da4c"
+          "version": "repo-file-v1:sha256:6166021340305adcba5fa1b11e319205c53b4b949909b2a0a071bb6dd9c0f7e7"
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:0546cb0f0344233241f864d5dfa02a0aef1dd6765658264cec2ab8671032681e"
+          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
+        }
+      ]
+    },
+    {
+      "id": "claim_840d66ea07744000bd42121892df87de",
+      "statement": "HITBOX-01 tiene una sonda R19 y una campaña de navegador que reconocen contacto de carrocería invertida sin auto-upright; la observación de penetración visual requiere navegador y permanece no verificada.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operational-incident-prevention.md",
+          "version": "repo-file-v1:sha256:a39545d6c150d6da7fbdec3ef44ba789a1b04df128ad1cd46f60bfdb3a7af3c8"
+        },
+        {
+          "resource": "repo://src/hitbox-01-browser-observation.js",
+          "version": "repo-file-v1:sha256:24d0da57a682b648272eb62e6a6169e8b56b497721d3873ecb2d05deb9b12c7a"
+        },
+        {
+          "resource": "repo://tools/rocketsim-bridge/probe-hitbox-01.mjs",
+          "version": "repo-file-v1:sha256:d71e72473745ccc084ce65742f228e6d5be034acc498c68792424023e2483e89"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-16T21:36:10.526Z"
+    "at": "2026-10-17T08:09:04.647Z"
   }
 }

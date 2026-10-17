@@ -11,3 +11,5 @@ node_modules/
 *.log
 .tmp-*.mjs
 dist/
+dist-final/
+dist-release/

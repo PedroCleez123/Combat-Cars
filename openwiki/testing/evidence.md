@@ -12,16 +12,16 @@ sources:
     resource: repo://desktop/main.cjs
   - id: openwiki-source-54a6756693f62c6588171ee2
     resource: repo://docs/local-server-browser-bridge.md
+  - id: openwiki-source-fc02c3893c209c930cbd4c49
+    resource: repo://docs/operational-incident-prevention.md
   - id: openwiki-source-5b54a58d1b51cd490b0e7162
     resource: repo://package.json
+  - id: openwiki-source-e4cd14f0628c14ca9b892fd9
+    resource: repo://src/hitbox-01-browser-observation.js
   - id: openwiki-source-b6a9dace199270121d821c89
     resource: repo://tests/arena-visual-profile.test.mjs
   - id: openwiki-source-6147aaf47ee7861dcae86c10
     resource: repo://tests/lan-outbound-queue.test.mjs
-  - id: openwiki-source-fdc5f25ce4a9ae86bd46d47c
-    resource: repo://tests/lan-session-control.test.mjs
-  - id: openwiki-source-3424d8f45c206352f1e8ad4f
-    resource: repo://tests/lan-session-protocol.test.mjs
   - id: openwiki-source-7caae0236f68c8e56ee8efee
     resource: repo://tests/mob-air-01-browser-playback.test.mjs
   - id: openwiki-source-739a4a0b2067873176a3b006
@@ -30,17 +30,19 @@ sources:
     resource: repo://tests/rocketsim-combat.test.mjs
   - id: openwiki-source-78b434e28c33acc4be56d041
     resource: repo://tools/lan-session-probe.mjs
-generated: { by: "codex", at: "2026-10-16T20:52:30.790Z" }
+  - id: openwiki-source-0caa51ce896827d5c4c99cad
+    resource: repo://tools/rocketsim-bridge/probe-hitbox-01.mjs
+generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-16T21:36:10.526Z
+    at: 2026-10-17T08:09:04.647Z
 ---
 
 # Pruebas y evidencia
 
 ## Capas de verificación
 
-La suite Node se ejecuta con `npm test` y reúne 172 pruebas del solver legado,
+La suite Node se ejecuta con `npm test` y reúne 177 pruebas del solver legado,
 controles, gamepad, interpolación, cámara, perfiles visuales, alineación del
 vehículo, campañas de navegador, bridge, curvas, sesión RocketSim, combate y
 vitalidad LAN. Incluye regresiones de frontera HTTP y del registro nominal de
@@ -64,6 +66,14 @@ La historia MOB-AIR-02 exige tres variantes aisladas (frontal, lateral y
 diagonal), un único piloto, ACKs monotónicos, snapshots autoritativos y seriales
 J/2/D. Solo una discrepancia reproducible abre una corrección del solver.
 
+`tests/hitbox-01-browser-observation.test.mjs` comprueba que HITBOX-01 deriva
+el eje arriba del quaternion autoritativo, exige R19 y un piloto, y reconoce el
+contacto de carrocería invertida con normal de suelo y `wheelCount=0`. La
+campaña libera todos los controles después de observarlo: no endereza el coche
+ni sustituye la recuperación que debe ejecutar el jugador. La sonda R19
+`npm run probe:rocketsim-hitbox-01` confirma la traza nativa; la ausencia de
+penetración visual sigue requiriendo observación en navegador.
+
 ## Arena y combate
 
 Las pruebas de perfil visual comprueban el tema claro de las arenas RocketSim,
@@ -72,13 +82,19 @@ de combate. Las pruebas de combate cubren objetivo de puntuación, cooldown,
 oclusiones por geometría, impacto de vehículo, eliminación y respawn.
 
 La cobertura LAN incluye el contrato de propietario, la allowlist de orígenes
-y la cola de salida con backpressure mediante sockets falsos; no sustituye la
-prueba viva de dos navegadores, reconexión o presión TCP en el host.
+y la cola de salida con backpressure mediante sockets falsos. Las sondas del
+host validan propietario, rechazo de control, reasignación y reconexión; la
+presión TCP sostenida sigue siendo una frontera separada.
 
 `tests/rocketsim-arena-profile.test.mjs` confirma que `combat-alpha` declara
 72 × 54 × 30 unidades y que su modo Three.js resuelve al mismo perfil.
 `tests/rocketsim-combat.test.mjs` reproduce el borde que antes desaparecía:
 un cohete que rebasa x=62 se mantiene vivo dentro del volumen ampliado.
+
+Los fallos de PowerShell, loopback sandbox/host, assets estáticos y portable
+NSIS se clasifican como incidencias operativas y se mantienen en
+`docs/operational-incident-prevention.md`; no se convierten en cambios de
+física sin una traza autoritativa.
 
 Las capturas nativas incluyen geometría de arenas curvas, esquinas, rampas,
 raycast estático, visibilidad de proyectiles, campañas LAN de dos o seis pilotos

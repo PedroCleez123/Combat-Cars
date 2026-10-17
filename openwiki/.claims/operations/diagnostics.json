@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:29dae271b69799ee1325bbc57e5c940061e6a4affd49db8b422683072b09e91e",
+  "pageVersion": "sha256:de0c16a4159d2ceb419925053d7758dfb9e082f9a2097c1715f46505ee55169f",
   "claims": [
     {
       "id": "claim_4ac868a92ebc4cc7afb388c1ea10f0a9",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:0c38a7d8b77b0c9ba60db865899adf3885dcd915492222866255bf7748eaae1b"
+          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
         },
         {
           "resource": "repo://tools/start-rocketsim-combat-watch.ps1",
@@ -22,7 +22,7 @@
       "evidence": [
         {
           "resource": "repo://server.mjs",
-          "version": "repo-file-v1:sha256:10a12e45ba8f3848c7d2c7a139929ffbf184463d48354ebe9a7c4025ad39c827"
+          "version": "repo-file-v1:sha256:ef631fde665ed52a5f585ab74753160489ae7346ebef40c4863bf2a27110453b"
         }
       ]
     },
@@ -52,7 +52,7 @@
     },
     {
       "id": "claim_bc0a369415524ebe8fa3a6a969706c2e",
-      "statement": "La regresión COMBAT-BOUNDS-01 y la cobertura LAN-HARDEN-02 forman parte de la suite npm test, que termina con 172 pruebas correctas; la verificación viva de red y renderizado queda reservada al host PowerShell.",
+      "statement": "La regresión COMBAT-BOUNDS-01 y la cobertura LAN-HARDEN-02 forman parte de la suite npm test, que termina con 177 pruebas correctas; las sondas HTTP, WebSocket y HITBOX-01 de integración se ejecutan en el host PowerShell.",
       "evidence": [
         {
           "resource": "repo://_bmad-output/implementation-artifacts/combat-bounds-01-story.md",
@@ -60,21 +60,25 @@
         },
         {
           "resource": "repo://_bmad-output/implementation-artifacts/lan-harden-02-session-control-story.md",
-          "version": "repo-file-v1:sha256:78b1c182ac03ea75b84749cff3fe8ee6f4c393876f35175e7439a943ba563555"
+          "version": "repo-file-v1:sha256:0176f7c32a6c156fe5ad8295f9f82310a24ae3b1f75c8fb0807acf8d53292f48"
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:0c38a7d8b77b0c9ba60db865899adf3885dcd915492222866255bf7748eaae1b"
+          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
+        },
+        {
+          "resource": "repo://tools/rocketsim-bridge/probe-hitbox-01.mjs",
+          "version": "repo-file-v1:sha256:d71e72473745ccc084ce65742f228e6d5be034acc498c68792424023e2483e89"
         }
       ]
     },
     {
       "id": "claim_06eb003bbe9742ca876368f94349f59c",
-      "statement": "La cobertura unitaria LAN valida propietario, allowlist/origen por Host y backpressure de salida; la sonda del host también comprueba propietario, rechazo de control, reasignación y reconexión, pero esa prueba viva permanece no verificada desde este sandbox.",
+      "statement": "La cobertura unitaria LAN valida propietario, allowlist/origen por Host y backpressure de salida; la sonda del host comprueba propietario, rechazo de control, reasignación y reconexión.",
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:9b34ddfbe2ec5eb574714fea1db94a843f4c7b4161deb2c1cff5374d52708ee1"
+          "version": "repo-file-v1:sha256:dd0fee76f4ad3a01a2d7ecc11a9263dd6e0555eb895f0306262435a71883022f"
         },
         {
           "resource": "repo://tests/lan-outbound-queue.test.mjs",
@@ -90,7 +94,7 @@
         },
         {
           "resource": "repo://tools/lan-session-probe.mjs",
-          "version": "repo-file-v1:sha256:04a92520114d312a91b06d6d9a0e83ad9109339b85c2ac407fc3e98315cb5b18"
+          "version": "repo-file-v1:sha256:8f92f1aef0d3e6562e1389b12b40acc5e4b86c843576fa66055dd54da079d920"
         }
       ]
     },
@@ -100,21 +104,59 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:e8a93cce3b32472762abbf9001fe5742fab02689ed5bcc2825b1e3b32cf731c6"
+          "version": "repo-file-v1:sha256:6166021340305adcba5fa1b11e319205c53b4b949909b2a0a071bb6dd9c0f7e7"
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:0c38a7d8b77b0c9ba60db865899adf3885dcd915492222866255bf7748eaae1b"
+          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
         },
         {
           "resource": "repo://tools/lan-websocket-probe.mjs",
           "version": "repo-file-v1:sha256:6976614c3e7988cc5f7f8ceb546e2a0986f980460858124ff32712b2b6669caa"
         }
       ]
+    },
+    {
+      "id": "claim_de01dd373c6c4933aa31c22e299b7478",
+      "statement": "verify:desktop-package calcula el SHA-256 del portable, inspecciona app.asar y prueba la integridad NSIS con 7za.exe.",
+      "evidence": [
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:62aea5628f4898101595d85a7c495a0cda59f7ba487a718c542bebfaf8206d0f"
+        },
+        {
+          "resource": "repo://tools/verify-desktop-package.mjs",
+          "version": "repo-file-v1:sha256:478a9711b2a8a18e442b10c4e91b51aec25a049ca26828c2e6cafcc571da20bd"
+        }
+      ]
+    },
+    {
+      "id": "claim_8fec5d958ed541e48ea7d25c7ff426cb",
+      "statement": "probe:lan-http valida en host los assets públicos, nosniff e internals/traversal 404 en una instancia JavaScript aislada.",
+      "evidence": [
+        {
+          "resource": "repo://tools/lan-http-probe.mjs",
+          "version": "repo-file-v1:sha256:a3dd2b9a54610cd205947bd3d6b7b29effa35c228af1da25b018062c547d6dfc"
+        }
+      ]
+    },
+    {
+      "id": "claim_c720eeca0b3a42c28b17fa7b191c3956",
+      "statement": "La campaña HITBOX-01 libera todos los controles tras detectar contacto de carrocería invertida y no aplica auto-upright; recuperar las ruedas sigue siendo una acción del jugador.",
+      "evidence": [
+        {
+          "resource": "repo://docs/operational-incident-prevention.md",
+          "version": "repo-file-v1:sha256:a39545d6c150d6da7fbdec3ef44ba789a1b04df128ad1cd46f60bfdb3a7af3c8"
+        },
+        {
+          "resource": "repo://src/hitbox-01-browser-observation.js",
+          "version": "repo-file-v1:sha256:24d0da57a682b648272eb62e6a6169e8b56b497721d3873ecb2d05deb9b12c7a"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-16T21:36:10.526Z"
+    "at": "2026-10-17T08:09:04.647Z"
   }
 }

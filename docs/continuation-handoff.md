@@ -14,9 +14,10 @@ La fuente de orden es el [plan canónico](../_bmad-output/implementation-artifac
 - `LIVENESS-01`: watchdog de snapshots implementado y cubierto por pruebas
   unitarias; la observación de integración en host sigue pendiente.
 - `HITBOX-01`: la raíz visual RocketSim gira alrededor del pivote físico y el
-  prototipo usa una envolvente vertical derivada de la hitbox Octane; la suite
-  queda en 160/160. Falta observar una postura invertida con contacto de suelo
-  antes de cerrar la historia.
+  prototipo usa una envolvente vertical derivada de la hitbox Octane. La sonda
+  R19 confirma `upY=-1` y contacto de carrocería invertida (normal de suelo,
+  `wheelCount=0`) en un solo piloto; la suite queda en 177/177. Falta solo la
+  inspección visual de píxeles en una sesión web limpia.
 - `ARENA-CEILING-01`: bridge R19 aceptado. La sonda de 720 ticks recorre suelo,
   pared, esquinas y techo con apoyo continuo y salto máximo de normal de
   3,124 grados. Three.js comparte la geometría. Falta una observación visual
@@ -25,7 +26,7 @@ La fuente de orden es el [plan canónico](../_bmad-output/implementation-artifac
 - La presentación de límites usa ahora paredes/curvas translúcidas y un techo
   emisivo con retícula. Es una capa Three.js; si una transición se ve pero no
   colisiona, hay que comprobar que `ROCKETSIM_BRIDGE_EXE` apunte a R19.
-- Suite después de la última edición de código: `npm test` 173/173.
+- Suite después de la última edición de código: `npm test` 177/177.
 - `LAN-HARDEN-01`: aceptada en el host el 17/10/2026. `probe:lan-http` entrega
   los assets públicos con `nosniff` y devuelve 404 para internals y traversal.
 - `LAN-HARDEN-02`: aceptada en el host el 17/10/2026. La sonda valida
@@ -59,7 +60,7 @@ congelados. La ficha completa está en
 
 ## Secuencia siguiente
 
-`LAN-HARDEN-01` (aceptada) → `COMBAT-BOUNDS-01` → `LAN-HARDEN-02` (aceptada) → `HITBOX-01` invertida → observación web de `ARENA-CEILING-01` con R19 →
+`LAN-HARDEN-01` (aceptada) → `COMBAT-BOUNDS-01` → `LAN-HARDEN-02` (aceptada) → `HITBOX-01` visual → observación web de `ARENA-CEILING-01` con R19 →
 `MOB-AIR-02-OBS-ISOLATED` → `LIVENESS-01-INTEGRATION` → `MOB-AIR-03` para
 comparar curvas web y nativas → cámara aérea/pared si procede → arena visual →
 regresión de combate → online.

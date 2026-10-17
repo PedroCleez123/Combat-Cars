@@ -16,10 +16,12 @@ sources:
     resource: repo://src/lan-session-protocol.js
   - id: openwiki-source-ed91f65a5e7a3852eeb9fc5e
     resource: repo://src/rocketsim-practice-match.js
-generated: { by: "codex", at: "2026-10-16T20:52:30.790Z" }
+  - id: openwiki-source-78b434e28c33acc4be56d041
+    resource: repo://tools/lan-session-probe.mjs
+generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-16T21:36:10.526Z
+    at: 2026-10-17T08:09:04.647Z
 ---
 
 # Sesión LAN y protocolo
@@ -63,6 +65,12 @@ de la LAN sin convertir cualquier origen en válido. Una allowlist configurada
 sustituye esas excepciones. Las respuestas WebSocket se enmarcan en
 `src/lan-outbound-queue.js`, se encolan mientras el socket aplica backpressure
 y se destruye la conexión al superar `LAN_MAX_BUFFER_BYTES`.
+
+La sonda host-only `tools/lan-session-probe.mjs` valida el contrato completo con
+dos peers en una arena JS aislada: rechazo antes de `hello`, owner inicial,
+rechazo de control del invitado, transferencia de owner, reconexión dentro de
+cuatro segundos y expiración posterior. No depende del bridge RocketSim ni de
+la instancia de juego del puerto 5300.
 
 ## Fuentes
 

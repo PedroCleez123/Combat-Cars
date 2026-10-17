@@ -40,10 +40,10 @@ sources:
     resource: repo://tools/live-session-probe.mjs
   - id: openwiki-source-0caa51ce896827d5c4c99cad
     resource: repo://tools/rocketsim-bridge/probe-hitbox-01.mjs
-generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
+generated: { by: "codex", at: "2026-10-17T10:18:51.966Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:48:31.775Z
+    at: 2026-10-17T10:18:51.966Z
 ---
 
 # Pruebas y evidencia
@@ -103,6 +103,12 @@ Los fallos de PowerShell, loopback sandbox/host, assets estáticos y portable
 NSIS se clasifican como incidencias operativas y se mantienen en
 `docs/operational-incident-prevention.md`; no se convierten en cambios de
 física sin una traza autoritativa.
+
+La corrección de foco del canvas está cubierta por sintaxis, suite Node y
+comprobación HTTP de que el cliente servido contiene los listeners de
+`pointerdown` y `visibilitychange`. La interacción visual dentro del navegador
+integrado queda `not verified` cuando el motor CUA no puede iniciar; no debe
+presentarse como una prueba de teclado satisfactoria.
 
 Las capturas nativas incluyen geometría de arenas curvas, esquinas, rampas,
 raycast estático, visibilidad de proyectiles, campañas LAN de dos o seis pilotos

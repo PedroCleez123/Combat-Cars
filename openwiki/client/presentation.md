@@ -6,6 +6,8 @@ tags: [client, camera, controls, threejs]
 sources:
   - id: openwiki-source-8dd35fdff2b3211f8978962f
     resource: repo://_bmad-output/implementation-artifacts/hitbox-01-visual-pivot-story.md
+  - id: openwiki-source-54a6756693f62c6588171ee2
+    resource: repo://docs/local-server-browser-bridge.md
   - id: openwiki-source-4c3989ef3101af67d167f4b8
     resource: repo://src/client.js
   - id: openwiki-source-4917001f2b43a164ea0117c9
@@ -24,10 +26,10 @@ sources:
     resource: repo://src/vehicle-visual-alignment.js
   - id: openwiki-source-66effc9b45839f69daeeccc3
     resource: repo://tests/hitbox-01-browser-observation.test.mjs
-generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
+generated: { by: "codex", at: "2026-10-17T10:18:51.966Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:48:31.775Z
+    at: 2026-10-17T10:18:51.966Z
 ---
 
 # Cliente, cámara y controles
@@ -44,6 +46,16 @@ teclado se puede reasignar y se guarda en `localStorage`. En mando, el stick
 izquierdo dirige, RT/LT controlan aceleración y freno, A salta, RB usa nitro,
 LB activa derrape o free air roll, X/B son air rolls direccionales y el D-pad
 arriba dispara. Las fuentes se combinan antes de generar el frame de entrada.
+
+El canvas reclama foco explícitamente al recibir `pointerdown` y al volver la
+pestaña a primer plano, siempre que el foco actual no sea un control editable.
+Esto evita que el navegador integrado conserve el teclado en su contenedor; tras
+un `Ctrl+F5`, hay que hacer clic una vez en el área 3D antes de conducir.
+
+En la campaña `?hitbox01=1`, el guion solo automatiza la observación inicial.
+Después del contacto de carrocería invertida, o si la sesión es compartida,
+terminal o no soportada por la build, se devuelve la entrada manual del jugador.
+La campaña nunca aplica auto-upright.
 
 ## Cámara
 

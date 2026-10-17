@@ -5,7 +5,7 @@ description: Flujo autoritativo entre servidor Node, simulación JavaScript o Ro
 tags: [architecture, authority, runtime, rocketsim]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:48:31.775Z
+    at: 2026-10-17T10:18:51.966Z
 sources:
   - id: openwiki-source-24082af6d1c2f2f04bbe5750
     resource: repo://server.mjs
@@ -21,7 +21,7 @@ sources:
     resource: repo://src/rocketsim-protocol.js
   - id: openwiki-source-b8683c98010c7eb67003515b
     resource: repo://tools/lan-http-probe.mjs
-generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
+generated: { by: "codex", at: "2026-10-17T10:18:51.966Z" }
 ---
 
 # Arquitectura y autoridad
@@ -67,6 +67,11 @@ La frontera HTTP usa una allowlist explícita de módulos de navegador. Expone
 `index.html`, el cliente y sus dependencias de Three.js, pero devuelve 404 para
 el servidor, documentación, herramientas, configuración y traversal; las
 respuestas públicas incluyen `X-Content-Type-Options: nosniff`.
+
+El foco del teclado pertenece a la presentación: el cliente reclama el foco del
+canvas al pulsar el área de juego y al recuperar visibilidad. Esta medida no
+cambia la autoridad del servidor ni la simulación; solo evita que un contenedor
+de navegador integrado intercepte la entrada.
 
 ## Fallos y recuperación
 

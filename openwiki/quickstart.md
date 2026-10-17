@@ -30,10 +30,10 @@ sources:
     resource: repo://tools/live-session-probe.mjs
   - id: openwiki-source-d96abcae97f0c3a3e4d264c8
     resource: repo://tools/start-rocketsim-combat-watch.ps1
-generated: { by: "codex", at: "2026-10-16T20:52:30.790Z" }
+generated: { by: "codex", at: "2026-10-17T10:18:51.966Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:48:31.775Z
+    at: 2026-10-17T10:18:51.966Z
 ---
 
 # Inicio rápido
@@ -49,6 +49,11 @@ El watcher mantiene el servidor durante el desarrollo: los cambios de módulos
 Node reinician `server.mjs`; los cambios de `src/client.js` solo requieren
 Ctrl+F5. Hay que mantener una única instancia por puerto y detener con Ctrl+C
 la instancia anterior antes de arrancar otra.
+
+En el navegador integrado, después de Ctrl+F5 hay que hacer clic una vez dentro
+del área 3D para que el canvas recupere el foco del teclado. Si el navegador
+externo permite conducir y el integrado no, registrar el caso como limitación
+del host de navegación y conservar la prueba externa como referencia.
 
 El servidor HTTP limita los recursos publicados a la aplicación y sus módulos
 de cliente; el código del servidor, la documentación interna, las herramientas

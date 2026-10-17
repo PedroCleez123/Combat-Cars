@@ -46,10 +46,10 @@ sources:
     resource: repo://tools/start-rocketsim-combat-watch.ps1
   - id: openwiki-source-18c57645744fd6a6b846587c
     resource: repo://tools/verify-desktop-package.mjs
-generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
+generated: { by: "codex", at: "2026-10-17T10:18:51.966Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:48:31.775Z
+    at: 2026-10-17T10:18:51.966Z
 ---
 
 # Operaciones y diagnóstico
@@ -104,6 +104,13 @@ el del host está documentada en la guía local; un timeout de esa frontera no e
 un fallo de física. Una salida incompleta de electron-builder (`EBUSY`, asar
 ausente o `.nsis.7z` vacío) se descarta y se reconstruye en una carpeta limpia,
 validando portable y asar de la misma salida antes de publicar el hash.
+
+Si el navegador externo acepta WASD pero el navegador integrado solo muestra la
+partida, clasificar primero el incidente como foco del host: hacer `Ctrl+F5` y
+clic en el área 3D. `client.js` vuelve a enfocar el canvas en ese clic y al
+recuperar visibilidad. Si el externo sigue funcionando y el integrado no
+entrega eventos después de ese paso, la limitación está en el contenedor de
+navegación, no en RocketSim, WebSocket ni en el solver.
 
 En `?hitbox01=1`, R19 puede publicar contacto de carrocería invertida con
 `wheelCount=0` y `grounded=false`. La campaña libera los controles al detectarlo:

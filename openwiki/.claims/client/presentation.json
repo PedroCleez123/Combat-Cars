@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:2542c9fa75181802dc3724779a8cfcb922660dffe04f38d67d55368782a1507a",
+  "pageVersion": "sha256:bfdd02417584875b700d39fe41ff1b1a5692988490e397144e86beee6a2efee6",
   "claims": [
     {
       "id": "claim_6aaf275bd16546cfb781930b02145ee3",
@@ -46,7 +46,7 @@
       "evidence": [
         {
           "resource": "repo://src/client.js",
-          "version": "repo-file-v1:sha256:5276d60a0c1d7e9e92e2233428410b7a1f2cd511f7791148fb1a7dbaee33a814"
+          "version": "repo-file-v1:sha256:0876416f556b59d0e8ee2531522c0a8b2d7109c7460f12ae709da56b87ad1542"
         },
         {
           "resource": "repo://src/lan-client-liveness.js",
@@ -63,7 +63,7 @@
       "statement": "El frame de presentación transmite entradas hasta 60 Hz y actualiza coches, cámara y HUD a partir del estado renderizado.",
       "evidence": [
         {
-          "resource": "repo://src/client.js#L1031-L1038",
+          "resource": "repo://src/client.js#L1039-L1046",
           "version": "repo-lines-v1:sha256:e3a5467ef08b9a26297156ad55c7e2cea309f14fc945b6d80e06e9d47ff86ec0:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzRmNjNhM2I0NzllNTA1NGUyZjhjNDU1MjZjYmM2NzJkN2FhNjU5YmIzZmVkNzg5YjA5ZTE2MTMxZDE5ZGJmMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjg2NDI3ODBlMzU4MzZiODRhYWI5M2Y3NmU3NjM4YzdiODNlNjAwODlmMDYwNjE1NWJhMjNiOTU5MjgzNzAyOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTdkMTRiZmRjYjQyZTYwMDkyNWM3ZDU0NGQ2YTM1YWE4NTE1Y2VlZmE5M2FhNjdjMDM3YjQ4Mjg1YTljYjU2MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
         }
       ]
@@ -88,7 +88,7 @@
       "evidence": [
         {
           "resource": "repo://_bmad-output/implementation-artifacts/hitbox-01-visual-pivot-story.md",
-          "version": "repo-file-v1:sha256:b02824ec320efe0b32ba616190527cf4a4a94502e7e0d1a62b21909424fea5ab"
+          "version": "repo-file-v1:sha256:ca4c6ceabad575b314f21c72ef9eb9b5bf4326733310883adde0f4e1f84f66c0"
         },
         {
           "resource": "repo://src/vehicle-visual-alignment.js",
@@ -102,7 +102,7 @@
       "evidence": [
         {
           "resource": "repo://src/client.js",
-          "version": "repo-file-v1:sha256:5276d60a0c1d7e9e92e2233428410b7a1f2cd511f7791148fb1a7dbaee33a814"
+          "version": "repo-file-v1:sha256:0876416f556b59d0e8ee2531522c0a8b2d7109c7460f12ae709da56b87ad1542"
         },
         {
           "resource": "repo://src/hitbox-01-browser-observation.js",
@@ -113,10 +113,24 @@
           "version": "repo-file-v1:sha256:7e4f0ee60003f25d6413c0be39dcc8e7867e46b08e0df66a4bd4afab59f0e05e"
         }
       ]
+    },
+    {
+      "id": "claim_7375841608b342d18b85c41fe32f83d7",
+      "statement": "El canvas reclama el foco al recibir pointerdown y al recuperar visibilidad, evitando que el navegador integrado retenga el teclado fuera del área de juego.",
+      "evidence": [
+        {
+          "resource": "repo://docs/local-server-browser-bridge.md",
+          "version": "repo-file-v1:sha256:39380b1bfb212ce46d54aadb7dbecef1ac3f99579ceb32f13828f431096652dc"
+        },
+        {
+          "resource": "repo://src/client.js",
+          "version": "repo-file-v1:sha256:0876416f556b59d0e8ee2531522c0a8b2d7109c7460f12ae709da56b87ad1542"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T09:48:31.775Z"
+    "at": "2026-10-17T10:18:51.966Z"
   }
 }

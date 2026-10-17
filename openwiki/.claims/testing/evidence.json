@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:6feb578d7ab3de9c799338b82341647c01f607d632a70802595727484479db81",
+  "pageVersion": "sha256:2df42616026d472b5b291e27ee58caa918edeee0029eca37e9b87ef0e8ce31f1",
   "claims": [
     {
       "id": "claim_fc10ac36f5a24c9b82619c53023e4bbb",
@@ -96,7 +96,7 @@
         },
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
+          "version": "repo-file-v1:sha256:39380b1bfb212ce46d54aadb7dbecef1ac3f99579ceb32f13828f431096652dc"
         },
         {
           "resource": "repo://package.json",
@@ -110,11 +110,11 @@
       "evidence": [
         {
           "resource": "repo://docs/operational-incident-prevention.md",
-          "version": "repo-file-v1:sha256:9d263098e986f3a6b347f3d2f9c94080b6edce8f236a5f785e3ee4509f5d35e8"
+          "version": "repo-file-v1:sha256:c855ece60b3e709536e33a77a2289cb6a98d23e6b5968f80abbb9e24e65dc103"
         },
         {
           "resource": "repo://src/client.js",
-          "version": "repo-file-v1:sha256:5276d60a0c1d7e9e92e2233428410b7a1f2cd511f7791148fb1a7dbaee33a814"
+          "version": "repo-file-v1:sha256:0876416f556b59d0e8ee2531522c0a8b2d7109c7460f12ae709da56b87ad1542"
         },
         {
           "resource": "repo://src/hitbox-01-browser-observation.js",
@@ -132,7 +132,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:2d7215cc67418d929fbb11172a46777c3633eb607409e46300284f63b85cbb1f"
+          "version": "repo-file-v1:sha256:82a15d26251a1c8993966039af62ca2364da23cee4c3a1c383587d011d8a8ffc"
         },
         {
           "resource": "repo://tools/live-session-probe.mjs",
@@ -146,17 +146,35 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:2d7215cc67418d929fbb11172a46777c3633eb607409e46300284f63b85cbb1f"
+          "version": "repo-file-v1:sha256:82a15d26251a1c8993966039af62ca2364da23cee4c3a1c383587d011d8a8ffc"
         },
         {
           "resource": "repo://tools/live-session-liveness-probe.mjs",
           "version": "repo-file-v1:sha256:4535a07a4d406a3a980d091bd2f54f64cc0eb083bf37a0d81d111d23f48b698f"
         }
       ]
+    },
+    {
+      "id": "claim_6da1af0dcfe5406a8f7aa6c8531d1727",
+      "statement": "La corrección de foco del canvas tiene evidencia de sintaxis, suite Node y comprobación HTTP de los listeners pointerdown/visibilitychange; la interacción visual del navegador integrado queda not verified si CUA no puede iniciar.",
+      "evidence": [
+        {
+          "resource": "repo://docs/continuation-handoff.md",
+          "version": "repo-file-v1:sha256:82a15d26251a1c8993966039af62ca2364da23cee4c3a1c383587d011d8a8ffc"
+        },
+        {
+          "resource": "repo://docs/local-server-browser-bridge.md",
+          "version": "repo-file-v1:sha256:39380b1bfb212ce46d54aadb7dbecef1ac3f99579ceb32f13828f431096652dc"
+        },
+        {
+          "resource": "repo://src/client.js",
+          "version": "repo-file-v1:sha256:0876416f556b59d0e8ee2531522c0a8b2d7109c7460f12ae709da56b87ad1542"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T09:48:31.775Z"
+    "at": "2026-10-17T10:18:51.966Z"
   }
 }

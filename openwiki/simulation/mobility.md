@@ -13,7 +13,7 @@ sources:
 generated: { by: "codex", at: "2026-10-16T08:35:40.163Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:48:31.775Z
+    at: 2026-10-17T10:18:51.966Z
 ---
 
 # Simulación y movilidad

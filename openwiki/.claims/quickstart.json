@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:846266de5ef6104e829db46fca5133ba4885c02276eecb6e28278422efcefa25",
+  "pageVersion": "sha256:455192f35171972e66220298e106fcb3fb6a62dbbc077db1ce76e48b938b8346",
   "claims": [
     {
       "id": "claim_f20ab4286bbc4742bb73146dc590d8c8",
@@ -64,7 +64,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
+          "version": "repo-file-v1:sha256:39380b1bfb212ce46d54aadb7dbecef1ac3f99579ceb32f13828f431096652dc"
         },
         {
           "resource": "repo://server.mjs",
@@ -90,7 +90,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
+          "version": "repo-file-v1:sha256:39380b1bfb212ce46d54aadb7dbecef1ac3f99579ceb32f13828f431096652dc"
         },
         {
           "resource": "repo://package.json",
@@ -104,7 +104,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
+          "version": "repo-file-v1:sha256:39380b1bfb212ce46d54aadb7dbecef1ac3f99579ceb32f13828f431096652dc"
         },
         {
           "resource": "repo://package.json",
@@ -122,7 +122,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
+          "version": "repo-file-v1:sha256:39380b1bfb212ce46d54aadb7dbecef1ac3f99579ceb32f13828f431096652dc"
         },
         {
           "resource": "repo://package.json",
@@ -140,17 +140,31 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:ea79e8a42d8045e44f0d44505a402b414a3e156093fc633b3082b3693d09a3a9"
+          "version": "repo-file-v1:sha256:39380b1bfb212ce46d54aadb7dbecef1ac3f99579ceb32f13828f431096652dc"
         },
         {
           "resource": "repo://src/client.js",
-          "version": "repo-file-v1:sha256:5276d60a0c1d7e9e92e2233428410b7a1f2cd511f7791148fb1a7dbaee33a814"
+          "version": "repo-file-v1:sha256:0876416f556b59d0e8ee2531522c0a8b2d7109c7460f12ae709da56b87ad1542"
+        }
+      ]
+    },
+    {
+      "id": "claim_7e78647d4291409f8e96dc8943e0616c",
+      "statement": "En el navegador integrado, después de Ctrl+F5 hay que hacer clic una vez dentro del área 3D para que el canvas recupere el foco; si el navegador externo funciona y el integrado no, se registra como limitación del host.",
+      "evidence": [
+        {
+          "resource": "repo://docs/local-server-browser-bridge.md",
+          "version": "repo-file-v1:sha256:39380b1bfb212ce46d54aadb7dbecef1ac3f99579ceb32f13828f431096652dc"
+        },
+        {
+          "resource": "repo://src/client.js",
+          "version": "repo-file-v1:sha256:0876416f556b59d0e8ee2531522c0a8b2d7109c7460f12ae709da56b87ad1542"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T09:48:31.775Z"
+    "at": "2026-10-17T10:18:51.966Z"
   }
 }

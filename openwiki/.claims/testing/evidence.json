@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:2df42616026d472b5b291e27ee58caa918edeee0029eca37e9b87ef0e8ce31f1",
+  "pageVersion": "sha256:fa755d1fe89be057a867b9349f53b9b900ccbe440db9a0570b499ce54d28c556",
   "claims": [
     {
       "id": "claim_fc10ac36f5a24c9b82619c53023e4bbb",
@@ -110,7 +110,7 @@
       "evidence": [
         {
           "resource": "repo://docs/operational-incident-prevention.md",
-          "version": "repo-file-v1:sha256:c855ece60b3e709536e33a77a2289cb6a98d23e6b5968f80abbb9e24e65dc103"
+          "version": "repo-file-v1:sha256:f616c34d7a9a0967419ef3920786e1f9b2f2d26ffaa82b0ab14a9d8999e1e068"
         },
         {
           "resource": "repo://src/client.js",
@@ -132,7 +132,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:82a15d26251a1c8993966039af62ca2364da23cee4c3a1c383587d011d8a8ffc"
+          "version": "repo-file-v1:sha256:82c3d6213a43d23d074f2d13977c356f6f6683d8bc4d8315a1c2263d19d705b2"
         },
         {
           "resource": "repo://tools/live-session-probe.mjs",
@@ -146,7 +146,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:82a15d26251a1c8993966039af62ca2364da23cee4c3a1c383587d011d8a8ffc"
+          "version": "repo-file-v1:sha256:82c3d6213a43d23d074f2d13977c356f6f6683d8bc4d8315a1c2263d19d705b2"
         },
         {
           "resource": "repo://tools/live-session-liveness-probe.mjs",
@@ -160,7 +160,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:82a15d26251a1c8993966039af62ca2364da23cee4c3a1c383587d011d8a8ffc"
+          "version": "repo-file-v1:sha256:82c3d6213a43d23d074f2d13977c356f6f6683d8bc4d8315a1c2263d19d705b2"
         },
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
@@ -171,10 +171,28 @@
           "version": "repo-file-v1:sha256:0876416f556b59d0e8ee2531522c0a8b2d7109c7460f12ae709da56b87ad1542"
         }
       ]
+    },
+    {
+      "id": "claim_090774be58164e02a5e7c2706fd3c0c4",
+      "statement": "La revalidación host del 17/10/2026 en 5298 pasó con R19 y arsenal-expanded-cornered-practice: 44 snapshots, reloj autoritativo creciente y poses finitas; sigue pendiente forzar el corte del stream para aceptar la reconexión del watchdog.",
+      "evidence": [
+        {
+          "resource": "repo://docs/continuation-handoff.md",
+          "version": "repo-file-v1:sha256:82c3d6213a43d23d074f2d13977c356f6f6683d8bc4d8315a1c2263d19d705b2"
+        },
+        {
+          "resource": "repo://docs/physics-mobility-tracker.md",
+          "version": "repo-file-v1:sha256:b57216629d940ddcea794b083200afe3916c34aaf1ea7f8f6b1cfe7f28890cfb"
+        },
+        {
+          "resource": "repo://tools/live-session-liveness-probe.mjs",
+          "version": "repo-file-v1:sha256:4535a07a4d406a3a980d091bd2f54f64cc0eb083bf37a0d81d111d23f48b698f"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T10:18:51.966Z"
+    "at": "2026-10-17T10:50:35.429Z"
   }
 }

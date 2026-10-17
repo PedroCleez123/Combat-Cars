@@ -13,7 +13,7 @@ sources:
 generated: { by: "codex", at: "2026-10-16T20:19:08.736Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T10:18:51.966Z
+    at: 2026-10-17T10:50:35.429Z
 ---
 
 # Arena y geometría física

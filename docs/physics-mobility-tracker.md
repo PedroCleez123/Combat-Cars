@@ -32,7 +32,7 @@ una implementación original y autoritativa para el juego web.
 | MOB-AIR front | Aceptado | Campaña `?mobair01=1` con J/2/D |
 | MOB-AIR side | No verificado | Intentos afectados por roster/estado congelado |
 | MOB-AIR diagonal | No verificado | Intentos afectados por roster/estado congelado |
-| Liveness de cliente | Unitario aceptado; host pendiente | `tests/lan-client-liveness.test.mjs` |
+| Liveness de cliente | Stream host aceptado; watchdog ante corte pendiente | `tests/lan-client-liveness.test.mjs`, `probe:live-liveness` en 5298 (44 snapshots R19) |
 | Alineación visual del chasis | Implementada con envolvente Octane; vuelco visual pendiente | `tests/vehicle-visual-alignment.test.mjs`, `hitbox-01-visual-pivot-story.md` |
 | Arena pared→techo | Bridge R19 aceptado; visual web pendiente | `probe:rocketsim-cornered-arena`, traza SHA `cee24af...`, misma escala y dimensiones en `src/client.js` |
 | Lectura visual de límites | Implementada | Paredes y curvas translúcidas, techo con material emisivo y retícula superior; no crea colisión en cliente |
@@ -67,3 +67,8 @@ esa instancia como R19. Para continuar con la geometría nueva hay que detener
 la instancia y ejecutar `npm run start:watch:combat`. Todavía falta una maniobra controlada de contacto
 pared→techo para cerrar la aceptación visual de colisión. Las ediciones
 documentales se verifican con `git diff --check`.
+
+La revalidación host del 17/10/2026 en 5298 recibió 44 snapshots R19 con reloj
+autoritativo creciente y poses finitas. La sonda confirma que el stream está
+vivo; aún no fuerza un corte para demostrar la reconexión del watchdog y no
+convierte la observación visual de HITBOX-01 o ARENA-CEILING-01 en aceptación.

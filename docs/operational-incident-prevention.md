@@ -34,6 +34,11 @@ Para no confundir un único `welcome` con un stream sano, usar
 `npm run probe:live-liveness` fuera de campañas de piloto único: exige varios
 snapshots y un reloj autoritativo que progrese sin enviar controles.
 
+Si el comando devuelve `socket access not permitted` desde el entorno aislado,
+no concluir que el servidor está detenido: solicitar permiso de red para
+localhost y repetir la sonda. La comprobación HTTP y WebSocket debe clasificarse
+por separado de la frontera de permisos del sandbox.
+
 ### HITBOX-01 parecía bloquear los controles
 
 La campaña `?hitbox01=1` usa entradas automáticas durante el salto y la

@@ -16,6 +16,8 @@ sources:
     resource: repo://docs/local-server-browser-bridge.md
   - id: openwiki-source-fc02c3893c209c930cbd4c49
     resource: repo://docs/operational-incident-prevention.md
+  - id: openwiki-source-faa18db0998ab6247a813ef3
+    resource: repo://docs/physics-mobility-tracker.md
   - id: openwiki-source-5b54a58d1b51cd490b0e7162
     resource: repo://package.json
   - id: openwiki-source-4c3989ef3101af67d167f4b8
@@ -43,7 +45,7 @@ sources:
 generated: { by: "codex", at: "2026-10-17T10:18:51.966Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T10:18:51.966Z
+    at: 2026-10-17T10:50:35.429Z
 ---
 
 # Pruebas y evidencia

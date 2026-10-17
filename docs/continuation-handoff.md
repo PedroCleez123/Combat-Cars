@@ -21,6 +21,15 @@ La fuente de orden es el [plan canónico](../_bmad-output/implementation-artifac
 - `LIVE-LIVENESS-PROBE`: `npm run probe:live-liveness` observó 1,8 s en ambos
   hosts el 17/10/2026. 5298 entregó 52 snapshots y 5300 entregó 40; en ambos
   el reloj autoritativo avanzó, no retrocedió y las poses finales fueron finitas.
+- Revalidación host del 17/10/2026: `npm run probe:live-liveness` en 5298
+  volvió a pasar con backend RocketSim R19 y
+  `arsenal-expanded-cornered-practice` (44 snapshots, reloj de 4090,42 a
+  4091,13, poses finitas). Confirma el stream vivo, pero no simula todavía un
+  corte de snapshots ni sustituye la inspección visual.
+- La frontera HTTP de 5298 y 5300 sirve `src/client.js` con HTTP 200 y contiene
+  los listeners `pointerdown`/`visibilitychange` del arreglo de foco. Si el
+  sandbox devuelve `socket access not permitted`, hay que solicitar permiso de
+  red para localhost antes de clasificar el servidor como caído.
 - `HITBOX-01`: la raíz visual RocketSim gira alrededor del pivote físico y el
   prototipo usa una envolvente vertical derivada de la hitbox Octane. La sonda
   R19 confirma `upY=-1` y contacto de carrocería invertida (normal de suelo,

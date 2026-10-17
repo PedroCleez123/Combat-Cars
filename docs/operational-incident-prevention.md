@@ -45,6 +45,20 @@ Con más de un piloto, bridge inferior a R19 o una campaña ya terminada tampoco
 debe secuestrar el control: el HUD explica el estado y el jugador conserva sus
 entradas manuales.
 
+### El navegador integrado no recibía el teclado
+
+**Señal:** el navegador externo mueve el coche, pero la pestaña integrada no
+responde aunque el WebSocket y los snapshots estén sanos.
+
+**Causa probable:** la pestaña integrada conserva el foco en su contenedor o en
+la barra del navegador; el canvas no lo reclama al entrar o volver a ser visible.
+
+**Prevención:** el cliente enfoca explícitamente el canvas al primer `pointerdown`
+y al recuperar visibilidad, sin cambiar las acciones ni la simulación. La prueba
+manual debe hacer clic una vez en el área de juego tras `Ctrl+F5`; si el externo
+funciona y el integrado no, registrar el caso como problema de foco/host antes
+de tocar RocketSim o el WebSocket.
+
 ### Actualización de OpenWiki rechazada por autorización
 
 **Señal:** una ejecución de la cola de actualización falla antes de entregar

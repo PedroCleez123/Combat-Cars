@@ -94,6 +94,11 @@ terminó, HITBOX-01 no toma las entradas: muestra el motivo en el objetivo del
 HUD y conserva los controles manuales. Para ejecutar la maniobra automática,
 cierra las demás pestañas y recarga con `Ctrl+F5`.
 
+En el navegador integrado, después de recargar hay que hacer un clic dentro del
+área 3D para entregar el foco al canvas. El cliente lo reclama automáticamente;
+no hace falta abrir el panel de controles. Si el navegador externo funciona y el
+integrado no, conservar la evidencia como incidencia del host integrado.
+
 ## Límites y prevención
 
 - Codex puede editar archivos, ejecutar pruebas y compilar el bridge cuando el

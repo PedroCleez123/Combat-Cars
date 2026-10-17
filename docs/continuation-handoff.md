@@ -30,6 +30,10 @@ La fuente de orden es el [plan canónico](../_bmad-output/implementation-artifac
   finaliza, y lo devuelve al registrar contacto invertido; solo reserva las
   entradas durante la maniobra automática reproducible. El HUD expone ambos
   estados para evitar confundir la observación con un modo de juego bloqueado.
+- El cliente enfoca el canvas al hacer clic y al recuperar visibilidad para el
+  navegador integrado. Si sigue sin recibir teclado mientras un navegador
+  externo sí lo hace, la visualización integrada queda como limitación del host,
+  no como cambio de física o WebSocket.
 - `ARENA-CEILING-01`: bridge R19 aceptado. La sonda de 720 ticks recorre suelo,
   pared, esquinas y techo con apoyo continuo y salto máximo de normal de
   3,124 grados. Three.js comparte la geometría. Falta una observación visual

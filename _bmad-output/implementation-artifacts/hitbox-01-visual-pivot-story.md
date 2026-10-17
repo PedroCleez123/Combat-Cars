@@ -51,6 +51,9 @@ autoridad.
   contacto para que la maniobra sea reproducible. Después del contacto, con
   bridge no compatible o con varios pilotos, devuelve la entrada manual; el
   HUD distingue `CONTROLES AUTOMÁTICOS` de `CONTROL DEL JUGADOR`.
+- El canvas reclama foco al primer clic y al volver visible el documento. Esto
+  cubre el navegador integrado cuando conserva el foco fuera de la página; no
+  altera las acciones ni la autoridad de RocketSim.
 - Host `http://localhost:5300/?arena=combat-alpha` recargado después del cambio,
   HUD y partida visibles, coche en suelo, sin warnings ni errores de consola
   observados. Esta es una comprobación visual de arranque y reposo, no del

@@ -961,10 +961,18 @@ addEventListener("mousedown", event => {
   if (code === bindings.restart && socket?.readyState === WebSocket.OPEN) socket.send(JSON.stringify({ type: "restart" }));
   mouseHeld.add(code);
 });
+canvas.addEventListener("pointerdown", () => {
+  canvas.focus({ preventScroll: true });
+}, { passive: true });
 addEventListener("mouseup", event => { const code = event.button === 0 ? "MouseLeft" : event.button === 2 ? "MouseRight" : `Mouse${event.button}`; mouseHeld.delete(code); });
 addEventListener("contextmenu", event => { if (event.target === canvas) event.preventDefault(); });
 addEventListener("blur", () => { held.clear(); mouseHeld.clear(); });
 addEventListener("focusin", event => { if (isInteractiveControl(event.target)) { held.clear(); mouseHeld.clear(); } });
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" && !isInteractiveControl(document.activeElement)) {
+    canvas.focus({ preventScroll: true });
+  }
+});
 addEventListener("resize", () => { renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); });
 
 function updateHud() {

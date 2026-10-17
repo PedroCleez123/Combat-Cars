@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:eaebab18a22fef7fc61998a91a0e0c57a426c32ed34563e2e47478b236dd0229",
+  "pageVersion": "sha256:d1564c7437c74011453593dcc72bb49b5bf7e837098acc1e693105d3d8bf3da6",
   "claims": [
     {
       "id": "claim_4ac868a92ebc4cc7afb388c1ea10f0a9",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
         },
         {
           "resource": "repo://tools/start-rocketsim-combat-watch.ps1",
@@ -64,7 +64,7 @@
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
         },
         {
           "resource": "repo://tools/rocketsim-bridge/probe-hitbox-01.mjs",
@@ -78,7 +78,7 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:f849b58fdbf3ecd240f5d61921678c549e6ada55dd6594e8fa9b5244ede09fe0"
+          "version": "repo-file-v1:sha256:e0b3f9c5b67fd8f41ea784ce5d33df892f854b3a9e5e7f038ccf3d6e9f8102aa"
         },
         {
           "resource": "repo://tests/lan-outbound-queue.test.mjs",
@@ -104,11 +104,11 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:5ecd6f3eeb311b434c53a7999e5c94da2ea4c48e5f8e8e2ef821855c9e32d983"
+          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
         },
         {
           "resource": "repo://tools/lan-websocket-probe.mjs",
@@ -122,7 +122,7 @@
       "evidence": [
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
         },
         {
           "resource": "repo://tools/verify-desktop-package.mjs",
@@ -146,7 +146,7 @@
       "evidence": [
         {
           "resource": "repo://docs/operational-incident-prevention.md",
-          "version": "repo-file-v1:sha256:22e6a1d428446a56534e776265bd108ec2fc572802e18476906c8d9800f4eaef"
+          "version": "repo-file-v1:sha256:7c56da1242c8db86883d327a9cd966a2e0f4556a5cecb7ccc4811004ad836019"
         },
         {
           "resource": "repo://src/hitbox-01-browser-observation.js",
@@ -160,21 +160,39 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:5ecd6f3eeb311b434c53a7999e5c94da2ea4c48e5f8e8e2ef821855c9e32d983"
+          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
         },
         {
           "resource": "repo://tools/live-session-probe.mjs",
           "version": "repo-file-v1:sha256:c8df1d673282e739083a8924af8c85c40de721ba198668f2c8bb35721d353fd5"
         }
       ]
+    },
+    {
+      "id": "claim_8b204434a7fd4257a596d208f9c769a0",
+      "statement": "La sonda probe:live-liveness observa durante una ventana configurable varios snapshots autoritativos, exige que el reloj avance sin retroceder y comprueba backend, arena y poses finitas sin enviar controles.",
+      "evidence": [
+        {
+          "resource": "repo://docs/local-server-browser-bridge.md",
+          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
+        },
+        {
+          "resource": "repo://tools/live-session-liveness-probe.mjs",
+          "version": "repo-file-v1:sha256:4535a07a4d406a3a980d091bd2f54f64cc0eb083bf37a0d81d111d23f48b698f"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T09:27:48.379Z"
+    "at": "2026-10-17T09:38:24.568Z"
   }
 }

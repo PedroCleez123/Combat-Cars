@@ -21,7 +21,7 @@ sources:
 generated: { by: "codex", at: "2026-10-17T08:09:04.647Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:27:48.379Z
+    at: 2026-10-17T09:38:24.568Z
 ---
 
 # Sesión LAN y protocolo

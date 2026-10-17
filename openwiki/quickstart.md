@@ -22,6 +22,8 @@ sources:
     resource: repo://src/rocketsim-practice-match.js
   - id: openwiki-source-78b434e28c33acc4be56d041
     resource: repo://tools/lan-session-probe.mjs
+  - id: openwiki-source-bb33773513aa2717f68a7ca0
+    resource: repo://tools/live-session-liveness-probe.mjs
   - id: openwiki-source-1e3c6fb4ec187cacb5117885
     resource: repo://tools/live-session-probe.mjs
   - id: openwiki-source-d96abcae97f0c3a3e4d264c8
@@ -29,7 +31,7 @@ sources:
 generated: { by: "codex", at: "2026-10-16T20:52:30.790Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:27:48.379Z
+    at: 2026-10-17T09:38:24.568Z
 ---
 
 # Inicio rápido

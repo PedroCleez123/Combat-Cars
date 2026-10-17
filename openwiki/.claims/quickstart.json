@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:04771d2e8a4c6fb71b4491c61873fc3786c7cb6e9628c4514549732b0fd59fd5",
+  "pageVersion": "sha256:5b1d20c6b0072495cb395a95a63fda4cf8844519a684d23dce65503390cab371",
   "claims": [
     {
       "id": "claim_f20ab4286bbc4742bb73146dc590d8c8",
@@ -64,7 +64,7 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:5ecd6f3eeb311b434c53a7999e5c94da2ea4c48e5f8e8e2ef821855c9e32d983"
+          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
         },
         {
           "resource": "repo://server.mjs",
@@ -90,11 +90,11 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:5ecd6f3eeb311b434c53a7999e5c94da2ea4c48e5f8e8e2ef821855c9e32d983"
+          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
         }
       ]
     },
@@ -104,21 +104,39 @@
       "evidence": [
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:5ecd6f3eeb311b434c53a7999e5c94da2ea4c48e5f8e8e2ef821855c9e32d983"
+          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
         },
         {
           "resource": "repo://tools/live-session-probe.mjs",
           "version": "repo-file-v1:sha256:c8df1d673282e739083a8924af8c85c40de721ba198668f2c8bb35721d353fd5"
         }
       ]
+    },
+    {
+      "id": "claim_f681871cca62495599e5e7571aa80fb6",
+      "statement": "El inicio rápido ofrece npm run probe:live-liveness con LIVE_LIVENESS_PROBE_PORT, LIVE_LIVENESS_EXPECT_BACKEND y LIVE_LIVENESS_EXPECT_ARENA para demostrar que el stream de snapshots continúa vivo sin enviar controles.",
+      "evidence": [
+        {
+          "resource": "repo://docs/local-server-browser-bridge.md",
+          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
+        },
+        {
+          "resource": "repo://package.json",
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
+        },
+        {
+          "resource": "repo://tools/live-session-liveness-probe.mjs",
+          "version": "repo-file-v1:sha256:4535a07a4d406a3a980d091bd2f54f64cc0eb083bf37a0d81d111d23f48b698f"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T09:27:48.379Z"
+    "at": "2026-10-17T09:38:24.568Z"
   }
 }

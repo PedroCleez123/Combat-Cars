@@ -15,7 +15,7 @@ sources:
 generated: { by: "codex", at: "2026-10-16T20:19:08.736Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-17T09:27:48.379Z
+    at: 2026-10-17T09:38:24.568Z
 ---
 
 # Combate, cohetes y respawn

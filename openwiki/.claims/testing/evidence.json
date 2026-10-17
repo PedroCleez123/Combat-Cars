@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:5485bcfe0325c35abc8b9ac3aeb859a87e0b7b0384428d4a5582043e4f041e89",
+  "pageVersion": "sha256:510ebd2d63650e93d7f8b164c840921fbfaf0d571c2949948865f99959168076",
   "claims": [
     {
       "id": "claim_fc10ac36f5a24c9b82619c53023e4bbb",
@@ -8,7 +8,7 @@
       "evidence": [
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
         }
       ]
     },
@@ -74,7 +74,7 @@
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
         },
         {
           "resource": "repo://tests/lan-outbound-queue.test.mjs",
@@ -96,11 +96,11 @@
         },
         {
           "resource": "repo://docs/local-server-browser-bridge.md",
-          "version": "repo-file-v1:sha256:5ecd6f3eeb311b434c53a7999e5c94da2ea4c48e5f8e8e2ef821855c9e32d983"
+          "version": "repo-file-v1:sha256:8d8f85d9ca470ab94d1290a70ab82c12f6103f1edf994ef8a096faa4e737e282"
         },
         {
           "resource": "repo://package.json",
-          "version": "repo-file-v1:sha256:4cbcee787acc014fd0495891c31fa0e4c7a60c98b58719bf1d2143f630706983"
+          "version": "repo-file-v1:sha256:d19bae5c9316b9d2b44f7affd32d385d35d03b228fa5768f042df87e29a34033"
         }
       ]
     },
@@ -110,7 +110,7 @@
       "evidence": [
         {
           "resource": "repo://docs/operational-incident-prevention.md",
-          "version": "repo-file-v1:sha256:22e6a1d428446a56534e776265bd108ec2fc572802e18476906c8d9800f4eaef"
+          "version": "repo-file-v1:sha256:7c56da1242c8db86883d327a9cd966a2e0f4556a5cecb7ccc4811004ad836019"
         },
         {
           "resource": "repo://src/hitbox-01-browser-observation.js",
@@ -128,17 +128,31 @@
       "evidence": [
         {
           "resource": "repo://docs/continuation-handoff.md",
-          "version": "repo-file-v1:sha256:f849b58fdbf3ecd240f5d61921678c549e6ada55dd6594e8fa9b5244ede09fe0"
+          "version": "repo-file-v1:sha256:e0b3f9c5b67fd8f41ea784ce5d33df892f854b3a9e5e7f038ccf3d6e9f8102aa"
         },
         {
           "resource": "repo://tools/live-session-probe.mjs",
           "version": "repo-file-v1:sha256:c8df1d673282e739083a8924af8c85c40de721ba198668f2c8bb35721d353fd5"
         }
       ]
+    },
+    {
+      "id": "claim_9bf76f9f9d194ef09a315436cd83df2d",
+      "statement": "La sonda live-liveness se ejecutó el 17/10/2026 contra 5298 y 5300 durante 1,8 segundos: obtuvo 52 y 40 snapshots respectivamente, con reloj autoritativo creciente, poses finitas y configuración R19 esperada.",
+      "evidence": [
+        {
+          "resource": "repo://docs/continuation-handoff.md",
+          "version": "repo-file-v1:sha256:e0b3f9c5b67fd8f41ea784ce5d33df892f854b3a9e5e7f038ccf3d6e9f8102aa"
+        },
+        {
+          "resource": "repo://tools/live-session-liveness-probe.mjs",
+          "version": "repo-file-v1:sha256:4535a07a4d406a3a980d091bd2f54f64cc0eb083bf37a0d81d111d23f48b698f"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-17T09:27:48.379Z"
+    "at": "2026-10-17T09:38:24.568Z"
   }
 }

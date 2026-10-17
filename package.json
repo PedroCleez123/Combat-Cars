@@ -51,6 +51,7 @@
     "probe:rocketsim-combat-session": "node tools/rocketsim-configurable-combat-probe.mjs",
     "probe:rocketsim-combat-six": "node tools/rocketsim-combat-six-pilot-probe.mjs",
     "probe:lan-session": "node tools/lan-session-probe.mjs",
+    "probe:lan-http": "node tools/lan-http-probe.mjs",
     "probe:lan-websocket": "node tools/lan-websocket-probe.mjs",
     "verify:provenance": "node tools/provenance-check.mjs",
     "verify:desktop-package": "node tools/verify-desktop-package.mjs",

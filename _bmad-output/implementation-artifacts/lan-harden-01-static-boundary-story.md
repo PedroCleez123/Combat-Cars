@@ -1,7 +1,7 @@
 # LAN-HARDEN-01 — frontera de recursos estáticos
 
-**Estado:** aceptada en pruebas unitarias; verificación HTTP viva pendiente en
-el host del usuario.
+**Estado:** aceptada; verificación HTTP viva completada el 17 de octubre de
+2026.
 **Fecha:** 16 de octubre de 2026
 
 ## Resultado observable
@@ -28,15 +28,16 @@ configuración ni artefactos de desarrollo.
 
 ## Verificación
 
-- `npm test`: 163/163.
+- `npm test`: 173/173.
 - `node --check server.mjs` y `node --check src/http-static-boundary.js`:
   correctos.
-- Arranque del servidor JS: se observó el log de escucha en un proceso hijo.
-- La petición HTTP desde este sandbox no pudo verificarse porque el entorno
-  aísla la red de procesos; queda como comprobación del host PowerShell.
+- `npm run probe:lan-http` en el entorno anfitrión: entrypoint, módulo del
+  cliente y `three.core.js` devuelven 200 con `nosniff`; servidor, `.git`,
+  documentación, herramientas y traversal devuelven 404.
+- La sonda usa una arena JS de una plaza y un puerto efímero; no toca la
+  instancia RocketSim del juego.
 
 ## Siguiente decisión
 
-Cerrar la comprobación viva en el host y, si es correcta, pasar a
-`COMBAT-BOUNDS-01` para alinear los límites de cohetes con la arena nativa antes
-de retomar nuevas observaciones de movilidad.
+`LAN-HARDEN-01` queda cerrada. La siguiente puerta es `HITBOX-01`: observar un
+vuelco aislado con R19 antes de cambiar física o presentación.

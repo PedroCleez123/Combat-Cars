@@ -12,8 +12,8 @@
   "source": [
     {
       "path": "package.json",
-      "bytes": 5913,
-      "sha256": "a3a439de49f9ed4ee17eea2f7d3bb7e954a83889c526eddd0b930716bfd5ad17"
+      "bytes": 5969,
+      "sha256": "1363322cf1521ea5e80987f8e58ba81dd9cc996b79326163662f5b436a5d96d7"
     },
     {
       "path": "package-lock.json",
@@ -39,8 +39,8 @@
     {
       "id": "windows-portable-0.1.1",
       "path": "dist/Car Soccer Arsenal 0.1.1.exe",
-      "bytes": 77454362,
-      "sha256": "4442135b48c758991713ed13789e977dad5ca29eec68c9d632b90208c7a850d8",
+      "bytes": 77454368,
+      "sha256": "3b37bb5626a647d4b80c1ebef317fda6f96e14a00ceb0274acdb2a777ac807ab",
       "optional": true
     }
   ]

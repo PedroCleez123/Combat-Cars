@@ -155,6 +155,18 @@ El sandbox de Codex no puede abrir esa conexión loopback hacia el servidor hijo
 por eso esa sonda se valida en el PowerShell anfitrión, mientras que la suite
 pura sigue ejecutándose dentro del sandbox.
 
+La frontera HTTP tiene una sonda análoga y aislada. Arranca un servidor JS en
+el puerto 5346, comprueba los módulos públicos y verifica que los internals y
+las rutas de traversal son 404; al terminar cierra el proceso hijo:
+
+```powershell
+npm run probe:lan-http
+```
+
+Debe devolver `story: "LAN-HARDEN-01"` y cinco aserciones verdaderas. Igual que
+la sonda WebSocket, ejecútala desde el PowerShell anfitrión porque el sandbox
+no puede abrir el loopback del proceso hijo.
+
 ## Diagnóstico de versión servida — 14/10/2026
 
 La sesión visible de `http://localhost:5300/?arena=combat-alpha&mobair01=1`

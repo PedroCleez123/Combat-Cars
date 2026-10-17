@@ -35,7 +35,7 @@ una conexión lenta no puede hacer crecer la memoria indefinidamente.
 
 ## Verificación
 
-- `npm test`: 172/172.
+- `npm test`: 173/173.
 - `node --check server.mjs` y `src/lan-session-control.js`: correctos.
 - Pruebas unitarias de propietario, timeout, origen LAN y allowlist: correctas.
 - `npm run probe:lan-session` en el entorno anfitrión: rechazo antes de

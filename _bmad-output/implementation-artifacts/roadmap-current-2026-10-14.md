@@ -34,7 +34,7 @@ esas notas se conservan como registro de decisiones y evidencias anteriores.
 
 | Prioridad | Historia | Resultado y criterio de salida |
 | --- | --- | --- |
-| P0 | `LAN-HARDEN-01` | Allowlist HTTP de assets públicos, traversal e internals en 404; suite verde. Implementada y aceptada en unitarias; falta prueba viva en host. |
+| P0 | `LAN-HARDEN-01` | **Aceptada 17/10/2026.** Allowlist HTTP de assets públicos, `nosniff`, traversal e internals en 404; `tools/lan-http-probe.mjs` valida la frontera en host. |
 | P0 | `BASELINE-01` | **Aceptada 17/10/2026.** Baseline Git etiquetado y hashes de bridge registrados en `docs/provenance-baseline-2026-10-17.json`; no modifica gameplay. |
 | P1 | `COMBAT-BOUNDS-01` | Unificar límites de cohete, arena nativa y malla; ningún cohete desaparece dentro del volumen jugable; prueba de regresión de combate. |
 | P1 | `LAN-HARDEN-02` | **Aceptada 17/10/2026.** Propietario de sesión para `restart/configure`, timeout de hello, backpressure y origen LAN por host; `tools/lan-session-probe.mjs` valida owner, invitado, transferencia y reconexión. |

@@ -25,9 +25,9 @@ La fuente de orden es el [plan canónico](../_bmad-output/implementation-artifac
 - La presentación de límites usa ahora paredes/curvas translúcidas y un techo
   emisivo con retícula. Es una capa Three.js; si una transición se ve pero no
   colisiona, hay que comprobar que `ROCKETSIM_BRIDGE_EXE` apunte a R19.
-- Suite después de la última edición de código: `npm test` 163/163.
-- `LAN-HARDEN-01`: frontera HTTP allowlist implementada y aceptada en pruebas
-  unitarias; la prueba viva contra el host sigue pendiente.
+- Suite después de la última edición de código: `npm test` 173/173.
+- `LAN-HARDEN-01`: aceptada en el host el 17/10/2026. `probe:lan-http` entrega
+  los assets públicos con `nosniff` y devuelve 404 para internals y traversal.
 - `LAN-HARDEN-02`: aceptada en el host el 17/10/2026. La sonda valida
   propietario de sesión, rechazo de `restart` del invitado, transferencia de
   owner, reconexión dentro de cuatro segundos y expiración posterior, además
@@ -59,7 +59,7 @@ congelados. La ficha completa está en
 
 ## Secuencia siguiente
 
-`LAN-HARDEN-01` → `COMBAT-BOUNDS-01` → `LAN-HARDEN-02` (aceptada) → `HITBOX-01` invertida → observación web de `ARENA-CEILING-01` con R19 →
+`LAN-HARDEN-01` (aceptada) → `COMBAT-BOUNDS-01` → `LAN-HARDEN-02` (aceptada) → `HITBOX-01` invertida → observación web de `ARENA-CEILING-01` con R19 →
 `MOB-AIR-02-OBS-ISOLATED` → `LIVENESS-01-INTEGRATION` → `MOB-AIR-03` para
 comparar curvas web y nativas → cámara aérea/pared si procede → arena visual →
 regresión de combate → online.

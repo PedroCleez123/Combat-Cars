@@ -41,6 +41,19 @@ inversión para producir una observación determinista. Antes de detectar el
 contacto no es un modo de conducción libre; después del contacto invertido debe
 devolver las entradas manuales al jugador. Si vuelve a quedarse neutral tras
 `CONTACTO sí`, es una regresión de la campaña, no una propiedad de RocketSim.
+Con más de un piloto, bridge inferior a R19 o una campaña ya terminada tampoco
+debe secuestrar el control: el HUD explica el estado y el jugador conserva sus
+entradas manuales.
+
+### Actualización de OpenWiki rechazada por autorización
+
+**Señal:** una ejecución de la cola de actualización falla antes de entregar
+la siguiente página con `workspace routing discovery unauthorized (401)`.
+
+**Prevención:** no editar los archivos de estado, Claims o manifiestos de
+OpenWiki a mano ni declarar la wiki actualizada. Mantener el cambio documentado
+en las fuentes del proyecto y reanudar el ciclo OpenWiki cuando vuelva a estar
+autorizado; clasificar la actualización de esa wiki como pendiente.
 
 ### Puerto ocupado y sesión equivocada
 

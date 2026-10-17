@@ -988,7 +988,14 @@ function updateHud() {
       ? rocketsimCombat ? `COMBATE ROCKETSIM${inRocketSimCombatAlpha() ? " · COMBAT-ALPHA" : ""}${bridgeLabel}${ceilingPhysicsWarning} · PRIMERO A ${combatGoal} · ${state.settings.humans}/${state.settings.vehicleLimit} PILOTOS${combatPhase}` : inRocketSimRampPractice() ? `PRÁCTICA ROCKETSIM · RAMPA DE PRUEBA · ESQUINAS CURVAS${bridgeLabel}` : inRocketSimBlockPractice() ? `PRÁCTICA ROCKETSIM · BLOQUE DE PRUEBA · ESQUINAS CURVAS${bridgeLabel}` : inRocketSimCorneredPractice() ? `PRÁCTICA ROCKETSIM · ESQUINAS CURVAS · SUELO · PAREDES · TECHO${bridgeLabel}` : (inRocketSimCurvedPractice() || state.settings?.practiceArena === "arsenal-expanded-curved-practice") ? `PRÁCTICA ROCKETSIM · TRANSICIONES CURVAS · SUELO · PAREDES · TECHO${bridgeLabel}` : `PRÁCTICA ROCKETSIM · SUELO · PAREDES · TECHO${bridgeLabel}`
       : calibration ? "CALIBRACIÓN DE MOVILIDAD · SUELO · PAREDES · TECHO"
       : state.settings.vehicleLimit === 1 && state.settings.bots === 0 ? "PRÁCTICA DE FÍSICA · SIN BOTS" : `PRIMERO A 15 · ${state.settings.humans} PILOTOS · ${state.settings.bots} BOTS`;
-    if (hitbox01Playback) ui.objective.textContent = "HITBOX-01 · OBSERVACIÓN INVERTIDA · R19 · UN PILOTO";
+    if (hitbox01Playback) {
+      const hitboxReport = buildHitbox01Report(hitbox01Playback);
+      ui.objective.textContent = hitboxReport.done
+        ? `HITBOX-01 · ${hitboxReport.outcome || "FIN"} · CONTROL DEL JUGADOR`
+        : hitboxReport.phase === "awaiting-solo-player"
+          ? "HITBOX-01 · CIERRA OTRAS PESTAÑAS · CONTROL DEL JUGADOR"
+          : "HITBOX-01 · OBSERVACIÓN INVERTIDA · CONTROLES AUTOMÁTICOS";
+    }
   }
   const me = state.cars.find(car => car.id === localId);
   if (me) {

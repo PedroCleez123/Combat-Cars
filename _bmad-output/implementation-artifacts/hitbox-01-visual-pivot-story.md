@@ -47,6 +47,10 @@ autoridad.
 - Al registrar el contacto, la campaña libera todos los controles. No existe
   auto-upright, impulso de recuperación ni cambio de orientación: recuperar
   ruedas sigue siendo responsabilidad del jugador y de RocketSim.
+- Durante la preparación automática, HITBOX-01 reserva las entradas hasta el
+  contacto para que la maniobra sea reproducible. Después del contacto, con
+  bridge no compatible o con varios pilotos, devuelve la entrada manual; el
+  HUD distingue `CONTROLES AUTOMÁTICOS` de `CONTROL DEL JUGADOR`.
 - Host `http://localhost:5300/?arena=combat-alpha` recargado después del cambio,
   HUD y partida visibles, coche en suelo, sin warnings ni errores de consola
   observados. Esta es una comprobación visual de arranque y reposo, no del

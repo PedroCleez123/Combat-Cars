@@ -112,19 +112,19 @@ export function stepHitbox01BrowserObservation(playback, {
   if (!playback || typeof playback !== "object") throw new TypeError("playback must be an object");
   const at = finite(now);
   const recoveryInput = manualInput && typeof manualInput === "object" ? manualInput : emptyInput();
-  if (!car) return result(playback, emptyInput());
+  if (!car) return result(playback, recoveryInput);
   if (movementBackend !== null && movementBackend !== "rocketsim") {
     finish(playback, "requires-rocketsim");
-    return result(playback, emptyInput());
+    return result(playback, recoveryInput);
   }
   if (Number.isFinite(Number(bridgeRevision)) && Number(bridgeRevision) < 19) {
     finish(playback, "requires-r19");
-    return result(playback, emptyInput());
+    return result(playback, recoveryInput);
   }
   if (Number.isSafeInteger(playerCount) && playerCount !== 1) {
     if (playback.restartRequested) finish(playback, "session-not-isolated");
     else playback.phase = "awaiting-solo-player";
-    return result(playback, emptyInput());
+    return result(playback, recoveryInput);
   }
 
   const token = snapshotTime === undefined ? at : String(snapshotTime);
@@ -140,7 +140,7 @@ export function stepHitbox01BrowserObservation(playback, {
   if (playback.done) return result(playback, recoveryInput);
   if (playback.lastSnapshotToken === token) {
     if (at - playback.lastSnapshotAt >= playback.tuning.snapshotStallSeconds) finish(playback, "snapshot-stalled");
-    return result(playback, playback.phase === "rotate" ? rotateInput() : emptyInput());
+    return result(playback, playback.done ? recoveryInput : playback.phase === "rotate" ? rotateInput() : emptyInput());
   }
   playback.lastSnapshotToken = token;
   playback.lastSnapshotAt = at;
@@ -153,7 +153,7 @@ export function stepHitbox01BrowserObservation(playback, {
     } else if (at - playback.phaseStartedAt >= playback.tuning.restartTimeoutSeconds) {
       finish(playback, "restart-unconfirmed");
     }
-    return result(playback, emptyInput());
+    return result(playback, playback.done ? recoveryInput : emptyInput());
   }
 
   observe(playback, car);
@@ -182,7 +182,7 @@ export function stepHitbox01BrowserObservation(playback, {
     }
     if (at - playback.phaseStartedAt >= playback.tuning.rotateMaxSeconds) {
       finish(playback, "inversion-not-observed");
-      return result(playback, emptyInput());
+      return result(playback, recoveryInput);
     }
     return result(playback, rotateInput());
   }

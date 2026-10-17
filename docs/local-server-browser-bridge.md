@@ -89,6 +89,11 @@ para hacer reproducible la maniobra; en cuanto detecta el contacto invertido
 devuelve las entradas manuales al jugador. Recuperar ruedas, saltar o usar
 air-roll sigue siendo una decisión y una acción del jugador.
 
+Si hay más de un piloto conectado, si el bridge no es R19 o si la campaña ya
+terminó, HITBOX-01 no toma las entradas: muestra el motivo en el objetivo del
+HUD y conserva los controles manuales. Para ejecutar la maniobra automática,
+cierra las demás pestañas y recarga con `Ctrl+F5`.
+
 ## Límites y prevención
 
 - Codex puede editar archivos, ejecutar pruebas y compilar el bridge cuando el

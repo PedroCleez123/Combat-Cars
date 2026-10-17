@@ -26,6 +26,10 @@ La fuente de orden es el [plan canónico](../_bmad-output/implementation-artifac
   R19 confirma `upY=-1` y contacto de carrocería invertida (normal de suelo,
   `wheelCount=0`) en un solo piloto; la suite queda en 177/177. Falta solo la
   inspección visual de píxeles en una sesión web limpia.
+- `HITBOX-01` conserva el control manual si hay varios pilotos o la campaña
+  finaliza, y lo devuelve al registrar contacto invertido; solo reserva las
+  entradas durante la maniobra automática reproducible. El HUD expone ambos
+  estados para evitar confundir la observación con un modo de juego bloqueado.
 - `ARENA-CEILING-01`: bridge R19 aceptado. La sonda de 720 ticks recorre suelo,
   pared, esquinas y techo con apoyo continuo y salto máximo de normal de
   3,124 grados. Three.js comparte la geometría. Falta una observación visual

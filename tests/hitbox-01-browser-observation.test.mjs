@@ -32,13 +32,19 @@ test("HITBOX-01 measures the authoritative up vector from a quaternion", () => {
 
 test("HITBOX-01 requires RocketSim R19 and an isolated pilot before restarting", () => {
   const js = createHitbox01BrowserObservation();
-  assert.equal(stepHitbox01BrowserObservation(js, { now: 0, car: car(), movementBackend: "js" }).report.outcome, "requires-rocketsim");
+  const manualInput = { throttle: 1, steer: 0, jump: false, boost: false, drift: false, airRoll: false, roll: 0, fire: false };
+  const jsResult = stepHitbox01BrowserObservation(js, { now: 0, car: car(), movementBackend: "js", manualInput });
+  assert.equal(jsResult.report.outcome, "requires-rocketsim");
+  assert.deepEqual(jsResult.input, manualInput, "an incompatible backend leaves the player in control");
   const r13 = createHitbox01BrowserObservation();
-  assert.equal(stepHitbox01BrowserObservation(r13, { ...options, bridgeRevision: 13, now: 0, car: car() }).report.outcome, "requires-r19");
+  const r13Result = stepHitbox01BrowserObservation(r13, { ...options, bridgeRevision: 13, now: 0, car: car(), manualInput });
+  assert.equal(r13Result.report.outcome, "requires-r19");
+  assert.deepEqual(r13Result.input, manualInput, "an older bridge leaves the player in control");
   const shared = createHitbox01BrowserObservation();
-  const waiting = stepHitbox01BrowserObservation(shared, { ...options, playerCount: 2, now: 0, car: car() });
+  const waiting = stepHitbox01BrowserObservation(shared, { ...options, playerCount: 2, now: 0, car: car(), manualInput });
   assert.equal(waiting.phase, "awaiting-solo-player");
   assert.equal(waiting.restartRequested, false);
+  assert.deepEqual(waiting.input, manualInput, "a shared session stays playable while HITBOX-01 waits for isolation");
 });
 
 test("HITBOX-01 holds jump then rotates only after an authoritative restart", () => {

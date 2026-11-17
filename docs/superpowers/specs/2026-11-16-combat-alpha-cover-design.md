@@ -1,5 +1,10 @@
 # Combat-alpha: cobertura industrial autoritativa
 
+> **Estado:** diseño inicial histórico. La altura de las barricadas de
+> neumáticos que figura en esta propuesta quedó supersedida por COV-06 y por
+> `docs/superpowers/specs/2026-11-17-combat-alpha-tire-cover-alignment-design.md`;
+> el contrato vigente es 8 × 8 × 4,8 UU.
+
 ## Estado
 
 Diseño aprobado por el usuario el 16/11/2026. Este documento define el hito

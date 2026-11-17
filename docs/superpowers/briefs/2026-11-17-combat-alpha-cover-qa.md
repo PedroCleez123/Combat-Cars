@@ -3,6 +3,12 @@
 Fecha: 2026-11-17  
 Estado: pendiente de evidencia manual; sin publicación.
 
+> **Instantánea histórica:** los conteos de pruebas, el tamaño del paquete Pages
+> y las observaciones automáticas de este brief describen el checkout revisado
+> el 17/11/2026. No representan el estado actual del árbol. Para evidencia
+> vigente, consulta `_bmad-output/current-roadmap.md` y los resultados de CI;
+> las fechas de archivos por sí solas no determinan la frescura del WASM.
+
 ## Estado de ejecución
 
 El fixture de choque del lobby usa una pose diagnóstica dentro del corredor

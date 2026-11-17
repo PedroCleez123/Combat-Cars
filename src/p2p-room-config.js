@@ -3,10 +3,8 @@
 // signaling service the published Combat Cars lobby may contact.
 export const P2P_SIGNAL_ORIGIN = "https://combat-cars-signal.combat-cars-pedro.workers.dev";
 
-// The public beta currently boots the 1v1 transport, but every later
-// multi-peer layer must agree on one bounded match vocabulary. Keep this
-// contract next to the reviewed signaling configuration so a UI cannot invent
-// a capacity that the causal host does not understand.
+// Keep the supported multiplayer modes and capacities in one bounded
+// contract so the room UI, signaling and WASM host cannot disagree.
 export const P2P_MATCH_MAX_PLAYERS = 6;
 export const P2P_MATCH_MODES = Object.freeze({
   DUEL_1V1: "1v1",
@@ -38,10 +36,9 @@ function freezeRosterPlayer(player) {
 }
 
 /**
- * Build the deterministic roster shared by the future host-star transport,
- * target lock and presentation state. This is deliberately a pure contract:
- * it does not open sockets or claim that the current 1v1 session supports
- * multiple WebRTC peers yet.
+ * Build the deterministic roster shared by the configured room, multiplayer
+ * host, target selection and presentation state. This is a pure validation
+ * contract; it does not open sockets or mutate the room.
  */
 export function createP2PMatchRoster({ mode, playerIds, teamsByPlayerId = null } = {}) {
   const range = p2pMatchPlayerRange(mode);

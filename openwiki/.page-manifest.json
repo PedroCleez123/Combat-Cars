@@ -1,68 +1,26 @@
 {
   "schemaVersion": 1,
   "pages": {
-    "/openwiki/architecture/runtime.md": {
-      "pageVersion": "sha256:407ca61d4b11a1a3f07ee3616281bf7948d20a4ba1d59ab881f1b0b6923dbb0b",
+    "/openwiki/docs/arena-scale-and-presentation-contract.md": {
+      "pageVersion": "sha256:9b23918cab98b50e7039dfa46c9d6e97351ac5c84cc60371bb6728f47adb1114",
       "completedBy": "codex",
-      "completedRunId": "34845729-fe49-4f6f-9761-fa885028880a",
-      "gitHead": "8f9863c71481187d47de7b081c17ec951a064cf8",
-      "sourceFingerprint": "sha256:363db5f952efa4ab4c8763d1f219ee9062734e364a14596c921e526958605e7f"
+      "completedRunId": "4352afb8-cd57-4d4d-84a7-b5550007d20b",
+      "gitHead": "ea7c7723f71a4f000da7efcd187f68b897014d35",
+      "sourceFingerprint": "sha256:f5d75a094cf1e062a05d1beafb4059f181b5fd87193f51084e0ceb22c74df22b"
     },
-    "/openwiki/arena/geometry.md": {
-      "pageVersion": "sha256:bb560b496f52a88a2f28e02fd364a7f169279df7a90bc15cdf3f70df8be88774",
+    "/openwiki/docs/boost-regeneration-contract.md": {
+      "pageVersion": "sha256:ba035ae1d01782b72be2bff9dc492108897a603f90d1b484684cf6fe04d3b7e1",
       "completedBy": "codex",
-      "completedRunId": "34845729-fe49-4f6f-9761-fa885028880a",
-      "gitHead": "8f9863c71481187d47de7b081c17ec951a064cf8",
-      "sourceFingerprint": "sha256:363db5f952efa4ab4c8763d1f219ee9062734e364a14596c921e526958605e7f"
+      "completedRunId": "4352afb8-cd57-4d4d-84a7-b5550007d20b",
+      "gitHead": "ea7c7723f71a4f000da7efcd187f68b897014d35",
+      "sourceFingerprint": "sha256:f5d75a094cf1e062a05d1beafb4059f181b5fd87193f51084e0ceb22c74df22b"
     },
-    "/openwiki/client/presentation.md": {
-      "pageVersion": "sha256:c9ef13c2ffc6336bd99b7a930bf2e346b0e0caa9c63ee2522fc87cf78c343b14",
+    "/openwiki/docs/persistent-room-lifecycle-plan.md": {
+      "pageVersion": "sha256:dccf2b3a2443006417609a33523a8695b96215c1567a6569f54092ac2f764cda",
       "completedBy": "codex",
-      "completedRunId": "34845729-fe49-4f6f-9761-fa885028880a",
-      "gitHead": "8f9863c71481187d47de7b081c17ec951a064cf8",
-      "sourceFingerprint": "sha256:363db5f952efa4ab4c8763d1f219ee9062734e364a14596c921e526958605e7f"
-    },
-    "/openwiki/combat/rockets.md": {
-      "pageVersion": "sha256:0a01ccf1133c7626bbbaff5f411413602143080f89f3fa77ebfc7e81299f8170",
-      "completedBy": "codex",
-      "completedRunId": "34845729-fe49-4f6f-9761-fa885028880a",
-      "gitHead": "8f9863c71481187d47de7b081c17ec951a064cf8",
-      "sourceFingerprint": "sha256:363db5f952efa4ab4c8763d1f219ee9062734e364a14596c921e526958605e7f"
-    },
-    "/openwiki/network/session.md": {
-      "pageVersion": "sha256:9dc52af7463cef3b0653e86decb5b4cc5bdaba31eab2a97ebdf0f2e4014d34aa",
-      "completedBy": "codex",
-      "completedRunId": "34845729-fe49-4f6f-9761-fa885028880a",
-      "gitHead": "8f9863c71481187d47de7b081c17ec951a064cf8",
-      "sourceFingerprint": "sha256:363db5f952efa4ab4c8763d1f219ee9062734e364a14596c921e526958605e7f"
-    },
-    "/openwiki/operations/diagnostics.md": {
-      "pageVersion": "sha256:e024ef1a58247ea3394dc33f0ff16bab11afa2cf7ae998d757fba3d82c4af86b",
-      "completedBy": "codex",
-      "completedRunId": "34845729-fe49-4f6f-9761-fa885028880a",
-      "gitHead": "8f9863c71481187d47de7b081c17ec951a064cf8",
-      "sourceFingerprint": "sha256:363db5f952efa4ab4c8763d1f219ee9062734e364a14596c921e526958605e7f"
-    },
-    "/openwiki/quickstart.md": {
-      "pageVersion": "sha256:8c2b1c6f42bc339242ac2c124dcbfc0288bd4a15caa02786845d4713009ea2fe",
-      "completedBy": "codex",
-      "completedRunId": "34845729-fe49-4f6f-9761-fa885028880a",
-      "gitHead": "8f9863c71481187d47de7b081c17ec951a064cf8",
-      "sourceFingerprint": "sha256:363db5f952efa4ab4c8763d1f219ee9062734e364a14596c921e526958605e7f"
-    },
-    "/openwiki/simulation/mobility.md": {
-      "pageVersion": "sha256:de18ebc376c95787ea01fef5d0fc95c9dc3c69079eabbbb0601913582c5bd34d",
-      "completedBy": "codex",
-      "completedRunId": "34845729-fe49-4f6f-9761-fa885028880a",
-      "gitHead": "8f9863c71481187d47de7b081c17ec951a064cf8",
-      "sourceFingerprint": "sha256:363db5f952efa4ab4c8763d1f219ee9062734e364a14596c921e526958605e7f"
-    },
-    "/openwiki/testing/evidence.md": {
-      "pageVersion": "sha256:70b10fed2e22c7056cecfb6e3c0340bf60096ee7b6ee0defcd2b02824d19b36e",
-      "completedBy": "codex",
-      "completedRunId": "34845729-fe49-4f6f-9761-fa885028880a",
-      "gitHead": "8f9863c71481187d47de7b081c17ec951a064cf8",
-      "sourceFingerprint": "sha256:363db5f952efa4ab4c8763d1f219ee9062734e364a14596c921e526958605e7f"
+      "completedRunId": "4352afb8-cd57-4d4d-84a7-b5550007d20b",
+      "gitHead": "ea7c7723f71a4f000da7efcd187f68b897014d35",
+      "sourceFingerprint": "sha256:f5d75a094cf1e062a05d1beafb4059f181b5fd87193f51084e0ceb22c74df22b"
     }
   }
 }

@@ -15,7 +15,7 @@ target_compile_definitions(RocketSim PRIVATE RS_DONT_LOG)
 
 add_executable(rocketsim_wasm wrapper.cpp)
 set_target_properties(rocketsim_wasm PROPERTIES SUFFIX ".mjs")
-target_include_directories(rocketsim_wasm PRIVATE "${ROCKETSIM_SOURCE}/src")
+target_include_directories(rocketsim_wasm PRIVATE "${ROCKETSIM_SOURCE}/src" "${CMAKE_CURRENT_LIST_DIR}/../shared")
 target_compile_options(rocketsim_wasm PRIVATE "-iquote${ROCKETSIM_SOURCE}/libsrc/bullet3-3.24")
 target_link_libraries(rocketsim_wasm PRIVATE RocketSim)
 target_compile_definitions(rocketsim_wasm PRIVATE RS_DONT_LOG)

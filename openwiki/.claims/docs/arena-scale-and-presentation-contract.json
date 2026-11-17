@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9b23918cab98b50e7039dfa46c9d6e97351ac5c84cc60371bb6728f47adb1114",
+  "claims": [
+    {
+      "id": "claim_d7ea69a5a4f8403f97e4feb99336a78f",
+      "statement": "El perfil compartido combat-alpha usa halfWidth=132, halfDepth=204, height=108 y curveRadius=30 en unidades de Arsenal, equivalente a un volumen visible 264×408×108.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-arena-profile.js",
+          "version": "repo-file-v1:sha256:506a9657b345397922b6c9cd63ecbd78c9fa7d1baa989fe2ae067a5d5ad8fa17"
+        }
+      ]
+    },
+    {
+      "id": "claim_f782054c55f3427a86d0edc9c322b7fa",
+      "statement": "El combate público de combat-alpha no publica pickups de nitro: COMBAT_ALPHA_PICKUPS y su capacidad están vacíos. Los seis elementos COV son obstáculos separados del sistema de pickups; las 88 ubicaciones históricas están comentadas y no se activan como pickups.",
+      "evidence": [
+        {
+          "resource": "repo://src/combat-alpha-map.js",
+          "version": "repo-file-v1:sha256:37125265af80aed6b9720d701d8c9185bffbc76e5acb734373c2391edd114c2c"
+        },
+        {
+          "resource": "repo://tests/combat-alpha-map.test.mjs",
+          "version": "repo-file-v1:sha256:3a85191b8b840efd4f9794112c1d6b04ce14cb617768f2aaabab7809c34420bd"
+        },
+        {
+          "resource": "repo://tools/rocketsim-bridge/main.cpp",
+          "version": "repo-file-v1:sha256:0cbf321764c732ec160a479a353c317a1303f8def276d5c86ad3d54816426ddc"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/wrapper.cpp",
+          "version": "repo-file-v1:sha256:5a6a21c6b08cb39caac04fb278b10b9fe549af7e6775c4291efe5b7f8834197d"
+        }
+      ]
+    },
+    {
+      "id": "claim_c16b3a33db1a46e3b6e32fa51cf3072c",
+      "statement": "La presentación online construye un shell interior continuo y ajusta límites de cámara y sombras a la escala de la arena sin convertir la malla visual en autoridad de colisión.",
+      "evidence": [
+        {
+          "resource": "repo://src/client.js",
+          "version": "repo-file-v1:sha256:a8d89bdf29a5068b0a53a540822090a808779b1a96f166f14f5e8bbd15bac1ae"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/p2p-wasm-three-presentation-renderer.mjs",
+          "version": "repo-file-v1:sha256:17a3ebc4a8ae071881974a5c9ae5bef1827a85dfec21abd0f30291e835fe5b29"
+        }
+      ]
+    },
+    {
+      "id": "claim_d6cf922fc87442409a9a4b90f191cb10",
+      "statement": "Las dimensiones, la topología continua del shell y la superficie plana retraída están cubiertas por contratos automatizados de perfil, mapa y renderer.",
+      "evidence": [
+        {
+          "resource": "repo://tests/combat-alpha-map.test.mjs",
+          "version": "repo-file-v1:sha256:3a85191b8b840efd4f9794112c1d6b04ce14cb617768f2aaabab7809c34420bd"
+        },
+        {
+          "resource": "repo://tests/p2p-wasm-three-presentation-renderer.test.mjs",
+          "version": "repo-file-v1:sha256:634b57c00b802b20dd9953362202d3c0fa3d14691236d3c832b48091fd36900c"
+        },
+        {
+          "resource": "repo://tests/rocketsim-arena-profile.test.mjs",
+          "version": "repo-file-v1:sha256:af4f8870315b9f26b8bd4379a611d51e2211c797f5397830018d7b0016595fad"
+        }
+      ]
+    },
+    {
+      "id": "claim_51e664cdab0c4866b2b2d373f0dcd312",
+      "statement": "Los seis slots de salida usan offsets longitudinales -90, 90 y 0, y los beacons se distribuyen en z=-120, 0 y 120 dentro del volumen ampliado.",
+      "evidence": [
+        {
+          "resource": "repo://src/combat-alpha-map.js",
+          "version": "repo-file-v1:sha256:37125265af80aed6b9720d701d8c9185bffbc76e5acb734373c2391edd114c2c"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/wrapper.cpp",
+          "version": "repo-file-v1:sha256:5a6a21c6b08cb39caac04fb278b10b9fe549af7e6775c4291efe5b7f8834197d"
+        }
+      ]
+    },
+    {
+      "id": "claim_6d44756f4b804f06876f950191ad88e9",
+      "statement": "El material industrial de combat-alpha carga cuatro derivados WebP aprobados mediante un manifiesto local y proyección triplanar en coordenadas de mundo, con fallback opaco y liberación segura cuando falla una carga.",
+      "evidence": [
+        {
+          "resource": "repo://src/arena-scrapyard-material.js",
+          "version": "repo-file-v1:sha256:9da71f15eed9d710e7b7c55b69034871d26db71a090bc41fba2b933dcde45b80"
+        },
+        {
+          "resource": "repo://src/assets/arena/scrapyard/manifest.json",
+          "version": "repo-file-v1:sha256:1195342a18bf12447f40cdaa25a667241a26b661fbd4fe392cf09d7486e58c6e"
+        },
+        {
+          "resource": "repo://tests/arena-scrapyard-material.test.mjs",
+          "version": "repo-file-v1:sha256:7565657e5a3ac86b10e2521db99781346fe90734b0fff965ef6f7d580d883a8b"
+        }
+      ]
+    },
+    {
+      "id": "claim_8056ac0421a441318b1b5636e9602247",
+      "statement": "El renderer P2P público conserva el skin industrial en el tier balanced y reserva el fallback opaco para low/performance; la elección es sólo de presentación y no modifica la simulación ni la red.",
+      "evidence": [
+        {
+          "resource": "repo://src/arena-scrapyard-material.js",
+          "version": "repo-file-v1:sha256:9da71f15eed9d710e7b7c55b69034871d26db71a090bc41fba2b933dcde45b80"
+        },
+        {
+          "resource": "repo://tests/arena-scrapyard-material.test.mjs",
+          "version": "repo-file-v1:sha256:7565657e5a3ac86b10e2521db99781346fe90734b0fff965ef6f7d580d883a8b"
+        },
+        {
+          "resource": "repo://tests/art-05-quality-contract.test.mjs",
+          "version": "repo-file-v1:sha256:0f0dd1ed4cde8090246f67697a98c956cb981fd67fcae1c98139d8ec6d85839b"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/p2p-wasm-three-presentation-renderer.mjs",
+          "version": "repo-file-v1:sha256:17a3ebc4a8ae071881974a5c9ae5bef1827a85dfec21abd0f30291e835fe5b29"
+        }
+      ]
+    },
+    {
+      "id": "claim_7a22000754a84ec9abe39173a2daa3c4",
+      "statement": "La revisión local documentada el 17/11/2026 pasó la suite completa, las puertas WASM de presentación/contacto/raycast/movilidad, las verificaciones de contrato/assets y el build/verificación Pages de 102 archivos. El build WASM limpio reproduce los hashes fijados en provenance. Los cinco comandos dedicados incorporados a CI el 18/11 pasaron localmente, pero la modificación del workflow aún no tiene un run remoto. La comparación nativa y la QA humana COV local/P2P siguen pendientes.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/ci.yml",
+          "version": "repo-file-v1:sha256:c06b70e38f56c4e8eff000518f1364e7601bfb8f52c88df2cf5aa49a6ef603cf"
+        },
+        {
+          "resource": "repo://_bmad-output/current-roadmap.md",
+          "version": "repo-file-v1:sha256:fe2b1094252c53717c1df87efe997daf1b7cf87b08aa50a70eaf575e041f1845"
+        },
+        {
+          "resource": "repo://docs/test-suite-inventory.md",
+          "version": "repo-file-v1:sha256:25f0d9a9541768ea32a21bcf74c136d7ca583f48553c970883225c829d6c55cc"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/wasm-build-provenance.json",
+          "version": "repo-file-v1:sha256:96290b8292996a373c0252419f56959fa099a630a7a4ca7c8eed2ee26114a1a1"
+        }
+      ]
+    },
+    {
+      "id": "claim_cad47fc55b174a4cab81301b20bdc0bf",
+      "statement": "El descriptor canónico define las seis coberturas COV. El generador valida IDs, tipos, posiciones y dimensiones positivas de obstáculos y coberturas, y rechaza registros incompletos antes de emitir el módulo JS y el header C++ compartido por los puentes nativo y WASM. Las pruebas cubren rayos bajos, bypass alto/lateral y contacto a alta velocidad; la fuente generada evita duplicar IDs, dimensiones y posiciones entre puentes.",
+      "evidence": [
+        {
+          "resource": "repo://data/combat-alpha-geometry.json",
+          "version": "repo-file-v1:sha256:f2b0f4b0971e4f349ba72297a355a65ff0db2d37ec6aa3be6752e0f54916255d"
+        },
+        {
+          "resource": "repo://tests/arena-contract-generation.test.mjs",
+          "version": "repo-file-v1:sha256:bed6dd1f4da709369c8160c1b29573c66c00d47df8a41a4694d11ea89aae7b43"
+        },
+        {
+          "resource": "repo://tests/rocketsim-wasm-combat-alpha-cover-contact.test.mjs",
+          "version": "repo-file-v1:sha256:a07ff5c7106fb1b595269a17fa73d649ac4a9d3155afedd6f7d10b30287df464"
+        },
+        {
+          "resource": "repo://tests/rocketsim-wasm-combat-alpha-cover.test.mjs",
+          "version": "repo-file-v1:sha256:3654319d6e0808ce91d7b8b154150c3e1906be6fb25f168dc926f791c681ab07"
+        },
+        {
+          "resource": "repo://tools/generate-arena-contract.mjs",
+          "version": "repo-file-v1:sha256:da1ec529c50e5941abb98e4e50bf553e3a1d45f1c95b1f08bb0bd0a07ad3199d"
+        },
+        {
+          "resource": "repo://tools/rocketsim-bridge/main.cpp",
+          "version": "repo-file-v1:sha256:0cbf321764c732ec160a479a353c317a1303f8def276d5c86ad3d54816426ddc"
+        },
+        {
+          "resource": "repo://tools/shared/combat_alpha_geometry.generated.hpp",
+          "version": "repo-file-v1:sha256:290dd799264b41415a45ca4aae2eb9237b04eccc41068e366366fd0997da5b7c"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/wrapper.cpp",
+          "version": "repo-file-v1:sha256:5a6a21c6b08cb39caac04fb278b10b9fe549af7e6775c4291efe5b7f8834197d"
+        }
+      ]
+    },
+    {
+      "id": "claim_e70e7060e2e94906b67a4128b58302fa",
+      "statement": "COV-03 deriva las vistas de cobertura del descriptor compartido del mapa para render local/P2P, y las mallas son visual-only. La presentación usa tres batches e instancia 256 neumáticos en dos pilas 4×4×8, con el material worn-tires-rubber.webp, sin crear colisión visual.",
+      "evidence": [
+        {
+          "resource": "repo://src/arena-decoration.js",
+          "version": "repo-file-v1:sha256:79b1fa23a823748a49ea708d0b6d0aae52cfb5578dd194c8a6c0112a440bab1f"
+        },
+        {
+          "resource": "repo://src/assets/arena/scrapyard/manifest.json",
+          "version": "repo-file-v1:sha256:1195342a18bf12447f40cdaa25a667241a26b661fbd4fe392cf09d7486e58c6e"
+        },
+        {
+          "resource": "repo://src/client.js",
+          "version": "repo-file-v1:sha256:a8d89bdf29a5068b0a53a540822090a808779b1a96f166f14f5e8bbd15bac1ae"
+        },
+        {
+          "resource": "repo://tests/combat-alpha-cover-visual.test.mjs",
+          "version": "repo-file-v1:sha256:488e034b25a7840471c844a9a24fe1dab068dbea73042ae06b9c9ab6a6fddea6"
+        },
+        {
+          "resource": "repo://tests/p2p-wasm-three-presentation-renderer.test.mjs",
+          "version": "repo-file-v1:sha256:634b57c00b802b20dd9953362202d3c0fa3d14691236d3c832b48091fd36900c"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/p2p-wasm-three-presentation-renderer.mjs",
+          "version": "repo-file-v1:sha256:17a3ebc4a8ae071881974a5c9ae5bef1827a85dfec21abd0f30291e835fe5b29"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-11-17T23:26:08.247Z"
+  }
+}

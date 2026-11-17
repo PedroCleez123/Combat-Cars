@@ -28,12 +28,20 @@ El nombre técnico del paquete y algunas rutas históricas conservan el slug
 
 ## Flujo de juego
 
-Al entrar se abre la práctica y, automáticamente, tu sala personal persistente:
-la clave aparece en pantalla para compartirla y el coche ya se puede conducir.
-Los jugadores que usan esa clave coinciden en la misma arena con nitro infinito
-y sin PvP mientras esperan. El host puede cambiar el modo y los jugadores sus
-equipos hasta **Empezar partida**; al salir de otra sala, cada navegador vuelve
-a su propia clave personal. El transporte admite hasta seis plazas.
+Al entrar se abre la práctica jugable y se crea o restaura automáticamente tu
+sala personal. La clave se muestra para compartirla; se conserva en ese
+navegador mientras la sala siga dentro de la retención de siete días del
+Worker. La clave identifica la sala, no es un secreto de autenticación.
+
+Los jugadores con esa clave aparecen en la misma arena y pueden conducir con
+nitro infinito mientras esperan, sin PvP, daño ni puntuación. El nombre es
+obligatorio para unirse. El host elige el modo y los equipos antes de empezar:
+1v1 requiere 2 pilotos, 2v2 requiere 4, 3v3 requiere 6 y FFA admite de 2 a 6.
+Los equipos deben quedar equilibrados en los modos por equipos. **Empezar
+partida** inicia una ronda de cinco minutos. Al abandonar una sala ajena, el
+navegador puede volver a su propia sala personal; si el host se marcha, otro
+jugador asume la sala compartida y el antiguo host recupera una clave personal
+propia al volver.
 
 ## Controles de escritorio
 
@@ -43,7 +51,9 @@ a su propia clave personal. El transporte admite hasta seis plazas.
 - Clic derecho: saltar / doble salto.
 - Clic izquierdo: nitro.
 - `F`: lanzar cohete; `Q`: fijar objetivo.
-- `R`: reiniciar cuando la ronda lo permita.
+
+La partida online no tiene una tecla para reiniciarla. La ruta local congelada
+(`npm run play`) conserva el reinicio histórico para pruebas de desarrollo.
 
 ## Desarrollo
 

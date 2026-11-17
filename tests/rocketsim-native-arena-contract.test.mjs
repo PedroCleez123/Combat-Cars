@@ -3,9 +3,12 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import { ROCKETSIM_ARENA_PROFILES } from "../src/rocketsim-arena-profile.js";
+import { COMBAT_ALPHA_GEOMETRY } from "../src/generated/combat-alpha-geometry.js";
 
 const nativeBridge = await readFile(new URL("../tools/rocketsim-bridge/main.cpp", import.meta.url), "utf8");
 const wasmWrapper = await readFile(new URL("../tools/wasm-spike/wrapper.cpp", import.meta.url), "utf8");
+const nativeCmake = await readFile(new URL("../tools/rocketsim-bridge/CMakeLists.txt", import.meta.url), "utf8");
+const wasmCmake = await readFile(new URL("../tools/wasm-spike/CMakeLists.txt", import.meta.url), "utf8");
 
 test("the shared arena profiles match the native bridge geometry contract", () => {
   const clean = ROCKETSIM_ARENA_PROFILES["arsenal-practice"];
@@ -37,12 +40,12 @@ test("the shared arena profiles match the native bridge geometry contract", () =
   assert.match(nativeBridge, /kArsenalExpandedHalfDepth\s*=\s*54\.f\s*\/\s*kArsenalPracticeScale/);
   assert.match(nativeBridge, /kArsenalExpandedHeight\s*=\s*RLConst::CAR_SPAWN_REST_Z\s*\+\s*30\.f\s*\/\s*kArsenalPracticeScale/);
   assert.match(nativeBridge, /kArsenalExpandedCurveRadius\s*=\s*8\.f\s*\/\s*kArsenalPracticeScale/);
-  assert.match(nativeBridge, /kCombatAlphaHalfWidth\s*=\s*132\.f\s*\/\s*kArsenalPracticeScale/);
-  assert.match(nativeBridge, /kCombatAlphaHalfDepth\s*=\s*204\.f\s*\/\s*kArsenalPracticeScale/);
-  assert.match(nativeBridge, /kCombatAlphaHeight\s*=\s*RLConst::CAR_SPAWN_REST_Z\s*\+\s*108\.f\s*\/\s*kArsenalPracticeScale/);
-  assert.match(nativeBridge, /kCombatAlphaCurveRadius\s*=\s*30\.f\s*\/\s*kArsenalPracticeScale/);
-  assert.match(nativeBridge, /kCombatBlockZ\s*=\s*-20\.f/);
-  assert.match(nativeBridge, /kCombatRampZ\s*=\s*20\.f/);
+  assert.match(nativeBridge, /kCombatAlphaHalfWidth\s*=\s*CombatCarsArenaGeometry::kCombatAlphaWidth\s*\/\s*2\.f\s*\/\s*kArsenalPracticeScale/);
+  assert.match(nativeBridge, /kCombatAlphaHalfDepth\s*=\s*CombatCarsArenaGeometry::kCombatAlphaDepth\s*\/\s*2\.f\s*\/\s*kArsenalPracticeScale/);
+  assert.match(nativeBridge, /kCombatAlphaHeight\s*=\s*RLConst::CAR_SPAWN_REST_Z\s*\+\s*CombatCarsArenaGeometry::kCombatAlphaHeight\s*\/\s*kArsenalPracticeScale/);
+  assert.match(nativeBridge, /kCombatAlphaCurveRadius\s*=\s*CombatCarsArenaGeometry::kCombatAlphaCurveRadius\s*\/\s*kArsenalPracticeScale/);
+  assert.match(nativeBridge, /kCombatBlockZ\s*=\s*CombatCarsArenaGeometry::kCentralBlockZ/);
+  assert.match(nativeBridge, /kCombatRampZ\s*=\s*CombatCarsArenaGeometry::kSouthRampZ/);
   assert.match(nativeBridge, /kCombatLargePickupXRatio\s*=\s*\.70f/);
   assert.match(nativeBridge, /kCombatLargePickupZRatio\s*=\s*\.70f/);
   assert.match(nativeBridge, /kCombatMediumPickupXRatio\s*=\s*\.52f/);
@@ -64,8 +67,8 @@ test("combat-alpha's readable spawn layout remains tied to the native bridge", (
 });
 
 test("combat-alpha keeps obstacle dimensions and native boost regeneration in the contract", () => {
-  assert.match(nativeBridge, /constexpr float kArsenalBlockHeight = 3\.25f/);
-  assert.match(nativeBridge, /constexpr float kArsenalRampHeight = 3\.5f/);
+  assert.match(nativeBridge, /constexpr float kArsenalBlockHeight = CombatCarsArenaGeometry::kCentralBlockHeight/);
+  assert.match(nativeBridge, /constexpr float kArsenalRampHeight = CombatCarsArenaGeometry::kSouthRampHeight/);
   assert.match(nativeBridge, /#include "BulletCollision\/CollisionShapes\/btConvexHullShape\.h"/);
   assert.match(nativeBridge, /btConvexHullShape\* arsenalRampShape\(\)/);
   assert.match(nativeBridge, /for \(const auto& point : \{ a, b, c, d, e, f \}\) shape->addPoint\(point, false\)/);
@@ -82,23 +85,27 @@ test("combat-alpha keeps obstacle dimensions and native boost regeneration in th
   assert.match(nativeBridge, /printState\(std::cout, tick, cars, pads\)/);
 });
 
-test("COV tire covers keep one shared 8x8x4.8 static box per bridge", () => {
+test("native and WASM bridges consume the generated arena and cover contract", () => {
+  assert.match(nativeBridge, /^#include "combat_alpha_geometry.generated.hpp"/m);
+  assert.match(wasmWrapper, /^#include "combat_alpha_geometry.generated.hpp"/m);
+  assert.match(nativeCmake, /\.\.\/shared/);
+  assert.match(wasmCmake, /\.\.\/shared/);
   for (const source of [nativeBridge, wasmWrapper]) {
-    assert.match(source, /\{ "tire-cover-blue", -68\.f, -30\.f, 8\.f, 8\.f, 4\.8f \}/);
-    assert.match(source, /\{ "tire-cover-red", 68\.f, 30\.f, 8\.f, 8\.f, 4\.8f \}/);
-    assert.match(source, /for \(const auto& cover : kCombatAlphaCovers\) addCombatAlphaCover/);
-    assert.match(source, /new btBoxShape\(halfExtents\)/);
+    assert.match(source, /for \(const auto& cover : CombatCarsArenaGeometry::kCombatAlphaCovers\) addCombatAlphaCover/);
+    assert.doesNotMatch(source, /"tire-cover-(?:blue|red)"/);
   }
-  assert.equal((nativeBridge.match(/"tire-cover-(?:blue|red)"/g) || []).length, 2);
-  assert.equal((wasmWrapper.match(/"tire-cover-(?:blue|red)"/g) || []).length, 2);
+  assert.deepEqual(COMBAT_ALPHA_GEOMETRY.covers.slice(-2).map(({ id, x, z, width, depth, height }) => ({ id, x, z, width, depth, height })), [
+    { id: "tire-cover-blue", x: -68, z: -30, width: 8, depth: 8, height: 4.8 },
+    { id: "tire-cover-red", x: 68, z: 30, width: 8, depth: 8, height: 4.8 },
+  ]);
 });
 
 test("WASM wrapper mirrors the safe combat-alpha spawn and regeneration contract", () => {
   assert.match(wasmWrapper, /kCombatAlphaSpawnXRatio\s*=\s*2\.f \/ 3\.f/);
   assert.match(wasmWrapper, /kCombatAlphaSpawnZOffset\s*=\s*90\.f \/ kArsenalPracticeScale/);
-  assert.match(wasmWrapper, /kCombatAlphaHalfDepth\s*=\s*204\.f \/ kArsenalPracticeScale/);
-  assert.match(wasmWrapper, /kCombatAlphaHeight\s*=\s*RocketSim::RLConst::CAR_SPAWN_REST_Z \+ 108\.f \/ kArsenalPracticeScale/);
-  assert.match(wasmWrapper, /kCombatAlphaCurveRadius\s*=\s*30\.f \/ kArsenalPracticeScale/);
+  assert.match(wasmWrapper, /kCombatAlphaHalfDepth\s*=\s*CombatCarsArenaGeometry::kCombatAlphaDepth \/ 2\.f \/ kArsenalPracticeScale/);
+  assert.match(wasmWrapper, /kCombatAlphaHeight\s*=\s*RocketSim::RLConst::CAR_SPAWN_REST_Z \+ CombatCarsArenaGeometry::kCombatAlphaHeight \/ kArsenalPracticeScale/);
+  assert.match(wasmWrapper, /kCombatAlphaCurveRadius\s*=\s*CombatCarsArenaGeometry::kCombatAlphaCurveRadius \/ kArsenalPracticeScale/);
   assert.match(wasmWrapper, /kBoostRegenDelayTicks\s*=\s*240/);
   assert.match(wasmWrapper, /kBoostRegenDurationTicks\s*=\s*120/);
   assert.match(wasmWrapper, /kBoostRegenStartRatePerTick\s*=\s*50\.f \/ 120\.f/);

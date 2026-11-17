@@ -7,15 +7,19 @@ import { COMBAT_ALPHA_COVER_RAYS, captureWasmCombatAlphaCoverRaycast } from "../
 
 const nativeBridge = await readFile(new URL("../tools/rocketsim-bridge/main.cpp", import.meta.url), "utf8");
 const wasmWrapper = await readFile(new URL("../tools/wasm-spike/wrapper.cpp", import.meta.url), "utf8");
+const generatedGeometry = await readFile(new URL("../tools/shared/combat_alpha_geometry.generated.hpp", import.meta.url), "utf8");
 
-test("native and WASM bridges enumerate the six COV-01 cover proxies", () => {
+test("generated geometry enumerates the six COV-01 cover proxies used by both bridges", () => {
+  for (const id of [
+    "container-cover-northwest",
+    "container-cover-southwest",
+    "container-cover-northeast",
+    "container-cover-southeast",
+    "tire-cover-blue",
+    "tire-cover-red",
+  ]) assert.match(generatedGeometry, new RegExp(id));
   for (const source of [nativeBridge, wasmWrapper]) {
-    assert.match(source, /container-cover-northwest/);
-    assert.match(source, /container-cover-southwest/);
-    assert.match(source, /container-cover-northeast/);
-    assert.match(source, /container-cover-southeast/);
-    assert.match(source, /tire-cover-blue/);
-    assert.match(source, /tire-cover-red/);
+    assert.match(source, /CombatCarsArenaGeometry::kCombatAlphaCovers/);
     assert.match(source, /btBoxShape/);
   }
   assert.match(nativeBridge, /createCombatAlphaArena[\s\S]*addCombatAlphaCover/);

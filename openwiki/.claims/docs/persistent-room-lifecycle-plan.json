@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:dccf2b3a2443006417609a33523a8695b96215c1567a6569f54092ac2f764cda",
+  "claims": [
+    {
+      "id": "claim_1633baa160e0418eba24fe1a4e3df736",
+      "statement": "La arquitectura vigente mantiene la simulación autoritativa en el host y separa la señalización P2P de la física.",
+      "evidence": [
+        {
+          "resource": "repo://PROTOCOL.md",
+          "version": "repo-file-v1:sha256:b8186330b0caeb94dcce14a56e03a06100ae4a97b02f42f73bf0b0239d6d5f30"
+        }
+      ]
+    },
+    {
+      "id": "claim_31258efa1be447029ae4d3990e963d0e",
+      "statement": "La ruta multiusuario conserva una sala persistente durante siete días; el propietario y los invitados guardan credenciales opacas por origen, y el ticket de participante permite recuperar la misma plaza durante una gracia de diez minutos.",
+      "evidence": [
+        {
+          "resource": "repo://cloudflare/arsenal-signal-worker.mjs",
+          "version": "repo-file-v1:sha256:7d1eba3fc8e68c1adf216376eb5be45978977eba0e5e8a9b7b4e31e7019f218a"
+        },
+        {
+          "resource": "repo://src/p2p-multiparty-signaling-client.js",
+          "version": "repo-file-v1:sha256:212793efdc10f7a6b4dadbcd892e3b35bf168daa8eff836c85797efbbce22047"
+        },
+        {
+          "resource": "repo://src/p2p-persistent-room-storage.js",
+          "version": "repo-file-v1:sha256:676c658ad56e605778fd98417da323616b4f6ea00ca99de8b0695bcc8b7b54ca"
+        }
+      ]
+    },
+    {
+      "id": "claim_fd827d2b5fae4e0fade62d554220c7e1",
+      "statement": "Cuando el host se desconecta, el Durable Object elige al invitado con menor joinOrder, incrementa hostEpoch, rota el hash de su antigua plaza y conserva la misma sala; el cliente promocionado reconstruye la autoridad de lobby.",
+      "evidence": [
+        {
+          "resource": "repo://cloudflare/arsenal-signal-worker.mjs",
+          "version": "repo-file-v1:sha256:7d1eba3fc8e68c1adf216376eb5be45978977eba0e5e8a9b7b4e31e7019f218a"
+        },
+        {
+          "resource": "repo://src/p2p-multiparty-signaling.js",
+          "version": "repo-file-v1:sha256:ec44aaa5fae47a14940983792c34bbacaf59d5651d8dcddbe7a758907d0c0592"
+        },
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        }
+      ]
+    },
+    {
+      "id": "claim_48a4bb3eb1cf465a9e1573e24ce1705c",
+      "statement": "La migración reconstruye un lobby RocketSim sin combate, limpia el modo y los equipos de la ronda perdida, conserva la clave y slots señalizables, y no finge reanudar una autoridad física desaparecida.",
+      "evidence": [
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        },
+        {
+          "resource": "repo://src/p2p-multiplayer-lobby.js",
+          "version": "repo-file-v1:sha256:1955bc6324bfc8fc68dd4a3ceb112316ee697187770b3d9506608402bda73af3"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/p2p-wasm-multiplayer-lobby-host.mjs",
+          "version": "repo-file-v1:sha256:3e75e770043f0153618fb10062256ab9a081ddfdbb56d04c8f9e7489d03af018"
+        }
+      ]
+    },
+    {
+      "id": "claim_871452dfc8204d2dbf0c39aa39d61346",
+      "statement": "Las salas nuevas de /v2/rooms nacen en room-open con mode nulo y seis plazas; el propietario fija después el modo mediante /v2/rooms/configure, mientras el flujo personal conserva las cinco plazas de invitado para poder cambiar de modo sin cambiar la clave.",
+      "evidence": [
+        {
+          "resource": "repo://cloudflare/arsenal-signal-worker.mjs",
+          "version": "repo-file-v1:sha256:7d1eba3fc8e68c1adf216376eb5be45978977eba0e5e8a9b7b4e31e7019f218a"
+        },
+        {
+          "resource": "repo://src/p2p-multiparty-signaling-client.js",
+          "version": "repo-file-v1:sha256:212793efdc10f7a6b4dadbcd892e3b35bf168daa8eff836c85797efbbce22047"
+        },
+        {
+          "resource": "repo://src/p2p-multiparty-signaling.js",
+          "version": "repo-file-v1:sha256:ec44aaa5fae47a14940983792c34bbacaf59d5651d8dcddbe7a758907d0c0592"
+        }
+      ]
+    },
+    {
+      "id": "claim_d186ca02112746fbbdc8167f3ea4b8da",
+      "statement": "El cliente crea el lobby WASM sin combate desde room-open para mostrar una arena física compartida; solo el host puede confirmar cambios de modo e iniciar la ronda, y los invitados reciben snapshots antes de enviar comandos.",
+      "evidence": [
+        {
+          "resource": "repo://p2p-multiplayer.html",
+          "version": "repo-file-v1:sha256:6f2b5a9cc3649465fec6ba59b4597c0e2c2efce321822073e2dceaede1c65bf0"
+        },
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/p2p-wasm-multiplayer-lobby-host.mjs",
+          "version": "repo-file-v1:sha256:3e75e770043f0153618fb10062256ab9a081ddfdbb56d04c8f9e7489d03af018"
+        }
+      ]
+    },
+    {
+      "id": "claim_5f085ac610c64172af055c59c6be2f39",
+      "statement": "La sala personal se crea o restaura automáticamente al entrar; al unirse a otra sala queda suspendida y el jugador puede volver a ella conservando la misma clave.",
+      "evidence": [
+        {
+          "resource": "repo://p2p-multiplayer.html",
+          "version": "repo-file-v1:sha256:6f2b5a9cc3649465fec6ba59b4597c0e2c2efce321822073e2dceaede1c65bf0"
+        },
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        },
+        {
+          "resource": "repo://src/p2p-persistent-room-storage.js",
+          "version": "repo-file-v1:sha256:676c658ad56e605778fd98417da323616b4f6ea00ca99de8b0695bcc8b7b54ca"
+        }
+      ]
+    },
+    {
+      "id": "claim_ed0de593d3734fe9b00e438febe644e9",
+      "statement": "Durante la espera el host puede cambiar de modo repetidamente y los jugadores pueden alternar Azul, Rojo o sin equipo sin perder su slot persistente.",
+      "evidence": [
+        {
+          "resource": "repo://cloudflare/arsenal-signal-worker.mjs",
+          "version": "repo-file-v1:sha256:7d1eba3fc8e68c1adf216376eb5be45978977eba0e5e8a9b7b4e31e7019f218a"
+        },
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/p2p-wasm-multiplayer-lobby-channel.mjs",
+          "version": "repo-file-v1:sha256:0212bc84ab9e0099a3471addc7fa7d9ffbeeb3dbf6a54ac957c2569cad004c7e"
+        }
+      ]
+    },
+    {
+      "id": "claim_1885609be54f43fd99bf567f425f3f5e",
+      "statement": "Durante una fase de espera, el invitado conserva roomCode, participantId y reconnectToken y reintenta su misma plaza con tres retardos acotados; el cierre de esos transportes no anuncia una salida voluntaria.",
+      "evidence": [
+        {
+          "resource": "repo://src/p2p-guest-connection-recovery.js",
+          "version": "repo-file-v1:sha256:3474a1ca88639091fd0452e73e75b5cf4b97005f693894424bf0eed475281cb7"
+        },
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        },
+        {
+          "resource": "repo://tests/p2p-guest-connection-recovery.test.mjs",
+          "version": "repo-file-v1:sha256:38431d4f6984800845697b46011879a13eb15d4b99d22d045952aba267a04e50"
+        }
+      ]
+    },
+    {
+      "id": "claim_1afe3caf46fa4458a3634c24a1aa00c5",
+      "statement": "Al perder el canal del host, el invitado espera 1,5 segundos el resultado de la promoción y un guestConnectionEpoch descarta callbacks de conexiones anteriores.",
+      "evidence": [
+        {
+          "resource": "repo://src/p2p-guest-connection-recovery.js",
+          "version": "repo-file-v1:sha256:3474a1ca88639091fd0452e73e75b5cf4b97005f693894424bf0eed475281cb7"
+        },
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        },
+        {
+          "resource": "repo://tests/p2p-guest-connection-recovery.test.mjs",
+          "version": "repo-file-v1:sha256:38431d4f6984800845697b46011879a13eb15d4b99d22d045952aba267a04e50"
+        }
+      ]
+    },
+    {
+      "id": "claim_fbfada7964d44d88b44f39210c6f5c61",
+      "statement": "Cuando un invitado asciende a host, la sala compartida queda persistida como su sala personal, guestSlot se libera y la interfaz oculta la acción de volver a una sala personal distinta.",
+      "evidence": [
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        },
+        {
+          "resource": "repo://src/p2p-persistent-room-storage.js",
+          "version": "repo-file-v1:sha256:676c658ad56e605778fd98417da323616b4f6ea00ca99de8b0695bcc8b7b54ca"
+        },
+        {
+          "resource": "repo://tests/p2p-multiplayer-desktop-controls.test.mjs",
+          "version": "repo-file-v1:sha256:3fcb33296cab043a60067cc514fa947240ec60c44c1942226e0301a7d355aad4"
+        }
+      ]
+    },
+    {
+      "id": "claim_6fa1d60565164912af2b0ddcafe09309",
+      "statement": "Al ascender un invitado, el cliente solicita que el Durable Object restablezca la misma sala a room-open, mode nulo y seis plazas antes de persistirla como su sala personal.",
+      "evidence": [
+        {
+          "resource": "repo://cloudflare/arsenal-signal-worker.mjs",
+          "version": "repo-file-v1:sha256:7d1eba3fc8e68c1adf216376eb5be45978977eba0e5e8a9b7b4e31e7019f218a"
+        },
+        {
+          "resource": "repo://src/p2p-multiparty-signaling-client.js",
+          "version": "repo-file-v1:sha256:212793efdc10f7a6b4dadbcd892e3b35bf168daa8eff836c85797efbbce22047"
+        },
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        },
+        {
+          "resource": "repo://tests/cloudflare-signal-room.test.mjs",
+          "version": "repo-file-v1:sha256:71d2220c1f3ad10d97318b8bbf60b3d403be998c1558d61a53ba13c7569ef12e"
+        }
+      ]
+    },
+    {
+      "id": "claim_d7856c3058ff4c2ba79a3bace076dd59",
+      "statement": "El selector de modo muestra Sin modo seleccionado en una sala abierta y conserva la elección local del host hasta que la confirma, sin que los snapshots de lobby la borren.",
+      "evidence": [
+        {
+          "resource": "repo://p2p-multiplayer.html",
+          "version": "repo-file-v1:sha256:6f2b5a9cc3649465fec6ba59b4597c0e2c2efce321822073e2dceaede1c65bf0"
+        },
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        },
+        {
+          "resource": "repo://tests/p2p-multiplayer-desktop-controls.test.mjs",
+          "version": "repo-file-v1:sha256:3fcb33296cab043a60067cc514fa947240ec60c44c1942226e0301a7d355aad4"
+        }
+      ]
+    },
+    {
+      "id": "claim_f427538298674040b7d4d907f9bb005c",
+      "statement": "Un host promovido crea una sesión WebRTC dinámica cuando una plaza posterior emite peer-ready, permitiendo unirse por la misma clave después de la migración.",
+      "evidence": [
+        {
+          "resource": "repo://src/p2p-multiplayer-webrtc.js",
+          "version": "repo-file-v1:sha256:ab344edfcf40128a75cb6a1ee1ad3c3d52928dfbb1548694540bd7a43dfad629"
+        },
+        {
+          "resource": "repo://tests/p2p-multiplayer-webrtc.test.mjs",
+          "version": "repo-file-v1:sha256:7491d43284b4c56346d8ec5d678528587325c9c1c384785ab6768db458612325"
+        }
+      ]
+    },
+    {
+      "id": "claim_ac5002bc0b8a4eceac9307dd1a42ae1d",
+      "statement": "Cuando el navegador que era host pierde el ownership por room-not-owner o room-expired, hostRoom borra la credencial de la sala transferida, vuelve a práctica offline y crea una nueva sala personal persistente antes de abrir el lobby.",
+      "evidence": [
+        {
+          "resource": "repo://src/p2p-multiparty-signaling-client.js",
+          "version": "repo-file-v1:sha256:212793efdc10f7a6b4dadbcd892e3b35bf168daa8eff836c85797efbbce22047"
+        },
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        },
+        {
+          "resource": "repo://tests/p2p-multiplayer-desktop-controls.test.mjs",
+          "version": "repo-file-v1:sha256:3fcb33296cab043a60067cc514fa947240ec60c44c1942226e0301a7d355aad4"
+        }
+      ]
+    },
+    {
+      "id": "claim_ceb2a33035a8410da57d0e1de66065ca",
+      "statement": "La recuperación del antiguo host es idempotente y segura frente a navegación: ignora callbacks de clientes sustituidos y queda desactivada durante beforeunload para no rotar una sala válida ni crear duplicados.",
+      "evidence": [
+        {
+          "resource": "repo://src/p2p-multiplayer-entry.js",
+          "version": "repo-file-v1:sha256:92bfc11e0efa1e3372388a7902f857dd5066c712a26865e1becb44ec0dc7c3e8"
+        },
+        {
+          "resource": "repo://tests/p2p-multiplayer-desktop-controls.test.mjs",
+          "version": "repo-file-v1:sha256:3fcb33296cab043a60067cc514fa947240ec60c44c1942226e0301a7d355aad4"
+        }
+      ]
+    },
+    {
+      "id": "claim_b751a47d0fd6446ebf692a7e90a4082d",
+      "statement": "El estado aceptado es P2P online funcional. El último run remoto registrado (44176984795 sobre ea7c772) valida ese commit y su workflow, no los gates añadidos después. Los cinco comandos de liveness, contratos ONLINE-QA/LIFECYCLE, audio causal y traza causal pasaron individualmente en local el 18/11/2026; la CI actual aún requiere un run remoto. Los conteos 589/7 y 101 archivos son instantáneas históricas, no métricas vigentes. La compilación WASM limpia reproduce los hashes fijados en provenance. La comparación nativa, la QA humana COV local/P2P y la conectividad entre redes/NAT siguen pendientes.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/ci.yml",
+          "version": "repo-file-v1:sha256:c06b70e38f56c4e8eff000518f1364e7601bfb8f52c88df2cf5aa49a6ef603cf"
+        },
+        {
+          "resource": "repo://PROTOCOL.md",
+          "version": "repo-file-v1:sha256:b8186330b0caeb94dcce14a56e03a06100ae4a97b02f42f73bf0b0239d6d5f30"
+        },
+        {
+          "resource": "repo://_bmad-output/current-roadmap.md",
+          "version": "repo-file-v1:sha256:fe2b1094252c53717c1df87efe997daf1b7cf87b08aa50a70eaf575e041f1845"
+        },
+        {
+          "resource": "repo://docs/test-suite-inventory.md",
+          "version": "repo-file-v1:sha256:25f0d9a9541768ea32a21bcf74c136d7ca583f48553c970883225c829d6c55cc"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/wasm-build-provenance.json",
+          "version": "repo-file-v1:sha256:96290b8292996a373c0252419f56959fa099a630a7a4ca7c8eed2ee26114a1a1"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-11-17T23:26:08.247Z"
+  }
+}

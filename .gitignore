@@ -11,6 +11,8 @@ dist/
 dist-final/
 dist-release/
 dist-pages-beta/
+# Reproducible clean RocketSim WASM build output; Pages uses the pinned package under build/.
+/tools/wasm-spike/build-pages-clean/
 .wrangler/
 .tmp-emscripten/
 .img2threejs/

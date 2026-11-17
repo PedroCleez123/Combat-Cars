@@ -34,8 +34,43 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify generated arena contract
+        run: npm run verify:arena-contract
+
+      - name: Verify runtime asset integration
+        run: npm run verify:assets
+
       - name: Run automated tests
         run: npm test
+
+      - name: Run online presentation and RocketSim WASM regressions
+        shell: pwsh
+        run: |
+          npm run test:online-full-presentation-state
+          if ($LASTEXITCODE -ne 0) { throw 'Online presentation regression failed.' }
+          npm run test:rocketsim-wasm-combat-alpha-contact
+          if ($LASTEXITCODE -ne 0) { throw 'Combat-alpha vehicle contact regression failed.' }
+          npm run test:rocketsim-wasm-combat-alpha-cover-contact
+          if ($LASTEXITCODE -ne 0) { throw 'Combat-alpha cover contact regression failed.' }
+          npm run test:rocketsim-wasm-combat-alpha-cover
+          if ($LASTEXITCODE -ne 0) { throw 'Combat-alpha cover raycast regression failed.' }
+          npm run test:rocketsim-wasm-mobility-parity
+          if ($LASTEXITCODE -ne 0) { throw 'RocketSim WASM mobility parity regression failed.' }
+
+      - name: Run dedicated lifecycle, audio, and causal contracts
+        shell: pwsh
+        run: |
+          $checks = @(
+            'test:liveness-integration',
+            'test:online-qa-24-contract',
+            'test:online-lifecycle-25-contract',
+            'test:online-audio',
+            'test:p2p-wasm-combat-alpha-causal'
+          )
+          foreach ($check in $checks) {
+            npm run $check
+            if ($LASTEXITCODE -ne 0) { throw "Dedicated CI check failed: $check" }
+          }
 
       - name: Build Pages package
         run: npm run build:pages-beta

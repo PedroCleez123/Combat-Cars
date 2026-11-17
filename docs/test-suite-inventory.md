@@ -8,8 +8,10 @@ cada integración restante.
 
 ## Cadena principal
 
-`npm test` ejecuta los hooks npm `pretest`, `test` y `posttest`. Estos 13
-contratos deterministas forman ahora parte del script `test`:
+`npm test` ejecuta los hooks npm `pretest`, `test` y `posttest`. Los 13
+contratos deterministas que REP-03 seleccionó de la matriz histórica forman
+parte del script `test`. REP-06/07 añadieron además dos contratos pequeños de
+generación y consumo de geometría compartida:
 
 - `arena-scrapyard-material.test.mjs`
 - `art-05-quality-contract.test.mjs`
@@ -22,6 +24,8 @@ contratos deterministas forman ahora parte del script `test`:
 - `p2p-causal-beta-hud-scoreboard.test.mjs`
 - `p2p-multiplayer-lobby.test.mjs`
 - `p2p-scoreboard.test.mjs`
+- `rocketsim-native-arena-contract.test.mjs`
+- `arena-contract-generation.test.mjs`
 - `rocketsim-wasm-mobility-parity-contract.test.mjs`
 - `vehicle-asset-loader.test.mjs`
 
@@ -53,6 +57,24 @@ contratos deterministas forman ahora parte del script `test`:
 | `rocketsim-wasm-mobility-parity.test.mjs` | Paridad de cinta WASM; comparación R20 nativa opcional | `npm run test:rocketsim-wasm-mobility-parity`; la parte nativa requiere `ROCKETSIM_BRIDGE_EXE` |
 | `vehicle-asset-loader.test.mjs` | Carga/asignación de assets Three.js en CPU | `npm test` |
 
+## Geometría canónica y puertas de CI (REP-06/07)
+
+| Archivo / gate | Tipo | Ejecución y alcance |
+|---|---|---|
+| `arena-contract-generation.test.mjs` | Generación determinista | `npm test`; detecta artefactos JS/C++ ausentes o desactualizados |
+| `rocketsim-native-arena-contract.test.mjs` | Contrato de consumidores nativos/WASM y perfil/mapa JS | `npm test`; comprueba que los puentes consumen el header generado |
+| `npm run verify:arena-contract` | Frescura del descriptor y artefactos generados | CI y `prebuild:pages-beta` |
+| `npm run verify:assets` | Integridad del manifiesto de assets | CI |
+| `test:online-full-presentation-state`, gates WASM de contacto/raycast y movilidad | Regresiones online y físicas enfocadas | CI y comandos dedicados; no sustituyen QA humana |
+| `build:pages-beta` / `verify:pages-beta` | Empaquetado y allowlist pública de Pages | CI; el build verifica antes el contrato geométrico |
+
+Además de la cadena principal, CI ejecuta explícitamente las cinco pruebas con
+comando propio que cubren loopback, fixtures ONLINE-QA/LIFECYCLE, audio causal
+y trazas de combate: `test:liveness-integration`,
+`test:online-qa-24-contract`, `test:online-lifecycle-25-contract`,
+`test:online-audio` y `test:p2p-wasm-combat-alpha-causal`. Los dos contratos de
+fixtures no sustituyen sus recorridos Electron reales.
+
 ## Puertas que no deben confundirse
 
 - `test:online-qa-24-contract` y `test:online-lifecycle-25-contract` solo
@@ -62,9 +84,9 @@ contratos deterministas forman ahora parte del script `test`:
   `ROCKETSIM_BRIDGE_EXE` no está configurado; un `skip` no equivale a paridad
   verificada.
 - Esta actualización clasifica y enruta pruebas existentes; no añade casos de
-  prueba nuevos. Primera validación: `npm test` tuvo 650 pass, 0 fallos y 9
-  skips; `posttest`, 3/3; los diez comandos dedicados, 31 pass, 0 fallos y 3
-  skips. Los skips dedicados fueron el servidor loopback bloqueado por el
-  entorno y dos comparaciones nativas sin `ROCKETSIM_BRIDGE_EXE`. Los smokes
-  Electron reales no se ejecutaron en esta pasada y siguen siendo una puerta
-  distinta.
+  prueba nuevos. Las cifras 650/9 citadas en reportes anteriores no tienen un
+  identificador durable de ejecución asociado y se retiran como métrica vigente.
+  Ejecuta los comandos listados para obtener evidencia nueva. Los skips de
+  comparaciones nativas sin `ROCKETSIM_BRIDGE_EXE` no acreditan paridad nativa;
+  los smokes Electron reales y la QA entre navegadores siguen siendo puertas
+  distintas.

@@ -10,6 +10,12 @@
 > nativa solo sirve como referencia y diagnóstico. Fecha del documento:
 > 05/11/2026.
 
+> **Lectura histórica:** este archivo conserva la propuesta y el historial de
+> PR0–PR3. Los apartados “Cambios necesarios” y “Hitos” describen el diseño
+> original, no una lista de trabajo vigente. Para el comportamiento actual usa
+> [`../PROTOCOL.md`](../PROTOCOL.md), la implementación en `src/` y sus pruebas;
+> para prioridades usa [`../_bmad-output/current-roadmap.md`](../_bmad-output/current-roadmap.md).
+
 ## Resumen y viabilidad
 
 La propuesta es viable si se separan tres conceptos que hoy comparten ciclo de

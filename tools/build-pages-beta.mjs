@@ -57,6 +57,7 @@ export const PAGES_BETA_FILES = Object.freeze([
   "src/p2p-webrtc-session.js",
   "src/lan-session-protocol.js",
   "src/combat-alpha-map.js",
+  "src/generated/combat-alpha-geometry.js",
   "src/arena-decoration.js",
   "src/arena-visual-profile.js",
   "src/rocketsim-arena-profile.js",

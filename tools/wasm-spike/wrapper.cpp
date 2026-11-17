@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "RocketSim.h"
+#include "combat_alpha_geometry.generated.hpp"
 #include "BulletCollision/CollisionDispatch/btCollisionWorld.h"
 #include "BulletCollision/CollisionShapes/btBoxShape.h"
 #include "BulletCollision/CollisionShapes/btConvexHullShape.h"
@@ -28,10 +29,10 @@ constexpr float kArsenalPracticeHeight = RocketSim::RLConst::CAR_SPAWN_REST_Z + 
 // Mirror the 264 × 408 × 108 native combat-alpha shell. These dimensions are shared
 // with the profile and local RocketSim bridge so render geometry never grows
 // beyond its real collision volume.
-constexpr float kCombatAlphaHalfWidth = 132.f / kArsenalPracticeScale;
-constexpr float kCombatAlphaHalfDepth = 204.f / kArsenalPracticeScale;
-constexpr float kCombatAlphaHeight = RocketSim::RLConst::CAR_SPAWN_REST_Z + 108.f / kArsenalPracticeScale;
-constexpr float kCombatAlphaCurveRadius = 30.f / kArsenalPracticeScale;
+constexpr float kCombatAlphaHalfWidth = CombatCarsArenaGeometry::kCombatAlphaWidth / 2.f / kArsenalPracticeScale;
+constexpr float kCombatAlphaHalfDepth = CombatCarsArenaGeometry::kCombatAlphaDepth / 2.f / kArsenalPracticeScale;
+constexpr float kCombatAlphaHeight = RocketSim::RLConst::CAR_SPAWN_REST_Z + CombatCarsArenaGeometry::kCombatAlphaHeight / kArsenalPracticeScale;
+constexpr float kCombatAlphaCurveRadius = CombatCarsArenaGeometry::kCombatAlphaCurveRadius / kArsenalPracticeScale;
 // Lobby contacts are solved by RocketSim. This small native guard only repairs
 // a body if a very fast discrete step escapes the whole static arena volume;
 // valid quarter-pipe contacts remain untouched. It deliberately preserves
@@ -53,36 +54,16 @@ constexpr uint32_t kBoostRegenDelayTicks = 240;
 constexpr uint32_t kBoostRegenDurationTicks = 120;
 constexpr float kBoostRegenStartRatePerTick = 50.f / 120.f;
 constexpr float kBoostRegenEndRatePerTick = 150.f / 120.f;
-constexpr float kArsenalBlockWidth = 14.f;
-constexpr float kArsenalBlockDepth = 18.f;
-constexpr float kArsenalBlockHeight = 3.25f;
-constexpr float kArsenalRampRun = 20.f;
-constexpr float kArsenalRampWidth = 18.f;
-constexpr float kArsenalRampHeight = 3.5f;
-constexpr float kCombatBlockX = 0.f;
-constexpr float kCombatBlockY = -20.f;
-constexpr float kCombatRampX = 0.f;
-constexpr float kCombatRampY = 20.f;
-struct CombatAlphaCoverSpec {
-  const char* id;
-  float x;
-  float y;
-  float width;
-  float depth;
-  float height;
-};
-
-// COV-01 declarative records mirrored in the native bridge. Keep the IDs in
-// the compiled wrapper so source-contract tests catch list drift before a
-// native/WASM raycast comparison is attempted.
-constexpr CombatAlphaCoverSpec kCombatAlphaCovers[] = {
-  { "container-cover-northwest", -45.f, -58.f, 10.f, 24.f, 6.f },
-  { "container-cover-southwest", -45.f, 58.f, 10.f, 24.f, 6.f },
-  { "container-cover-northeast", 45.f, -58.f, 10.f, 24.f, 6.f },
-  { "container-cover-southeast", 45.f, 58.f, 10.f, 24.f, 6.f },
-  { "tire-cover-blue", -68.f, -30.f, 8.f, 8.f, 4.8f },
-  { "tire-cover-red", 68.f, 30.f, 8.f, 8.f, 4.8f },
-};
+constexpr float kArsenalBlockWidth = CombatCarsArenaGeometry::kCentralBlockWidth;
+constexpr float kArsenalBlockDepth = CombatCarsArenaGeometry::kCentralBlockDepth;
+constexpr float kArsenalBlockHeight = CombatCarsArenaGeometry::kCentralBlockHeight;
+constexpr float kArsenalRampRun = CombatCarsArenaGeometry::kSouthRampRun;
+constexpr float kArsenalRampWidth = CombatCarsArenaGeometry::kSouthRampWidth;
+constexpr float kArsenalRampHeight = CombatCarsArenaGeometry::kSouthRampHeight;
+constexpr float kCombatBlockX = CombatCarsArenaGeometry::kCentralBlockX;
+constexpr float kCombatBlockY = CombatCarsArenaGeometry::kCentralBlockZ;
+constexpr float kCombatRampX = CombatCarsArenaGeometry::kSouthRampX;
+constexpr float kCombatRampY = CombatCarsArenaGeometry::kSouthRampZ;
 constexpr float kCombatAlphaSpawnXRatio = 2.f / 3.f;
 constexpr float kCombatAlphaSpawnZOffset = 90.f / kArsenalPracticeScale;
 // This pair is a diagnostic-only fixture, deliberately positioned near the
@@ -169,10 +150,10 @@ bool combatAlphaSafeFloorPoint(float worldX, float worldY, float clearance) {
   const float rampHalfX = kArsenalRampRun / 2.f + clearance;
   const float rampHalfY = kArsenalRampWidth / 2.f + clearance;
   if (std::abs(worldX - kCombatRampX) < rampHalfX && std::abs(worldY - kCombatRampY) < rampHalfY) return false;
-  for (const auto& cover : kCombatAlphaCovers) {
+  for (const auto& cover : CombatCarsArenaGeometry::kCombatAlphaCovers) {
     const float halfX = cover.width / 2.f + clearance;
     const float halfY = cover.depth / 2.f + clearance;
-    if (std::abs(worldX - cover.x) < halfX && std::abs(worldY - cover.y) < halfY) return false;
+    if (std::abs(worldX - cover.x) < halfX && std::abs(worldY - cover.z) < halfY) return false;
   }
   return true;
 }
@@ -526,7 +507,7 @@ btConvexHullShape* combatAlphaRampShape() {
   return shape;
 }
 
-void addCombatAlphaCover(RocketSim::Arena& target, const CombatAlphaCoverSpec& cover) {
+void addCombatAlphaCover(RocketSim::Arena& target, const CombatCarsArenaGeometry::CoverSpec& cover) {
   const btVector3 halfExtents(
     (cover.width / kArsenalPracticeScale) * UU_TO_BT / 2.f,
     (cover.depth / kArsenalPracticeScale) * UU_TO_BT / 2.f,
@@ -534,14 +515,14 @@ void addCombatAlphaCover(RocketSim::Arena& target, const CombatAlphaCoverSpec& c
   );
   auto* body = target._AddStaticCollisionShape(
     new btBoxShape(halfExtents),
-    combatAlphaArenaPoint(cover.x, cover.y, cover.height / 2.f)
+    combatAlphaArenaPoint(cover.x, cover.z, cover.height / 2.f)
   );
   body->setFriction(RocketSim::RLConst::ARENA_COLLISION_BASE_FRICTION);
   body->setRestitution(RocketSim::RLConst::ARENA_COLLISION_BASE_RESTITUTION);
 }
 
 void addCombatAlphaCovers(RocketSim::Arena& target) {
-  for (const auto& cover : kCombatAlphaCovers) addCombatAlphaCover(target, cover);
+  for (const auto& cover : CombatCarsArenaGeometry::kCombatAlphaCovers) addCombatAlphaCover(target, cover);
 }
 
 void addCombatAlphaArena(RocketSim::Arena& target) {

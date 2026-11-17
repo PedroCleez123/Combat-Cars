@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ba035ae1d01782b72be2bff9dc492108897a603f90d1b484684cf6fe04d3b7e1",
+  "claims": [
+    {
+      "id": "claim_12f8c55bc4654fc79f8a5e6481a84529",
+      "statement": "RocketSim WASM autoritativo regenera el nitro en combat-alpha a 120 Hz: espera 240 ticks (2 segundos) después de un consumo real y después aplica una tasa lineal acelerada de 50 a 150 unidades por segundo durante 120 ticks hasta 100; otro consumo real reinicia la espera.",
+      "evidence": [
+        {
+          "resource": "repo://src/rocketsim-boost-regeneration.js",
+          "version": "repo-file-v1:sha256:9c840ab56c347b4dd4e82e1255cc453c6c98fbd0bd0946f6d4b9a49aebaa9ecc"
+        },
+        {
+          "resource": "repo://tests/rocketsim-boost-regeneration.test.mjs",
+          "version": "repo-file-v1:sha256:faa4e7f78a83fa145f7babbfd87339c8ec58d806bc7491d21222d27062a144e2"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/wrapper.cpp",
+          "version": "repo-file-v1:sha256:5a6a21c6b08cb39caac04fb278b10b9fe549af7e6775c4291efe5b7f8834197d"
+        }
+      ]
+    },
+    {
+      "id": "claim_805921338f6e4bb08755a78f71e807cb",
+      "statement": "El combate público publica pads vacíos y descarta registros o eventos legacy de pickups, mientras lobby y práctica conservan nitro infinito.",
+      "evidence": [
+        {
+          "resource": "repo://src/online-full-presentation-state.js",
+          "version": "repo-file-v1:sha256:3443d01d5dc403b23fcfb09f03c58a55a5b06a644ab63ff4d7650e500a27ee26"
+        },
+        {
+          "resource": "repo://src/p2p-multiplayer-presentation-state.js",
+          "version": "repo-file-v1:sha256:0900c6b2a373319d9b7f389ec818fe894057497acc1264619cb23b625348d03e"
+        },
+        {
+          "resource": "repo://src/rocketsim-practice-match.js",
+          "version": "repo-file-v1:sha256:2bad73c1b56c8f78e51668dac98ab97af9e188508473d33a140f4faf88cc0d79"
+        },
+        {
+          "resource": "repo://tests/online-full-presentation-state.test.mjs",
+          "version": "repo-file-v1:sha256:f6e1e3fe92254d84b5dc33cc3234ac8e613af7823abc05ba420547962faaee72"
+        }
+      ]
+    },
+    {
+      "id": "claim_b9ffec95b09c4639a0c8529eade7a7a6",
+      "statement": "Los conteos 650/9 y 589/7 son históricos y no se usan como métricas actuales. El workflow local cubre contrato, assets, presentación, contacto/raycast, movilidad, liveness, contratos ONLINE-QA/LIFECYCLE, audio causal y traza causal. Los cinco comandos añadidos pasaron localmente el 18/11/2026, pero aún no existe un run remoto para esa versión del workflow; la QA humana COV local/P2P sigue pendiente.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/ci.yml",
+          "version": "repo-file-v1:sha256:c06b70e38f56c4e8eff000518f1364e7601bfb8f52c88df2cf5aa49a6ef603cf"
+        },
+        {
+          "resource": "repo://_bmad-output/current-roadmap.md",
+          "version": "repo-file-v1:sha256:fe2b1094252c53717c1df87efe997daf1b7cf87b08aa50a70eaf575e041f1845"
+        },
+        {
+          "resource": "repo://docs/test-suite-inventory.md",
+          "version": "repo-file-v1:sha256:25f0d9a9541768ea32a21bcf74c136d7ca583f48553c970883225c829d6c55cc"
+        }
+      ]
+    },
+    {
+      "id": "claim_04a74d6137a343999ec62ccab1f09876",
+      "statement": "El combate público no reintroduce pickups de nitro: publica pads vacíos y rules.pads false, mientras lobby y práctica conservan nitro infinito.",
+      "evidence": [
+        {
+          "resource": "repo://src/combat-alpha-map.js",
+          "version": "repo-file-v1:sha256:37125265af80aed6b9720d701d8c9185bffbc76e5acb734373c2391edd114c2c"
+        },
+        {
+          "resource": "repo://src/rocketsim-boost-regeneration.js",
+          "version": "repo-file-v1:sha256:9c840ab56c347b4dd4e82e1255cc453c6c98fbd0bd0946f6d4b9a49aebaa9ecc"
+        },
+        {
+          "resource": "repo://tests/rocketsim-boost-regeneration.test.mjs",
+          "version": "repo-file-v1:sha256:faa4e7f78a83fa145f7babbfd87339c8ec58d806bc7491d21222d27062a144e2"
+        },
+        {
+          "resource": "repo://tools/wasm-spike/p2p-wasm-three-presentation-renderer.mjs",
+          "version": "repo-file-v1:sha256:17a3ebc4a8ae071881974a5c9ae5bef1827a85dfec21abd0f30291e835fe5b29"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-11-17T23:26:08.247Z"
+  }
+}

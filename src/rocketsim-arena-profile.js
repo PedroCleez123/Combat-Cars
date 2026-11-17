@@ -1,3 +1,5 @@
+import { COMBAT_ALPHA_GEOMETRY } from "./generated/combat-alpha-geometry.js";
+
 const CLEAN_ARENA = Object.freeze({
   halfWidth: 62,
   halfDepth: 46,
@@ -29,14 +31,12 @@ const EXPANDED_CURVED_ARENA = Object.freeze({
 });
 
 const COMBAT_ALPHA_ARENA = Object.freeze({
-  // Public arena dimensions: 264 × 408 × 108 Arsenal units.  The width was
-  // already 264; the requested expansion doubles its long axis and height.
-  // Keep these values mirrored by both RocketSim bridges so visual geometry,
-  // collision curves and gameplay limits remain one named volume.
-  halfWidth: 132,
-  halfDepth: 204,
-  height: 108,
-  curveRadius: 30,
+  // Generated from data/combat-alpha-geometry.json so presentation and both
+  // RocketSim collision bridges share one accepted arena volume.
+  halfWidth: COMBAT_ALPHA_GEOMETRY.arena.width / 2,
+  halfDepth: COMBAT_ALPHA_GEOMETRY.arena.depth / 2,
+  height: COMBAT_ALPHA_GEOMETRY.arena.height,
+  curveRadius: COMBAT_ALPHA_GEOMETRY.arena.curveRadius,
   cornered: true,
   expanded: true,
 });

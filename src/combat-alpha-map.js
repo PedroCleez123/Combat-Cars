@@ -1,38 +1,9 @@
+import { COMBAT_ALPHA_GEOMETRY } from "./generated/combat-alpha-geometry.js";
 import { rocketSimArenaProfile } from "./rocketsim-arena-profile.js";
 
 export const COMBAT_ALPHA_OBSTACLES = Object.freeze([
-  Object.freeze({ id: "central-block", kind: "box", x: 0, z: -20, width: 14, depth: 18, height: 3.25 }),
-  Object.freeze({ id: "south-ramp", kind: "closed-convex-wedge", x: 0, z: 20, run: 20, width: 18, height: 3.5 }),
-  Object.freeze({
-    id: "container-cover-northwest", kind: "box", x: -45, z: -58,
-    width: 10, depth: 24, height: 6,
-    role: "cover", visualKind: "container", symmetryGroup: "container-cover-pair-northwest-southeast",
-  }),
-  Object.freeze({
-    id: "container-cover-southwest", kind: "box", x: -45, z: 58,
-    width: 10, depth: 24, height: 6,
-    role: "cover", visualKind: "container", symmetryGroup: "container-cover-pair-southwest-northeast",
-  }),
-  Object.freeze({
-    id: "container-cover-northeast", kind: "box", x: 45, z: -58,
-    width: 10, depth: 24, height: 6,
-    role: "cover", visualKind: "container", symmetryGroup: "container-cover-pair-southwest-northeast",
-  }),
-  Object.freeze({
-    id: "container-cover-southeast", kind: "box", x: 45, z: 58,
-    width: 10, depth: 24, height: 6,
-    role: "cover", visualKind: "container", symmetryGroup: "container-cover-pair-northwest-southeast",
-  }),
-  Object.freeze({
-    id: "tire-cover-blue", kind: "box", x: -68, z: -30,
-    width: 8, depth: 8, height: 4.8,
-    role: "cover", visualKind: "tires", symmetryGroup: "tire-cover-pair-blue-red",
-  }),
-  Object.freeze({
-    id: "tire-cover-red", kind: "box", x: 68, z: 30,
-    width: 8, depth: 8, height: 4.8,
-    role: "cover", visualKind: "tires", symmetryGroup: "tire-cover-pair-blue-red",
-  }),
+  ...COMBAT_ALPHA_GEOMETRY.obstacles.map(obstacle => Object.freeze({ ...obstacle })),
+  ...COMBAT_ALPHA_GEOMETRY.covers.map(cover => Object.freeze({ ...cover, kind: "box" })),
 ]);
 
 // Combat no longer uses floor pickups. Boost is an authoritative RocketSim

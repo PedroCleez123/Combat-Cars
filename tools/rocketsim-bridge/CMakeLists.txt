@@ -21,5 +21,6 @@ endif()
 target_include_directories(rocketsim_bridge PRIVATE
   "${ROCKETSIM_SOURCE}/src"
   "${ROCKETSIM_SOURCE}/libsrc/bullet3-3.24"
+  "${CMAKE_CURRENT_LIST_DIR}/../shared"
 )
 target_link_libraries(rocketsim_bridge PRIVATE RocketSim)

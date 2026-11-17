@@ -28,7 +28,7 @@ for (const [relativePath, expected] of artifacts) {
     } catch {
       actual = null;
     }
-    if (actual !== expected) {
+    if (actual?.replace(/\r\n/g, "\n") !== expected) {
       console.error(`Generated arena contract is missing or stale: ${relativePath}`);
       stale = true;
     }

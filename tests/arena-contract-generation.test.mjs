@@ -60,6 +60,25 @@ test("check mode rejects a stale generated artifact", () => {
   }
 });
 
+test("check mode accepts generated artifacts checked out with CRLF line endings", () => {
+  const temporaryRoot = mkdtempSync(path.join(os.tmpdir(), "combat-cars-arena-crlf-"));
+  try {
+    mkdirSync(path.join(temporaryRoot, "data"), { recursive: true });
+    copyFileSync(contractPath, path.join(temporaryRoot, "data/combat-alpha-geometry.json"));
+    execFileSync(process.execPath, [generatorPath, "--root", temporaryRoot], { cwd: rootPath, stdio: "pipe" });
+    for (const relativePath of [
+      "src/generated/combat-alpha-geometry.js",
+      "tools/shared/combat_alpha_geometry.generated.hpp",
+    ]) {
+      const artifactPath = path.join(temporaryRoot, relativePath);
+      writeFileSync(artifactPath, readFileSync(artifactPath, "utf8").replace(/\r?\n/g, "\r\n"));
+    }
+    assert.doesNotThrow(() => execFileSync(process.execPath, [generatorPath, "--check", "--root", temporaryRoot], { cwd: rootPath, stdio: "pipe" }));
+  } finally {
+    rmSync(temporaryRoot, { recursive: true, force: true });
+  }
+});
+
 test("generator rejects an incomplete obstacle before emitting a malformed C++ header", () => {
   const temporaryRoot = mkdtempSync(path.join(os.tmpdir(), "combat-cars-arena-invalid-"));
   try {

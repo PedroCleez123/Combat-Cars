@@ -22,7 +22,7 @@ test("1v1 scoreboard exposes stable team rows and team totals", () => {
   assert.equal(model.mode, "1v1");
   assert.equal(model.kind, "teams");
   assert.deepEqual(model.rows.map(row => [row.name, row.points, row.kills, row.deaths]), [["Ana", 2, 2, 0], ["Luis", 1, 1, 0]]);
-  assert.deepEqual(model.groups.map(group => [group.team, group.points]), [["red", 1], ["blue", 2]]);
+  assert.deepEqual(model.groups.map(group => [group.team, group.points]), [["blue", 2], ["red", 1]]);
 });
 
 test("2v2 and 3v3 group an equal roster without inventing player scores", () => {

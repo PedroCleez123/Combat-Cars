@@ -62,5 +62,9 @@ contratos deterministas forman ahora parte del script `test`:
   `ROCKETSIM_BRIDGE_EXE` no está configurado; un `skip` no equivale a paridad
   verificada.
 - Esta actualización clasifica y enruta pruebas existentes; no añade casos de
-  prueba nuevos. No se ejecutaron las suites ni se afirma que pasen o cuál sea
-  su duración. El primer recorrido de la cadena ampliada sigue pendiente.
+  prueba nuevos. Primera validación: `npm test` tuvo 650 pass, 0 fallos y 9
+  skips; `posttest`, 3/3; los diez comandos dedicados, 31 pass, 0 fallos y 3
+  skips. Los skips dedicados fueron el servidor loopback bloqueado por el
+  entorno y dos comparaciones nativas sin `ROCKETSIM_BRIDGE_EXE`. Los smokes
+  Electron reales no se ejecutaron en esta pasada y siguen siendo una puerta
+  distinta.

@@ -12,9 +12,11 @@ Este archivo indica la prioridad. Trabaja en una tarea cada vez y cierra sus
 criterios antes de avanzar. **COV-01–03 están cerrados; COV-04 y COV-06 tienen
 su automatización registrada y conservan QA manual pendiente.** REP-01 quedó
 completado y REP-02 está cerrado con el checkpoint local `46e9c2a`. `build:pages-beta`
-y `verify:pages-beta` terminaron correctamente con 101 archivos. La tarea activa
-pasa a **REP-03: clasificar las 23 pruebas que aún no están conectadas a los
-scripts npm**. No se desplegó nada.
+y `verify:pages-beta` terminaron correctamente con 101 archivos. REP-03 ya tiene
+matriz y scripts: 13 contratos deterministas se añadieron a `npm test` y cinco
+integraciones tienen comandos dedicados nuevos; cinco más ya los tenían. No se
+ejecutaron las suites, así que su resultado y duración siguen sin verificarse.
+La tarea activa es la primera ejecución/validación de REP-03. No se desplegó nada.
 
 ## Prioridad activa — REP: recuperar estado reproducible del repositorio
 
@@ -68,7 +70,8 @@ La inspección de rutas confirmó estas decisiones iniciales:
 | Borrados sin preparar `tools/start-rocketsim-combat-watch.ps1` y `tools/start-rocketsim-practice.mjs` | No se hallaron referencias en el checkout actual. **Mantener la baja propuesta** y revisar si existe uso externo antes del checkpoint; son utilidades de la referencia local, no el runtime Pages. |
 | `art06-*.log`, `wrangler-deploy.log`; `experiments/` | Cuatro logs ignorados ocupan la raíz; `experiments/` está vacía. **Artefactos locales**, sin efecto en runtime. Mover los logs solo si su evidencia sigue siendo necesaria; la carpeta vacía no requiere acción. |
 
-Los 23 tests fuera de `pretest`/`test`/`posttest` son:
+Esta es la lista base de los 23 tests que REP-03 revisó antes de cambiar el
+enrutamiento de `pretest`/`test`/`posttest`:
 `arena-scrapyard-material`, `art-05-quality-contract`,
 `combat-alpha-cover-layout`, `combat-alpha-cover-visual`,
 `combat-alpha-perimeter`, `lan-liveness-integration`, `lan-outbound-queue`,
@@ -101,11 +104,19 @@ generados de OpenWiki y las salidas de build redundantes; siguen pendientes en
 el checkout para su revisión/regeneración. No se publicó ni desplegó durante el
 checkpoint.
 
+**REP-03 · enrutamiento de pruebas:** la matriz está en
+[`docs/test-suite-inventory.md`](../docs/test-suite-inventory.md). Trece
+contratos Node deterministas están en la cadena de `npm test`; cinco
+integraciones tienen comandos `test:*` propios y cinco conservan sus comandos
+previos. Los contratos de ONLINE-QA-24 y ONLINE-LIFECYCLE-25 no sustituyen los
+smokes Electron. **Pendiente:** ejecutar las suites y registrar resultados,
+duración y cualquier dependencia de entorno; no se afirma que pasen todavía.
+
 | Gate | Entrega | Criterio de salida |
 |---|---|---|
 | **REP-01 · inventario** | Clasificar cambios, archivos sin seguimiento y borrados por producto, pruebas, documentación, fixture, generación y herramienta local | Cada ruta tiene una decisión explícita (conservar/versionar, generar fuera del checkout, archivar o retirar); no hay borrados automáticos ni se descarta trabajo sin procedencia revisada. |
 | **REP-02 · checkpoint (completado: `46e9c2a`)** | Crear una línea base revisable del estado que se decida conservar | Runtime Pages/P2P, artefactos WASM, pruebas, configuración y documentación conservada están juntos en Git; build y verificación de Pages correctas (101 archivos). |
-| **REP-03 · cobertura de pruebas** | Clasificar los 23 tests no conectados a los scripts npm | Cada prueba está en una suite automatizada adecuada o marcada claramente como smoke/manual; `npm test` refleja una política deliberada, no una lista parcial accidental. |
+| **REP-03 · cobertura de pruebas (enrutada; ejecución pendiente)** | Clasificar y enrutar los 23 tests de la lista base | Matriz documentada; 13 contratos deterministas en `npm test`; integraciones separadas por comandos dedicados. Falta ejecutar las suites ampliadas y anotar evidencia; no se asume que pasen. |
 | **REP-04 · automatización** | Añadir CI mínima y un control de frescura del WASM empaquetado | CI se activa solo después de REP-02/03; el build alerta/falla si fuentes RocketSim cambiaron y el WASM entregado no se regeneró. No introducir runtime nuevo. |
 | **REP-05 · una verdad documental** | Corregir métricas históricas y señalar documentos activos/superseded | Roadmap y brief vigente concuerdan; los documentos históricos se etiquetan y el OpenWiki generado se regenera desde el estado consolidado, sin editar sus páginas a mano. |
 
@@ -116,10 +127,10 @@ externos. Mantener intacto el trabajo actual mientras se decide cada ruta.
 
 ### Siguiente paso
 
-REP-03: clasificar las 23 pruebas no conectadas a los scripts npm y decidir
-cuáles son deterministas para automatizar y cuáles requieren browser, smoke o
-bridge. COV-04/06 queda en espera de QA manual; no se considera un fallo de la
-ruta online.
+Primero ejecutar `npm test` y los comandos de integración REP-03 que correspondan,
+registrando skips por bridge/red y duración. Con resultados revisados, pasar a
+REP-04: CI mínima y control de frescura del WASM empaquetado. COV-04/06 queda en
+espera de QA manual; no se considera un fallo de la ruta online.
 
 ## Hito pendiente — COV: cobertura industrial autoritativa
 

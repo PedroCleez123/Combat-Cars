@@ -3,17 +3,17 @@ param(
   # non-ASCII username in a PowerShell file that Windows PowerShell may read as ANSI.
   [string]$RocketSimSource = (Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Codex\2026-10-10\s\rocketsim-r1'),
   [string]$BuildDirectory = (Join-Path $PSScriptRoot 'build'),
-  [string]$NinjaExecutable = (Join-Path $PSScriptRoot 'ninja\ninja.exe')
+  [string]$NinjaExecutable = (Join-Path $PSScriptRoot 'ninja\ninja.exe'),
+  [string]$EmsdkRoot = (Join-Path $PSScriptRoot 'emsdk')
 )
 $ErrorActionPreference = 'Stop'
-$sdk = Join-Path $PSScriptRoot 'emsdk'
 $emcmakeCandidates = @(
-  (Join-Path $sdk 'upstream\emscripten\emcmake.bat'),
-  (Join-Path $sdk 'upstream\emscripten\emcmake.exe')
+  (Join-Path $EmsdkRoot 'upstream\emscripten\emcmake.bat'),
+  (Join-Path $EmsdkRoot 'upstream\emscripten\emcmake.exe')
 )
 $emcmake = $emcmakeCandidates | Where-Object { Test-Path $_ } | Select-Object -First 1
 if (-not $emcmake) {
-  throw "Emscripten compiler wrapper not found under $sdk; run .\bootstrap-emsdk.ps1"
+  throw "Emscripten compiler wrapper not found under $EmsdkRoot; run .\bootstrap-emsdk.ps1"
 }
 if (-not (Test-Path (Join-Path $RocketSimSource 'CMakeLists.txt'))) { throw "RocketSim source not found: $RocketSimSource" }
 if (-not (Test-Path $NinjaExecutable)) {

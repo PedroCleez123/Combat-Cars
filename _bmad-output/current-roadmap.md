@@ -17,8 +17,9 @@ matriz y scripts: 13 contratos deterministas se añadieron a `npm test` y cinco
 integraciones tienen comandos dedicados nuevos; cinco más ya los tenían. La
 validación REP-03 pasó: `npm test` dio 650 pass, 0 fallos y 9 skips; `posttest`,
 3/3; los diez comandos dedicados, 31 pass, 0 fallos y 3 skips ambientales. La
-tarea activa pasa a **REP-04: CI mínima y control de frescura del WASM**. No se
-desplegó nada.
+tarea activa **REP-04: CI mínima y control de frescura del WASM** ya está
+implementada localmente; la primera ejecución de GitHub Actions queda pendiente
+de incorporar el cambio al remoto. No se desplegó nada.
 
 ## Prioridad activa — REP: recuperar estado reproducible del repositorio
 
@@ -116,12 +117,25 @@ smokes Electron. **Completado:** `npm test` 650 pass/0 fail/9 skip, `posttest`
 fueron el servidor loopback bloqueado por el entorno y dos comparaciones nativas
 sin `ROCKETSIM_BRIDGE_EXE`; los smokes Electron siguen siendo puertas aparte.
 
+**REP-04 · CI y frescura WASM (implementado localmente; ejecución remota
+pendiente):** `.github/workflows/ci.yml` ejecuta `npm ci`, `npm test`,
+`build:pages-beta` y `verify:pages-beta`, sin pasos de deploy ni secretos de
+Cloudflare. El manifiesto `tools/wasm-spike/wasm-build-provenance.json` fija las
+revisiones RocketSim/emsdk, Emscripten, Node, CMake, Ninja y hashes SHA-256 de
+los dos artefactos. El guard `tools/wasm-spike/verify-wasm-freshness.ps1` valida
+esas revisiones/versiones, recompila en un directorio limpio y falla ante
+cualquier discrepancia con los artefactos distribuidos. La verificación local
+con RocketSim `c2baacb`, emsdk `d7b4130`, Emscripten 6.0.13, CMake 4.4.4 y Ninja
+1.13.2 completó 108 pasos; ambos artefactos coincidieron byte por byte con sus
+hashes. Sigue pendiente comprobar la primera ejecución del workflow tras el
+push; hasta entonces no se considera validado el entorno GitHub-hosted.
+
 | Gate | Entrega | Criterio de salida |
 |---|---|---|
 | **REP-01 · inventario** | Clasificar cambios, archivos sin seguimiento y borrados por producto, pruebas, documentación, fixture, generación y herramienta local | Cada ruta tiene una decisión explícita (conservar/versionar, generar fuera del checkout, archivar o retirar); no hay borrados automáticos ni se descarta trabajo sin procedencia revisada. |
 | **REP-02 · checkpoint (completado: `46e9c2a`)** | Crear una línea base revisable del estado que se decida conservar | Runtime Pages/P2P, artefactos WASM, pruebas, configuración y documentación conservada están juntos en Git; build y verificación de Pages correctas (101 archivos). |
 | **REP-03 · cobertura de pruebas (completado)** | Clasificar y enrutar los 23 tests de la lista base | Matriz documentada; 13 contratos deterministas en `npm test`; integraciones separadas por comandos dedicados. `npm test`: 650 pass/0 fail/9 skip; `posttest`: 3/3; integraciones: 31 pass/0 fail/3 skip ambiental. |
-| **REP-04 · automatización** | Añadir CI mínima y un control de frescura del WASM empaquetado | CI se activa solo después de REP-02/03; el build alerta/falla si fuentes RocketSim cambiaron y el WASM entregado no se regeneró. No introducir runtime nuevo. |
+| **REP-04 · automatización (configuración local completa)** | Añadir CI mínima y un control de frescura del WASM empaquetado | Workflow sin deploy; ejecuta suite y build/verificación Pages, fija dependencias y compara un build WASM limpio con los binarios versionados. **Pendiente:** confirmar la primera ejecución de GitHub Actions después del push. No introducir runtime nuevo. |
 | **REP-05 · una verdad documental** | Corregir métricas históricas y señalar documentos activos/superseded | Roadmap y brief vigente concuerdan; los documentos históricos se etiquetan y el OpenWiki generado se regenera desde el estado consolidado, sin editar sus páginas a mano. |
 
 **No es parte de REP:** reescribir el juego, borrar la ruta Three.js local,
@@ -131,10 +145,10 @@ externos. Mantener intacto el trabajo actual mientras se decide cada ruta.
 
 ### Siguiente paso
 
-REP-04: preparar CI mínima para la build/verificación Pages y el control de
-frescura del WASM empaquetado. Mantener los smokes reales de Electron y la QA
-de navegador como puertas separadas. COV-04/06 queda en espera de QA manual; no
-se considera un fallo de la ruta online.
+REP-04: revisar el primer resultado de GitHub Actions tras el push. Si queda
+verde, avanzar a REP-05. Mantener los smokes reales de Electron y la QA de
+navegador como puertas separadas. COV-04/06 queda en espera de QA manual; no se
+considera un fallo de la ruta online.
 
 ## Hito pendiente — COV: cobertura industrial autoritativa
 

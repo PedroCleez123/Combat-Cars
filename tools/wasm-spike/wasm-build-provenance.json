@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "rocketsim": {
+      "repository": "https://github.com/ZealanL/RocketSim.git",
+      "commit": "c2baacb8f4b441dd8505e63c2aeb5a1679b60b02"
+    },
+    "emsdk": {
+      "repository": "https://github.com/emscripten-core/emsdk.git",
+      "commit": "d7b4130688bfa348392b921ab04015aa15c4f154",
+      "emscriptenVersion": "6.0.13",
+      "compilerCommit": "e13ee988ce3d87a738dd8f3661d02223308c412a"
+    }
+  },
+  "tools": {
+    "node": "24.19.0",
+    "cmake": "4.4.4",
+    "ninja": "1.13.2"
+  },
+  "build": {
+    "generator": "Ninja",
+    "configuration": "Release",
+    "parallelJobs": 2
+  },
+  "artifacts": [
+    {
+      "path": "tools/wasm-spike/build/rocketsim_wasm.mjs",
+      "sha256": "28ACA5DC6C6D835DB188A438572B3D55EED3F2D573CC932538399AD819923908"
+    },
+    {
+      "path": "tools/wasm-spike/build/rocketsim_wasm.wasm",
+      "sha256": "8A99B163438CFB3D2D5CEBFE2911B190CB97A6CDCB9836D2C9D5A6B687FC6206"
+    }
+  ]
+}

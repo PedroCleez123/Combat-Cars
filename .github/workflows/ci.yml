@@ -1,0 +1,109 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pages-and-wasm:
+    name: Pages contracts and reproducible WASM
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.19.0
+          cache: npm
+
+      - name: Verify pinned Node.js version
+        shell: pwsh
+        run: |
+          $manifest = Get-Content tools/wasm-spike/wasm-build-provenance.json -Raw | ConvertFrom-Json
+          $expected = "v$($manifest.tools.node)"
+          $actual = (node --version).Trim()
+          if ($actual -ne $expected) { throw "Node.js version mismatch: expected $expected, got $actual" }
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run automated tests
+        run: npm test
+
+      - name: Build Pages package
+        run: npm run build:pages-beta
+
+      - name: Verify Pages package
+        run: npm run verify:pages-beta
+
+      - name: Install pinned CMake and Ninja
+        shell: pwsh
+        run: |
+          $manifest = Get-Content tools/wasm-spike/wasm-build-provenance.json -Raw | ConvertFrom-Json
+          $toolsRoot = Join-Path $env:RUNNER_TEMP 'combat-cars-rep04-tools'
+          $ninjaRoot = Join-Path $toolsRoot 'ninja'
+          $cmakeArchive = Join-Path $env:RUNNER_TEMP "cmake-$($manifest.tools.cmake)-windows-x86_64.zip"
+          $ninjaArchive = Join-Path $env:RUNNER_TEMP "ninja-win-v$($manifest.tools.ninja).zip"
+          New-Item -ItemType Directory -Path $toolsRoot -Force | Out-Null
+          Invoke-WebRequest -Uri "https://github.com/Kitware/CMake/releases/download/v$($manifest.tools.cmake)/cmake-$($manifest.tools.cmake)-windows-x86_64.zip" -OutFile $cmakeArchive
+          Invoke-WebRequest -Uri "https://github.com/ninja-build/ninja/releases/download/v$($manifest.tools.ninja)/ninja-win.zip" -OutFile $ninjaArchive
+          Expand-Archive -LiteralPath $cmakeArchive -DestinationPath $toolsRoot -Force
+          Expand-Archive -LiteralPath $ninjaArchive -DestinationPath $ninjaRoot -Force
+          $cmakeExtracted = Join-Path $toolsRoot "cmake-$($manifest.tools.cmake)-windows-x86_64\bin"
+          Add-Content -LiteralPath $env:GITHUB_PATH -Value $cmakeExtracted
+          Add-Content -LiteralPath $env:GITHUB_PATH -Value $ninjaRoot
+          "CMAKE_EXE=$cmakeExtracted\cmake.exe" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "NINJA_EXE=$ninjaRoot\ninja.exe" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Fetch pinned RocketSim source
+        shell: pwsh
+        run: |
+          $manifest = Get-Content tools/wasm-spike/wasm-build-provenance.json -Raw | ConvertFrom-Json
+          $source = Join-Path $env:RUNNER_TEMP 'combat-cars-rocketsim'
+          git clone --filter=blob:none --no-checkout $manifest.source.rocketsim.repository $source
+          if ($LASTEXITCODE -ne 0) { throw 'Could not clone RocketSim source.' }
+          git -C $source fetch --depth 1 origin $manifest.source.rocketsim.commit
+          if ($LASTEXITCODE -ne 0) { throw 'Could not fetch the pinned RocketSim commit.' }
+          git -C $source checkout --detach $manifest.source.rocketsim.commit
+          if ($LASTEXITCODE -ne 0) { throw 'Could not check out the pinned RocketSim commit.' }
+          "ROCKETSIM_SOURCE=$source" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Install pinned Emscripten SDK
+        shell: pwsh
+        run: |
+          $manifest = Get-Content tools/wasm-spike/wasm-build-provenance.json -Raw | ConvertFrom-Json
+          $sdk = Join-Path $env:RUNNER_TEMP 'combat-cars-emsdk'
+          git clone --filter=blob:none --no-checkout $manifest.source.emsdk.repository $sdk
+          if ($LASTEXITCODE -ne 0) { throw 'Could not clone emsdk source.' }
+          git -C $sdk fetch --depth 1 origin $manifest.source.emsdk.commit
+          if ($LASTEXITCODE -ne 0) { throw 'Could not fetch the pinned emsdk commit.' }
+          git -C $sdk checkout --detach $manifest.source.emsdk.commit
+          if ($LASTEXITCODE -ne 0) { throw 'Could not check out the pinned emsdk commit.' }
+          Push-Location $sdk
+          try {
+            .\emsdk.bat install $manifest.source.emsdk.emscriptenVersion --embedded
+            if ($LASTEXITCODE -ne 0) { throw 'Emscripten SDK installation failed.' }
+            .\emsdk.bat activate $manifest.source.emsdk.emscriptenVersion --embedded
+            if ($LASTEXITCODE -ne 0) { throw 'Emscripten SDK activation failed.' }
+          } finally {
+            Pop-Location
+          }
+          "EMSDK_ROOT=$sdk" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Verify clean WASM build matches packaged artifacts
+        shell: pwsh
+        run: |
+          $buildDirectory = Join-Path $env:RUNNER_TEMP 'combat-cars-rep04-wasm-build'
+          & tools/wasm-spike/verify-wasm-freshness.ps1 `
+            -RocketSimSource $env:ROCKETSIM_SOURCE `
+            -EmsdkRoot $env:EMSDK_ROOT `
+            -NinjaExecutable $env:NINJA_EXE `
+            -CMakeExecutable $env:CMAKE_EXE `
+            -BuildDirectory $buildDirectory

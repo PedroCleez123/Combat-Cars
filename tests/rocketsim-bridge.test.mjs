@@ -12,11 +12,32 @@ import {
   parseBridgeLine,
   summarizeBridgeFrame,
 } from "../src/rocketsim-protocol.js";
-import { ROCKETSIM_DEFAULT_REQUEST_TIMEOUT_MS } from "../src/rocketsim-backend.js";
+import { createRocketSimProcessEnv, ROCKETSIM_DEFAULT_REQUEST_TIMEOUT_MS } from "../src/rocketsim-backend.js";
+import { RocketSimWasmBridge } from "../src/rocketsim-wasm-backend.js";
 
 test("RocketSim bridge leaves enough startup budget for a Windows watcher restart", () => {
   assert.equal(ROCKETSIM_DEFAULT_REQUEST_TIMEOUT_MS, 250);
   assert.ok(ROCKETSIM_DEFAULT_REQUEST_TIMEOUT_MS > 100);
+});
+
+test("RocketSim child environment keeps native runtime variables and drops online secrets", () => {
+  const env = createRocketSimProcessEnv({
+    Path: "C:\\native-bin",
+    SystemRoot: "C:\\Windows",
+    ARSENAL_ONLINE_AUTH_SECRET: "do-not-forward",
+    ARSENAL_ONLINE_ALLOWED_ORIGINS: "https://play.example.test",
+    UNRELATED_SECRET: "do-not-forward",
+  }, {
+    PATH: "C:\\native-bin;C:\\Windows\\System32",
+    ARSENAL_ONLINE_TLS_TERMINATED: "true",
+  });
+  assert.equal(env.Path, "C:\\native-bin");
+  assert.equal(env.PATH, "C:\\native-bin;C:\\Windows\\System32");
+  assert.equal(env.SystemRoot, "C:\\Windows");
+  assert.equal(env.ARSENAL_ONLINE_AUTH_SECRET, undefined);
+  assert.equal(env.ARSENAL_ONLINE_ALLOWED_ORIGINS, undefined);
+  assert.equal(env.ARSENAL_ONLINE_TLS_TERMINATED, undefined);
+  assert.equal(env.UNRELATED_SECRET, undefined);
 });
 
 test("RocketSim bridge protocol keeps the fixed-step contract", () => {
@@ -96,12 +117,14 @@ test("RocketSim state is normalized at the Node y-up boundary", () => {
       actionFlags: { hasJumped: false, hasDoubleJumped: false, hasFlipped: false },
       boost: 100,
     }],
+    pads: [{ id: 0, active: false, cooldown: 4.25 }],
   });
   assert.equal(frame.fixedStepHz, 120);
   assert.equal(frame.cars[0].grounded, true);
   assert.equal(frame.cars[0].position.y, 2);
   assert.deepEqual(frame.cars[0].worldContact, { hasContact: true, normal: { x: 0, y: 1, z: 0 } });
   assert.deepEqual(frame.cars[0].wheelContact, { hasContact: true, normal: { x: 0, y: 1, z: 0 } });
+  assert.deepEqual(frame.pads, [{ id: 0, active: false, cooldown: 4.25 }]);
   assert.equal(summarizeBridgeFrame(frame), summarizeBridgeFrame(frame));
 });
 
@@ -116,4 +139,89 @@ test("RocketSim bridge rejects malformed frames", () => {
     type: "state", schemaVersion: 1, fixedStepHz: 120, tick: 1,
     cars: [{ id: 1, position: { x: null, y: 0, z: 0 }, velocity: { x: 0, y: 0, z: 0 }, orientation: { x: 0, y: 0, z: 0, w: 1 }, jumpState: "airborne" }],
   }), /position.x is not finite/);
+});
+
+test("RocketSim WASM lifecycle suppresses controls on an inactive combat slot until respawn", async () => {
+  const controls = [];
+  const containment = [];
+  const authorityRules = [];
+  let nativeTick = 0;
+  let nextPointer = 4;
+  const module = {
+    HEAPU32: new Uint32Array(4096),
+    HEAPF32: new Float32Array(4096),
+    _malloc(size) { const pointer = nextPointer; nextPointer += size; return pointer; },
+    _free() {},
+    _rs_destroy() {},
+    _rs_init_combat_alpha_roster(count) { return count === 2 ? 1 : 0; },
+    _rs_boost_regeneration_contract() { return 1; },
+    _rs_set_authority_rules(enabled) { authorityRules.push(enabled); return 1; },
+    _rs_set_controls_for_car_full(slot, ...input) { controls.push({ slot, input }); return 1; },
+    _rs_step() { nativeTick += 1; return 1; },
+    _rs_snapshot_car_authority(slot, tickPointer, statePointer) {
+      module.HEAPU32[tickPointer >>> 2] = nativeTick;
+      module.HEAPF32.fill(0, statePointer >>> 2, (statePointer >>> 2) + 40);
+      module.HEAPF32[(statePointer >>> 2) + 9] = 1;
+      return slot < 2 ? 1 : 0;
+    },
+    _rs_snapshot_combat_pads(countPointer) { module.HEAPU32[countPointer >>> 2] = 0; return 1; },
+    _rs_raycast_static() { return 1; },
+    _rs_set_combat_active_car() { return 1; },
+    _rs_respawn_car() { return 1; },
+    _rs_contain_car(slot) { containment.push(slot); return 1; },
+  };
+  const bridge = new RocketSimWasmBridge({ moduleFactory: async () => module });
+  const command = [{ id: 1, input: { throttle: 1, steer: .2, boost: true } }, { id: 2, input: { throttle: -1, steer: -.2, jump: true } }];
+  try {
+    await bridge.start({ arena: "combat-alpha", cars: [{ id: 1, team: "blue" }, { id: 2, team: "red" }] });
+    assert.deepEqual(authorityRules, [1], "combat bridge leaves kills and respawns to the shared online authority");
+    await bridge.tick(1, command);
+    await bridge.contain(1);
+    assert.deepEqual(containment, [0], "the adapter forwards containment to the authoritative native slot");
+    await bridge.setCombatActive(2, false);
+    await bridge.tick(2, command);
+    assert.deepEqual(controls.at(-1), { slot: 1, input: [0, 0, 0, 0, 0, 0, 0, 0] });
+    await bridge.respawn(2);
+    await bridge.tick(3, command);
+    assert.deepEqual(controls.at(-1), { slot: 1, input: [-1, -.2, 1, -.2, 0, 1, 0, 0] });
+  } finally {
+    await bridge.shutdown();
+  }
+});
+
+test("RocketSim WASM enables no-demo rules for a waiting lobby as well", async () => {
+  const authorityRules = [];
+  let nextPointer = 4;
+  const module = {
+    HEAPU32: new Uint32Array(4096),
+    HEAPF32: new Float32Array(4096),
+    _malloc(size) { const pointer = nextPointer; nextPointer += size; return pointer; },
+    _free() {},
+    _rs_destroy() {},
+    _rs_init_combat_alpha_roster() { return 1; },
+    _rs_boost_regeneration_contract() { return 1; },
+    _rs_set_authority_rules(enabled) { authorityRules.push(enabled); return 1; },
+    _rs_set_controls_for_car_full() { return 1; },
+    _rs_step() { return 1; },
+    _rs_snapshot_car_authority(slot, tickPointer, statePointer) {
+      module.HEAPU32[tickPointer >>> 2] = 0;
+      module.HEAPF32.fill(0, statePointer >>> 2, (statePointer >>> 2) + 40);
+      module.HEAPF32[(statePointer >>> 2) + 9] = 1;
+      return slot === 0 ? 1 : 0;
+    },
+    _rs_snapshot_combat_pads(countPointer) { module.HEAPU32[countPointer >>> 2] = 0; return 1; },
+    _rs_raycast_static() { return 1; },
+    _rs_set_combat_active_car() { return 1; },
+    _rs_respawn_car() { return 1; },
+    _rs_contain_car() { return 1; },
+  };
+  const bridge = new RocketSimWasmBridge({ moduleFactory: async () => module });
+  try {
+    const ready = await bridge.start({ arena: "combat-alpha", cars: [{ id: 1, team: "blue" }], lobby: true });
+    assert.deepEqual(authorityRules, [1]);
+    assert.equal(ready.features.lobbyRules, true);
+    assert.equal(ready.features.nativeDemos, false);
+  } finally {
+    await bridge.shutdown();
+  }
 });

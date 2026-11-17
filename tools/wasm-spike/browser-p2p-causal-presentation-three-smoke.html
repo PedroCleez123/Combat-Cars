@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RocketSim WASM · presentación Three.js · P2P-WASM-44</title>
+    <script type="importmap">
+      {"imports":{"three":"/node_modules/three/build/three.module.js"}}
+    </script>
+    <script>
+      window.addEventListener("error", event => {
+        window.__arsenalWasmBrowserP2PCausalPresentationThreeSmoke = { ok: false, story: "P2P-WASM-44", error: String(event.error?.message || event.message || "window error") };
+      });
+      window.addEventListener("unhandledrejection", event => {
+        window.__arsenalWasmBrowserP2PCausalPresentationThreeSmoke = { ok: false, story: "P2P-WASM-44", error: String(event.reason?.message || event.reason || "unhandled rejection") };
+      });
+    </script>
+    <style>
+      :root { color-scheme: dark; font-family: ui-monospace, Consolas, monospace; background: #08131d; color: #d8e6f1; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+      main { width: min(58rem, calc(100vw - 3rem)); padding: 1.25rem; border: 1px solid #42617a; border-radius: .75rem; background: #102332; }
+      h1 { margin: 0 0 .75rem; font-size: 1.1rem; }
+      p { margin: 0 0 .75rem; color: #a9bece; line-height: 1.5; }
+      canvas { display: block; width: 100%; aspect-ratio: 16 / 9; border: 1px solid #3e6177; border-radius: .5rem; background: #0a1621; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 2rem; color: #a7eecc; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>RocketSim WASM · presentación Three.js · P2P-WASM-44</h1>
+      <p>Smoke aislado: dibuja el estado v2 autoritativo en una escena Three.js mínima y mide canvas, llamadas de render y píxeles variados. No inicia la beta pública.</p>
+      <canvas id="scene" width="640" height="360" aria-label="Escena Three.js de verificación"></canvas>
+      <pre id="status" aria-live="polite">Inicializando módulo…</pre>
+    </main>
+    <script type="module">
+      import * as THREE from "three";
+      import {
+        createP2PWasmCausalCombatPresentationEnvelope,
+        decodeP2PWasmCausalCombatPresentationEnvelope,
+      } from "./p2p-wasm-causal-combat-presentation-protocol.mjs";
+      import { createP2PWasmCombatHost } from "./p2p-wasm-combat-host.mjs";
+      import { P2PWasmPresentationRenderBuffer } from "./p2p-wasm-presentation-render-state.mjs";
+      import { createP2PWasmThreePresentationRenderer } from "./p2p-wasm-three-presentation-renderer.mjs";
+
+      const output = document.querySelector("#status");
+      const canvas = document.querySelector("#scene");
+      const context = Object.freeze({ roomId: "p2p-v2-three-room", sessionId: "p2p-v2-three-session" });
+      const idle = Object.freeze({ throttle: 0, steer: 0, boost: false, jump: false });
+      const command = (overrides = {}) => ({ controls: { ...idle }, fire: false, restart: false, targetId: null, ...overrides });
+
+      function failIf(condition, message) { if (condition) throw new Error(message); }
+
+      async function run() {
+        const host = await createP2PWasmCombatHost();
+        let rendered = null;
+        try {
+          failIf(!host.setHostCommand(command()).accepted, "El host v2 rechazó el comando neutral.");
+          const input = host.receivePilotCommand({ sequence: 1, ...command() });
+          failIf(!input.accepted, "El host v2 rechazó el primer input.");
+          const wire = createP2PWasmCausalCombatPresentationEnvelope({ ...context, sequence: 1, snapshot: host.presentationSnapshot() });
+          const envelope = decodeP2PWasmCausalCombatPresentationEnvelope(wire);
+          const buffer = new P2PWasmPresentationRenderBuffer({ ...context, delay: 0, now: () => 0 });
+          buffer.push(envelope, 0);
+          const state = buffer.sample(0);
+          failIf(!state || state.cars.length !== 2, "El buffer v5 no entregó los dos vehículos.");
+          failIf(!state.cars.every(car => typeof car.jumpState === "string" && Number.isSafeInteger(car.actionSerials?.jump)), "El buffer v5 perdió los estados o seriales de movilidad.");
+          rendered = createP2PWasmThreePresentationRenderer({ THREE, canvas, width: 640, height: 360, focusCarId: "p2p-host", diagnosticsReadback: true });
+          rendered.update(state);
+          rendered.render();
+          failIf(!host.setHostCommand(command({ fire: true, targetId: "p2p-pilot" })).accepted, "El host v2 rechazó el disparo de feedback.");
+          const fired = host.receivePilotCommand({ sequence: 2, ...command() });
+          failIf(!fired.accepted, "El host v2 rechazó el tick posterior al disparo.");
+          const firedWire = createP2PWasmCausalCombatPresentationEnvelope({ ...context, sequence: 2, snapshot: host.presentationSnapshot() });
+          const firedEnvelope = decodeP2PWasmCausalCombatPresentationEnvelope(firedWire);
+          buffer.push(firedEnvelope, 1 / 60);
+          const firedState = buffer.sample(1 / 60);
+          failIf(!firedState || firedState.rockets.length < 1, "El snapshot de feedback no conserva el cohete autoritativo.");
+          rendered.update(firedState);
+          rendered.render();
+          await rendered.ready();
+          const aimCandidates = rendered.getAimCandidates();
+          failIf(!Array.isArray(aimCandidates) || aimCandidates.length !== 1, "El renderer no expuso el candidato rival autoritativo para apuntado.");
+          const metrics = rendered.metrics();
+          failIf(metrics.renderCalls < 1, "Three.js no realizó llamadas de render.");
+          failIf(metrics.pixelDiversity < 4, `El canvas no tiene variación visual suficiente: ${metrics.pixelDiversity}.`);
+          failIf(!Number.isFinite(metrics.cameraRivalDistance) || !Number.isFinite(metrics.cameraFollowDistance), "La cámara no derivó el encuadre relativo al rival.");
+          failIf(metrics.arena !== "combat-alpha" || metrics.arenaSurfaceContract !== "unified-interior-shell-v1" || !Number.isFinite(metrics.arenaWidth) || !Number.isFinite(metrics.arenaDepth) || !Number.isFinite(metrics.arenaHeight), "La escena no usa la huella autoritativa de combat-alpha o conserva paneles visuales separados.");
+          failIf(metrics.rocketCount !== 1 || metrics.rocketPoolActive !== 1, "El pool visual no presentó exactamente el cohete activo.");
+          failIf(metrics.effectPrewarmStatus !== "ready" || metrics.effectPrewarmCompilePasses !== 3, "La presentación no precalentó las variantes de lanzamiento e impacto.");
+          failIf(metrics.eventCount < 1 || metrics.eventPoolActive < 1, "El feedback visual no presentó el evento de disparo.");
+          failIf(metrics.vehicleCount !== 2 || metrics.vehicleWheelCount !== 8 || metrics.vehiclePartCount < 24 || metrics.authoredVehicleCount !== 2 || metrics.authoredAssetReadyCount !== 2 || metrics.vehicleVisualContract !== "authored-game-car-v1", "La escena no presentó el modelo authored del cliente local.");
+          rendered.dispose();
+          rendered.dispose();
+          buffer.close();
+          return {
+            ok: true,
+            story: "P2P-WASM-44",
+            renderer: "three.js",
+            protocolVersion: envelope.protocolVersion,
+            vehicleCount: state.cars.length,
+            vehiclePartCount: metrics.vehiclePartCount,
+            vehicleWheelCount: metrics.vehicleWheelCount,
+            vehicleVisualContract: metrics.vehicleVisualContract,
+            authoredVehicleCount: metrics.authoredVehicleCount,
+            authoredAssetReadyCount: metrics.authoredAssetReadyCount,
+            fullAttitude: state.cars.every(car => car.orientation && Math.abs(Math.hypot(car.orientation.x, car.orientation.y, car.orientation.z, car.orientation.w) - 1) < .001),
+            mobilityTelemetry: state.cars.every(car => typeof car.jumpState === "string" && Number.isSafeInteger(car.actionSerials?.jump)),
+            canvasVisible: metrics.canvasVisible,
+            renderCalls: metrics.renderCalls,
+            pixelDiversity: metrics.pixelDiversity,
+            cameraFocusId: metrics.cameraFocusId,
+            cameraInitialized: metrics.cameraInitialized,
+            cameraRivalDistance: metrics.cameraRivalDistance,
+            cameraFollowDistance: metrics.cameraFollowDistance,
+            arena: metrics.arena,
+            arenaWidth: metrics.arenaWidth,
+            arenaDepth: metrics.arenaDepth,
+            arenaHeight: metrics.arenaHeight,
+            arenaSurfaceContract: metrics.arenaSurfaceContract,
+            rocketCount: metrics.rocketCount,
+            effectPrewarmStatus: metrics.effectPrewarmStatus,
+            effectPrewarmCompilePasses: metrics.effectPrewarmCompilePasses,
+            eventCount: metrics.eventCount,
+            aimCandidateCount: aimCandidates.length,
+            aimEligibleTargetCount: aimCandidates.filter(candidate => candidate.eligible).length,
+            arenaLimitReadout: metrics.arenaLimitReadout,
+            cleanupIdempotent: true,
+          };
+        } finally {
+          rendered?.dispose?.();
+          host.close();
+          host.close();
+        }
+      }
+
+      run().then(result => {
+        window.__arsenalWasmBrowserP2PCausalPresentationThreeSmoke = result;
+        output.textContent = JSON.stringify(result, null, 2);
+      }).catch(error => {
+        const result = { ok: false, story: "P2P-WASM-44", error: String(error?.message || error) };
+        window.__arsenalWasmBrowserP2PCausalPresentationThreeSmoke = result;
+        output.textContent = JSON.stringify(result, null, 2);
+        console.error("RocketSim WASM Three.js presentation browser smoke failed", error);
+      });
+    </script>
+  </body>
+</html>

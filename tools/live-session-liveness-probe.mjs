@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import process from "node:process";
+import { inspectLocalHttpEndpoint } from "./live-probe-http-preflight.mjs";
 
 const port = Number(process.env.LIVE_LIVENESS_PROBE_PORT || process.argv[2] || 5300);
 const observeMs = Number(process.env.LIVE_LIVENESS_PROBE_OBSERVE_MS || 1800);
@@ -18,6 +19,7 @@ if (!Number.isSafeInteger(minimumSnapshots) || minimumSnapshots < 2) {
   throw new Error("LIVE_LIVENESS_PROBE_MIN_SNAPSHOTS debe ser al menos 2");
 }
 
+const httpPreflight = await inspectLocalHttpEndpoint({ port, timeoutMs: Math.min(timeoutMs, 1_200) });
 const socket = new WebSocket(`ws://127.0.0.1:${port}`);
 let completed = false;
 let welcome = null;
@@ -40,7 +42,7 @@ function finish(code, report) {
   completed = true;
   clearTimeout(timeoutTimer);
   clearTimeout(observationTimer);
-  console.log(JSON.stringify(report, null, 2));
+  console.log(JSON.stringify({ ...report, httpPreflight }, null, 2));
   try { socket.close(); } catch { /* the connection can fail before open */ }
   process.exitCode = code;
 }
@@ -138,7 +140,9 @@ socket.addEventListener("error", event => finish(1, {
   story: "LIVE-LIVENESS-PROBE",
   port,
   status: "connection-error",
-  detail: event?.message || "No se pudo abrir el WebSocket.",
+  detail: httpPreflight.reachable
+    ? (event?.message || "HTTP responde, pero no se pudo abrir el WebSocket.")
+    : `HTTP local no responde (${httpPreflight.errorCode || "desconocido"}); el WebSocket no pudo abrirse.`,
 }));
 
 socket.addEventListener("close", event => {

@@ -16,6 +16,59 @@ import {
 
 export const ROCKETSIM_DEFAULT_REQUEST_TIMEOUT_MS = 250;
 
+// The native bridge does not need the server's deployment configuration. Keep
+// its environment deliberately small so online credentials cannot cross the
+// process boundary, while retaining the runtime and loader variables used by
+// native executables on Windows, macOS and Linux.
+export const ROCKETSIM_BRIDGE_ENV_ALLOWLIST = Object.freeze([
+  "PATH",
+  "Path",
+  "PATHEXT",
+  "SystemRoot",
+  "WINDIR",
+  "ComSpec",
+  "COMSPEC",
+  "TEMP",
+  "TMP",
+  "USERPROFILE",
+  "HOMEDRIVE",
+  "HOMEPATH",
+  "HOME",
+  "APPDATA",
+  "LOCALAPPDATA",
+  "PROGRAMDATA",
+  "OS",
+  "PROCESSOR_ARCHITECTURE",
+  "PROCESSOR_ARCHITEW6432",
+  "NUMBER_OF_PROCESSORS",
+  "LD_LIBRARY_PATH",
+  "DYLD_LIBRARY_PATH",
+  "DYLD_FALLBACK_LIBRARY_PATH",
+  "LANG",
+  "LC_ALL",
+  "TZ",
+]);
+
+const bridgeEnvNames = new Set(ROCKETSIM_BRIDGE_ENV_ALLOWLIST.map(name => name.toLowerCase()));
+
+/**
+ * Build the environment for the native bridge process.
+ *
+ * `overrides` is intentionally filtered through the same allowlist as the
+ * parent environment. This keeps callers from accidentally reintroducing a
+ * deployment secret while still allowing explicit runtime/loader overrides.
+ */
+export function createRocketSimProcessEnv(baseEnv = process.env, overrides = {}) {
+  const result = {};
+  for (const source of [baseEnv, overrides]) {
+    for (const [name, value] of Object.entries(source || {})) {
+      if (!bridgeEnvNames.has(name.toLowerCase()) || value === undefined || value === null) continue;
+      result[name] = String(value);
+    }
+  }
+  return result;
+}
+
 export class RocketSimBridge {
   constructor({ executable, cwd, env, requestTimeoutMs = ROCKETSIM_DEFAULT_REQUEST_TIMEOUT_MS, startupTimeoutMs = 3000 } = {}) {
     if (!executable) throw new Error("RocketSimBridge needs an executable path");
@@ -39,7 +92,7 @@ export class RocketSimBridge {
     this.stderr = "";
     this.process = spawn(this.executable, [], {
       cwd: this.cwd,
-      env: { ...process.env, ...this.env },
+      env: createRocketSimProcessEnv(process.env, this.env),
       stdio: ["pipe", "pipe", "pipe"],
       windowsHide: true,
     });

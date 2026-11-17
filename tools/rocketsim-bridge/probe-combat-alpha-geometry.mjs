@@ -54,7 +54,7 @@ const second = await capture();
 assert.deepEqual(second, first, "la geometría combat-alpha debe ser determinista");
 const report = {
   schemaVersion: 1, story: "ARENA-07", profile: "combat-alpha",
-  layout: { block: { x: 0, z: -20, size: [14, 4, 18] }, ramp: { x: 0, z: 20, size: [20, 4.5, 18] }, centralLane: { zMin: -11, zMax: 11 } },
+  layout: { block: { x: 0, z: -20, size: [14, 3.25, 18] }, ramp: { x: 0, z: 20, size: [20, 3.5, 18] }, centralLane: { zMin: -13, zMax: 13 } },
   sha256: createHash("sha256").update(JSON.stringify(first)).digest("hex"), ...first,
 };
 await mkdir(dirname(capturePath), { recursive: true });

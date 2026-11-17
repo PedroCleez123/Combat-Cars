@@ -59,6 +59,15 @@ function direction(value, label) {
   };
 }
 
+function padState(value, label) {
+  if (!value || typeof value !== "object") throw new Error(`${label} is missing`);
+  return {
+    id: requiredInteger(value.id, `${label}.id`, 0),
+    active: boolean(value.active, `${label}.active`),
+    cooldown: nonNegative(value.cooldown, `${label}.cooldown`),
+  };
+}
+
 function boolean(value, label) {
   if (typeof value !== "boolean") throw new Error(`${label} is invalid`);
   return value;
@@ -227,7 +236,10 @@ export function normalizeBridgeStateFrame(message) {
       boost: nonNegative(car.boost, `${label}.boost`),
     };
   });
-  return { type: "state", schemaVersion: ROCKETSIM_BRIDGE_SCHEMA, tick, fixedStepHz: ROCKETSIM_FIXED_STEP_HZ, cars };
+  const pads = Array.isArray(message.pads)
+    ? message.pads.map((pad, index) => padState(pad, `RocketSim state pads[${index}]`))
+    : [];
+  return { type: "state", schemaVersion: ROCKETSIM_BRIDGE_SCHEMA, tick, fixedStepHz: ROCKETSIM_FIXED_STEP_HZ, cars, pads };
 }
 
 export function summarizeBridgeFrame(frame) {

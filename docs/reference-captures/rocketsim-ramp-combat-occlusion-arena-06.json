@@ -2,17 +2,20 @@
   "schemaVersion": 1,
   "story": "ARENA-06",
   "profile": "arsenal-expanded-ramp-practice",
-  "sha256": "960835fadc2ed52571fcc359b2379c930654252d12ce2a2f07964ab12839406f",
+  "sha256": "72c7b9dc26556de015e3243a79f92bea4f1031caa30581618fd2171fe4f11a97",
   "time": 0.38,
   "settings": {
     "vehicleLimit": 6,
     "botCount": 0,
     "arena": "calibration",
     "practiceArena": "arsenal-expanded-ramp-practice",
+    "bridgeLabel": "NATIVE",
     "humans": 2,
     "bots": 0,
     "profile": "COMBATE ROCKETSIM",
-    "movementBackend": "rocketsim"
+    "movementBackend": "rocketsim",
+    "roundState": "active",
+    "scoreToWin": 15
   },
   "cars": [
     {

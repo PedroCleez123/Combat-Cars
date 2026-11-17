@@ -2,6 +2,7 @@
 
 #include "BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
 #include "BulletCollision/CollisionShapes/btBoxShape.h"
+#include "BulletCollision/CollisionShapes/btConvexHullShape.h"
 #include "BulletCollision/CollisionShapes/btTriangleMesh.h"
 
 #include <algorithm>
@@ -9,9 +10,11 @@
 #include <cmath>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <memory>
 #include <set>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -21,6 +24,10 @@ namespace {
 
 constexpr int kFixedStepHz = 120;
 constexpr int kSettleFrames = 120;
+constexpr int kBoostRegenDelayTicks = 240;
+constexpr int kBoostRegenDurationTicks = 120;
+constexpr float kBoostRegenStartRatePerTick = 50.f / 120.f;
+constexpr float kBoostRegenEndRatePerTick = 150.f / 120.f;
 constexpr float kArenaHalfExtent = 1000.f;
 constexpr float kArenaHeight = 500.f;
 // The clean Three.js arena is 62 x 46 x 24 Arsenal units. Keep RocketSim's
@@ -30,20 +37,88 @@ constexpr float kArsenalPracticeScale = 56.f / RLConst::CAR_MAX_SPEED;
 constexpr float kArsenalPracticeHalfWidth = 62.f / kArsenalPracticeScale;
 constexpr float kArsenalPracticeHalfDepth = 46.f / kArsenalPracticeScale;
 constexpr float kArsenalPracticeHeight = RLConst::CAR_SPAWN_REST_Z + 24.f / kArsenalPracticeScale;
-// Expanded training arena. It keeps the same UU-to-Arsenal scale while
-// giving aerial movement more room before a wall or ceiling contact.
+// Expanded practice arena. These values are kept stable for the existing
+// practice profiles; combat-alpha has a separate larger contract below.
 constexpr float kArsenalExpandedHalfWidth = 72.f / kArsenalPracticeScale;
 constexpr float kArsenalExpandedHalfDepth = 54.f / kArsenalPracticeScale;
 constexpr float kArsenalExpandedHeight = RLConst::CAR_SPAWN_REST_Z + 30.f / kArsenalPracticeScale;
 constexpr float kArsenalExpandedCurveRadius = 8.f / kArsenalPracticeScale;
+// Combat-alpha is 264 × 408 × 108 Arsenal units. Keep these values mirrored
+// by COMBAT_ALPHA_ARENA and the browser WASM bridge: the native cornered
+// collision shell remains the sole authority for floor, curves, walls and
+// ceiling.
+constexpr float kCombatAlphaHalfWidth = 132.f / kArsenalPracticeScale;
+constexpr float kCombatAlphaHalfDepth = 204.f / kArsenalPracticeScale;
+constexpr float kCombatAlphaHeight = RLConst::CAR_SPAWN_REST_Z + 108.f / kArsenalPracticeScale;
+constexpr float kCombatAlphaCurveRadius = 30.f / kArsenalPracticeScale;
 constexpr float kArsenalBlockWidth = 14.f;
 constexpr float kArsenalBlockDepth = 18.f;
-constexpr float kArsenalBlockHeight = 4.f;
+constexpr float kArsenalBlockHeight = 3.25f;
 // ARENA-06 uses one deliberately simple wedge. These are Arsenal-world
 // dimensions; the native mesh is converted with the same scale as the arena.
 constexpr float kArsenalRampRun = 20.f;
 constexpr float kArsenalRampWidth = 18.f;
-constexpr float kArsenalRampHeight = 4.5f;
+constexpr float kArsenalRampHeight = 3.5f;
+// These ratios and obstacle coordinates mirror COMBAT_ALPHA_MAP. Contract
+// tests keep the native and Node descriptions synchronized.
+constexpr float kCombatBlockX = 0.f;
+constexpr float kCombatBlockZ = -20.f;
+constexpr float kCombatRampX = 0.f;
+constexpr float kCombatRampZ = 20.f;
+struct CombatAlphaCoverSpec {
+  const char* id;
+  float x;
+  float z;
+  float width;
+  float depth;
+  float height;
+};
+
+// COV-01 declarative records mirrored in the WASM wrapper. These are one
+// closed static box per cover; presentation meshes never participate in this
+// list or in the authoritative collision world.
+constexpr CombatAlphaCoverSpec kCombatAlphaCovers[] = {
+  { "container-cover-northwest", -45.f, -58.f, 10.f, 24.f, 6.f },
+  { "container-cover-southwest", -45.f, 58.f, 10.f, 24.f, 6.f },
+  { "container-cover-northeast", 45.f, -58.f, 10.f, 24.f, 6.f },
+  { "container-cover-southeast", 45.f, 58.f, 10.f, 24.f, 6.f },
+  { "tire-cover-blue", -68.f, -30.f, 8.f, 8.f, 4.8f },
+  { "tire-cover-red", 68.f, 30.f, 8.f, 8.f, 4.8f },
+};
+constexpr float kCombatSpawnXRatio = 2.f / 3.f;
+constexpr float kCombatSpawnZOffset = 90.f;
+constexpr float kCombatLargePickupXRatio = .70f;
+constexpr float kCombatLargePickupZRatio = .70f;
+constexpr float kCombatLargeMidPickupZRatio = .47f;
+constexpr float kCombatLargeLanePickupZRatio = .23f;
+constexpr float kCombatMediumPickupXRatio = .52f;
+constexpr float kCombatMediumPickupZRatio = .72f;
+constexpr float kCombatCenterLanePickupZRatio = .48f;
+constexpr float kCombatCrossLanePickupZRatio = .26f;
+constexpr float kCombatDiagonalPickupXRatio = .30f;
+constexpr float kCombatDiagonalPickupZRatio = .42f;
+constexpr float kCombatLongDiagonalPickupZRatio = .65f;
+constexpr float kCombatWideDiagonalPickupXRatio = .58f;
+constexpr float kCombatWideDiagonalPickupZRatio = .48f;
+constexpr float kCombatWideOuterPickupZRatio = .70f;
+constexpr float kCombatInnerPickupXRatio = .12f;
+constexpr float kCombatInnerPickupZRatio = .24f;
+constexpr float kCombatSecondLargeXRatio = .52f;
+constexpr float kCombatSecondLargeOuterZRatio = .60f;
+constexpr float kCombatSecondLargeMidZRatio = .35f;
+constexpr float kCombatSecondLargeInnerZRatio = .20f;
+constexpr float kCombatSecondCrossXRatio = .36f;
+constexpr float kCombatSecondCrossZRatio = .18f;
+constexpr float kCombatSecondCrossOuterZRatio = .42f;
+constexpr float kCombatSecondDiagonalXRatio = .20f;
+constexpr float kCombatSecondDiagonalZRatio = .32f;
+constexpr float kCombatSecondDiagonalOuterZRatio = .58f;
+constexpr float kCombatSecondOuterXRatio = .46f;
+constexpr float kCombatSecondOuterZRatio = .35f;
+constexpr float kCombatSecondInnerXRatio = .08f;
+constexpr float kCombatSecondInnerZRatio = .22f;
+constexpr float kCombatAlphaVehicleClearance = 2.5f;
+constexpr float kCombatAlphaPickupExtraClearance = .6f;
 constexpr int kArsenalCornerSegments = 16;
 // Original clean training geometry. The fillet is deliberately independent
 // from Rocket League's arena meshes: it exists to validate continuous contact
@@ -51,6 +126,36 @@ constexpr int kArsenalCornerSegments = 16;
 constexpr float kArsenalCurveRadius = 256.f;
 constexpr int kArsenalCurveSegments = 32;
 constexpr float kPi = 3.14159265358979323846f;
+
+bool combatAlphaSafeFloorPoint(float worldX, float worldY, float clearance) {
+  const float curve = kCombatAlphaCurveRadius * kArsenalPracticeScale;
+  const float maxX = kCombatAlphaHalfWidth * kArsenalPracticeScale - curve - clearance;
+  const float maxY = kCombatAlphaHalfDepth * kArsenalPracticeScale - curve - clearance;
+  if (std::abs(worldX) >= maxX || std::abs(worldY) >= maxY) return false;
+  const float blockHalfX = kArsenalBlockWidth / 2.f + clearance;
+  const float blockHalfY = kArsenalBlockDepth / 2.f + clearance;
+  if (std::abs(worldX - kCombatBlockX) < blockHalfX
+      && std::abs(worldY - kCombatBlockZ) < blockHalfY) return false;
+  const float rampHalfX = kArsenalRampRun / 2.f + clearance;
+  const float rampHalfY = kArsenalRampWidth / 2.f + clearance;
+  if (std::abs(worldX - kCombatRampX) < rampHalfX
+      && std::abs(worldY - kCombatRampZ) < rampHalfY) return false;
+  for (const auto& cover : kCombatAlphaCovers) {
+    const float halfX = cover.width / 2.f + clearance;
+    const float halfY = cover.depth / 2.f + clearance;
+    if (std::abs(worldX - cover.x) < halfX && std::abs(worldY - cover.z) < halfY) return false;
+  }
+  return true;
+}
+
+float combatAlphaCurveFloorHeight(float worldCoordinate, float halfExtent) {
+  const float radius = kCombatAlphaCurveRadius * kArsenalPracticeScale;
+  const float distance = std::abs(worldCoordinate);
+  if (distance <= halfExtent - radius) return 0.f;
+  if (distance >= halfExtent) return std::numeric_limits<float>::infinity();
+  const float offset = distance - (halfExtent - radius);
+  return radius - std::sqrt(std::max(0.f, radius * radius - offset * offset));
+}
 
 struct Input {
   float throttle = 0;
@@ -71,7 +176,169 @@ struct RequestedCar {
 struct NativeCar {
   int id = 0;
   Car* car = nullptr;
+  int boostRegenDelayTicks = 0;
+  int boostRegenTicks = 0;
+  float boostBeforeStep = RLConst::BOOST_MAX;
 };
+
+// Combat-alpha owns its pickup layout here, beside the native collision
+// authority. These are intentionally simple overlap volumes rather than
+// visual meshes; the client receives their cooldown state in every frame.
+struct CombatBoostPad {
+  int id = 0;
+  Vec pos;
+  float radius = 185.f;
+  float height = 180.f;
+  float amount = 60.f;
+  float cooldown = 0.f;
+  float cooldownSeconds = 5.f;
+  bool active = true;
+};
+
+std::vector<CombatBoostPad> combatBoostPads(const std::string& profile) {
+  // Combat-alpha uses native boost regeneration; retain the legacy builder
+  // below only as source history for old diagnostics, never instantiate it.
+  if (profile != "combat-alpha" || profile == "combat-alpha") return {};
+  const float sx = kCombatAlphaHalfWidth * kCombatLargePickupXRatio;
+  const float sy = kCombatAlphaHalfDepth * kCombatLargePickupZRatio;
+  const float lmy = kCombatAlphaHalfDepth * kCombatLargeMidPickupZRatio;
+  const float ly = kCombatAlphaHalfDepth * kCombatLargeLanePickupZRatio;
+  const float mx = kCombatAlphaHalfWidth * kCombatMediumPickupXRatio;
+  const float my = kCombatAlphaHalfDepth * kCombatMediumPickupZRatio;
+  const float cy = kCombatAlphaHalfDepth * kCombatCenterLanePickupZRatio;
+  const float crossY = kCombatAlphaHalfDepth * kCombatCrossLanePickupZRatio;
+  const float dx = kCombatAlphaHalfWidth * kCombatDiagonalPickupXRatio;
+  const float dy = kCombatAlphaHalfDepth * kCombatDiagonalPickupZRatio;
+  const float longDy = kCombatAlphaHalfDepth * kCombatLongDiagonalPickupZRatio;
+  const float wx = kCombatAlphaHalfWidth * kCombatWideDiagonalPickupXRatio;
+  const float wy = kCombatAlphaHalfDepth * kCombatWideDiagonalPickupZRatio;
+  const float outerWy = kCombatAlphaHalfDepth * kCombatWideOuterPickupZRatio;
+  const float ix = kCombatAlphaHalfWidth * kCombatInnerPickupXRatio;
+  const float iy = kCombatAlphaHalfDepth * kCombatInnerPickupZRatio;
+  const float secondLargeX = kCombatAlphaHalfWidth * kCombatSecondLargeXRatio;
+  const float secondLargeOuterZ = kCombatAlphaHalfDepth * kCombatSecondLargeOuterZRatio;
+  const float secondLargeMidZ = kCombatAlphaHalfDepth * kCombatSecondLargeMidZRatio;
+  const float secondLargeInnerZ = kCombatAlphaHalfDepth * kCombatSecondLargeInnerZRatio;
+  const float secondCrossX = kCombatAlphaHalfWidth * kCombatSecondCrossXRatio;
+  const float secondCrossZ = kCombatAlphaHalfDepth * kCombatSecondCrossZRatio;
+  const float secondCrossOuterZ = kCombatAlphaHalfDepth * kCombatSecondCrossOuterZRatio;
+  const float secondDiagonalX = kCombatAlphaHalfWidth * kCombatSecondDiagonalXRatio;
+  const float secondDiagonalZ = kCombatAlphaHalfDepth * kCombatSecondDiagonalZRatio;
+  const float secondDiagonalOuterZ = kCombatAlphaHalfDepth * kCombatSecondDiagonalOuterZRatio;
+  const float secondOuterX = kCombatAlphaHalfWidth * kCombatSecondOuterXRatio;
+  const float secondOuterZ = kCombatAlphaHalfDepth * kCombatSecondOuterZRatio;
+  const float secondInnerX = kCombatAlphaHalfWidth * kCombatSecondInnerXRatio;
+  const float secondInnerZ = kCombatAlphaHalfDepth * kCombatSecondInnerZRatio;
+  std::vector<CombatBoostPad> pads;
+  pads.reserve(88);
+  auto add = [&](float x, float y, float amount, float cooldownSeconds, float radius) {
+    const float worldX = x * kArsenalPracticeScale;
+    const float worldY = y * kArsenalPracticeScale;
+    const float clearance = radius * kArsenalPracticeScale + kCombatAlphaPickupExtraClearance;
+    if (!combatAlphaSafeFloorPoint(worldX, worldY, clearance)) {
+      throw std::runtime_error("combat-alpha pickup intersects a curve or obstacle clearance zone");
+    }
+    pads.push_back({ static_cast<int>(pads.size()), Vec(x, y, 0.f), radius, 180.f, amount, 0.f, cooldownSeconds, true });
+  };
+  add(-sx, -sy, 60.f, 5.f, 210.f); add(sx, -sy, 60.f, 5.f, 210.f);
+  add(-sx, sy, 60.f, 5.f, 210.f); add(sx, sy, 60.f, 5.f, 210.f);
+  add(-sx, -lmy, 60.f, 5.f, 210.f); add(sx, -lmy, 60.f, 5.f, 210.f);
+  add(-sx, lmy, 60.f, 5.f, 210.f); add(sx, lmy, 60.f, 5.f, 210.f);
+  add(-sx, -ly, 60.f, 5.f, 210.f); add(sx, ly, 60.f, 5.f, 210.f);
+  add(-sx, ly, 60.f, 5.f, 210.f); add(sx, -ly, 60.f, 5.f, 210.f);
+  add(0.f, -my, 38.f, 3.5f, 165.f); add(0.f, my, 38.f, 3.5f, 165.f);
+  add(0.f, -cy, 38.f, 3.5f, 165.f); add(0.f, cy, 38.f, 3.5f, 165.f);
+  add(0.f, -iy, 38.f, 3.5f, 165.f); add(0.f, iy, 38.f, 3.5f, 165.f);
+  add(-mx, 0.f, 38.f, 3.5f, 165.f); add(mx, 0.f, 38.f, 3.5f, 165.f);
+  add(-mx, -crossY, 38.f, 3.5f, 165.f); add(mx, -crossY, 38.f, 3.5f, 165.f);
+  add(-mx, crossY, 38.f, 3.5f, 165.f); add(mx, crossY, 38.f, 3.5f, 165.f);
+  add(-dx, -dy, 38.f, 3.5f, 165.f); add(dx, dy, 38.f, 3.5f, 165.f);
+  add(-dx, dy, 38.f, 3.5f, 165.f); add(dx, -dy, 38.f, 3.5f, 165.f);
+  add(-dx, -longDy, 38.f, 3.5f, 165.f); add(dx, longDy, 38.f, 3.5f, 165.f);
+  add(-dx, longDy, 38.f, 3.5f, 165.f); add(dx, -longDy, 38.f, 3.5f, 165.f);
+  add(-wx, -wy, 38.f, 3.5f, 165.f); add(wx, wy, 38.f, 3.5f, 165.f);
+  add(-wx, wy, 38.f, 3.5f, 165.f); add(wx, -wy, 38.f, 3.5f, 165.f);
+  add(-wx, -outerWy, 38.f, 3.5f, 165.f); add(wx, outerWy, 38.f, 3.5f, 165.f);
+  add(-wx, outerWy, 38.f, 3.5f, 165.f); add(wx, -outerWy, 38.f, 3.5f, 165.f);
+  add(-ix, iy, 38.f, 3.5f, 165.f); add(ix, -iy, 38.f, 3.5f, 165.f);
+  add(-ix, -iy, 38.f, 3.5f, 165.f); add(ix, iy, 38.f, 3.5f, 165.f);
+  add(-secondLargeX, -secondLargeOuterZ, 60.f, 5.f, 210.f); add(secondLargeX, -secondLargeOuterZ, 60.f, 5.f, 210.f);
+  add(-secondLargeX, secondLargeOuterZ, 60.f, 5.f, 210.f); add(secondLargeX, secondLargeOuterZ, 60.f, 5.f, 210.f);
+  add(-secondLargeX, -secondLargeMidZ, 60.f, 5.f, 210.f); add(secondLargeX, -secondLargeMidZ, 60.f, 5.f, 210.f);
+  add(-secondLargeX, secondLargeMidZ, 60.f, 5.f, 210.f); add(secondLargeX, secondLargeMidZ, 60.f, 5.f, 210.f);
+  add(-secondLargeX, -secondLargeInnerZ, 60.f, 5.f, 210.f); add(secondLargeX, secondLargeInnerZ, 60.f, 5.f, 210.f);
+  add(-secondLargeX, secondLargeInnerZ, 60.f, 5.f, 210.f); add(secondLargeX, -secondLargeInnerZ, 60.f, 5.f, 210.f);
+  add(0.f, -secondLargeOuterZ, 38.f, 3.5f, 165.f); add(0.f, secondLargeOuterZ, 38.f, 3.5f, 165.f);
+  add(0.f, -secondLargeMidZ, 38.f, 3.5f, 165.f); add(0.f, secondLargeMidZ, 38.f, 3.5f, 165.f);
+  add(0.f, -secondLargeInnerZ, 38.f, 3.5f, 165.f); add(0.f, secondLargeInnerZ, 38.f, 3.5f, 165.f);
+  add(-secondCrossX, 0.f, 38.f, 3.5f, 165.f); add(secondCrossX, 0.f, 38.f, 3.5f, 165.f);
+  add(-secondCrossX, -secondCrossZ, 38.f, 3.5f, 165.f); add(secondCrossX, secondCrossZ, 38.f, 3.5f, 165.f);
+  add(-secondCrossX, secondCrossZ, 38.f, 3.5f, 165.f); add(secondCrossX, -secondCrossZ, 38.f, 3.5f, 165.f);
+  add(-secondCrossX, -secondCrossOuterZ, 38.f, 3.5f, 165.f); add(secondCrossX, secondCrossOuterZ, 38.f, 3.5f, 165.f);
+  add(-secondCrossX, secondCrossOuterZ, 38.f, 3.5f, 165.f); add(secondCrossX, -secondCrossOuterZ, 38.f, 3.5f, 165.f);
+  add(-secondDiagonalX, -secondDiagonalZ, 38.f, 3.5f, 165.f); add(secondDiagonalX, secondDiagonalZ, 38.f, 3.5f, 165.f);
+  add(-secondDiagonalX, secondDiagonalZ, 38.f, 3.5f, 165.f); add(secondDiagonalX, -secondDiagonalZ, 38.f, 3.5f, 165.f);
+  add(-secondDiagonalX, -secondDiagonalOuterZ, 38.f, 3.5f, 165.f); add(secondDiagonalX, secondDiagonalOuterZ, 38.f, 3.5f, 165.f);
+  add(-secondDiagonalX, secondDiagonalOuterZ, 38.f, 3.5f, 165.f); add(secondDiagonalX, -secondDiagonalOuterZ, 38.f, 3.5f, 165.f);
+  add(-secondOuterX, -secondOuterZ, 38.f, 3.5f, 165.f); add(secondOuterX, secondOuterZ, 38.f, 3.5f, 165.f);
+  add(-secondOuterX, secondOuterZ, 38.f, 3.5f, 165.f); add(secondOuterX, -secondOuterZ, 38.f, 3.5f, 165.f);
+  add(-secondInnerX, -secondInnerZ, 38.f, 3.5f, 165.f); add(secondInnerX, secondInnerZ, 38.f, 3.5f, 165.f);
+  add(-secondInnerX, secondInnerZ, 38.f, 3.5f, 165.f); add(secondInnerX, -secondInnerZ, 38.f, 3.5f, 165.f);
+  return pads;
+}
+
+void updateCombatBoostPads(std::vector<CombatBoostPad>& pads, const std::vector<NativeCar>& cars, float dt) {
+  for (auto& pad : pads) {
+    pad.cooldown = std::max(0.f, pad.cooldown - dt);
+    pad.active = pad.cooldown <= 0.f;
+    if (!pad.active) continue;
+    for (const auto& native : cars) {
+      auto state = native.car->GetState();
+      if (std::hypot(state.pos.x - pad.pos.x, state.pos.y - pad.pos.y) > pad.radius) continue;
+      if (std::abs(state.pos.z - pad.pos.z) > pad.height) continue;
+      const float before = state.boost;
+      state.boost = std::min(RLConst::BOOST_MAX, state.boost + pad.amount);
+      if (state.boost > before + .001f) {
+        native.car->SetState(state);
+        pad.active = false;
+        pad.cooldown = pad.cooldownSeconds;
+        break;
+      }
+    }
+  }
+}
+
+void updateCombatBoostRegeneration(std::vector<NativeCar>& cars, const std::string& profile) {
+  if (profile != "combat-alpha") return;
+  for (auto& native : cars) {
+    if (!native.car) continue;
+    const CarState state = native.car->GetState();
+    if (state.boost < native.boostBeforeStep - .0001f) {
+      native.boostRegenDelayTicks = kBoostRegenDelayTicks;
+      native.boostRegenTicks = 0;
+      continue;
+    }
+    if (state.boost >= RLConst::BOOST_MAX - .0001f) {
+      native.boostRegenDelayTicks = 0;
+      native.boostRegenTicks = 0;
+      continue;
+    }
+    if (native.boostRegenDelayTicks > 1) {
+      native.boostRegenDelayTicks -= 1;
+      native.boostRegenTicks = 0;
+      continue;
+    }
+    CarState updated = state;
+    const int progress = std::min(native.boostRegenTicks, kBoostRegenDurationTicks - 1);
+    const float ramp = static_cast<float>(progress) / static_cast<float>(kBoostRegenDurationTicks - 1);
+    const float ratePerTick = kBoostRegenStartRatePerTick
+      + (kBoostRegenEndRatePerTick - kBoostRegenStartRatePerTick) * ramp;
+    updated.boost = std::min(RLConst::BOOST_MAX, state.boost + ratePerTick);
+    native.car->SetState(updated);
+    native.boostRegenDelayTicks = 0;
+    native.boostRegenTicks = std::min(kBoostRegenDurationTicks, native.boostRegenTicks + 1);
+  }
+}
 
 float number(const std::string& line, const std::string& key, float fallback = 0) {
   const std::string needle = "\"" + key + "\":";
@@ -568,12 +835,12 @@ void addVerticalCornerFillet(Arena& arena, float halfWidth, float halfDepth, flo
   arena._AddStaticCollisionShape(arsenalVerticalCornerShape(halfWidth, halfDepth, radius, height, corner));
 }
 
-void addExpandedWallPanels(Arena& arena) {
+void addExpandedWallPanels(Arena& arena, float halfWidth, float halfDepth, float curveRadius, float height) {
   // Static planes are infinite, so they overlap a corner patch after the
   // vehicle reaches the vertical wall. These four finite panels start above
   // the lower curve, end below the upper curve, and stop before both corners.
-  const float w = kArsenalExpandedHalfWidth, d = kArsenalExpandedHalfDepth;
-  const float r = kArsenalExpandedCurveRadius, h = kArsenalExpandedHeight;
+  const float w = halfWidth, d = halfDepth;
+  const float r = curveRadius, h = height;
   const auto addPanel = [&](const btVector3& p00, const btVector3& p10, const btVector3& p01, bool reverse) {
     auto* mesh = new btTriangleMesh();
     if (reverse) {
@@ -619,8 +886,12 @@ btVector3 arsenalRampPoint(float x, float y, float height) {
   return arsenalArenaPoint(x, y, height);
 }
 
-btBvhTriangleMeshShape* arsenalRampShape() {
-  static btBvhTriangleMeshShape* shape = nullptr;
+btConvexHullShape* arsenalRampShape() {
+  // The wedge used to be a triangle mesh. Its sloped face rendered and
+  // raycast correctly, but a vehicle could enter through a lateral edge in
+  // the native solver. A convex hull gives RocketSim one closed support
+  // volume for the same six visual vertices.
+  static btConvexHullShape* shape = nullptr;
   if (shape) return shape;
   const float run = kArsenalRampRun / 2.f;
   const float width = kArsenalRampWidth / 2.f;
@@ -630,17 +901,10 @@ btBvhTriangleMeshShape* arsenalRampShape() {
   const auto d = arsenalRampPoint(run, width, 0);
   const auto e = arsenalRampPoint(run, -width, kArsenalRampHeight);
   const auto f = arsenalRampPoint(run, width, kArsenalRampHeight);
-  auto* mesh = new btTriangleMesh();
-  // Wedge: floor, both side faces, high end cap and the single sloped face.
-  mesh->addTriangle(a, c, b, true);
-  mesh->addTriangle(b, c, d, true);
-  mesh->addTriangle(a, b, e, true);
-  mesh->addTriangle(c, f, d, true);
-  mesh->addTriangle(b, d, f, true);
-  mesh->addTriangle(b, f, e, true);
-  mesh->addTriangle(a, e, f, true);
-  mesh->addTriangle(a, f, c, true);
-  shape = new btBvhTriangleMeshShape(mesh, true);
+  shape = new btConvexHullShape();
+  for (const auto& point : { a, b, c, d, e, f }) shape->addPoint(point, false);
+  shape->optimizeConvexHull();
+  shape->recalcLocalAabb();
   shape->setMargin(0.04f);
   return shape;
 }
@@ -649,6 +913,24 @@ void addArsenalRamp(Arena& arena, float x = 0, float y = 0) {
   auto* body = arena._AddStaticCollisionShape(arsenalRampShape(), arsenalArenaPoint(x, y, 0));
   body->setFriction(RLConst::ARENA_COLLISION_BASE_FRICTION);
   body->setRestitution(RLConst::ARENA_COLLISION_BASE_RESTITUTION);
+}
+
+void addCombatAlphaCover(Arena& arena, const CombatAlphaCoverSpec& cover) {
+  const btVector3 halfExtents(
+    (cover.width / kArsenalPracticeScale) * UU_TO_BT / 2.f,
+    (cover.depth / kArsenalPracticeScale) * UU_TO_BT / 2.f,
+    (cover.height / kArsenalPracticeScale) * UU_TO_BT / 2.f
+  );
+  auto* body = arena._AddStaticCollisionShape(
+    new btBoxShape(halfExtents),
+    arsenalArenaPoint(cover.x, cover.z, cover.height / 2.f)
+  );
+  body->setFriction(RLConst::ARENA_COLLISION_BASE_FRICTION);
+  body->setRestitution(RLConst::ARENA_COLLISION_BASE_RESTITUTION);
+}
+
+void addCombatAlphaCovers(Arena& arena) {
+  for (const auto& cover : kCombatAlphaCovers) addCombatAlphaCover(arena, cover);
 }
 
 std::unique_ptr<Arena> createCleanArena() {
@@ -725,23 +1007,29 @@ std::unique_ptr<Arena> createArsenalExpandedCurvedPracticeArena() {
   return arena;
 }
 
-std::unique_ptr<Arena> createArsenalExpandedCorneredPracticeArena() {
-  auto arena = std::unique_ptr<Arena>(Arena::Create(GameMode::THE_VOID, {}, kFixedStepHz));
+std::unique_ptr<Arena> createCorneredArena(float halfWidth, float halfDepth, float height, float curveRadius, bool largeBroadphase = false) {
+  ArenaConfig arenaConfig;
+  if (largeBroadphase) arenaConfig.useCustomBroadphase = false;
+  auto arena = std::unique_ptr<Arena>(Arena::Create(GameMode::THE_VOID, arenaConfig, kFixedStepHz));
   addPlane(*arena, btVector3(0, 0, 1), btVector3(0, 0, 0));
-  addPlane(*arena, btVector3(0, 0, -1), btVector3(0, 0, kArsenalExpandedHeight));
-  addQuarterPipe(*arena, kArsenalExpandedHalfWidth, kArsenalExpandedHalfDepth, kArsenalExpandedCurveRadius, kArsenalExpandedHeight, CurveBoundary::PositiveX);
-  addQuarterPipe(*arena, kArsenalExpandedHalfWidth, kArsenalExpandedHalfDepth, kArsenalExpandedCurveRadius, kArsenalExpandedHeight, CurveBoundary::NegativeX);
-  addQuarterPipe(*arena, kArsenalExpandedHalfWidth, kArsenalExpandedHalfDepth, kArsenalExpandedCurveRadius, kArsenalExpandedHeight, CurveBoundary::PositiveY);
-  addQuarterPipe(*arena, kArsenalExpandedHalfWidth, kArsenalExpandedHalfDepth, kArsenalExpandedCurveRadius, kArsenalExpandedHeight, CurveBoundary::NegativeY);
-  for (int corner = 0; corner < 4; corner += 1) addCornerFillet(*arena, kArsenalExpandedHalfWidth, kArsenalExpandedHalfDepth, kArsenalExpandedCurveRadius, corner);
-  for (int corner = 0; corner < 4; corner += 1) addCeilingCornerFillet(*arena, kArsenalExpandedHalfWidth, kArsenalExpandedHalfDepth, kArsenalExpandedCurveRadius, kArsenalExpandedHeight, corner);
-  for (int corner = 0; corner < 4; corner += 1) addVerticalCornerFillet(*arena, kArsenalExpandedHalfWidth, kArsenalExpandedHalfDepth, kArsenalExpandedCurveRadius, kArsenalExpandedHeight, corner);
-  addExpandedWallPanels(*arena);
+  addPlane(*arena, btVector3(0, 0, -1), btVector3(0, 0, height));
+  addQuarterPipe(*arena, halfWidth, halfDepth, curveRadius, height, CurveBoundary::PositiveX);
+  addQuarterPipe(*arena, halfWidth, halfDepth, curveRadius, height, CurveBoundary::NegativeX);
+  addQuarterPipe(*arena, halfWidth, halfDepth, curveRadius, height, CurveBoundary::PositiveY);
+  addQuarterPipe(*arena, halfWidth, halfDepth, curveRadius, height, CurveBoundary::NegativeY);
+  for (int corner = 0; corner < 4; corner += 1) addCornerFillet(*arena, halfWidth, halfDepth, curveRadius, corner);
+  for (int corner = 0; corner < 4; corner += 1) addCeilingCornerFillet(*arena, halfWidth, halfDepth, curveRadius, height, corner);
+  for (int corner = 0; corner < 4; corner += 1) addVerticalCornerFillet(*arena, halfWidth, halfDepth, curveRadius, height, corner);
+  addExpandedWallPanels(*arena, halfWidth, halfDepth, curveRadius, height);
   BallState ball = arena->ball->GetState();
   ball.pos = Vec(0, 0, 10000);
   ball.vel = Vec();
   arena->ball->SetState(ball);
   return arena;
+}
+
+std::unique_ptr<Arena> createArsenalExpandedCorneredPracticeArena() {
+  return createCorneredArena(kArsenalExpandedHalfWidth, kArsenalExpandedHalfDepth, kArsenalExpandedHeight, kArsenalExpandedCurveRadius);
 }
 
 std::unique_ptr<Arena> createArsenalExpandedBlockPracticeArena() {
@@ -757,11 +1045,12 @@ std::unique_ptr<Arena> createArsenalExpandedRampPracticeArena() {
 }
 
 std::unique_ptr<Arena> createCombatAlphaArena() {
-  auto arena = createArsenalExpandedCorneredPracticeArena();
+  auto arena = createCorneredArena(kCombatAlphaHalfWidth, kCombatAlphaHalfDepth, kCombatAlphaHeight, kCombatAlphaCurveRadius, true);
   // ARENA-07 composes only the accepted resources. The open middle lane and
   // mirrored z positions make cover and bypass scenarios reproducible.
-  addArsenalBlock(*arena, 0, -20.f);
-  addArsenalRamp(*arena, 0, 20.f);
+  addArsenalBlock(*arena, kCombatBlockX, kCombatBlockZ);
+  addArsenalRamp(*arena, kCombatRampX, kCombatRampZ);
+  addCombatAlphaCovers(*arena);
   return arena;
 }
 
@@ -813,12 +1102,16 @@ Vec spawnPosition(size_t index, const std::string& profile) {
     if (index == 2) return Vec(-1600.f, 1200.f, RLConst::CAR_SPAWN_REST_Z);
   }
   if (profile == "combat-alpha") {
-    static const Vec positions[] = {
-      Vec(-1970.f, -1230.f, RLConst::CAR_SPAWN_REST_Z), Vec(1970.f, 1230.f, RLConst::CAR_SPAWN_REST_Z),
-      Vec(-1970.f, 1230.f, RLConst::CAR_SPAWN_REST_Z), Vec(1970.f, -1230.f, RLConst::CAR_SPAWN_REST_Z),
-      Vec(-1970.f, 0.f, RLConst::CAR_SPAWN_REST_Z), Vec(1970.f, 0.f, RLConst::CAR_SPAWN_REST_Z),
-    };
-    if (index < 6) return positions[index];
+    const float side = index % 2 == 0 ? -kCombatSpawnXRatio : kCombatSpawnXRatio;
+    const float worldX = side * kCombatAlphaHalfWidth * kArsenalPracticeScale;
+    const float worldY = index == 0 ? -kCombatSpawnZOffset
+      : index == 1 ? kCombatSpawnZOffset
+      : index == 2 ? kCombatSpawnZOffset
+      : index == 3 ? -kCombatSpawnZOffset : 0.f;
+    if (index < 6 && combatAlphaSafeFloorPoint(worldX, worldY, kCombatAlphaVehicleClearance)) {
+      return Vec(side * kCombatAlphaHalfWidth, worldY / kArsenalPracticeScale, RLConst::CAR_SPAWN_REST_Z);
+    }
+    if (index < 6) throw std::runtime_error("combat-alpha spawn intersects a curve or obstacle clearance zone");
   }
   if (profile == "arsenal-expanded-cornered-practice") {
     static const Vec positions[] = {
@@ -920,6 +1213,29 @@ void resetNativeCar(NativeCar& nativeCar, size_t index, const std::string& profi
   state.jumpTime = 0;
   nativeCar.car->SetState(state);
   nativeCar.car->controls = CarControls();
+}
+
+// Recover only the failure mode reported by the online arena: a vehicle can
+// be pushed below the floor-to-wall quarter-pipe or beyond the low wall edge.
+// The geometry checks above prevent normal placement there; this watchdog is
+// an authoritative last resort after a collision/precision failure.
+void recoverCombatAlphaCarsOutsideSafeFloor(std::vector<NativeCar>& cars, const std::string& profile) {
+  if (profile != "combat-alpha") return;
+  const float halfWidth = kCombatAlphaHalfWidth * kArsenalPracticeScale;
+  const float halfDepth = kCombatAlphaHalfDepth * kArsenalPracticeScale;
+  for (size_t index = 0; index < cars.size(); index += 1) {
+    const auto state = cars[index].car->GetState();
+    const float worldX = state.pos.x * kArsenalPracticeScale;
+    const float worldY = state.pos.y * kArsenalPracticeScale;
+    const float height = (state.pos.z - RLConst::CAR_SPAWN_REST_Z) * kArsenalPracticeScale;
+    const float floorFromX = combatAlphaCurveFloorHeight(worldX, halfWidth);
+    const float floorFromY = combatAlphaCurveFloorHeight(worldY, halfDepth);
+    const float expectedFloor = std::max(floorFromX, floorFromY);
+    const bool belowCurve = std::isfinite(expectedFloor) && height + 1.5f < expectedFloor;
+    const bool beyondLowEdge = (std::abs(worldX) > halfWidth + kCombatAlphaVehicleClearance
+      || std::abs(worldY) > halfDepth + kCombatAlphaVehicleClearance) && height < 5.f;
+    if (belowCurve || beyondLowEdge) resetNativeCar(cars[index], index, profile);
+  }
 }
 
 void deactivateNativeCar(NativeCar& nativeCar) {
@@ -1055,12 +1371,18 @@ void printCarState(std::ostream& out, int id, Car& car, const CarState& state) {
       << ",\"boost\":" << state.boost << "}";
 }
 
-void printState(std::ostream& out, int tick, const std::vector<NativeCar>& cars) {
+void printState(std::ostream& out, int tick, const std::vector<NativeCar>& cars, const std::vector<CombatBoostPad>& pads) {
   out << "{\"type\":\"state\",\"schemaVersion\":1,\"fixedStepHz\":" << kFixedStepHz
       << ",\"tick\":" << tick << ",\"cars\":[";
   for (size_t index = 0; index < cars.size(); index += 1) {
     if (index) out << ',';
     printCarState(out, cars[index].id, *cars[index].car, cars[index].car->GetState());
+  }
+  out << "],\"pads\":[";
+  for (size_t index = 0; index < pads.size(); index += 1) {
+    if (index) out << ',';
+    out << "{\"id\":" << pads[index].id << ",\"active\":" << (pads[index].active ? "true" : "false")
+        << ",\"cooldown\":" << pads[index].cooldown << "}";
   }
   out << "]}\n";
 }
@@ -1103,6 +1425,7 @@ int main() {
   std::cout << std::fixed << std::setprecision(6);
   std::unique_ptr<Arena> arena;
   std::vector<NativeCar> cars;
+  std::vector<CombatBoostPad> pads;
   int tick = 0;
   std::string activeArena;
   std::string line;
@@ -1118,6 +1441,15 @@ int main() {
       activeArena = stringValue(line, "arena");
       arena = createArenaForProfile(activeArena);
       cars = addConfiguredCars(*arena, requestedCars, activeArena);
+      pads = combatBoostPads(activeArena);
+      // A modestly lower drain makes the new pickups meaningful without
+      // turning combat-alpha into unlimited boost. RocketSim remains the
+      // authority for consumption and acceleration.
+      if (activeArena == "combat-alpha") {
+        auto mutator = arena->GetMutatorConfig();
+        mutator.boostUsedPerSecond *= .78f;
+        arena->SetMutatorConfig(mutator);
+      }
       tick = 0;
       printReady(std::cout, activeArena, cars);
       std::cout.flush();
@@ -1140,9 +1472,12 @@ int main() {
         const auto native = std::find_if(cars.begin(), cars.end(), [&](const NativeCar& candidate) { return candidate.id == requested.id; });
         native->car->controls = toControls(requested.input);
       }
+      for (auto& native : cars) native.boostBeforeStep = native.car->GetState().boost;
       arena->Step();
+      recoverCombatAlphaCarsOutsideSafeFloor(cars, activeArena);
+      updateCombatBoostRegeneration(cars, activeArena);
       tick = requestedTick;
-      printState(std::cout, tick, cars);
+      printState(std::cout, tick, cars, pads);
       std::cout.flush();
       continue;
     }
@@ -1172,7 +1507,7 @@ int main() {
       }
       const size_t index = static_cast<size_t>(std::distance(cars.begin(), native));
       resetNativeCar(*native, index, activeArena);
-      printState(std::cout, tick, cars);
+      printState(std::cout, tick, cars, pads);
       std::cout.flush();
       continue;
     }
@@ -1188,7 +1523,7 @@ int main() {
         const size_t index = static_cast<size_t>(std::distance(cars.begin(), native));
         resetNativeCar(*native, index, activeArena);
       } else deactivateNativeCar(*native);
-      printState(std::cout, tick, cars);
+      printState(std::cout, tick, cars, pads);
       std::cout.flush();
       continue;
     }

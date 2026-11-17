@@ -14,6 +14,14 @@ export const LAN_MAX_INPUTS_PER_SECOND = 180;
 
 const safeId = /^[A-Za-z0-9_-]{1,96}$/;
 
+export function normalizePilotName(value) {
+  const normalized = String(value ?? "")
+    .normalize("NFKC")
+    .replace(/[^\p{L}\p{N} _-]/gu, "")
+    .trim();
+  return Array.from(normalized).slice(0, 16).join("") || "PILOTO";
+}
+
 export function normalizeRoomId(value) {
   const roomId = String(value || LAN_DEFAULT_ROOM_ID).trim();
   return safeId.test(roomId) ? roomId : null;
@@ -24,6 +32,12 @@ export function normalizeSessionId(value) {
   return safeId.test(sessionId) ? sessionId : null;
 }
 
+// targetId is the only optional combat intention in an input frame; arbitrary
+// client objects never cross the input normalization boundary.
+export function normalizeTargetId(value) {
+  return typeof value === "string" && safeId.test(value) ? value : null;
+}
+
 export function validateHello(message, expectedRoomId = LAN_DEFAULT_ROOM_ID) {
   if (!message || message.type !== "hello") return { ok: false, reason: "Se requiere un saludo hello antes de enviar controles." };
   if (message.protocolVersion !== LAN_PROTOCOL_VERSION) return { ok: false, reason: `Versión de protocolo no compatible: se esperaba ${LAN_PROTOCOL_VERSION}.` };
@@ -31,7 +45,11 @@ export function validateHello(message, expectedRoomId = LAN_DEFAULT_ROOM_ID) {
   if (!roomId || roomId !== expectedRoomId) return { ok: false, reason: "La sala solicitada no está disponible." };
   const sessionId = normalizeSessionId(message.sessionId);
   if (!sessionId) return { ok: false, reason: "La sesión efímera no es válida." };
-  return { ok: true, roomId, sessionId, name: String(message.name || "PILOTO").slice(0, 16) || "PILOTO" };
+  // The access token is deliberately not normalized, logged, or reflected to
+  // clients. It crosses this protocol boundary only so the hosted server can
+  // verify it before assigning an online identity.
+  const accessToken = typeof message.accessToken === "string" ? message.accessToken : null;
+  return { ok: true, roomId, sessionId, name: normalizePilotName(message.name), accessToken };
 }
 
 export function parseAllowedOrigins(value) {
@@ -47,5 +65,5 @@ export function isAllowedOrigin(origin, { port, host = "", configured = new Set(
 }
 
 export function createClientHello({ sessionId, name = "PILOTO", roomId = LAN_DEFAULT_ROOM_ID } = {}) {
-  return { type: "hello", protocolVersion: LAN_PROTOCOL_VERSION, roomId, sessionId, name };
+  return { type: "hello", protocolVersion: LAN_PROTOCOL_VERSION, roomId, sessionId, name: normalizePilotName(name) };
 }

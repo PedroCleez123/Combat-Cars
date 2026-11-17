@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="es" data-platform="desktop" data-supported-input="keyboard-mouse-gamepad" data-p2p-room-lobby-auto-start="false" data-p2p-causal-beta-auto-start="false">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111a24">
+  <link rel="icon" href="data:,">
+  <script type="importmap">{"imports":{"three":"/vendor/three/three.module.js"}}</script>
+  <title>Combat Cars · Online WASM</title>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: #071117; color: #edf3f5; }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+    body { min-height: 100dvh; margin: 0; background: #071117; }
+    main { position: relative; width: 100vw; height: 100dvh; min-height: 100%; overflow: hidden; background: #0b131a; }
+    :fullscreen { width: 100vw; height: 100vh; background: #0b131a; }
+    :-webkit-full-screen { width: 100vw; height: 100vh; background: #0b131a; }
+    :-moz-full-screen { width: 100vw; height: 100vh; background: #0b131a; }
+    :-ms-fullscreen { width: 100vw; height: 100vh; background: #0b131a; }
+    .arena-header { position: absolute; z-index: 3; inset: 0 0 auto; display: flex; align-items: center; justify-content: flex-end; gap: .75rem; padding: max(.45rem, env(safe-area-inset-top)) clamp(.7rem, 1.6vw, 1rem) .4rem; pointer-events: none; }
+    .arena-header > * { pointer-events: auto; }
+    .arena-header h1 { margin: 0; font-size: clamp(1.05rem, 2.4vw, 1.35rem); }
+    .arena-header .eyebrow { margin: 0 0 .2rem; font-size: .64rem; }
+    .menu-button { min-height: 2.15rem; padding: .4rem .7rem; border: 1px solid #6b9697; background: #1e3a42; color: #edf8f6; font-size: .85rem; }
+    .fullscreen-button { min-height: 2.15rem; padding: .4rem .7rem; border: 1px solid #6b9697; background: #1e3a42; color: #edf8f6; font-size: .78rem; }
+    .menu-overlay { position: absolute; z-index: 8; inset: max(.75rem, env(safe-area-inset-top)) max(.75rem, env(safe-area-inset-right)) max(.75rem, env(safe-area-inset-bottom)) max(.75rem, env(safe-area-inset-left)); width: min(26rem, calc(100% - 1.5rem)); margin: auto; overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; max-height: min(calc(100dvh - 1.5rem), 38rem); padding: .75rem .9rem; border: 1px solid #6b9697; border-radius: .6rem; background: #13232cf7; box-shadow: 0 1.5rem 5rem #05090dcc; }
+    .menu-overlay[hidden] { display: none; }
+    .menu-title-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .menu-title-row h2 { margin: 0; font-size: 1.25rem; }
+    .menu-close { min-height: 2.35rem; padding: .4rem .7rem; }
+    .loading-overlay { position: absolute; z-index: 6; top: 50%; left: 50%; transform: translate(-50%, -50%); display: grid; place-items: center; min-height: 2.5rem; max-width: min(90vw, 30rem); padding: .75rem 1rem; border: 1px solid #6b9697; border-radius: .5rem; background: #10232aee; color: #d8f4ef; text-align: center; }
+    .loading-overlay[hidden] { display: none; }
+    .eyebrow { margin: 0 0 .75rem; color: #91c6c8; font-size: .8rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(1.8rem, 7vw, 2.5rem); line-height: 1.05; }
+    .intro { color: #c1ced2; line-height: 1.45; }
+    .menu-subtitle { display: none; }
+    .menu-primary { display: none; }
+    .menu-online { display: grid; gap: .4rem; margin-top: .55rem; padding-top: .55rem; border-top: 1px solid #45606b; }
+    .menu-online h3 { margin: 0; font-size: .98rem; }
+    .room-actions { display: grid; gap: .5rem; margin-top: .25rem; }
+    .room-actions-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .5rem; }
+    .room-actions label { margin: 0; }
+    .room-actions-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    .room-actions-buttons button { width: 100%; }
+    .menu-hint { margin: 0; color: #b7d7d5; font-size: .78rem; line-height: 1.35; }
+    label { display: grid; gap: .3rem; margin: .5rem 0; font-weight: 700; }
+    input { width: 100%; padding: .5rem .6rem; border: 1px solid #58717a; border-radius: .4rem; background: #101a22; color: inherit; font: inherit; }
+    button { min-height: 2.4rem; padding: .55rem .8rem; border: 0; border-radius: .45rem; background: #83d0c7; color: #102126; font: inherit; font-weight: 800; cursor: pointer; }
+    button:focus-visible, input:focus-visible { outline: 3px solid #f4c56f; outline-offset: 3px; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .status { min-height: 1.2rem; margin: .35rem 0 0; color: #b7d7d5; font-size: .78rem; }
+    .causal { position: absolute; inset: 0; display: block; margin: 0; padding: 0; }
+    .causal > h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .causal-state { display: none; }
+    .snapshot { min-height: 10rem; overflow: auto; margin: 0; padding: .9rem; border-radius: .45rem; background: #101a22; color: #d7e7e8; font: .85rem/1.45 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .causal-scene { position: absolute; z-index: 0; inset: 0; display: block; width: 100%; height: 100%; border: 0; border-radius: 0; background: #0b131a; }
+    .causal-input-surface { position: absolute; z-index: 1; inset: 0; touch-action: none; user-select: none; -webkit-user-select: none; }
+    .causal-hud { position: absolute; z-index: 2; top: clamp(3.35rem, 6.5vh, 4.15rem); right: clamp(.7rem, 2vw, 1.25rem); width: min(15rem, calc(100% - 1.4rem)); display: grid; gap: .18rem; padding: .38rem .58rem; border: 1px solid #45606b99; border-radius: .38rem; background: #10242db8; backdrop-filter: blur(3px); pointer-events: none; }
+    .causal-hud-top { display: flex; align-items: center; justify-content: space-between; gap: .45rem; min-width: 0; }
+    .causal-hud-kicker, .causal-hud-tick { overflow: hidden; color: #9dc9ca; font-size: .61rem; font-weight: 800; letter-spacing: .07em; line-height: 1.2; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+    .causal-hud-score { min-width: 4.45rem; color: #f4c56f; font-size: 1.05rem; font-variant-numeric: tabular-nums; font-weight: 900; line-height: 1; text-align: center; }
+    .causal-hud-scoreboard { display: grid; gap: .18rem; }
+    .causal-hud-scoreboard-header { display: flex; align-items: center; justify-content: space-between; gap: .5rem; color: #9dc9ca; font-size: .6rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .causal-hud-scoreboard-groups { display: flex; justify-content: space-between; gap: .4rem; color: #f4c56f; font-size: .62rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+    .causal-hud-scoreboard-rows { display: grid; gap: .12rem; }
+    .causal-hud-scoreboard-row { display: flex; align-items: center; justify-content: space-between; gap: .45rem; min-width: 0; padding: .18rem .3rem; border-left: .16rem solid #83d0c7; background: #0d1a22d8; color: #e9f4f5; font-size: .68rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.2; }
+    .causal-hud-scoreboard-row[data-team="red"] { border-left-color: #f05b66; }
+    .causal-hud-scoreboard-row[data-team="blue"] { border-left-color: #36a8ff; }
+    .causal-hud-connection { min-width: 0; overflow: hidden; color: #b7d7d5; font-size: .64rem; text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+    .causal-hud-cars { display: grid; grid-template-columns: 1fr 1fr; gap: .28rem; }
+    .causal-hud-car { min-width: 0; overflow: hidden; padding: .25rem .35rem; border-left: .16rem solid #36a8ff; background: #0d1a22d8; color: #e9f4f5; font-size: .64rem; font-weight: 800; line-height: 1.25; text-overflow: ellipsis; white-space: nowrap; }
+    .causal-hud-car.rival { border-left-color: #f05b66; }
+    .causal-hud-event { min-height: 0; overflow: hidden; color: #f4c56f; font-size: .62rem; font-weight: 800; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+    .causal-audio { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; color: #b7d7d5; font-size: .76rem; }
+    .causal-audio button { min-height: 2.15rem; padding: .45rem .7rem; font-size: .76rem; }
+    .causal-audio input[type="range"] { width: min(12rem, 100%); padding: 0; accent-color: #83d0c7; }
+    .causal-hud-bottom { display: flex; justify-content: space-between; gap: .45rem; }
+    .causal-diagnostics { margin-top: .35rem; }
+    .causal-target { position: absolute; z-index: 2; left: 50%; bottom: max(3.4rem, calc(env(safe-area-inset-bottom) + 3.4rem)); transform: translateX(-50%); margin: 0; padding: .3rem .55rem; border-radius: .35rem; background: #071117aa; color: #8fdfff; font-size: .72rem; letter-spacing: .04em; white-space: nowrap; }
+    .causal-target[data-locked="true"] { color: #ffd16b; text-shadow: 0 0 .55rem #ff9b3a88; }
+    .causal-diagnostics summary { color: #9dc9ca; cursor: pointer; font-size: .78rem; }
+    .menu-settings { display: grid; gap: .35rem; margin-top: .55rem; padding-top: .55rem; border-top: 1px solid #45606b; }
+    .menu-settings h3 { margin: 0; font-size: 1rem; }
+    .menu-settings-group { border: 1px solid #45606b; border-radius: .4rem; padding: .4rem .55rem; background: #10202999; }
+    .menu-settings-group summary { color: #dcebea; cursor: pointer; font-size: .82rem; font-weight: 800; }
+    .menu-settings-group[open] { background: #142a3299; }
+    .causal-bindings { display: grid; gap: .35rem; }
+    .causal-bindings summary { color: #9dc9ca; cursor: pointer; font-size: .82rem; }
+    .causal-binding-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: .65rem; font-size: .78rem; }
+    .causal-binding-row button { min-width: 7rem; min-height: 2.1rem; padding: .4rem .6rem; font-size: .75rem; }
+    .setting-row { display: flex; align-items: center; gap: .6rem; margin: 0; font-weight: 700; }
+    .setting-row input { width: 1.15rem; min-width: 1.15rem; height: 1.15rem; margin: 0; accent-color: #83d0c7; }
+    .room { display: grid; gap: .55rem; margin-top: .75rem; padding: .65rem; border: 1px solid #45606b; border-radius: .45rem; background: #10202999; }
+    .room code { overflow-wrap: anywhere; color: #e8c27b; }
+    .copy-row { display: flex; gap: .6rem; }
+    .copy-row input { flex: 1; min-width: 0; }
+    .secondary { margin-top: .45rem; border: 1px solid #607984; background: transparent; color: #dce7e9; }
+    [hidden] { display: none !important; }
+    #causal-action { position: absolute; z-index: 3; right: clamp(.75rem, 2vw, 1.25rem); bottom: max(3.3rem, calc(env(safe-area-inset-bottom) + 3.3rem)); min-height: 2.2rem; padding: .4rem .65rem; font-size: .72rem; opacity: .86; }
+    @media (max-width: 42rem) { .copy-row { flex-direction: column; } .causal-hud { top: 3.35rem; } .causal-hud-connection { max-width: 10rem; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="arena-header">
+      <div hidden aria-hidden="true"><p class="eyebrow">Combat Cars · WASM</p><h1 id="arena-title">Cargando práctica local</h1></div>
+      <button id="fullscreen-toggle" class="fullscreen-button" type="button" aria-pressed="false">Pantalla completa</button>
+      <button id="game-menu-toggle" class="menu-button" type="button" aria-controls="game-menu-overlay" aria-expanded="false">Menú</button>
+    </header>
+
+    <div id="renderer-loading-overlay" class="loading-overlay" role="status" aria-live="polite">
+      <span id="renderer-loading-status">Preparando arena…</span>
+    </div>
+
+    <section id="game-menu-overlay" class="menu-overlay" role="dialog" aria-modal="true" aria-labelledby="game-menu-title" hidden>
+      <div class="menu-title-row"><h2 id="game-menu-title">Menú</h2><button id="game-menu-close" class="menu-close secondary" type="button">Continuar</button></div>
+      <div class="menu-primary">
+        <button id="primary" type="button" disabled>Preparando partida privada…</button>
+        <p id="status" class="status" role="status" aria-live="polite" hidden></p>
+      </div>
+
+      <section class="menu-online" aria-labelledby="online-heading">
+        <h3 id="online-heading">Partida privada</h3>
+        <p id="invite-note" class="menu-hint" hidden>Invitación recibida. Pulsa Unirse para entrar.</p>
+        <div class="room-actions">
+          <div class="room-actions-row">
+            <label for="match-mode">Modo
+              <select id="match-mode">
+                <option value="1v1">1v1</option>
+                <option value="2v2">2v2</option>
+                <option value="3v3">3v3</option>
+                <option value="ffa">Todos contra todos</option>
+              </select>
+            </label>
+            <label for="room-code">Clave de sala (obligatoria para unirse)
+              <input id="room-code" inputmode="text" autocomplete="off" maxlength="14" placeholder="Pega la clave para unirte" aria-describedby="room-code-status">
+            </label>
+          </div>
+          <div class="room-actions-buttons">
+            <button id="unified-create" type="button">Crear sala</button>
+            <button id="unified-join" class="secondary" type="button">Unirse</button>
+          </div>
+          <p id="room-code-status" class="menu-hint" role="status" aria-live="polite" hidden></p>
+        </div>
+        <section id="room-panel" class="room" hidden aria-live="polite">
+          <p id="room-caption"></p>
+          <div id="room-code-display" class="room-code-share" hidden>
+            <label for="room-code-value">Clave para tu rival</label>
+            <div class="copy-row"><input id="room-code-value" readonly aria-label="Clave de sala"><button id="copy-room-code" type="button">Copiar clave</button></div>
+          </div>
+          <details id="technical-invite" class="menu-hint">
+            <summary>Mostrar enlace de respaldo</summary>
+            <label for="invite-url">Solo si la clave no funciona</label>
+            <div class="copy-row"><input id="invite-url" readonly aria-label="Enlace de invitación"><button id="copy-invite" type="button">Copiar enlace</button></div>
+          </details>
+          <button id="leave" class="secondary" type="button">Cerrar sala</button>
+        </section>
+        <label for="player-name">Nombre de piloto (obligatorio para crear o unirse)
+          <input id="player-name" name="player-name" maxlength="16" autocomplete="nickname" placeholder="Tu nombre" required>
+        </label>
+      </section>
+
+      <section class="menu-settings" aria-label="Ajustes">
+        <details class="menu-settings-group causal-audio">
+          <summary>Sonido</summary>
+          <div><button id="causal-audio-action" type="button">Activar sonido</button><button id="causal-audio-mute" type="button" aria-pressed="false">Silenciar</button></div>
+          <label for="causal-audio-volume">Volumen <output id="causal-audio-volume-value" for="causal-audio-volume">30%</output><input id="causal-audio-volume" type="range" min="0" max="1" step="0.01" value="0.3" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0.3" aria-valuetext="30%"></label>
+          <span id="causal-audio-status" role="status" aria-live="polite">Sonido listo al jugar.</span>
+        </details>
+        <details class="menu-settings-group causal-bindings">
+          <summary>Controles</summary>
+          <p class="menu-hint">WASD mover · clic derecho saltar · clic izquierdo nitro · Q objetivo · F cohete · R reiniciar.</p>
+          <div id="causal-bindings" aria-live="polite"></div>
+          <button id="causal-bindings-reset" class="secondary" type="button">Restaurar controles</button>
+        </details>
+        <details class="menu-settings-group" hidden>
+          <summary>Diagnóstico</summary>
+          <label class="setting-row" for="diagnostics-toggle"><input id="diagnostics-toggle" type="checkbox"> Mostrar diagnóstico técnico</label>
+          <details id="causal-diagnostics" class="causal-diagnostics" hidden>
+            <summary>Snapshot</summary>
+            <pre id="causal-snapshot" class="snapshot" aria-label="Snapshot causal normalizado">Esperando un snapshot causal normalizado de los dos coches…</pre>
+          </details>
+        </details>
+      </section>
+    </section>
+
+    <section class="causal" aria-labelledby="causal-heading">
+      <h2 id="causal-heading">Arena en vivo</h2>
+      <p id="causal-state" class="causal-state" role="status" aria-live="polite" hidden>Causal: esperando una sala.</p>
+      <canvas id="causal-scene" class="causal-scene" width="960" height="540" aria-label="Presentación visual causal de los vehículos" oncontextmenu="return false"></canvas>
+      <div id="causal-input-surface" class="causal-input-surface" aria-hidden="true" oncontextmenu="return false"></div>
+      <button id="causal-action" type="button" disabled hidden>Acción de prueba</button>
+      <p id="causal-target" class="causal-target" role="status" aria-live="polite" hidden aria-hidden="true"></p>
+      <section id="causal-hud" class="causal-hud" hidden aria-label="Estado de la partida causal">
+        <strong id="causal-hud-score" class="causal-hud-score" aria-label="Marcador" hidden aria-hidden="true">0 — 0</strong>
+        <div id="causal-hud-scoreboard" class="causal-hud-scoreboard" aria-label="Marcador de la partida">
+          <div class="causal-hud-scoreboard-header"><span>Marcador</span><span id="causal-hud-scoreboard-mode">1V1</span></div>
+          <div class="causal-hud-scoreboard-groups" aria-hidden="true"><span id="causal-hud-scoreboard-blue" hidden></span><span id="causal-hud-scoreboard-red" hidden></span></div>
+          <div id="causal-hud-scoreboard-rows" class="causal-hud-scoreboard-rows">
+            <div id="causal-hud-scoreboard-row-0" class="causal-hud-scoreboard-row" hidden></div>
+            <div id="causal-hud-scoreboard-row-1" class="causal-hud-scoreboard-row" hidden></div>
+            <div id="causal-hud-scoreboard-row-2" class="causal-hud-scoreboard-row" hidden></div>
+            <div id="causal-hud-scoreboard-row-3" class="causal-hud-scoreboard-row" hidden></div>
+            <div id="causal-hud-scoreboard-row-4" class="causal-hud-scoreboard-row" hidden></div>
+            <div id="causal-hud-scoreboard-row-5" class="causal-hud-scoreboard-row" hidden></div>
+          </div>
+        </div>
+        <span id="causal-hud-role" class="causal-hud-kicker" hidden aria-hidden="true"></span>
+        <span id="causal-hud-connection" class="causal-hud-connection" hidden aria-hidden="true"></span>
+        <div class="causal-hud-cars" hidden aria-hidden="true">
+          <div id="causal-hud-own" class="causal-hud-car"></div>
+          <div id="causal-hud-rival" class="causal-hud-car rival"></div>
+        </div>
+        <div id="causal-hud-event" class="causal-hud-event" hidden aria-hidden="true"></div>
+        <div id="causal-hud-pads" class="causal-hud-event" hidden aria-hidden="true"></div>
+        <div class="causal-hud-bottom" hidden aria-hidden="true"><span id="causal-hud-tick" class="causal-hud-tick"></span><span id="causal-hud-fps" class="causal-hud-tick"></span></div>
+      </section>
+    </section>
+  </main>
+  <script type="module" src="/src/p2p-causal-beta-entry.js"></script>
+</body>
+</html>

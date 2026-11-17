@@ -21,7 +21,7 @@ async function capture() {
   const trace = {
     approach: null, firstSlopeSupport: null, firstExitAirborne: null, firstLandingAfterExit: null,
     ramp: { maxX: -Infinity, maxHeight: -Infinity, final: null },
-    bypass: { initialX: null, maxX: -Infinity, final: null }, tickDeltas: [], staticRay: null,
+    bypass: { initialX: null, maxX: -Infinity, final: null }, tickDeltas: [], staticRay: null, sideRay: null,
   };
   try {
     const ready = await bridge.start({ arena: "arsenal-expanded-ramp-practice", cars });
@@ -30,6 +30,11 @@ async function capture() {
     // the wedge. It is a native geometry check, independent of car contacts.
     const ray = await bridge.raycast([{ id: 1, from: { x: 1600, y: 62.18, z: 0 }, to: { x: -1600, y: 62.18, z: 0 } }]);
     trace.staticRay = ray.hits.find(hit => hit.id === 1) || null;
+    // Start outside both native lateral faces. Bullet ray tests do not report
+    // an entry when the segment begins inside a convex solid, so a short
+    // segment around the centre would miss the very face this contract checks.
+    const side = await bridge.raycast([{ id: 2, from: { x: 0, y: 1.2, z: -500 }, to: { x: 0, y: 1.2, z: 500 } }]);
+    trace.sideRay = side.hits.find(hit => hit.id === 2) || null;
     for (let tick = 1; tick <= 480; tick += 1) {
       const active = tick <= 230;
       const frame = await bridge.tick(tick, cars.map(car => ({ ...car, input: (car.id === 1 || car.id === 3) && active ? driven : neutral })));
@@ -57,6 +62,8 @@ async function capture() {
   } finally { await bridge.shutdown(); }
   assert.ok(trace.staticRay?.hit, "un segmento de cohete debe interceptar la rampa nativa");
   assert.ok(trace.staticRay.fraction > 0 && trace.staticRay.fraction < 1, "el impacto de la rampa debe quedar dentro del segmento");
+  assert.ok(trace.sideRay?.hit, "la cara lateral de la rampa debe bloquear un cruce transversal");
+  assert.ok(trace.sideRay.fraction > 0 && trace.sideRay.fraction < 1, "el bloqueo lateral debe quedar dentro del segmento");
   assert.ok(trace.approach?.x < -10, "el coche debe comenzar antes de la rampa");
   assert.ok(trace.firstSlopeSupport, "el coche debe publicar apoyo nativo en la cara inclinada");
   assert.ok(trace.ramp.maxHeight > 2.5, `la subida debe elevar el coche, altura=${trace.ramp.maxHeight}`);

@@ -1,37 +1,46 @@
-# Arquitectura actual de RocketSim
+# Arquitectura actual de Combat Cars y RocketSim
 
-Este contrato sustituye a la antigua hoja de migración, archivada en
-[`archive/2026-10-14/rocketsim-migration-roadmap.md`](archive/2026-10-14/rocketsim-migration-roadmap.md).
-
-## Propiedad de cada capa
+## WASM/P2P canónico y referencia local congelada
 
 ```text
-cliente Three.js
-      │ entradas / snapshots
-      ▼
-Node ArenaMatch (red, combate, respawn, puntuación)
-      │ MovementBackend
-      ├── js        → fallback y regresión
-      └── rocketsim → proceso nativo R13, movimiento autoritativo
+cliente Three.js local ── Node ── RocketSim nativo R20
+cliente Pages ── WebRTC P2P ── host ── RocketSim WASM R20
+                         ▲
+                         └── Worker: únicamente señalización
 ```
 
-- RocketSim ejecuta el movimiento del coche a 120 Hz.
-- Node traduce ejes, mantiene la sesión y publica snapshots a 60 Hz.
-- El modo RocketSim de combate es opt-in y requiere el bridge nativo.
-- Los cohetes, daño, cooldown, puntuación y respawn siguen fuera de RocketSim.
-- La arena propia conserva recursos de colisión explícitos; no depende de
-  archivos de Rocket League.
+RocketSim es la autoridad de movimiento a tick fijo. El cliente presenta sus
+snapshots y envía inputs; no inventa poses, daño, score, boost ni respawns.
+Las reglas de combate, pickups y ronda se mantienen en la capa de host y deben
+conservar la semántica de `src/rocketsim-combat.js`.
 
-## Límites
+Pages + Worker + WebRTC + RocketSim WASM es la ruta canónica de producto de
+Combat Cars. La migración está aceptada para el desarrollo y el despliegue
+online. La ruta Three.js + Node + RocketSim nativo queda congelada como
+referencia histórica de comportamiento y diagnóstico; una diferencia local no
+autoriza por sí sola a alterar el contrato WASM.
 
-El bridge no convierte automáticamente el juego en Rocket League completo: hay
-que mantener el adaptador de red, el roster multijugador, las reglas de combate
-y la geometría de la arena. La similitud se valida con trazas y pruebas, no por
-la mera presencia del código nativo.
+La ruta local no se elimina todavía. Primero hay que inventariar sus imports,
+fixtures, herramientas y pruebas, y verificar que ninguno sea necesario para
+validar WASM/P2P. El orden seguro es archivar o excluir de builds, conservar
+una copia recuperable y sólo después retirar código que ya no tenga
+consumidores.
 
-## Cambios permitidos
+## Bridge local
 
-Una modificación de bridge debe conservar el protocolo JSONL, los ids de coche,
-los ticks consecutivos, la conversión de ejes y las pruebas de 1v1/6v6. Una
-modificación de física requiere una historia independiente y una captura antes
-y después.
+El bridge nativo se usa para comparar trazas y regresiones locales. Se compila
+en `.rocketsim-bridge-build-r20/` y no se publica en Pages. El antiguo R9 y las
+builds portables anteriores ya no forman parte del proyecto.
+
+## Contratos que no se deben romper
+
+- ticks consecutivos y conversión de ejes y-up;
+- roster e IDs de vehículo, hasta seis plazas reservadas;
+- flags de salto, dodge, air-roll, derrape, boost y contacto de superficie;
+- lifecycle de ronda, proyectiles, daño, eliminación y respawn;
+- separación entre simulación, WebRTC, renderer, cámara y audio.
+
+Una modificación de física exige una comparación nativo/WASM con la misma cinta
+de inputs y una prueba focal. Una modificación de red exige prueba de lobby,
+host/invitado y cleanup. La presencia de archivos antiguos no es evidencia de
+paridad.

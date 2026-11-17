@@ -91,16 +91,21 @@ async function run() {
 
     const first = await openPilot();
     const firstId = first.welcome.id;
+    first.socket.send(JSON.stringify({ type: "input", sequence: 3471, input: { throttle: 1 } }));
+    await waitFor(() => first.messages.find(message => message.type === "state" && message.inputAcknowledged === 3471), "ACK de secuencia previa");
     first.socket.close();
     await wait(120);
     const recovered = await openPilot();
     assert.equal(recovered.welcome.id, firstId, "la reconexión conserva ID");
     assert.equal(recovered.welcome.protocolVersion, 1);
+    recovered.socket.send(JSON.stringify({ type: "input", sequence: 1, input: { throttle: 1 } }));
+    const recoveredInput = await waitFor(() => recovered.messages.find(message => message.type === "state" && message.inputAcknowledged === 1), "ACK de contador reiniciado");
+    assert.equal(recoveredInput.inputAcknowledged, 1, "la reconexión acepta el contador fresco del navegador");
     recovered.socket.close();
     await wait(4200);
     const fresh = await openPilot();
     assert.notEqual(fresh.welcome.id, firstId, "fuera de la ventana se crea una sesión nueva");
-    const report = { schemaVersion: 1, story: "ONLINE-01", port, assertions: { rejectsInputBeforeHello: true, assignsFirstOwner: owner.welcome.owner === true, rejectsGuestControl: /host/.test(guestControlError.text), reassignsOwner: ownerTransfer.owner === true, reconnectsWithinGrace: recovered.welcome.id === firstId, expiresAfterGrace: fresh.welcome.id !== firstId } };
+    const report = { schemaVersion: 1, story: "ONLINE-01", port, assertions: { rejectsInputBeforeHello: true, assignsFirstOwner: owner.welcome.owner === true, rejectsGuestControl: /host/.test(guestControlError.text), reassignsOwner: ownerTransfer.owner === true, reconnectsWithinGrace: recovered.welcome.id === firstId, acceptsFreshInputAfterReconnect: recoveredInput.inputAcknowledged === 1, expiresAfterGrace: fresh.welcome.id !== firstId } };
     console.log(JSON.stringify(report, null, 2));
     fresh.socket.close();
   } finally {

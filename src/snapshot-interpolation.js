@@ -66,7 +66,11 @@ export function interpolateState(previous, current, amount) {
 function continuous(previous, current) {
   if (!previous || !current || !Number.isFinite(previous.time) || !Number.isFinite(current.time)) return false;
   if (current.time <= previous.time || current.time - previous.time > MAX_CONTINUOUS_GAP) return false;
-  return previous.settings?.arena === current.settings?.arena;
+  if (previous.settings?.arena !== current.settings?.arena) return false;
+  if (previous.settings?.roundSerial !== undefined
+    && current.settings?.roundSerial !== undefined
+    && previous.settings.roundSerial !== current.settings.roundSerial) return false;
+  return true;
 }
 
 export class SnapshotInterpolator {

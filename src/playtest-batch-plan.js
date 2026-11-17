@@ -63,84 +63,75 @@ export function classifyPlaytestPriority(signals = {}) {
 }
 
 /**
- * The first deliberate R19 browser batch. The ordered items share one setup,
- * but a single-pilot campaign must still be completed and closed before the
- * next one starts.
+ * The only player-facing entry is final RocketSim R20 combat. This grouped
+ * batch protects that contract without reviving retired practice URLs or
+ * repeating accepted physics probes.
  */
-export function createR19WebPlaytestBatch({
+export function createCombatExperiencePlaytestBatch({
   host = "localhost",
   combatPort = 5300,
-  practicePort = 5298,
 } = {}) {
   const safeHost = validateHost(host);
   const safeCombatPort = validatePort(combatPort, "combatPort");
-  const safePracticePort = validatePort(practicePort, "practicePort");
-  const normalCombatUrl = localhostUrl(safeHost, safeCombatPort, "?arena=combat-alpha");
+  const combatUrl = localhostUrl(safeHost, safeCombatPort, "?arena=combat-alpha");
 
   return {
-    id: "PLAYTEST-BATCH-01",
-    title: "Lote web R19: contacto, techo y movilidad aérea",
+    id: "COMBAT-EXPERIENCE-02",
+    title: "Lote final R20: combate, cámara, arena y primera baja",
     priority: PLAYTEST_PRIORITY.P1,
     execution: "group-with-next-batch",
-    ports: { combat: safeCombatPort, practice: safePracticePort },
+    ports: { combat: safeCombatPort },
     preconditions: [
-      "Los puertos de combate y práctica usan RocketSim R19 y publican snapshots vivos.",
-      "Cerrar pestañas adicionales antes de HITBOX-01 y cada variante MOB-AIR: esas campañas requieren exactamente un piloto.",
-      "No ejecutar la prueba de corte de snapshots contra una partida que alguien esté usando.",
+      "Iniciar únicamente npm run play y esperar el mensaje del backend RocketSim R20.",
+      "La cubierta PREPARANDO COMBATE debe desaparecer sólo después de ACTIVAR Y CARGAR.",
+      "Para la parte multijugador, abrir el enlace LAN en un segundo navegador o usar otro piloto de la misma red.",
+      "No iniciar servidores de práctica ni detener el puerto 5300 durante la sesión.",
     ],
     items: [
       {
         id: "normal-control-gate",
         priority: PLAYTEST_PRIORITY.P0,
-        url: normalCombatUrl,
-        goal: "Comprobar que una sesión normal acepta conducción, salto y nitro.",
-        expected: "El coche responde y el HUD mantiene ACK creciente.",
+        url: combatUrl,
+        goal: "Comprobar que el combate final acepta conducción, salto, nitro y disparo.",
+        expected: "El coche responde, el HUD mantiene ACK creciente y el botón de carga no reaparece.",
         onFailure: "Detener el lote: es una incidencia P0 de controles o conexión.",
       },
       {
-        id: "hitbox-visual",
+        id: "first-kill-loading-and-performance",
         priority: PLAYTEST_PRIORITY.P1,
-        url: localhostUrl(safeHost, safeCombatPort, "?arena=combat-alpha&hitbox01=1"),
-        goal: "Observar la carrocería invertida sin penetración visible; el guion no debe autoenderezar el coche.",
-        expected: "HUD con INV sí y CONTACTO sí; después, CONTROL DEL JUGADOR.",
-        onFailure: "Guardar captura y clasificar fallida solo si el snapshot/HUD es completo; si no, no verificada.",
+        url: combatUrl,
+        goal: "Con un rival, bloquear con Q y disparar con F hasta la primera baja tras la pantalla de preparación.",
+        expected: "La primera baja no congela perceptiblemente; FPS/ms siguen legibles y BAJAS aumenta.",
+        onFailure: "Anotar FPS, ms, instante y si fue al disparar, impactar o eliminar; no diagnosticar por intuición.",
       },
       {
-        id: "arena-ceiling-visual",
+        id: "aim-camera-continuity",
         priority: PLAYTEST_PRIORITY.P1,
-        url: localhostUrl(safeHost, safePracticePort),
-        goal: "Conducir una transición suelo-pared-techo de la arena R19 y comprobar continuidad visual.",
-        expected: "Sin huecos visuales ni desajuste aparente entre curvas, pared y techo.",
-        onFailure: "Guardar captura, perfil y bridge; no tocar geometría o física sin esa evidencia.",
+        url: combatUrl,
+        goal: "Alternar Q con un rival visible, moverse y alejarse sin perder el coche propio de composición.",
+        expected: "Car Cam y Enemy Cam conservan escala/encuadre; láser y arma indican el objetivo bloqueado.",
+        onFailure: "Guardar una captura y describir el salto, zoom o dirección concreta antes de tocar la cámara.",
       },
       {
-        id: "mob-air-side",
+        id: "arena-readability-and-pickups",
         priority: PLAYTEST_PRIORITY.P1,
-        url: localhostUrl(safeHost, safeCombatPort, "?arena=combat-alpha&mobair01=1&dodge=side"),
-        goal: "Registrar la variante lateral aislada.",
-        expected: "Un piloto, ACK creciente, seriales J/2/D y recuperación final.",
-        onFailure: "Cerrar la campaña y clasificar no verificada si hay roster compartido o snapshots congelados.",
+        url: combatUrl,
+        goal: "Recorrer pared, curvas, esquinas, rampa y pickups en combat-alpha.",
+        expected: "La arena se percibe continua y profunda; pickups restauran nitro y no aparecen huecos o atravesamientos nuevos.",
+        onFailure: "Indicar ubicación, dirección de aproximación y captura; distinguir visual, colisión y transparencia.",
       },
       {
-        id: "mob-air-diagonal",
+        id: "audio-and-session-finish",
         priority: PLAYTEST_PRIORITY.P1,
-        url: localhostUrl(safeHost, safeCombatPort, "?arena=combat-alpha&mobair01=1&dodge=diagonal"),
-        goal: "Registrar la variante diagonal aislada con air roll.",
-        expected: "Un piloto, ACK creciente, seriales J/2/D y recuperación final.",
-        onFailure: "Cerrar la campaña y clasificar no verificada si hay roster compartido o snapshots congelados.",
-      },
-      {
-        id: "liveness-controlled-stall",
-        priority: PLAYTEST_PRIORITY.P2,
-        url: null,
-        goal: "Ejecutar en un servidor desechable el corte controlado de snapshots para validar una sola reconexión del watchdog.",
-        expected: "La prueba no afecta los puertos 5298/5300 ni una partida abierta.",
-        onFailure: "Aplazar y conservar las pruebas unitarias; no interrumpir la sesión normal por esta comprobación.",
+        url: combatUrl,
+        goal: "Comprobar motor, nitro y salto durante combate y volver a abrir/cerrar la sesión una vez.",
+        expected: "Audio reconocible y no molesto; no quedan loops al salir y la reconexión devuelve estado autoritativo.",
+        onFailure: "Indicar el evento exacto, volumen y si el problema persiste tras soltar la entrada o cerrar la sesión.",
       },
     ],
     completion: {
       acceptedWhen: "Cada ítem P1 tiene evidencia suficiente o un estado explícito de no verificado; no se ajusta física durante el lote.",
-      nextWhenGreen: "MOB-AIR-03 compara las trazas web y nativas antes de considerar una calibración.",
+      nextWhenGreen: "Cerrar COMBAT-EXPERIENCE-02 y priorizar online público o arte final según los resultados, sin reabrir modos retirados.",
     },
   };
 }

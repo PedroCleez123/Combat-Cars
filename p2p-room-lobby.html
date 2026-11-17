@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111a24">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111a24'/%3E%3Cpath d='M13 42h38L46 25H19z' fill='%2383d0c7'/%3E%3Ccircle cx='22' cy='44' r='7' fill='%230d1319'/%3E%3Ccircle cx='42' cy='44' r='7' fill='%230d1319'/%3E%3C/svg%3E">
+  <title>Abriendo arena online · Combat Cars</title>
+  <script>
+    // The original room-only URL remains a supported public bookmark, but an
+    // invite must always arrive in the playable WASM/P2P arena. Preserve the
+    // private fragment: it is consumed there and never sent in an HTTP request.
+    (() => {
+      const arena = new URL("/p2p-causal-beta", window.location.origin);
+      arena.hash = window.location.hash;
+      window.location.replace(arena.href);
+    })();
+  </script>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: #111a24; color: #edf3f5; }
+    * { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; padding: clamp(1rem, 4vw, 3rem); display: grid; place-items: center; background: radial-gradient(ellipse at 80% 0%, #24434c 0, transparent 42%), #111a24; }
+    main { width: min(100%, 39rem); padding: clamp(1.25rem, 5vw, 2.5rem); border: 1px solid #45606b; border-radius: 1rem; background: #182530ee; box-shadow: 0 1.5rem 5rem #05090d88; }
+    .eyebrow { margin: 0 0 .75rem; color: #91c6c8; font-size: .8rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(1.8rem, 7vw, 2.5rem); line-height: 1.05; }
+    .intro { color: #c1ced2; line-height: 1.6; }
+    .notice { padding: .9rem 1rem; border-left: .25rem solid #e3aa55; background: #2f2a21; color: #f4dbb4; line-height: 1.5; }
+    .privacy { display: grid; gap: .65rem; margin: 1.25rem 0; padding: .9rem 1rem; border: 1px solid #45606b; border-radius: .55rem; background: #142029; color: #c7d8da; line-height: 1.5; }
+    .privacy h2 { margin: 0; font-size: 1rem; color: #edf3f5; }
+    .privacy p { margin: 0; font-size: .9rem; }
+    .privacy label { display: flex; grid-template-columns: none; flex-direction: row; align-items: flex-start; gap: .6rem; margin: 0; font-weight: 700; }
+    .privacy input { width: 1.15rem; min-width: 1.15rem; height: 1.15rem; margin: .15rem 0 0; accent-color: #83d0c7; }
+    label { display: grid; gap: .45rem; margin: 1.4rem 0; font-weight: 700; }
+    input { width: 100%; padding: .8rem .9rem; border: 1px solid #58717a; border-radius: .45rem; background: #101a22; color: inherit; font: inherit; }
+    button, .copy-row button { min-height: 2.8rem; padding: .7rem 1rem; border: 0; border-radius: .45rem; background: #83d0c7; color: #102126; font: inherit; font-weight: 800; cursor: pointer; }
+    button:focus-visible, input:focus-visible { outline: 3px solid #f4c56f; outline-offset: 3px; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .status { min-height: 1.6rem; margin: 1rem 0; color: #b7d7d5; }
+    .room { display: grid; gap: .75rem; margin-top: 1rem; }
+    .room code { overflow-wrap: anywhere; color: #e8c27b; }
+    .copy-row { display: flex; gap: .6rem; }
+    .copy-row input { flex: 1; min-width: 0; }
+    .secondary { margin-top: .75rem; border: 1px solid #607984; background: transparent; color: #dce7e9; }
+    [hidden] { display: none !important; }
+    @media (max-width: 30rem) { .copy-row { flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">Combat Cars · online WASM</p>
+    <h1>Abriendo la arena privada…</h1>
+    <p class="intro">Las invitaciones privadas se abren en la arena jugable con RocketSim WASM y WebRTC P2P.</p>
+    <noscript><p class="notice">Activa JavaScript para abrir la arena online. <a href="/p2p-causal-beta">Abrir arena</a></p></noscript>
+  </main>
+</body>
+</html>

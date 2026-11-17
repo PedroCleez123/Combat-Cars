@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RocketSim WASM · combat-alpha host · P2P-WASM-19</title>
+    <style>
+      :root { color-scheme: dark; font-family: ui-monospace, Consolas, monospace; background: #0d1520; color: #d8e6f1; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+      main { width: min(48rem, calc(100vw - 3rem)); padding: 1.5rem; border: 1px solid #42617a; border-radius: .75rem; background: #132331; }
+      h1 { margin-top: 0; font-size: 1.15rem; }
+      p { color: #a9bece; line-height: 1.5; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 2rem; color: #a7eecc; }
+      .error { color: #ff9d9d; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>RocketSim WASM · host combat-alpha · P2P-WASM-19</h1>
+      <p>Esta página aislada verifica dos coches físicos de combat-alpha, su lifecycle y cierre. No inicia el juego, WebRTC ni una sala pública.</p>
+      <pre id="status" aria-live="polite">Inicializando módulo…</pre>
+    </main>
+    <script type="module">
+      import {
+        createP2PWasmHostMatch,
+        P2P_WASM_HOST_DIAGNOSTIC_VELOCITY_COMPONENT,
+        P2P_WASM_HOST_FIXTURES,
+      } from "./p2p-wasm-host-match.mjs";
+
+      const output = document.querySelector("#status");
+      const startedAt = performance.now();
+      const idle = Object.freeze({ throttle: 0, steer: 0, boost: false, jump: false });
+
+      function failIf(condition, message) {
+        if (condition) throw new Error(message);
+      }
+
+      function isPairSpawn(snapshot) {
+        const [host, pilot] = snapshot.cars;
+        return host?.id === "p2p-host" && pilot?.id === "p2p-pilot"
+          && host.x < -1900 && host.z < -1200 && host.h > 0 && host.h < 100
+          && pilot.x > 1900 && pilot.z > 1200 && pilot.h > 0 && pilot.h < 100;
+      }
+
+      let match;
+      try {
+        match = await createP2PWasmHostMatch({
+          fixture: P2P_WASM_HOST_FIXTURES.COMBAT_ALPHA_PAIR,
+          ticksPerInput: 1,
+          maxVelocityComponent: P2P_WASM_HOST_DIAGNOSTIC_VELOCITY_COMPONENT,
+        });
+        failIf(match.fixture !== P2P_WASM_HOST_FIXTURES.COMBAT_ALPHA_PAIR, "The requested combat-alpha fixture was not selected.");
+        failIf(!match.setHostInput({ throttle: 0.5, steer: 0, boost: false, jump: false }).accepted, "Host input was rejected.");
+
+        const first = match.receivePilotInput({ sequence: 1, controls: idle });
+        const second = match.receivePilotInput({ sequence: 2, controls: idle });
+        failIf(!first?.accepted || !second?.accepted || !first.snapshot || !second.snapshot, "The pair host did not accept both pilot inputs.");
+        const snapshots = [first.snapshot, second.snapshot];
+        const spawnContractValid = isPairSpawn(first.snapshot);
+        const hostAdvanced = second.snapshot.cars[0].x > first.snapshot.cars[0].x;
+        failIf(!spawnContractValid, "The physical pair did not expose the canonical combat-alpha spawns.");
+        failIf(!hostAdvanced, "The host throttle did not advance on combat-alpha.");
+        failIf(JSON.stringify(snapshots.map(snapshot => snapshot.tick)) !== JSON.stringify([1, 2]), "External host ticks are not [1, 2].");
+        failIf(match.wasmTick !== 4, `Expected four internal WASM steps, received ${match.wasmTick}.`);
+
+        const inactive = match.setCombatActive(1, false);
+        failIf(inactive.tick !== 2 || inactive.cars[1]?.h > -9999, "The inactive pilot did not enter the physical lifecycle sentinel.");
+        const respawned = match.respawn(1);
+        const lifecycleContractValid = respawned.tick === 2 && isPairSpawn({ cars: [respawned.cars[0], respawned.cars[1]] });
+        failIf(!lifecycleContractValid, "The respawn did not restore the canonical pilot spawn without advancing the host tick.");
+
+        const velocityContractValid = [first.snapshot, second.snapshot, inactive, respawned]
+          .every(snapshot => snapshot.cars.every(car => [car.vx, car.vz, car.vh]
+            .every(value => Number.isFinite(value) && value >= -2500 && value <= 2500)));
+        failIf(!velocityContractValid, "A physical pair velocity exceeded the diagnostic envelope.");
+
+        match.close();
+        match.close();
+        const cleanupIdempotent = match.closed === true;
+        failIf(!cleanupIdempotent, "WASM pair host cleanup was not idempotent.");
+
+        const result = {
+          ok: true,
+          story: "P2P-WASM-19",
+          fixture: "combat-alpha-pair",
+          ticks: snapshots.map(snapshot => snapshot.tick),
+          internalWasmTick: match.wasmTick,
+          spawnContractValid,
+          hostAdvanced,
+          lifecycleContractValid,
+          velocityContractValid,
+          cleanupIdempotent,
+          elapsedMs: performance.now() - startedAt,
+        };
+        window.__arsenalWasmBrowserP2PCombatAlphaHostSmoke = result;
+        output.textContent = JSON.stringify(result, null, 2);
+      } catch (error) {
+        try { match?.close(); } catch { /* Preserve the browser smoke failure. */ }
+        const result = { ok: false, story: "P2P-WASM-19", error: String(error?.message || error) };
+        window.__arsenalWasmBrowserP2PCombatAlphaHostSmoke = result;
+        output.classList.add("error");
+        output.textContent = JSON.stringify(result, null, 2);
+        console.error("RocketSim WASM combat-alpha host browser smoke failed", error);
+      }
+    </script>
+  </body>
+</html>

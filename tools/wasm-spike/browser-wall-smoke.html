@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RocketSim WASM · contacto de pared</title>
+    <style>
+      :root { color-scheme: dark; font-family: ui-monospace, Consolas, monospace; background: #0d1520; color: #d8e6f1; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+      main { width: min(48rem, calc(100vw - 3rem)); padding: 1.5rem; border: 1px solid #42617a; border-radius: .75rem; background: #132331; }
+      h1 { margin-top: 0; font-size: 1.15rem; }
+      p { color: #a9bece; line-height: 1.5; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 2rem; color: #a7eecc; }
+      .error { color: #ff9d9d; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>RocketSim WASM · contacto de pared +X</h1>
+      <p>Traza aislada de 180 ticks sobre clean-six-planes con throttle y boost continuos.</p>
+      <pre id="status" aria-live="polite">Inicializando módulo…</pre>
+    </main>
+    <script type="module">
+      import createRocketSimWasm from "./build/rocketsim_wasm.mjs";
+      import { WALL_TRACE_FRAME_COUNT, wallTraceInput, normalizeWallWasmSnapshot } from "./wall-trace-contract.mjs";
+
+      const output = document.querySelector("#status");
+      const startedAt = performance.now();
+      try {
+        const Module = await createRocketSimWasm();
+        if (Module._rs_init_trace_clean_wall_contact() !== 1) throw new Error("La fixture clean-six-planes no se pudo iniciar");
+        const tickPtr = Module._malloc(4);
+        const statePtr = Module._malloc(9 * 4);
+        const contactPtr = Module._malloc(4);
+        const normalPtr = Module._malloc(3 * 4);
+        if (!tickPtr || !statePtr || !contactPtr || !normalPtr) throw new Error("No se pudieron reservar buffers WASM");
+        try {
+          const samples = [];
+          for (let tick = 1; tick <= WALL_TRACE_FRAME_COUNT; tick += 1) {
+            const input = wallTraceInput(tick);
+            if (Module._rs_set_controls(input.throttle, input.steer, Number(input.jump), Number(input.boost)) !== 1) throw new Error("No se aceptó un control WASM");
+            if (Module._rs_step() !== 1 || Module._rs_snapshot(tickPtr, statePtr) !== 1) throw new Error("WASM no avanzó un tick finito");
+            if (Module._rs_body_contact_car(0, contactPtr, normalPtr) !== 1) throw new Error("No se pudo leer el contacto de carrocería");
+            const values = Array.from(Module.HEAPF32.subarray(statePtr >>> 2, (statePtr >>> 2) + 9));
+            const nativeNormal = Array.from(Module.HEAPF32.subarray(normalPtr >>> 2, (normalPtr >>> 2) + 3));
+            samples.push({ input, ...normalizeWallWasmSnapshot(
+              Module.HEAPU32[tickPtr >>> 2], values, Module._rs_is_grounded_car(0) === 1,
+              Module.HEAPU32[contactPtr >>> 2] === 1, nativeNormal,
+            ) });
+          }
+          const firstContact = samples.find(sample => sample.contact.hasContact) || null;
+          const inputContractValid = samples.every(sample => sample.input.throttle === 1 && sample.input.steer === 0
+            && sample.input.jump === false && sample.input.boost === true);
+          const result = {
+            ok: samples.length === WALL_TRACE_FRAME_COUNT && inputContractValid && firstContact !== null,
+            ticks: samples.at(-1)?.tick ?? 0,
+            inputContractValid,
+            firstContactTick: firstContact?.tick ?? null,
+            firstContact: firstContact ? { grounded: firstContact.grounded, contact: firstContact.contact, state: firstContact.state } : null,
+            elapsedMs: performance.now() - startedAt,
+          };
+          window.__arsenalWasmBrowserWallSmoke = result;
+          output.textContent = JSON.stringify(result, null, 2);
+        } finally {
+          Module._free(normalPtr);
+          Module._free(contactPtr);
+          Module._free(statePtr);
+          Module._free(tickPtr);
+          Module._rs_destroy();
+        }
+      } catch (error) {
+        const result = { ok: false, error: String(error?.message || error) };
+        window.__arsenalWasmBrowserWallSmoke = result;
+        output.classList.add("error");
+        output.textContent = JSON.stringify(result, null, 2);
+        console.error("RocketSim WASM wall-contact browser smoke failed", error);
+      }
+    </script>
+  </body>
+</html>

@@ -21,12 +21,12 @@ test("standard gamepad maps the Rocket League controller layout to vehicle actio
     forward: false, back: false, left: false, right: false,
     drift: true, rollLeft: true, rollRight: true,
     jump: true, boost: true, fire: true,
-    throttle: .65, steer: .8
+    throttle: .65, steer: (0.8 - .12) / .88
   });
 });
 
 test("the adapter ignores stick noise, disconnected devices, and non-standard layouts", () => {
-  assert.deepEqual(readGamepadActions([pad({ axes: [.24, -.24] })]).actions, {
+  assert.deepEqual(readGamepadActions([pad({ axes: [.08, -.08] })]).actions, {
     forward: false, back: false, left: false, right: false,
     drift: false, rollLeft: false, rollRight: false,
     jump: false, boost: false, fire: false,
@@ -34,6 +34,12 @@ test("the adapter ignores stick noise, disconnected devices, and non-standard la
   });
   assert.equal(readGamepadActions([pad({ connected: false })]).connected, false);
   assert.equal(readGamepadActions([pad({ mapping: "" })]).connected, false);
+});
+
+test("the adapter uses a scaled Rocket Arena-style dead zone instead of a hard steering cutoff", () => {
+  const result = readGamepadActions([pad({ axes: [.24, 0] })]);
+  assert.ok(result.actions.steer > 0, "intent above the dead zone is retained");
+  assert.ok(result.actions.steer < .24, "the dead-zone portion is removed before rescaling");
 });
 
 test("controller actions merge with keyboard actions without cancelling either source", () => {

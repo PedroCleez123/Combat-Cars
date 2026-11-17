@@ -1,4 +1,8 @@
-const DEADZONE = .25;
+// Match the semantic controller contract audited in Rocket Arena: a small
+// centred dead zone followed by a normalized response, rather than a hard
+// cutoff that makes fine steering disappear near the centre.
+export const GAMEPAD_DEADZONE = .12;
+export const GAMEPAD_TRIGGER_THRESHOLD = .15;
 
 const emptyActions = () => ({
   forward: false, back: false, left: false, right: false,
@@ -11,12 +15,19 @@ function axis(value) {
   return Number.isFinite(value) ? Math.max(-1, Math.min(1, value)) : 0;
 }
 
+function deadzone(value, threshold = GAMEPAD_DEADZONE) {
+  const normalized = axis(value);
+  if (Math.abs(normalized) <= threshold) return 0;
+  return Math.sign(normalized) * ((Math.abs(normalized) - threshold) / (1 - threshold));
+}
+
 function buttonDown(button) {
   return Boolean(button?.pressed) || Number(button?.value) >= .5;
 }
 
 function triggerValue(button) {
-  return Number.isFinite(button?.value) ? Math.max(0, Math.min(1, button.value)) : buttonDown(button) ? 1 : 0;
+  const value = Number.isFinite(button?.value) ? Math.max(0, Math.min(1, button.value)) : buttonDown(button) ? 1 : 0;
+  return value <= GAMEPAD_TRIGGER_THRESHOLD ? 0 : value;
 }
 
 /**
@@ -35,8 +46,8 @@ export function readGamepadActions(gamepads) {
   const actions = emptyActions();
   if (!gamepad) return { connected: false, actions };
 
-  const horizontal = axis(gamepad.axes?.[0]);
-  actions.steer = Math.abs(horizontal) > DEADZONE ? horizontal : 0;
+  const horizontal = gamepad.axes?.[0];
+  actions.steer = deadzone(horizontal);
   actions.throttle = triggerValue(gamepad.buttons?.[7]) - triggerValue(gamepad.buttons?.[6]); // RT - LT
   actions.jump = buttonDown(gamepad.buttons?.[0]); // A
   actions.rollRight = buttonDown(gamepad.buttons?.[1]); // B

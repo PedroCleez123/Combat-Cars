@@ -1,83 +1,50 @@
-# Documentación del proyecto
+# Documentación vigente — Combat Cars
 
-Lee estos archivos en este orden:
+Esta carpeta contiene solo referencias que todavía sirven para desarrollar o
+validar la versión actual.
 
-1. [`../README.md`](../README.md) — arranque y arquitectura.
-2. [`../PROTOCOL.md`](../PROTOCOL.md) — contrato de red y snapshots.
-3. [`../_bmad-output/implementation-artifacts/roadmap-current-2026-10-14.md`](../_bmad-output/implementation-artifacts/roadmap-current-2026-10-14.md)
-   — orden canónico de historias, puertas de decisión y trabajo aplazado.
-4. [`physics-mobility-tracker.md`](physics-mobility-tracker.md) — estado actual
-   de física, evidencias y puertas aceptadas.
-5. [`rocketsim-architecture.md`](rocketsim-architecture.md) — autoridad y
-   límites de la integración RocketSim.
-6. [`continuation-handoff.md`](continuation-handoff.md) — relevo operativo para
-   la siguiente sesión.
-7. [`web-online-compatibility.md`](web-online-compatibility.md) — compatibilidad
-   web/LAN y futura ruta online.
-8. [`local-server-browser-bridge.md`](local-server-browser-bridge.md) — frontera
-   sandbox/host, comprobación del servidor y solución del timeout del navegador.
-9. [`openwiki-codex-mcp.md`](openwiki-codex-mcp.md) — flujo recomendado para
-    que Codex coordine OpenWiki por páginas sin una petición monolítica.
-10. [`operational-incident-prevention.md`](operational-incident-prevention.md)
-    — incidencias conocidas, evidencia y prevención para host, navegador,
-    empaquetado y herramientas.
-11. [`../openwiki/quickstart.md`](../openwiki/quickstart.md) — wiki generada
-    por páginas y fuentes de arquitectura, movilidad, red y pruebas.
+## Estado de las versiones
 
-El plan operativo vigente es
-[`../_bmad-output/implementation-artifacts/roadmap-current-2026-10-14.md`](../_bmad-output/implementation-artifacts/roadmap-current-2026-10-14.md).
-La planificación anterior está archivada en
-[`../_bmad-output/archive/2026-10-15/implementation-artifacts/roadmap-next-phase-2026-10-13.md`](../_bmad-output/archive/2026-10-15/implementation-artifacts/roadmap-next-phase-2026-10-13.md)
-y no decide trabajo nuevo.
-Las únicas fichas BMad activas son
-[`arena-ceiling-01-story.md`](../_bmad-output/implementation-artifacts/arena-ceiling-01-story.md),
-[`hitbox-01-visual-pivot-story.md`](../_bmad-output/implementation-artifacts/hitbox-01-visual-pivot-story.md)
-y
-[`mob-air-02-isolated-observation-story.md`](../_bmad-output/implementation-artifacts/mob-air-02-isolated-observation-story.md);
-el resto está en el archivo BMad.
-El orden activo es P0 cierre de `HITBOX-01` → P1 `ARENA-CEILING-01` → P2
-`MOB-AIR-02-OBS-ISOLATED` → P3 `LIVENESS-01-INTEGRATION` → P4 `MOB-AIR-03`
-→ P5 `CAMERA-AIR-WALL-01` → P6 `ARENA-VIS-01` → P7 regresión de combate →
-P8 `ONLINE-02`. Las hojas antiguas conservan evidencia histórica y no reabren
-historias cerradas.
+La versión WASM/P2P de Combat Cars es la migración aceptada y la única ruta de
+producto que se mantiene y se despliega (`Pages → Worker de señalización →
+WebRTC P2P → RocketSim WASM en el host`). La antigua versión local Three.js se
+conserva congelada como referencia de auditoría, regresión y diagnóstico; no se
+usa para publicar ni se desarrolla en paralelo.
 
-Las observaciones in-game se agrupan por prioridad en
-[`playtest-batches.md`](playtest-batches.md); el lote actual se genera con
-`npm run plan:playtest-batch`.
+La retirada requiere primero un inventario de imports, fixtures, herramientas y
+pruebas. Hasta cerrar ese inventario, los archivos locales no deben borrarse:
+se archivarán o se excluirán de la build antes de eliminarse de forma
+definitiva.
 
-## Referencias activas de diseño
+- [`../README.md`](../README.md): arranque, controles y arquitectura del producto Combat Cars.
+- [`../PROTOCOL.md`](../PROTOCOL.md): prioridad WASM online, referencia local y autoridad Pages + Worker + WebRTC.
+- [`wasm-migration-01-full-game.md`](wasm-migration-01-full-game.md): estado y
+  próximos gates de la migración del cliente local al host WASM.
+- [`rocketsim-architecture.md`](rocketsim-architecture.md): límites de la
+  integración RocketSim y separación entre simulación y presentación.
+- [`external-online-qa-checklist.md`](external-online-qa-checklist.md): pruebas
+  manuales de dos navegadores y redes externas antes de ampliar el roster.
+- [`persistent-room-lifecycle-plan.md`](persistent-room-lifecycle-plan.md):
+  contrato y diseño histórico de la sala personal persistente, lobby físico sin
+  PvP, reconexión, fases, seguridad, hitos y gates de publicación. No sustituye
+  al roadmap canónico.
+- [`../AGENTS.md`](../AGENTS.md): invariantes y reglas de trabajo; la prioridad
+  se consulta siempre en el roadmap vigente.
+- [`integrations/ccgs-codex.md`](integrations/ccgs-codex.md): integración
+  selectiva de Claude Code Game Studios como adaptador de proceso para Codex.
+- [`integrations/matt-pocock-skills.md`](integrations/matt-pocock-skills.md):
+  análisis del repositorio, solapamientos y decisiones de composición para las
+  skills actuales.
+- [`integrations/skills-routing-matrix.md`](integrations/skills-routing-matrix.md):
+  selección de una skill principal, técnicas transversales y comprobaciones por
+  tipo de tarea.
+- [`integrations/bmad-runtime.md`](integrations/bmad-runtime.md): estado del
+  runtime BMad/GDS y ruta oficial de instalación cuando vuelva la conectividad.
+- [`reference-captures/`](reference-captures/): evidencias deterministas que
+  alimentan las pruebas; no son documentación narrativa.
 
-- [`car-soccer-rea-physics-contract.md`](car-soccer-rea-physics-contract.md)
-- [`reference-translation-ledger.md`](reference-translation-ledger.md)
-
-Los planes cerrados, calibraciones y el relevo largo están en
-[`archive/2026-10-14/`](archive/2026-10-14/) y no deciden el trabajo actual.
-
-## Evidencia reproducible
-
-Las capturas JSON viven en [`reference-captures/`](reference-captures/). Las
-últimas puertas son `rocketsim-cornered-practice-arena-02.json`,
-`rocketsim-configurable-combat-game-01.json` y
-`rocketsim-six-pilot-lan-r9-01.json`.
-COMBAT-GEO-01 añade `rocketsim-static-raycast-combat-geo-01.json` como
-evidencia de consulta nativa contra geometría estática.
-No son documentación narrativa: se regeneran con las sondas de `package.json`.
-
-## Archivo
-
-Los documentos cerrados se guardan en
-[`archive/2026-10-12/`](archive/2026-10-12/) y
-[`archive/2026-10-14/`](archive/2026-10-14/), con la limpieza más reciente en
-[`archive/2026-10-15/`](archive/2026-10-15/) y
-[`archive/2026-10-16/`](archive/2026-10-16/). Las referencias activas que aún
-necesitan contexto histórico enlazan directamente allí. No se elimina historia.
-Para restaurar uno, muévelo de vuelta a `docs/` y actualiza este índice solo si
-vuelve a ser una fuente activa. El inventario actual está en
-[`document-inventory.md`](document-inventory.md).
-
-La última limpieza está registrada en
-[`archive/2026-10-16/cleanup-log.md`](archive/2026-10-16/cleanup-log.md).
-
-
-
-
+La fuente de código prevalece sobre cualquier captura o nota. Las salidas de
+build, smoke, logs, exports de investigación y documentos de iteraciones
+anteriores se eliminan o regeneran; no se usan como configuración de runtime.
+El plan de trabajo canónico está en
+[`../_bmad-output/current-roadmap.md`](../_bmad-output/current-roadmap.md).

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RocketSim WASM · combate causal · P2P-WASM-20</title>
+    <style>
+      :root { color-scheme: dark; font-family: ui-monospace, Consolas, monospace; background: #0d1520; color: #d8e6f1; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+      main { width: min(48rem, calc(100vw - 3rem)); padding: 1.5rem; border: 1px solid #42617a; border-radius: .75rem; background: #132331; }
+      h1 { margin-top: 0; font-size: 1.15rem; }
+      p { color: #a9bece; line-height: 1.5; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 2rem; color: #a7eecc; }
+      .error { color: #ff9d9d; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>RocketSim WASM · combate causal · P2P-WASM-20</h1>
+      <p>Diagnóstico aislado: verifica intercepción estática y el ciclo físico de cohete, baja y respawn. No inicia el juego, WebRTC ni una sala pública.</p>
+      <pre id="status" aria-live="polite">Inicializando módulo…</pre>
+    </main>
+    <script type="module">
+      import {
+        createP2PWasmCombatHost,
+        P2P_WASM_COMBAT_FIXED_DT,
+      } from "./p2p-wasm-combat-host.mjs";
+      import {
+        createP2PWasmCausalCombatEnvelope,
+        decodeP2PWasmCausalCombatEnvelope,
+        P2P_WASM_CAUSAL_COMBAT_MAX_BYTES,
+      } from "./p2p-wasm-causal-combat-protocol.mjs";
+
+      const output = document.querySelector("#status");
+      const startedAt = performance.now();
+      const idle = Object.freeze({ throttle: 0, steer: 0, boost: false, jump: false });
+      const command = (overrides = {}) => ({ controls: { ...idle }, fire: false, restart: false, targetId: null, ...overrides });
+      const arsenalScale = 56 / 2300;
+      const wireContext = Object.freeze({ roomId: "p2p-wasm-causal-browser", sessionId: "p2p-wasm-causal-smoke" });
+      let wireSequence = 0;
+      let maxCausalEnvelopeBytes = 0;
+
+      function failIf(condition, message) {
+        if (condition) throw new Error(message);
+      }
+
+      function validateCausalEnvelope(snapshot) {
+        const text = createP2PWasmCausalCombatEnvelope({ ...wireContext, sequence: ++wireSequence, snapshot });
+        const decoded = decodeP2PWasmCausalCombatEnvelope(text);
+        const bytes = new TextEncoder().encode(text).byteLength;
+        failIf(decoded.sequence !== wireSequence || decoded.snapshot.tick !== snapshot.tick, "The causal envelope did not round-trip the authoritative snapshot.");
+        failIf(bytes > P2P_WASM_CAUSAL_COMBAT_MAX_BYTES, "The causal envelope exceeded its DataChannel frame budget.");
+        maxCausalEnvelopeBytes = Math.max(maxCausalEnvelopeBytes, bytes);
+      }
+
+      async function runStaticInterception() {
+        const host = await createP2PWasmCombatHost();
+        let sequence = 0;
+        try {
+          failIf(!host.setHostCommand(command({ fire: true })).accepted, "The static-intercept host rejected the firing command.");
+          host.receivePilotCommand({ sequence: ++sequence, ...command() });
+          failIf(!host.setHostCommand(command()).accepted, "The static-intercept host rejected the release command.");
+          for (let tick = 0; tick < 90; tick += 1) {
+            const result = host.receivePilotCommand({ sequence: ++sequence, ...command() });
+            validateCausalEnvelope(result.snapshot);
+            if (result.snapshot.combat.events.some(event => event.kind === "miss" && event.text === "COHETE INTERCEPTADO")) {
+              failIf(result.snapshot.combat.rockets.length !== 0, "A statically intercepted rocket remained in the authoritative state.");
+              return { intercepted: true, tick: result.snapshot.tick, internalWasmTick: host.physical.wasmTick };
+            }
+          }
+          throw new Error("The static wall did not intercept the causal rocket.");
+        } finally {
+          host.close();
+          host.close();
+        }
+      }
+
+      async function runCombatLifecycle() {
+        const host = await createP2PWasmCombatHost();
+        const events = [];
+        const capturedTargetIds = [];
+        let sequence = 0;
+        let fired = false;
+        let firstHit = false;
+        let eliminated = false;
+        let respawned = false;
+        let releaseFire = false;
+        let eliminatedPhysical = null;
+        let respawnPhysical = null;
+        let latest = null;
+        try {
+          failIf(!host.setHostCommand(command()).accepted, "The causal host rejected the neutral host command.");
+          for (let tick = 0; tick < 520 && !respawned; tick += 1) {
+            const physical = latest?.physical;
+            const hostX = physical?.find(car => car.id === "p2p-host")?.x ?? 0;
+            const pilotX = physical?.find(car => car.id === "p2p-pilot")?.x ?? -600;
+            const distance = Math.abs(pilotX - hostX) * arsenalScale;
+            const targetVisible = hostX > pilotX && distance <= 90;
+            const pilotState = latest?.combat.cars.find(car => car.id === "p2p-pilot");
+            const cooldownReady = !pilotState || pilotState.rocketCooldown <= 0;
+            const shouldFire = targetVisible && !releaseFire && (!fired || (firstHit && !eliminated && cooldownReady));
+            const pilotThrottle = targetVisible ? 0 : 1;
+            latest = host.receivePilotCommand({
+              sequence: ++sequence,
+              ...command({
+                controls: { ...idle, throttle: pilotThrottle },
+                fire: shouldFire,
+                targetId: "p2p-host",
+              }),
+            }).snapshot;
+            validateCausalEnvelope(latest);
+            for (const rocket of latest.combat.rockets) if (rocket.targetId) capturedTargetIds.push(rocket.targetId);
+            for (const event of latest.combat.events) events.push(event.kind);
+            const firedThisTick = latest.combat.events.some(event => event.kind === "fire");
+            if (firedThisTick) fired = true;
+            if (latest.combat.events.some(event => event.kind === "hit")) firstHit = true;
+            if (latest.combat.events.some(event => event.kind === "elimination")) {
+              eliminated = true;
+              eliminatedPhysical = latest.physical.find(car => car.id === "p2p-host");
+            }
+            if (latest.combat.events.some(event => event.kind === "respawn")) {
+              respawned = true;
+              respawnPhysical = latest.physical.find(car => car.id === "p2p-host");
+            }
+            releaseFire = firedThisTick;
+          }
+          failIf(!latest, "The causal host produced no snapshot.");
+          const eventOrder = ["fire", "hit", "elimination", "respawn"];
+          failIf(eventOrder.some(kind => !events.includes(kind)), `The causal event cycle is incomplete: ${events.join(",")}.`);
+          failIf(eventOrder.some((kind, index) => index > 0 && events.indexOf(eventOrder[index - 1]) >= events.indexOf(kind)), "The causal event order is invalid.");
+          failIf(!capturedTargetIds.length || capturedTargetIds.some(targetId => targetId !== "p2p-host"), "The guided rocket retargeted or was never observable.");
+          failIf(!eliminatedPhysical || eliminatedPhysical.h > -9999, "Logical elimination did not deactivate the physical host slot.");
+          failIf(!respawnPhysical || Math.abs(respawnPhysical.x) > 1 || respawnPhysical.h < -1000, "Physical respawn did not restore the host spawn.");
+          const physicalLifecycleValid = latest.combat.cars.find(car => car.id === "p2p-host")?.hp === 100
+            && latest.combat.cars.find(car => car.id === "p2p-pilot")?.hp === 100;
+          failIf(!physicalLifecycleValid, "The combat lifecycle did not end with both cars restored.");
+          return {
+            events,
+            finalTick: latest.tick,
+            internalWasmTick: host.physical.wasmTick,
+            physicalLifecycleValid,
+            targetPersistenceValid: true,
+          };
+        } finally {
+          host.close();
+          host.close();
+        }
+      }
+
+      try {
+        const interception = await runStaticInterception();
+        const lifecycle = await runCombatLifecycle();
+        failIf(P2P_WASM_COMBAT_FIXED_DT !== 1 / 60, "The causal combat host did not retain its fixed 60 Hz step.");
+        failIf(lifecycle.internalWasmTick !== lifecycle.finalTick * 2, "The causal host drifted from its two WASM steps per external tick contract.");
+        const result = {
+          ok: true,
+          story: "P2P-WASM-20",
+          fixture: "combat-lineup",
+          fixedDt: P2P_WASM_COMBAT_FIXED_DT,
+          staticInterception: interception.intercepted,
+          interceptionTick: interception.tick,
+          combatEvents: lifecycle.events,
+          finalTick: lifecycle.finalTick,
+          internalWasmTick: lifecycle.internalWasmTick,
+          physicalLifecycleValid: lifecycle.physicalLifecycleValid,
+          targetPersistenceValid: lifecycle.targetPersistenceValid,
+          causalEnvelopeValid: maxCausalEnvelopeBytes > 0 && maxCausalEnvelopeBytes <= P2P_WASM_CAUSAL_COMBAT_MAX_BYTES,
+          maxCausalEnvelopeBytes,
+          cleanupIdempotent: true,
+          elapsedMs: performance.now() - startedAt,
+        };
+        window.__arsenalWasmBrowserP2PCausalCombatSmoke = result;
+        output.textContent = JSON.stringify(result, null, 2);
+      } catch (error) {
+        const result = { ok: false, story: "P2P-WASM-20", error: String(error?.message || error) };
+        window.__arsenalWasmBrowserP2PCausalCombatSmoke = result;
+        output.classList.add("error");
+        output.textContent = JSON.stringify(result, null, 2);
+        console.error("RocketSim WASM causal combat browser smoke failed", error);
+      }
+    </script>
+  </body>
+</html>

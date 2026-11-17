@@ -13,20 +13,39 @@ const projectRoot = isPackaged ? app.getAppPath() : path.join(__dirname, "..");
 const serverCwd = isPackaged ? process.resourcesPath : projectRoot;
 const serverPath = path.join(projectRoot, "server.mjs");
 const bridgePath = isPackaged
-  ? path.join(process.resourcesPath, "bridge", "rocketsim_bridge-r19.exe")
-  : path.join(projectRoot, ".rocketsim-bridge-build-r9", "rocketsim_bridge-r19.exe");
+  ? path.join(process.resourcesPath, "bridge", "rocketsim_bridge-r20.exe")
+  : path.join(projectRoot, ".rocketsim-bridge-build-r20", "rocketsim_bridge-r20.exe");
 const launchToken = randomBytes(32).toString("hex");
 
 let gameServer = null;
 let gameWindow = null;
 let quitting = false;
 
+// The desktop launcher starts a LAN-only server and a native bridge. Keep
+// hosted deployment values out of both child processes while preserving the
+// Windows/runtime variables needed to start Node and native DLLs.
+const childEnvironmentAllowlist = new Set([
+  "path", "pathext", "systemroot", "windir", "comspec", "temp", "tmp",
+  "userprofile", "homedrive", "homepath", "home", "appdata", "localappdata",
+  "programdata", "os", "processor_architecture", "processor_architew6432",
+  "number_of_processors", "ld_library_path", "dyld_library_path",
+  "dyld_fallback_library_path", "lang", "lc_all", "tz",
+]);
+
+function createChildEnvironment(overrides) {
+  const env = {};
+  for (const [name, value] of Object.entries(process.env)) {
+    if (childEnvironmentAllowlist.has(name.toLowerCase())) env[name] = value;
+  }
+  return { ...env, ...overrides };
+}
+
 function gameUrl() {
   return `http://127.0.0.1:${PORT}/?arena=combat-alpha`;
 }
 
 function fail(message) {
-  dialog.showErrorBox("Car Soccer Arsenal no se pudo iniciar", message);
+  dialog.showErrorBox("Combat Cars no se pudo iniciar", message);
 }
 
 function assertLaunchConfiguration() {
@@ -34,7 +53,7 @@ function assertLaunchConfiguration() {
     throw new Error("PORT debe ser un entero entre 1 y 65535.");
   }
   if (!existsSync(serverPath)) throw new Error(`No se encuentra el servidor del juego: ${serverPath}`);
-  if (!existsSync(bridgePath)) throw new Error(`No se encuentra el bridge RocketSim R19: ${bridgePath}`);
+  if (!existsSync(bridgePath)) throw new Error(`No se encuentra el bridge RocketSim R20: ${bridgePath}`);
 }
 
 function assertPortAvailable(port) {
@@ -61,8 +80,7 @@ function appendChildLogs(child) {
 }
 
 function startServer() {
-  const childEnvironment = {
-    ...process.env,
+  const childEnvironment = createChildEnvironment({
     ELECTRON_RUN_AS_NODE: "1",
     PORT: String(PORT),
     MOVEMENT_BACKEND: "rocketsim",
@@ -71,7 +89,7 @@ function startServer() {
     ROCKETSIM_REQUEST_TIMEOUT_MS: process.env.ROCKETSIM_REQUEST_TIMEOUT_MS || "500",
     ROCKETSIM_BRIDGE_EXE: bridgePath,
     ARSENAL_DESKTOP_SHUTDOWN_TOKEN: launchToken,
-  };
+  });
   gameServer = spawn(process.execPath, [serverPath], {
     cwd: serverCwd,
     env: childEnvironment,
@@ -143,7 +161,7 @@ function openGameWindow() {
     show: false,
     autoHideMenuBar: true,
     backgroundColor: "#0a111c",
-    title: "Car Soccer: Arsenal",
+    title: "Combat Cars",
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,

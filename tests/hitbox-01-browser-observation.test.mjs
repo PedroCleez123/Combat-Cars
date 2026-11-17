@@ -17,7 +17,7 @@ const car = (overrides = {}) => ({
   ...overrides,
 });
 
-const options = { movementBackend: "rocketsim", bridgeRevision: 19, playerCount: 1 };
+const options = { movementBackend: "rocketsim", bridgeRevision: 20, playerCount: 1 };
 
 function confirmRestart(playback) {
   assert.equal(stepHitbox01BrowserObservation(playback, { ...options, now: 0, snapshotTime: 0, car: car() }).restartRequested, true);
@@ -30,7 +30,7 @@ test("HITBOX-01 measures the authoritative up vector from a quaternion", () => {
   assert.equal(authoritativeUpY(car({ orientation: null, roll: Math.PI })), -1);
 });
 
-test("HITBOX-01 requires RocketSim R19 and an isolated pilot before restarting", () => {
+test("HITBOX-01 requires RocketSim R20 and an isolated pilot before restarting", () => {
   const js = createHitbox01BrowserObservation();
   const manualInput = { throttle: 1, steer: 0, jump: false, boost: false, drift: false, airRoll: false, roll: 0, fire: false };
   const jsResult = stepHitbox01BrowserObservation(js, { now: 0, car: car(), movementBackend: "js", manualInput });
@@ -38,7 +38,7 @@ test("HITBOX-01 requires RocketSim R19 and an isolated pilot before restarting",
   assert.deepEqual(jsResult.input, manualInput, "an incompatible backend leaves the player in control");
   const r13 = createHitbox01BrowserObservation();
   const r13Result = stepHitbox01BrowserObservation(r13, { ...options, bridgeRevision: 13, now: 0, car: car(), manualInput });
-  assert.equal(r13Result.report.outcome, "requires-r19");
+  assert.equal(r13Result.report.outcome, "requires-r20");
   assert.deepEqual(r13Result.input, manualInput, "an older bridge leaves the player in control");
   const shared = createHitbox01BrowserObservation();
   const waiting = stepHitbox01BrowserObservation(shared, { ...options, playerCount: 2, now: 0, car: car(), manualInput });

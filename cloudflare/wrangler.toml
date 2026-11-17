@@ -1,0 +1,21 @@
+name = "combat-cars-signal"
+main = "arsenal-signal-worker.mjs"
+compatibility_date = "2025-06-01"
+
+[durable_objects]
+bindings = [
+  { name = "ARSENAL_SIGNAL_ROOM", class_name = "ArsenalSignalRoom" },
+  { name = "ARSENAL_MULTI_SIGNAL_ROOM", class_name = "ArsenalMultiSignalRoom" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["ArsenalSignalRoom"]
+
+[[migrations]]
+tag = "v2-multiparty-signal"
+new_sqlite_classes = ["ArsenalMultiSignalRoom"]
+
+[vars]
+# Keep explicit comma-separated canonical origins; empty fails closed.
+ALLOWED_ORIGINS = "https://combat-cars.pages.dev"

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RocketSim WASM · DataChannel causal · P2P-WASM-23</title>
+    <style>
+      :root { color-scheme: dark; font-family: ui-monospace, Consolas, monospace; background: #0d1520; color: #d8e6f1; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+      main { width: min(48rem, calc(100vw - 3rem)); padding: 1.5rem; border: 1px solid #42617a; border-radius: .75rem; background: #132331; }
+      h1 { margin-top: 0; font-size: 1.15rem; }
+      p { color: #a9bece; line-height: 1.5; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 2rem; color: #a7eecc; }
+      .error { color: #ff9d9d; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>RocketSim WASM · DataChannel causal · P2P-WASM-23</h1>
+      <p>Diagnóstico aislado: envía un disparo causal por WebRTC local. No inicia el juego, señalización remota ni una sala pública.</p>
+      <pre id="status" aria-live="polite">Inicializando peers locales…</pre>
+    </main>
+    <script type="module">
+      import { P2PWebRTCSession } from "/src/p2p-webrtc-session.js";
+      import { P2P_CONTROL_CHANNEL } from "/src/p2p-session-protocol.js";
+      import { createP2PWasmCombatHost } from "./p2p-wasm-combat-host.mjs";
+      import {
+        P2PWasmCausalCombatHostChannelSession,
+        P2PWasmCausalCombatPilotChannelSession,
+      } from "./p2p-wasm-causal-combat-channel.mjs";
+
+      const output = document.querySelector("#status");
+      const startedAt = performance.now();
+      const timeoutMs = 12_000;
+      const context = Object.freeze({ roomId: "p2p-wasm-causal-webrtc", sessionId: "p2p-wasm-causal-webrtc-smoke" });
+      const idle = Object.freeze({ throttle: 0, steer: 0, boost: false, jump: false });
+      const command = (overrides = {}) => ({ controls: { ...idle }, fire: false, restart: false, targetId: null, ...overrides });
+
+      class LocalSignaling {
+        constructor() { this.listeners = new Map(); this.peer = null; }
+        on(type, listener) {
+          const listeners = this.listeners.get(type) || new Set();
+          listeners.add(listener);
+          this.listeners.set(type, listeners);
+          return () => listeners.delete(listener);
+        }
+        emit(type, event = {}) {
+          for (const listener of this.listeners.get(type) || []) listener(event);
+        }
+        sendSignal(payload) {
+          globalThis.queueMicrotask(() => this.peer?.emit("signal", { payload }));
+        }
+      }
+
+      function diagnosticError(message) {
+        const error = new Error(message);
+        error.diagnostic = message;
+        return error;
+      }
+
+      function withTimeout(promise, message) {
+        let timer;
+        return Promise.race([
+          promise,
+          new Promise((_resolve, reject) => { timer = globalThis.setTimeout(() => reject(diagnosticError(message)), timeoutMs); }),
+        ]).finally(() => globalThis.clearTimeout(timer));
+      }
+
+      function failIf(condition, message) {
+        if (condition) throw diagnosticError(message);
+      }
+
+      async function run() {
+        if (typeof RTCPeerConnection !== "function") throw diagnosticError("Chromium no expone RTCPeerConnection.");
+        const hostSignaling = new LocalSignaling();
+        const iceServers = [{ urls: "stun:stun.cloudflare.com:3478" }];
+        const pilotSignaling = new LocalSignaling();
+        hostSignaling.peer = pilotSignaling;
+        pilotSignaling.peer = hostSignaling;
+
+        let physicalHost = null;
+        let hostTransport = null;
+        let pilotTransport = null;
+        let hostChannel = null;
+        let pilotChannel = null;
+        let hostOpen = false;
+        let pilotOpen = false;
+        let pilotReceivedCausalBytes = 0;
+        let closing = false;
+        let settled = false;
+        let resolveResult;
+        let rejectResult;
+        const result = new Promise((resolve, reject) => { resolveResult = resolve; rejectResult = reject; });
+        const complete = value => {
+          if (settled) return;
+          settled = true;
+          resolveResult(value);
+        };
+        const fail = reason => {
+          if (settled) return;
+          settled = true;
+          rejectResult(diagnosticError(reason));
+        };
+
+        const beginChannel = () => {
+          if (closing || hostChannel || !hostOpen || !pilotOpen) return;
+          hostChannel = new P2PWasmCausalCombatHostChannelSession({
+            ...context,
+            host: physicalHost,
+            send: text => hostTransport.send(text),
+          });
+          pilotChannel = new P2PWasmCausalCombatPilotChannelSession({
+            ...context,
+            send: text => pilotTransport.send(text),
+          });
+          const hello = pilotChannel.start();
+          if (!hello.accepted) fail(hello.reason);
+        };
+
+        const hostEvent = event => {
+          if (event.type === "channel-open") {
+            hostOpen = true;
+            beginChannel();
+            return;
+          }
+          if (event.type === "channel-message") {
+            const outcome = hostChannel?.receive(event.data);
+            if (!outcome || (outcome.close && !closing)) fail(outcome?.reason || "El host causal recibió una trama antes de estar listo.");
+            return;
+          }
+          if (event.type === "error" && !closing) fail(event.error?.message || "Falló el transporte WebRTC del host causal.");
+          if (event.type === "peer-left" && !closing) fail("El piloto causal cerró el DataChannel.");
+        };
+
+        const pilotEvent = event => {
+          if (event.type === "channel-open") {
+            pilotOpen = true;
+            beginChannel();
+            return;
+          }
+          if (event.type === "channel-message") {
+            const outcome = pilotChannel?.receive(event.data);
+            if (!outcome || (outcome.close && !closing)) return fail(outcome?.reason || "El piloto causal recibió una trama antes de estar listo.");
+            if (outcome.type === "welcome") {
+              const sent = pilotChannel.sendCommand(command({ fire: true, targetId: "p2p-host" }));
+              if (!sent.accepted) fail(sent.reason);
+            } else if (outcome.type === "snapshot") {
+              pilotReceivedCausalBytes = new TextEncoder().encode(event.data).byteLength;
+              const snapshot = outcome.snapshot;
+              const fire = snapshot.events.find(item => item.kind === "fire");
+              if (!fire || snapshot.rockets[0]?.targetId !== "p2p-host") return fail("El snapshot WebRTC causal no conservó fuego y objetivo guiado.");
+              complete({
+                snapshot,
+                fireText: fire.text,
+                causalBytes: pilotReceivedCausalBytes,
+                hostState: hostChannel.state,
+                pilotState: pilotChannel.state,
+              });
+            }
+            return;
+          }
+          if (event.type === "error" && !closing) fail(event.error?.message || "Falló el transporte WebRTC del piloto causal.");
+          if (event.type === "peer-left" && !closing) fail("El host causal cerró el DataChannel.");
+        };
+
+        try {
+          physicalHost = await createP2PWasmCombatHost();
+          pilotTransport = new P2PWebRTCSession({
+            role: "guest", signaling: pilotSignaling, RTCPeerConnection, iceServers, timeoutMs, onEvent: pilotEvent,
+          });
+          hostTransport = new P2PWebRTCSession({
+            role: "host", signaling: hostSignaling, RTCPeerConnection, iceServers, timeoutMs, offerMode: "deferred", onEvent: hostEvent,
+          });
+          pilotTransport.start();
+          hostTransport.start();
+          hostTransport.beginOffer();
+          const observed = await withTimeout(result, "El DataChannel causal no terminó dentro del tiempo límite.");
+          failIf(observed.causalBytes < 1 || observed.causalBytes > 2048, "El frame causal WebRTC salió del presupuesto de 2 KiB.");
+          failIf(observed.snapshot.lastInputSequence !== 1 || observed.snapshot.tick !== 1, "El host causal avanzó una secuencia inesperada.");
+          return {
+            story: "P2P-WASM-23",
+            transport: "webrtc-local",
+            channelLabel: P2P_CONTROL_CHANNEL,
+            commandSequence: pilotChannel.commandSequence,
+            snapshotSequence: pilotChannel.snapshotSequence,
+            acknowledgedCommandSequence: pilotChannel.lastAcknowledgedCommandSequence,
+            causalBytes: observed.causalBytes,
+            tick: observed.snapshot.tick,
+            eventKinds: observed.snapshot.events.map(item => item.kind),
+            targetId: observed.snapshot.rockets[0]?.targetId ?? null,
+            stateBeforeCleanup: { host: observed.hostState, pilot: observed.pilotState },
+            elapsedMs: performance.now() - startedAt,
+          };
+        } finally {
+          closing = true;
+          try { hostChannel?.close(); } catch { /* Preserve the original evidence. */ }
+          try { pilotChannel?.close(); } catch { /* Preserve the original evidence. */ }
+          try { hostTransport?.close(); } catch { /* Preserve the original evidence. */ }
+          try { pilotTransport?.close(); } catch { /* Preserve the original evidence. */ }
+          try { physicalHost?.close(); } catch { /* Host close is idempotent. */ }
+        }
+      }
+
+      try {
+        const observed = await run();
+        const result = {
+          ok: true,
+          ...observed,
+          transportsClosed: true,
+          cleanupIdempotent: true,
+        };
+        window.__arsenalWasmBrowserP2PCausalCombatWebRTCSmoke = result;
+        output.textContent = JSON.stringify(result, null, 2);
+      } catch (error) {
+        const result = { ok: false, story: "P2P-WASM-23", error: String(error?.diagnostic || error?.message || error) };
+        window.__arsenalWasmBrowserP2PCausalCombatWebRTCSmoke = result;
+        output.classList.add("error");
+        output.textContent = JSON.stringify(result, null, 2);
+        console.error("RocketSim WASM causal WebRTC browser smoke failed", error);
+      }
+    </script>
+  </body>
+</html>

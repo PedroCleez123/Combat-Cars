@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RocketSim WASM · pareja causal WebRTC · P2P-WASM-24/27/31</title>
+    <style>
+      :root { color-scheme: dark; font-family: ui-monospace, Consolas, monospace; background: #0d1520; color: #d8e6f1; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+      main { width: min(48rem, calc(100vw - 3rem)); padding: 1.5rem; border: 1px solid #42617a; border-radius: .75rem; background: #132331; }
+      h1 { margin-top: 0; font-size: 1.15rem; }
+      p { color: #a9bece; line-height: 1.5; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 2rem; color: #a7eecc; }
+      .error { color: #ff9d9d; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>RocketSim WASM · pareja causal WebRTC · P2P-WASM-24/27/31</h1>
+      <p id="scope">Preparando dos contextos Chromium locales…</p>
+      <pre id="status" aria-live="polite">Inicializando…</pre>
+    </main>
+    <script type="module">
+      import { P2P_CONTROL_CHANNEL } from "/src/p2p-session-protocol.js";
+      import { P2PWasmRenderBuffer } from "/src/p2p-wasm-render-state.js";
+      import { createP2PWasmCombatHost } from "./p2p-wasm-combat-host.mjs";
+      import { P2PWasmCausalRoomSession } from "./p2p-wasm-causal-room-session.mjs";
+
+      const role = location.hash === "#host" ? "host" : location.hash === "#pilot" ? "pilot" : null;
+      const output = document.querySelector("#status");
+      const scope = document.querySelector("#scope");
+      const startedAt = performance.now();
+      const timeoutMs = 12_000;
+      const roomId = "p2p-wasm-causal-pair";
+      const sessionId = "p2p-wasm-causal-pair-smoke";
+      const broadcastName = `arsenal-${roomId}-${sessionId}`;
+      const idle = Object.freeze({ throttle: 0, steer: 0, boost: false, jump: false });
+      const command = (overrides = {}) => ({ controls: { ...idle }, fire: false, restart: false, targetId: null, ...overrides });
+      let closing = false;
+      let roomSession = null;
+      let signaling = null;
+      let causalBytes = 0;
+      let presentationBuffer = null;
+      const seenEventKinds = new Set();
+      const snapshotLog = [];
+      let seenGuidedRocket = false;
+      let publishedEvidence = false;
+
+      function diagnosticError(message) {
+        const error = new Error(message);
+        error.diagnostic = message;
+        return error;
+      }
+
+      function failIf(condition, message) {
+        if (condition) throw diagnosticError(message);
+      }
+
+      class PrivateRoomSignaling {
+        constructor(selfRole) {
+          this.selfRole = selfRole;
+          this.otherRole = selfRole === "host" ? "pilot" : "host";
+          this.listeners = new Map();
+          this.peerSeen = false;
+          this.closed = false;
+          this.presenceReceived = 0;
+          this.signalReceived = 0;
+          this.signalSent = 0;
+          this.channel = new BroadcastChannel(broadcastName);
+          this.channel.addEventListener("message", event => this.onMessage(event?.data));
+          this.presenceTimer = globalThis.setInterval(() => this.announce(), 120);
+          this.announce();
+        }
+
+        on(type, listener) {
+          const listeners = this.listeners.get(type) || new Set();
+          listeners.add(listener);
+          this.listeners.set(type, listeners);
+          // Replay an already observed pilot presence after the coordinator
+          // has finished constructing its transport.
+          if (type === "peer-ready" && this.peerSeen) {
+            globalThis.queueMicrotask(() => {
+              if (!this.closed) listener({ role: this.otherRole });
+            });
+          }
+          return () => listeners.delete(listener);
+        }
+
+        emit(type, event = {}) {
+          for (const listener of this.listeners.get(type) || []) listener(event);
+        }
+
+        announce() {
+          if (!closing) this.channel.postMessage({ kind: "presence", role: this.selfRole });
+        }
+
+        onMessage(message) {
+          if (!message || typeof message !== "object" || message.role !== this.otherRole) return;
+          if (message.kind === "presence") {
+            this.presenceReceived += 1;
+            if (!this.peerSeen) {
+              this.peerSeen = true;
+              this.emit("peer-ready", { role: message.role });
+            }
+            return;
+          }
+          if (message.kind === "signal") {
+            this.signalReceived += 1;
+            this.emit("signal", { payload: message.payload });
+          }
+        }
+
+        sendSignal(payload) {
+          this.signalSent += 1;
+          this.channel.postMessage({ kind: "signal", role: this.selfRole, payload });
+        }
+
+        close() {
+          if (this.closed) return;
+          this.closed = true;
+          globalThis.clearInterval(this.presenceTimer);
+          this.channel.close();
+        }
+      }
+
+      function publish(value) {
+        window.__arsenalWasmBrowserP2PCausalCombatWebRTCPairSmoke = value;
+        output.textContent = JSON.stringify(value, null, 2);
+      }
+
+      function cleanup() {
+        if (closing) return { closed: true, idempotent: true };
+        closing = true;
+        try { roomSession?.close("smoke-cleanup"); } catch { /* The result remains observable. */ }
+        try { presentationBuffer?.close(); } catch { /* Presentation cleanup is isolated. */ }
+        try { signaling?.close(); } catch { /* The result remains observable. */ }
+        return { closed: true, idempotent: true };
+      }
+
+      // The Electron runner invokes this only after both independent renderers
+      // report their accepted evidence; neither player tears down the other's
+      // first causal frame while it is still in flight.
+      window.__arsenalWasmBrowserP2PCausalCombatWebRTCPairCleanup = cleanup;
+      window.__arsenalWasmBrowserP2PCausalCombatWebRTCPairDebug = () => ({
+        role,
+        closing,
+        roomState: roomSession?.state || null,
+        transportState: roomSession?.transport?.state || null,
+        transportIceState: roomSession?.transport?.lastIceState || null,
+        pcConnectionState: roomSession?.transport?.pc?.connectionState || null,
+        pcIceConnectionState: roomSession?.transport?.pc?.iceConnectionState || null,
+        peerReady: roomSession?.peerReady === true,
+        offerStarted: roomSession?.offerStarted === true,
+        channelOpen: roomSession?.channelOpen === true,
+        channelReady: roomSession?.channelReady === true,
+        causalState: roomSession?.causalSession?.state || null,
+        signalingPeerSeen: signaling?.peerSeen === true,
+        signalingPresenceReceived: signaling?.presenceReceived || 0,
+        signalingSignalReceived: signaling?.signalReceived || 0,
+        signalingSignalSent: signaling?.signalSent || 0,
+        signalingClosed: signaling?.closed === true,
+      });
+
+      function abort(error) {
+        if (closing) return;
+        const result = {
+          ok: false,
+          story: "P2P-WASM-24",
+          coordinatorStory: "P2P-WASM-27",
+          role: role || "unknown",
+          error: String(error?.diagnostic || error?.message || error),
+        };
+        publish(result);
+        cleanup();
+        console.error("RocketSim WASM causal two-context WebRTC smoke failed", error);
+      }
+
+      async function start() {
+        failIf(!role, "La pareja WebRTC requiere #host o #pilot.");
+        failIf(typeof RTCPeerConnection !== "function" || typeof BroadcastChannel !== "function", "Chromium no ofrece las APIs WebRTC/BroadcastChannel requeridas.");
+        scope.textContent = `Contexto ${role}: señalización privada local, sin servidor de sala.`;
+        signaling = new PrivateRoomSignaling(role);
+        const context = { roomId, sessionId };
+        presentationBuffer = new P2PWasmRenderBuffer({ ...context });
+
+        const onEvent = event => {
+          try {
+            if (closing) return;
+            if (event.type === "channel-message") {
+              causalBytes = typeof event.data === "string" ? new TextEncoder().encode(event.data).byteLength : 0;
+              return;
+            }
+            if (event.type === "causal-message") {
+              const outcome = event.outcome;
+              if (!outcome || outcome.close) throw diagnosticError(outcome?.reason || "La frontera causal no estaba preparada.");
+              if (role === "pilot" && outcome.type === "welcome") {
+                const sent = roomSession.causalSession.sendCommand(command({ fire: true, targetId: "p2p-host" }));
+                if (!sent.accepted) throw diagnosticError(sent.reason);
+              }
+              if (outcome.type === "snapshot" && role === "host") {
+                const snapshot = outcome.snapshot;
+                if (snapshotLog.length < 8) snapshotLog.push({ tick: snapshot.tick, events: snapshot.events.map(item => item.kind), rockets: snapshot.rockets.length });
+                for (const event of snapshot.events) seenEventKinds.add(event.kind);
+                if (snapshot.rockets.some(rocket => rocket.targetId === "p2p-host")) seenGuidedRocket = true;
+                const presentation = presentationBuffer.sample();
+                failIf(!presentation, "El buffer de presentación host no recibió el snapshot causal.");
+                if (publishedEvidence) return;
+                publishedEvidence = true;
+                publish({
+                  ok: true,
+                  story: "P2P-WASM-24",
+                  coordinatorStory: "P2P-WASM-27",
+                  presentationStory: "P2P-WASM-30",
+                  presentationBufferStory: "P2P-WASM-31",
+                  role,
+                  transport: "webrtc-local",
+                  channelLabel: P2P_CONTROL_CHANNEL,
+                  commandSequence: roomSession.causalSession.commandSequence,
+                  snapshotSequence: roomSession.causalSession.snapshotSequence,
+                  tick: Math.round(presentation.time * 60),
+                  eventKinds: [...seenEventKinds],
+                  targetId: presentation.rockets[0]?.targetId ?? null,
+                  presentation: {
+                    time: presentation.time,
+                    arena: presentation.settings.arena,
+                    vehicleCount: presentation.cars.length,
+                    rocketTargetId: presentation.rockets[0]?.targetId ?? null,
+                    localCarId: "p2p-host",
+                  },
+                  elapsedMs: performance.now() - startedAt,
+                });
+              }
+              if (role === "pilot" && outcome.type === "snapshot") {
+                const snapshot = outcome.snapshot;
+                if (snapshotLog.length < 8) snapshotLog.push({ tick: snapshot.tick, events: snapshot.events.map(item => item.kind), rockets: snapshot.rockets.length });
+                for (const event of snapshot.events) seenEventKinds.add(event.kind);
+                if (snapshot.rockets.some(rocket => rocket.targetId === "p2p-host")) seenGuidedRocket = true;
+                const presentation = presentationBuffer.sample();
+                failIf(!seenEventKinds.has("fire") || !seenGuidedRocket, `El piloto no recibió el primer disparo guiado causal: ${JSON.stringify({ snapshotLog, seenEventKinds: [...seenEventKinds], snapshotEvents: snapshot.events, snapshotRockets: snapshot.rockets, presentationEvents: presentation?.events || null, presentationRockets: presentation?.rockets || null })}`);
+                if (publishedEvidence) return;
+                publishedEvidence = true;
+                publish({
+                  ok: true,
+                  story: "P2P-WASM-24",
+                  coordinatorStory: "P2P-WASM-27",
+                  presentationStory: "P2P-WASM-30",
+                  presentationBufferStory: "P2P-WASM-31",
+                  role,
+                  transport: "webrtc-local",
+                  channelLabel: P2P_CONTROL_CHANNEL,
+                  commandSequence: roomSession.causalSession.commandSequence,
+                  snapshotSequence: roomSession.causalSession.snapshotSequence,
+                  acknowledgedCommandSequence: roomSession.causalSession.lastAcknowledgedCommandSequence,
+                  causalBytes,
+                  tick: Math.round(presentation.time * 60),
+                  eventKinds: [...seenEventKinds],
+                  targetId: presentation.rockets[0]?.targetId ?? null,
+                  presentation: {
+                    time: presentation.time,
+                    arena: presentation.settings.arena,
+                    vehicleCount: presentation.cars.length,
+                    rocketTargetId: presentation.rockets[0]?.targetId ?? null,
+                    localCarId: "p2p-pilot",
+                  },
+                  elapsedMs: performance.now() - startedAt,
+                });
+              }
+              return;
+            }
+            if (event.type === "error") throw diagnosticError(event.error?.message || "Falló el transporte WebRTC local.");
+            if (event.type === "peer-left") throw diagnosticError("El peer local abandonó la pareja causal.");
+          } catch (error) {
+            abort(error);
+          }
+        };
+
+        roomSession = new P2PWasmCausalRoomSession({
+          role,
+          signaling,
+          context,
+          hostFactory: createP2PWasmCombatHost,
+          onSnapshot: snapshot => presentationBuffer.push(snapshot, performance.now() / 1000),
+          // Chromium BrowserWindows do not always expose a usable host
+          // candidate to each other on the privileged `arsenal://` origin.
+          // Use the same public STUN contract as the production room so this
+          // two-context fixture tests the actual ICE path instead of hanging
+          // in `checking` forever.
+          iceServers: [{ urls: "stun:stun.cloudflare.com:3478" }],
+          timeoutMs,
+          RTCPeerConnection,
+          onEvent,
+        });
+        roomSession.start();
+      }
+
+      start().catch(abort);
+    </script>
+  </body>
+</html>

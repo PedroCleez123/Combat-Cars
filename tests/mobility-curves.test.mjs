@@ -87,3 +87,29 @@ test("curve comparison reports zero shape error for an identical capture", () =>
   }
 });
 
+test("curve comparison exposes LAN snapshot phases without treating them as native frames", () => {
+  const trace = {
+    samples: Array.from({ length: 4 }, (_, index) => ({
+      frame: index + 1,
+      input: {},
+      state: {
+        position: { x: index, y: index, z: 0 },
+        velocity: { x: index, y: 0, z: 0 },
+        localAngularVelocity: { pitch: 0, yaw: 0, roll: 0 },
+        angularVelocity: { pitch: 0, yaw: 0, roll: 0 },
+        orientation: { x: 0, y: 0, z: 0, w: 1 },
+        actionSerials: { jump: 0, doubleJump: 0, dodge: 0 },
+        dodgeDirection: { forward: 0, side: 0 },
+      },
+    })),
+  };
+  const document = {
+    fixedStepHz: 60,
+    scenarioManifest: { scenarios: [{ id: "dodge-side", phases: [{ id: "pulse", snapshots: 1 }, { id: "release", snapshots: 3 }] }] },
+    traces: { dodgeSide: trace },
+  };
+  const report = compareCurveTraces(document, document, "dodge-side");
+  assert.deepEqual(report.phases.map(phase => phase.id), ["pulse", "release"]);
+  assert.deepEqual(report.phases.map(phase => phase.frames), [1, 3]);
+});
+

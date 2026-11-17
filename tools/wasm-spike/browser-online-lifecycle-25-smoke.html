@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>ONLINE-LIFECYCLE-25 · sustitución P2P</title>
+    <style>:root{color-scheme:dark;font:14px ui-monospace,Consolas,monospace;background:#101820;color:#d8e6f1}body{margin:0;min-height:100vh;display:grid;place-items:center}main{width:min(58rem,calc(100vw - 3rem));padding:1.5rem;border:1px solid #42617a;border-radius:.75rem;background:#142638}h1{font-size:1.15rem}pre{white-space:pre-wrap;color:#a7eecc}</style>
+  </head>
+  <body><main><h1>ONLINE-LIFECYCLE-25 · host/guest replacement Chromium</h1><pre id="status">Inicializando…</pre></main>
+    <script type="module">
+      import { createP2PWasmCombatHost } from "./p2p-wasm-combat-host.mjs";
+      import { P2PWasmCausalRoomSession } from "./p2p-wasm-causal-room-session.mjs";
+
+      const role = location.hash.slice(1);
+      const status = document.querySelector("#status");
+      const roomId = "online-lifecycle-25-local";
+      const sessionPrefix = "online-lifecycle-25";
+      const broadcastName = `arsenal-${roomId}`;
+      const idleCommand = () => ({ controls: { throttle: 0, steer: 0, boost: false, jump: false }, fire: false, restart: false, targetId: null });
+      let signaling = null;
+      let session = null;
+      let generation = 0;
+      let closing = false;
+      let snapshots = 0;
+      let replacementReady = false;
+      let replacementAuthorized = false;
+      let guestOneActive = false;
+      let guestOneSnapshotTick = null;
+      let guestTwoActive = false;
+      let guestTwoSnapshotTick = null;
+      let firstHostSnapshots = 0;
+      let firstHostSnapshotTick = null;
+      let replacementHostSnapshots = 0;
+      let replacementHostSnapshotTick = null;
+      let guestOneLeft = false;
+      let hostWaitingReplacement = false;
+      let lifecyclePublished = false;
+      let guestOneSession = null;
+      let guestTwoSession = null;
+      let hostSession = null;
+      const eventLog = [];
+
+      const publish = (value) => { window.__arsenalOnlineLifecycle25Smoke = value; status.textContent = JSON.stringify(value, null, 2); };
+      const fail = (message) => { const error = new Error(message); error.diagnostic = message; throw error; };
+
+      class LocalLifecycleSignaling {
+        constructor(selfRole) {
+          this.selfRole = selfRole;
+          this.listeners = new Map();
+          this.closed = false;
+          this.presenceTimer = null;
+          this.seenPeers = new Set();
+          this.channel = new BroadcastChannel(broadcastName);
+          this.channel.addEventListener("message", event => this.onMessage(event?.data));
+        }
+        on(type, listener) {
+          const listeners = this.listeners.get(type) || new Set();
+          listeners.add(listener); this.listeners.set(type, listeners);
+          return () => listeners.delete(listener);
+        }
+        emit(type, event = {}) { for (const listener of this.listeners.get(type) || []) listener(event); }
+        post(message) { if (!this.closed) this.channel.postMessage({ ...message, sender: this.selfRole }); }
+        announce(nextGeneration = generation) { this.post({ kind: "presence", role: this.selfRole, generation: nextGeneration }); }
+        startPresence(nextGeneration = generation) {
+          this.stopPresence();
+          // A page can finish loading while its peer is still importing the WebRTC modules. Retry presence until an actual causal snapshot proves the channel is active.
+          this.announce(nextGeneration);
+          this.presenceTimer = setInterval(() => this.announce(nextGeneration), 100);
+        }
+        stopPresence() { if (this.presenceTimer !== null) clearInterval(this.presenceTimer); this.presenceTimer = null; }
+        leave(nextGeneration = generation) { this.stopPresence(); this.post({ kind: "leave", role: this.selfRole, generation: nextGeneration }); }
+        sendSignal(payload) { this.post({ kind: "signal", role: this.selfRole, generation, payload }); }
+        onMessage(message) {
+          if (this.closed || !message || message.sender === this.selfRole) return;
+          if (message.kind === "allow-replacement" && this.selfRole === "guest2" && message.role === "host" && message.generation === 2) {
+            generation = message.generation;
+            replacementReady = true;
+            status.textContent = "Reemplazo autorizado; negociando con el anfitrión.";
+            startGuest(2);
+            return;
+          }
+          if (message.generation !== generation) return;
+          if (message.kind === "presence" && this.selfRole === "host"
+            && ((message.role === "guest1" && generation === 1) || (message.role === "guest2" && generation === 2))) {
+            const peerKey = `${message.role}:${message.generation}`;
+            if (this.seenPeers.has(peerKey)) return;
+            this.seenPeers.add(peerKey);
+            if (message.role === "guest1") status.textContent = "Invitado 1 detectado; negociando…";
+            else { replacementReady = true; status.textContent = "Invitado 2 detectado; negociando…"; }
+            this.emit("peer-ready", { role: "guest" });
+            return;
+          }
+          if (message.kind === "guest-one-active" && this.selfRole === "host" && message.role === "guest1" && generation === 1
+            && message.channelOpen === true && message.channelReady === true && Number.isSafeInteger(message.snapshotTick) && message.snapshotTick > 0
+            && message.sessionId === `${sessionPrefix}-1`) {
+            guestOneActive = true;
+            guestOneSnapshotTick = message.snapshotTick;
+            this.post({ kind: "guest-one-active-ack", role: "host", generation: 1 });
+            return;
+          }
+          if (message.kind === "guest-one-active-ack" && this.selfRole === "guest1" && message.role === "host" && generation === 1) {
+            this.stopPresence();
+            // Leave only after the host acknowledges a snapshot received by guest1. This orders the lifecycle transition after proof of the first active pair.
+            setTimeout(() => {
+              if (closing || guestOneLeft) return;
+              guestOneLeft = true;
+              signaling.leave(1);
+              closeSession(guestOneSession);
+            }, 100);
+            return;
+          }
+          if (message.kind === "guest-two-active" && this.selfRole === "host" && message.role === "guest2" && generation === 2
+            && message.channelOpen === true && message.channelReady === true && Number.isSafeInteger(message.snapshotTick) && message.snapshotTick > 0
+            && message.sessionId === `${sessionPrefix}-2`) {
+            guestTwoActive = true;
+            guestTwoSnapshotTick = message.snapshotTick;
+            publishLifecycleIfReady();
+            return;
+          }
+          if (message.kind === "signal" && this.selfRole === "host" && message.role === "guest1" && generation === 1) this.emit("signal", { payload: message.payload });
+          if (message.kind === "signal" && this.selfRole === "host" && message.role === "guest2" && generation === 2) this.emit("signal", { payload: message.payload });
+          if (message.kind === "signal" && this.selfRole !== "host" && message.role === "host") this.emit("signal", { payload: message.payload });
+          if (message.kind === "leave" && this.selfRole === "host" && message.role === "guest1" && generation === 1) this.emit("peer-left", { role: "guest" });
+        }
+        close() { if (this.closed) return; this.closed = true; this.stopPresence(); this.channel.close(); }
+      }
+
+      function closeSession(target) { try { target?.close?.("online-lifecycle-25-cleanup"); } catch {} }
+
+      function onSessionEvent(event, sessionRef, guestRole = null) {
+        if (event?.type) eventLog.push({ type: event.type, role: event.role || null, state: event.state || null, error: event.error?.code || null });
+        if (event.type === "negotiating") status.textContent = `${role} negociando WebRTC…`;
+        if (event.type === "channel-open") status.textContent = `${role} canal abierto.`;
+        if (event.type === "error") status.textContent = `${role} error de sesión.`;
+        if (event.type === "closed" && !guestOneLeft) status.textContent = `${role} sesión cerrada.`;
+        if (event.type === "causal-message" && event.outcome?.type === "welcome" && guestRole) {
+          sessionRef.causalSession?.sendCommand(idleCommand());
+          status.textContent = "Canal listo; enviando primer estado.";
+        }
+        if (event.type === "peer-left" && role === "host" && generation === 1) {
+          guestOneLeft = true;
+          hostWaitingReplacement = true;
+          hostSession = null;
+          generation = 2;
+          status.textContent = "Rival desconectado; esperando reemplazo.";
+          // Let the original WebRTC boundary finish its synchronous close
+          // before creating the replacement offer. Otherwise its late
+          // data-channel close can race the new boundary.
+          setTimeout(() => {
+            if (closing) return;
+            startHost();
+            replacementAuthorized = true;
+            signaling.post({ kind: "allow-replacement", generation: 2, role: "host" });
+          }, 100);
+        }
+      }
+
+      function createSession(nextRole, nextGeneration) {
+        let createdSession = null;
+        createdSession = new P2PWasmCausalRoomSession({
+          role: nextRole === "host" ? "host" : "pilot",
+          signaling,
+          context: { roomId, sessionId: `${sessionPrefix}-${nextGeneration}` },
+          iceServers: [{ urls: "stun:stun.cloudflare.com:3478" }],
+          RTCPeerConnection,
+          presentation: true,
+          hostFactory: options => createP2PWasmCombatHost({ ...options, combatOptions: { scoreToWin: 1 } }),
+          onSnapshot: (envelope) => {
+            snapshots += 1;
+            const snapshot = envelope?.snapshot || envelope;
+            const snapshotTick = snapshot?.tick;
+            if (nextRole === "host" && nextGeneration === 1 && Number.isSafeInteger(snapshotTick) && snapshotTick > 0) {
+              firstHostSnapshots += 1;
+              firstHostSnapshotTick ??= snapshotTick;
+            }
+            if (nextRole === "host" && nextGeneration === 2 && Number.isSafeInteger(snapshotTick) && snapshotTick > 0) {
+              replacementHostSnapshots += 1;
+              replacementHostSnapshotTick ??= snapshotTick;
+            }
+            if (nextRole === "pilot" && Number.isSafeInteger(snapshotTick) && snapshotTick > 0 && (nextGeneration === 1 || nextGeneration === 2)) {
+              const firstActivation = nextGeneration === 1 ? !guestOneActive : !guestTwoActive;
+              if (firstActivation) {
+                if (nextGeneration === 1) { guestOneActive = true; guestOneSnapshotTick = snapshotTick; }
+                else { guestTwoActive = true; guestTwoSnapshotTick = snapshotTick; }
+                signaling?.stopPresence();
+                signaling?.post({
+                  kind: nextGeneration === 1 ? "guest-one-active" : "guest-two-active",
+                  role,
+                  generation: nextGeneration,
+                  sessionId: `${sessionPrefix}-${nextGeneration}`,
+                  channelOpen: createdSession?.channelOpen === true,
+                  channelReady: createdSession?.channelReady === true,
+                  snapshotTick,
+                });
+              }
+            }
+            publishLifecycleIfReady();
+          },
+          onEvent: event => onSessionEvent(event, createdSession, nextRole === "pilot" ? nextRole : null),
+        });
+        return createdSession;
+      }
+
+      function startHost() {
+        if (hostSession && !hostSession.closed) return;
+        status.textContent = generation === 1 ? "Anfitrión esperando invitado…" : "Anfitrión esperando reemplazo…";
+        hostSession = createSession("host", generation);
+        session = hostSession;
+        hostSession.start();
+      }
+
+      function startGuest(number) {
+        if (number === 1 && guestOneSession) return;
+        if (number === 2 && guestTwoSession) return;
+        const nextGeneration = number;
+        const target = createSession("pilot", nextGeneration);
+        if (number === 1) guestOneSession = target; else guestTwoSession = target;
+        target.start();
+        status.textContent = number === 1 ? "Invitado 1 negociando…" : "Invitado 2 negociando…";
+        signaling.startPresence(nextGeneration);
+      }
+
+      function publishLifecycleIfReady() {
+        if (role !== "host" || lifecyclePublished || !guestOneActive || !guestOneLeft || !hostWaitingReplacement
+          || firstHostSnapshots < 1 || !replacementAuthorized || !replacementReady || !guestTwoActive || replacementHostSnapshots < 1
+          || !hostSession || hostSession.closed || generation !== 2) return;
+        lifecyclePublished = true;
+        publish({ ok: true, story: "ONLINE-LIFECYCLE-25", transport: "webrtc-local", lifecycle: {
+          guestOneActive, guestOneSnapshotTick, hostFirstActive: firstHostSnapshots > 0, firstHostSnapshotTick, guestOneLeft, hostWaitingReplacement,
+          guestTwoAuthorized: replacementAuthorized, guestTwoReady: replacementReady,
+          guestTwoActive, guestTwoSnapshotTick, hostReplacementSession: true,
+          replacementHostSnapshotTick, replacementHostSnapshots,
+        }, snapshots });
+      }
+
+      function cleanup() {
+        if (closing) return { closed: true, idempotent: true };
+        closing = true;
+        closeSession(hostSession); closeSession(guestOneSession); closeSession(guestTwoSession); signaling?.close();
+        return { closed: true, idempotent: true };
+      }
+      window.__arsenalOnlineLifecycle25Cleanup = cleanup;
+      window.__onlineLifecycle25Debug = () => ({ role, generation, replacementReady, replacementAuthorized, guestOneActive,
+        guestOneSnapshotTick, firstHostSnapshots, firstHostSnapshotTick, guestOneLeft, hostWaitingReplacement, guestTwoActive, guestTwoSnapshotTick, replacementHostSnapshots,
+        transport: session?.transport ? { state: session.transport.state, offerStarted: session.transport.offerStarted, remoteDescriptionSeen: session.transport.remoteDescriptionSeen } : null,
+        host: hostSession?.transport ? { state: hostSession.transport.state, offerStarted: hostSession.transport.offerStarted, peerReady: hostSession.peerReady } : null,
+        events: eventLog.slice(-20) });
+
+      async function start() {
+        if (!["host", "guest1", "guest2"].includes(role)) return fail("ONLINE-LIFECYCLE-25 requiere #host, #guest1 o #guest2");
+        if (typeof RTCPeerConnection !== "function" || typeof BroadcastChannel !== "function") return fail("Chromium no ofrece WebRTC/BroadcastChannel");
+        signaling = new LocalLifecycleSignaling(role);
+        if (role === "host") {
+          generation = 1;
+          signaling.on("peer-ready", () => {
+            if (!hostSession) startHost();
+            // The causal session's own peer-ready observer may run after this
+            // room observer. Defer the offer once so either listener order is
+            // safe and replacement cannot stall in negotiation.
+            queueMicrotask(() => hostSession?.beginOffer?.());
+          });
+          signaling.on("peer-left", () => {
+            // A local guest close can surface once from the room signal and
+            // once from the WebRTC data-channel close. The production lobby
+            // treats both as one lifecycle transition; the fixture must do
+            // the same so the replacement session is not closed immediately.
+            if (generation !== 1 || hostWaitingReplacement) return;
+            const current = hostSession;
+            if (current?.transport) current.transport.emit("peer-left", { role: "guest" });
+          });
+          startHost();
+        } else if (role === "guest1") {
+          generation = 1; startGuest(1);
+        } else {
+          generation = 0;
+        }
+      }
+      start().catch(error => { publish({ ok: false, story: "ONLINE-LIFECYCLE-25", error: String(error?.diagnostic || error?.message || error) }); cleanup(); console.error(error); });
+    </script>
+  </body>
+</html>

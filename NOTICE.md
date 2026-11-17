@@ -1,4 +1,4 @@
-# Car Soccer: Arsenal — notices
+# Combat Cars — notices
 
 This local prototype was created with the direct authorization supplied by the
 project owner on 10 October 2026 to use the code and assets of

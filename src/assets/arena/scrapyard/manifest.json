@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "id": "industrial-scrapyard",
+  "generatedAt": "2026-11-15",
+  "provenance": {
+    "status": "user-confirmed",
+    "confirmedAt": "2026-11-15",
+    "statement": "User confirmed ownership and redistribution rights for the five approved sources, which were created with another AI.",
+    "license": "user-confirmed-redistribution-rights",
+    "sourceLocation": "external-user-supplied",
+    "rawSourcePolicy": "No raw PNG is copied into the runtime or Pages package."
+  },
+  "derivation": {
+    "tool": "Python Pillow",
+    "toolVersion": "13.0.0",
+    "format": "webp",
+    "quality": 82,
+    "method": 6,
+    "colorMode": "RGB",
+    "alpha": false,
+    "normalMaps": false,
+    "powerOfTwo": true,
+    "hazardCropPx": [
+      256,
+      256,
+      768,
+      768
+    ],
+    "notes": "1024x1024 sources keep their dimensions; the hazard derivative is a 1:1 512x512 crop of the interior stripe field, excluding the riveted frame."
+  },
+  "limits": {
+    "targetBytes": 4194304,
+    "hardStopBytes": 6291456,
+    "maxBaseAlbedoBytes": 524288,
+    "maxHazardBytes": 262144,
+    "maxCoverBytes": 262144,
+    "approvedTextureCount": 5
+  },
+  "totalBytes": 1275976,
+  "textures": [
+    {
+      "id": "ground-concrete",
+      "url": "/src/assets/arena/scrapyard/ground-concrete.webp",
+      "source": "Meshy_AI_ground_concrete_cracked_texture.png",
+      "sourceBytes": 2913905,
+      "sourceSha256": "606d9c4311fafe4225228e8d5c2798c3ba4114102a7c23e0319bb819a07849be",
+      "sha256": "cafe928357fa8ea16050e91c6bad83fb81ca6b4537ccbdaca0c6be6350da3e85",
+      "bytes": 381584,
+      "width": 1024,
+      "height": 1024,
+      "colorSpace": "srgb",
+      "alpha": false,
+      "role": "floor",
+      "surface": "floor and lower quarter-pipe band",
+      "repeat": "world-projection with mirrored repeat at a stable large scale",
+      "maxBytes": 524288
+    },
+    {
+      "id": "wall-concrete",
+      "url": "/src/assets/arena/scrapyard/wall-concrete.webp",
+      "source": "Meshy_AI_worn_concrete_graffiti_texture.png",
+      "sourceBytes": 2965951,
+      "sourceSha256": "73a5d861e6cbe487845c9afab75357cd27ba36833ebb1b81229b1ad567470c4f",
+      "sha256": "33ad19b51fe2b8065ead0563def6a83675ff2e255fee792f5f522ff582c2b104",
+      "bytes": 384662,
+      "width": 1024,
+      "height": 1024,
+      "colorSpace": "srgb",
+      "alpha": false,
+      "role": "wall",
+      "surface": "vertical walls, corner fillets, and native block/ramp bodies",
+      "repeat": "world-projection at low frequency with a large stable scale",
+      "maxBytes": 524288
+    },
+    {
+      "id": "corrugated-metal",
+      "url": "/src/assets/arena/scrapyard/corrugated-metal.webp",
+      "source": "Meshy_AI_rusty_corrugated_metal_texture.png",
+      "sourceBytes": 2627262,
+      "sourceSha256": "bfcae3c6446a578a683329481a0e4bf1bdc80e34b447f939925a61d81562d03b",
+      "sha256": "adb8d4349dca1c1f9c079b38eec892fecd2bcfe12e1ccd516db6a43bfc597cef",
+      "bytes": 351806,
+      "width": 1024,
+      "height": 1024,
+      "colorSpace": "srgb",
+      "alpha": false,
+      "role": "metal",
+      "surface": "upper wall/ceiling panels, obstacle caps, and gantry panels",
+      "repeat": "horizontal repeat with a stable rib scale",
+      "maxBytes": 524288
+    },
+    {
+      "id": "hazard-stripes",
+      "url": "/src/assets/arena/scrapyard/hazard-stripes.webp",
+      "source": "Meshy_AI_hazard_stripes_warning_texture.png",
+      "sourceBytes": 2471325,
+      "sourceSha256": "edcfa0cb7ff90b40853c795efae9bb050cc19069adfbd6170fd70002ce83e4aa",
+      "sha256": "70b53b3d484ce85de88c63b1e76dcc283ce97c0dd8fb92c13ef9af7a5af486de",
+      "bytes": 83482,
+      "width": 512,
+      "height": 512,
+      "colorSpace": "srgb",
+      "alpha": false,
+      "role": "hazard",
+      "surface": "native obstacle edges, ramp lip, and constrained perimeter bands",
+      "repeat": "single decal or constrained strip; never a full-surface repeat",
+      "cropPx": [
+        256,
+        256,
+        768,
+        768
+      ],
+      "maxBytes": 262144
+    },
+    {
+      "id": "worn-tires-rubber",
+      "url": "/src/assets/arena/scrapyard/worn-tires-rubber.webp",
+      "source": "Meshy_AI_worn_tires_rubber_texture.png",
+      "sourceBytes": 2563728,
+      "sourceSha256": "7122f27fbeefb6e40c8dd5c3ff806fd2d271e9f202a44e0c1336ac88dd6fe281",
+      "sha256": "905e6b00c90af4221f513c67cb16d6dc5eb6be71a942e6d35f3dd463975db979",
+      "bytes": 74442,
+      "width": 512,
+      "height": 512,
+      "colorSpace": "srgb",
+      "alpha": false,
+      "role": "tires",
+      "surface": "instanced tire barricades and cover stacks",
+      "repeat": "UV repeat on shared torus geometry",
+      "maxBytes": 262144
+    }
+  ],
+  "deferred": [
+    {
+      "source": "Meshy_AI_chainlink_metal_fence_texture.png",
+      "reason": "No real alpha mask; not packaged until a later approved task supplies or generates one."
+    },
+    {
+      "source": "Meshy_AI_asphalt_road_stripes_texture.png",
+      "reason": "Optional floor decal; road layout is not tileable and is outside the initial four-albedo set."
+    }
+  ],
+  "rejected": [
+    {
+      "source": "ejemplo textura.png",
+      "reason": "Top-down composition reference only; rejected as an arena map, shell texture, or UV atlas."
+    }
+  ]
+}
+

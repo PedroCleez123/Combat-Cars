@@ -85,11 +85,15 @@ function compareSignals(referenceSamples, candidateSamples, sampleCount) {
 
 function phaseComparisons(referenceTrace, candidateTrace, phases, sampleCount) {
   if (!phases.length) return [];
-  const totalFrames = phases.reduce((total, phase) => total + phase.frames, 0);
+  // Native curve manifests use `frames`; the LAN contract intentionally uses
+  // `snapshots` because each sample represents two fixed native ticks.
+  const phaseLength = phase => Number.isSafeInteger(phase.frames) ? phase.frames : phase.snapshots;
+  const totalFrames = phases.reduce((total, phase) => total + phaseLength(phase), 0);
   if (totalFrames !== candidateTrace.samples.length) return [];
   let startFrame = 0;
   return phases.map((phase, index) => {
-    const endFrame = startFrame + phase.frames;
+    const frames = phaseLength(phase);
+    const endFrame = startFrame + frames;
     const referenceStart = Math.round(startFrame / totalFrames * referenceTrace.samples.length);
     const referenceEnd = Math.round(endFrame / totalFrames * referenceTrace.samples.length);
     const candidateStart = Math.round(startFrame / totalFrames * candidateTrace.samples.length);
@@ -97,7 +101,7 @@ function phaseComparisons(referenceTrace, candidateTrace, phases, sampleCount) {
     startFrame = endFrame;
     return {
       id: phase.id || `phase-${index + 1}`,
-      frames: phase.frames,
+      frames,
       input: phase.input,
       signals: compareSignals(
         referenceTrace.samples.slice(referenceStart, referenceEnd),

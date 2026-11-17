@@ -4,12 +4,16 @@ node_modules/
 /archive/rocketsim-builds/
 /.agents/
 /.codex/
-/_bmad/
 /work/
-/docs/archive/2026-10-15/openwiki-update.yml
-/docs/archive/2026-10-16/openwiki-update-workflow.yml
 *.log
 .tmp-*.mjs
 dist/
 dist-final/
 dist-release/
+dist-pages-beta/
+.wrangler/
+.tmp-emscripten/
+.img2threejs/
+# Capturas y logs generados por smoke visual; las pruebas los regeneran bajo
+# demanda y no forman parte de la distribución Pages.
+/artifacts/

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RocketSim WASM · capacidad aislada</title>
+    <style>
+      :root { color-scheme: dark; font-family: ui-monospace, Consolas, monospace; background: #0d1520; color: #d8e6f1; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+      main { width: min(48rem, calc(100vw - 3rem)); padding: 1.5rem; border: 1px solid #42617a; border-radius: .75rem; background: #132331; }
+      h1 { margin-top: 0; font-size: 1.15rem; }
+      p { color: #a9bece; line-height: 1.5; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 2rem; color: #a7eecc; }
+      .error { color: #ff9d9d; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>RocketSim WASM · capacidad aislada</h1>
+      <p>Esta página sólo mide seis coches en THE_VOID. No carga el juego ni abre una sala.</p>
+      <pre id="status" aria-live="polite">Inicializando módulo…</pre>
+    </main>
+    <script type="module">
+      import { captureWasmAirVoidMultiCarTrace } from "./multi-car.mjs";
+      const output = document.querySelector("#status");
+      try {
+        const result = await captureWasmAirVoidMultiCarTrace();
+        window.__arsenalWasmBrowserMulticarSmoke = result;
+        output.textContent = JSON.stringify(result, null, 2);
+      } catch (error) {
+        const result = { ok: false, error: String(error?.message || error) };
+        window.__arsenalWasmBrowserMulticarSmoke = result;
+        output.classList.add("error");
+        output.textContent = JSON.stringify(result, null, 2);
+        console.error("RocketSim WASM multicar browser smoke failed", error);
+      }
+    </script>
+  </body>
+</html>

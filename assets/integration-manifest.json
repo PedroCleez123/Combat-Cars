@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-15",
+  "purpose": "offline audiovisual integration",
+  "authorization": "user-confirmed repository-family and user-supplied asset usage (2026-11-15)",
+  "source": "C:/Users/Pedro José/Documents/Codex/2026-10-10/s/reference-carsoccer-assets/assets",
+  "textureSource": "user-supplied external sources; provenance and limits in src/assets/arena/scrapyard/manifest.json",
+  "runtimePolicy": {
+    "remoteFetch": false,
+    "visualOnly": true,
+    "physicsAuthority": "RocketSim",
+    "fallback": "procedural skin and synthesized audio"
+  },
+  "assets": [
+    { "path": "src/assets/arena/skybowl.glb", "sourcePath": "arena/skybowl/skybowl.glb", "sha256": "BC5861CD4E4CC722F778C31CF428AD343ADF870385EA724F37BF7FD243A54AC0", "bytes": 797736, "maxTriangles": 12000 },
+    { "path": "src/assets/arena/boost-pads.glb", "sourcePath": "arena/pads/boost-pads.glb", "sha256": "83798A70A039EEBB1C73B78864A9D697E67DCE7292013FF0F0947C40B8EA0FCF", "bytes": 229044, "maxTriangles": 5000 },
+    { "path": "src/assets/vehicle/model.gltf", "sourcePath": "game-car/model.gltf", "sha256": "49190B1C66C51893A6FD36AC6CE3027843747EE18BBBE49D009434EEBEC61EA6", "bytes": 24134, "maxTriangles": 16000, "role": "vehicle-visual-skin" },
+    { "path": "src/assets/vehicle/geometry.bin", "sourcePath": "game-car/geometry.bin", "sha256": "0E5F635C940A545A38CCF265E563E7E231E035265C18F48521D10165D980270A", "bytes": 383628, "role": "vehicle-visual-skin-buffer" },
+    { "path": "src/assets/arena/scrapyard/ground-concrete.webp", "sourcePath": "external-user-supplied/Meshy_AI_ground_concrete_cracked_texture.png", "sha256": "CAFE928357FA8EA16050E91C6BAD83FB81CA6B4537CCBDACA0C6BE6350DA3E85", "bytes": 381584, "width": 1024, "height": 1024, "colorSpace": "srgb", "alpha": false, "role": "arena-floor-albedo", "maxBytes": 524288 },
+    { "path": "src/assets/arena/scrapyard/wall-concrete.webp", "sourcePath": "external-user-supplied/Meshy_AI_worn_concrete_graffiti_texture.png", "sha256": "33AD19B51FE2B8065EAD0563DEF6A83675FF2E255FEE792F5F522FF582C2B104", "bytes": 384662, "width": 1024, "height": 1024, "colorSpace": "srgb", "alpha": false, "role": "arena-wall-albedo", "maxBytes": 524288 },
+    { "path": "src/assets/arena/scrapyard/corrugated-metal.webp", "sourcePath": "external-user-supplied/Meshy_AI_rusty_corrugated_metal_texture.png", "sha256": "ADB8D4349DCA1C1F9C079B38EEC892FECD2BCFE12E1CCD516DB6A43BFC597CEF", "bytes": 351806, "width": 1024, "height": 1024, "colorSpace": "srgb", "alpha": false, "role": "arena-metal-albedo", "maxBytes": 524288 },
+    { "path": "src/assets/arena/scrapyard/hazard-stripes.webp", "sourcePath": "external-user-supplied/Meshy_AI_hazard_stripes_warning_texture.png", "sha256": "70B53B3D484CE85DE88C63B1E76DCC283CE97C0DD8FB92C13EF9AF7A5AF486DE", "bytes": 83482, "width": 512, "height": 512, "colorSpace": "srgb", "alpha": false, "role": "arena-hazard-albedo", "maxBytes": 262144 },
+    { "path": "src/assets/arena/scrapyard/worn-tires-rubber.webp", "sourcePath": "external-user-supplied/Meshy_AI_worn_tires_rubber_texture.png", "sha256": "905E6B00C90AF4221F513C67CB16D6DC5EB6BE71A942E6D35F3DD463975DB979", "bytes": 74442, "width": 512, "height": 512, "colorSpace": "srgb", "alpha": false, "role": "arena-cover-tires", "maxBytes": 262144 },
+    { "path": "assets/audio/engine/idle.wav", "sourcePath": "audio/engine/idle.wav", "sha256": "1ED36213F1692A44BAFFD8B44DB2A6FA49283980C08143CE5B5ECFAFCF528D0E", "bytes": 321984, "role": "engine-idle" },
+    { "path": "assets/audio/engine/coast-01.wav", "sourcePath": "audio/engine/coast-01.wav", "sha256": "9016CEB695400A268B28F802B51C6D29543777C18BED3A30D0B2F2B3F746C94A", "bytes": 47574, "role": "engine-coast" },
+    { "path": "assets/audio/engine/loaded-01.wav", "sourcePath": "audio/engine/loaded-01.wav", "sha256": "25CA88852218BAD569D74FF318523C2C8EF4E21B2A8D418B29699BA37438F538", "bytes": 50640, "role": "engine-loaded" },
+    { "path": "assets/audio/boost/start.wav", "sourcePath": "audio/boost/start.wav", "sha256": "96F54FED373C5A3CA2AA1F67AF626281C55DFE44F90E1E7E08FEC60201FC46C7", "bytes": 196196, "role": "boost-start" },
+    { "path": "assets/audio/boost/loop.wav", "sourcePath": "audio/boost/loop.wav", "sha256": "9910E9347389DBFCA3BC62A825CA3DA58CF0DAB563AB622C4CCEDF9FD80F5BBA", "bytes": 255020, "role": "boost-loop" },
+    { "path": "assets/audio/boost/release.wav", "sourcePath": "audio/boost/release.wav", "sha256": "259127D39F4E4622FF638EFA2AC4C16D96C2DC8F5AE861720AD47A5CC82D7D51", "bytes": 120772, "role": "boost-release" },
+    { "path": "assets/audio/vehicle/jump-01.wav", "sourcePath": "audio/vehicle/jump-01.wav", "sha256": "939B9DEE9F8161E5F49EB30A3C3DA210E27509560A01B486E03A953E2E40C1E4", "bytes": 432044, "role": "jump" },
+    { "path": "assets/audio/vehicle/double-jump-01.wav", "sourcePath": "audio/vehicle/double-jump-01.wav", "sha256": "D70BF9B9BB9534779D2830E17A14A165A8EF58841F96A93473C487EC6BE5C2C1", "bytes": 437036, "role": "double-jump" },
+    { "path": "assets/audio/vehicle/dodge-01.wav", "sourcePath": "audio/vehicle/dodge-01.wav", "sha256": "3EFDC8A3958ECE251871C58B4FB794B5829CDC92A8032BB0AC88140EE6A58F72", "bytes": 460844, "role": "dodge" },
+    { "path": "assets/audio/impacts/vehicle-body-01.wav", "sourcePath": "audio/impacts/vehicle-body-01.wav", "sha256": "363909B4393DAB4CF2AF7A74028D4F57626A020D1FCD18525089C961C4E91836", "bytes": 29536, "role": "vehicle-impact" },
+    { "path": "assets/audio/impacts/arena-01.wav", "sourcePath": "audio/impacts/arena-01.wav", "sha256": "A340E6AA31D1449D7983C1759303596F63A0770B34735022029FA55FA9159E7F", "bytes": 19926, "role": "arena-impact" }
+  ]
+}

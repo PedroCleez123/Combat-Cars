@@ -117,8 +117,8 @@ export function stepHitbox01BrowserObservation(playback, {
     finish(playback, "requires-rocketsim");
     return result(playback, recoveryInput);
   }
-  if (Number.isFinite(Number(bridgeRevision)) && Number(bridgeRevision) < 19) {
-    finish(playback, "requires-r19");
+  if (Number.isFinite(Number(bridgeRevision)) && Number(bridgeRevision) < 20) {
+    finish(playback, "requires-r20");
     return result(playback, recoveryInput);
   }
   if (Number.isSafeInteger(playerCount) && playerCount !== 1) {

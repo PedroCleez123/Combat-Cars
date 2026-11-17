@@ -1,0 +1,20 @@
+{
+  "source": "https://car-soccer.com/assets/audio/",
+  "sourceCopy": "C:/Users/Pedro José/Documents/Codex/2026-10-10/s/reference-carsoccer-assets/assets/audio",
+  "purpose": "offline sample bank for Combat Cars",
+  "authorization": "User-authorized reference asset copy for this build; verify redistribution rights before public release.",
+  "policy": "Only the representative files below are shipped initially. Add variants here and in src/audio-sample-bank.js when expanding the bank.",
+  "files": [
+    { "path": "engine/idle.wav", "sha256": "1ED36213F1692A44BAFFD8B44DB2A6FA49283980C08143CE5B5ECFAFCF528D0E" },
+    { "path": "engine/coast-01.wav", "sha256": "9016CEB695400A268B28F802B51C6D29543777C18BED3A30D0B2F2B3F746C94A" },
+    { "path": "engine/loaded-01.wav", "sha256": "25CA88852218BAD569D74FF318523C2C8EF4E21B2A8D418B29699BA37438F538" },
+    { "path": "boost/start.wav", "sha256": "96F54FED373C5A3CA2AA1F67AF626281C55DFE44F90E1E7E08FEC60201FC46C7" },
+    { "path": "boost/loop.wav", "sha256": "9910E9347389DBFCA3BC62A825CA3DA58CF0DAB563AB622C4CCEDF9FD80F5BBA" },
+    { "path": "boost/release.wav", "sha256": "259127D39F4E4622FF638EFA2AC4C16D96C2DC8F5AE861720AD47A5CC82D7D51" },
+    { "path": "vehicle/jump-01.wav", "sha256": "939B9DEE9F8161E5F49EB30A3C3DA210E27509560A01B486E03A953E2E40C1E4" },
+    { "path": "vehicle/double-jump-01.wav", "sha256": "D70BF9B9BB9534779D2830E17A14A165A8EF58841F96A93473C487EC6BE5C2C1" },
+    { "path": "vehicle/dodge-01.wav", "sha256": "3EFDC8A3958ECE251871C58B4FB794B5829CDC92A8032BB0AC88140EE6A58F72" },
+    { "path": "impacts/vehicle-body-01.wav", "sha256": "363909B4393DAB4CF2AF7A74028D4F57626A020D1FCD18525089C961C4E91836" },
+    { "path": "impacts/arena-01.wav", "sha256": "A340E6AA31D1449D7983C1759303596F63A0770B34735022029FA55FA9159E7F" }
+  ]
+}

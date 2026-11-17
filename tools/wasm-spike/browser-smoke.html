@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RocketSim WASM · diagnóstico aislado</title>
+    <style>
+      :root { color-scheme: dark; font-family: ui-monospace, Consolas, monospace; background: #0d1520; color: #d8e6f1; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+      main { width: min(48rem, calc(100vw - 3rem)); padding: 1.5rem; border: 1px solid #42617a; border-radius: .75rem; background: #132331; }
+      h1 { margin-top: 0; font-size: 1.15rem; }
+      p { color: #a9bece; line-height: 1.5; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 2rem; color: #a7eecc; }
+      .error { color: #ff9d9d; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>RocketSim WASM · diagnóstico aislado</h1>
+      <p>Esta página no carga el juego, no abre una sala y no sustituye el bridge nativo.</p>
+      <pre id="status" aria-live="polite">Inicializando módulo…</pre>
+    </main>
+    <script type="module">
+      import createRocketSimWasm from "./build/rocketsim_wasm.mjs";
+      import {
+        WASM_TRACE_FRAME_COUNT,
+        airVoidTraceInput,
+        normalizeWasmTraceSnapshot,
+      } from "./trace-contract.mjs";
+
+      const output = document.querySelector("#status");
+      const startedAt = performance.now();
+      try {
+        const Module = await createRocketSimWasm();
+        if (Module._rs_init_trace_air_void() !== 1) throw new Error("La fixture air-void no se pudo iniciar");
+        const tickPtr = Module._malloc(4);
+        const statePtr = Module._malloc(9 * 4);
+        if (!tickPtr || !statePtr) throw new Error("No se pudieron reservar buffers WASM");
+        try {
+          let last = null;
+          for (let tick = 1; tick <= WASM_TRACE_FRAME_COUNT; tick += 1) {
+            const input = airVoidTraceInput(tick);
+            if (Module._rs_set_controls(input.throttle, input.steer, Number(input.jump), Number(input.boost)) !== 1) throw new Error("No se aceptó un control WASM");
+            if (Module._rs_step() !== 1 || Module._rs_snapshot(tickPtr, statePtr) !== 1) throw new Error("WASM no avanzó un tick finito");
+            const values = Array.from(Module.HEAPF32.subarray(statePtr >>> 2, (statePtr >>> 2) + 9));
+            last = { input, ...normalizeWasmTraceSnapshot(Module.HEAPU32[tickPtr >>> 2], values) };
+          }
+          const result = { ok: true, ticks: last.tick, elapsedMs: performance.now() - startedAt, last };
+          window.__arsenalWasmBrowserSmoke = result;
+          output.textContent = JSON.stringify(result, null, 2);
+        } finally {
+          Module._free(statePtr);
+          Module._free(tickPtr);
+          Module._rs_destroy();
+        }
+      } catch (error) {
+        const result = { ok: false, error: String(error?.message || error) };
+        window.__arsenalWasmBrowserSmoke = result;
+        output.classList.add("error");
+        output.textContent = JSON.stringify(result, null, 2);
+        console.error("RocketSim WASM browser smoke failed", error);
+      }
+    </script>
+  </body>
+</html>

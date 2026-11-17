@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#071117">
+    <script type="importmap">{"imports":{"three":"/vendor/three/three.module.js"}}</script>
+    <title>Combat Cars · Sala privada</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        color: #edf3f5;
+        background: #071117;
+      }
+      * { box-sizing: border-box; }
+      html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+      body { min-height: 100dvh; background: #071117; }
+      main { position: relative; width: 100vw; height: 100dvh; overflow: hidden; background: #0b131a; }
+      #multiplayer-arena:fullscreen, #multiplayer-arena:-webkit-full-screen, #multiplayer-arena:-moz-full-screen, #multiplayer-arena:-ms-fullscreen { width: 100vw; height: 100vh; background: #0b131a; }
+      canvas { position: absolute; z-index: 0; inset: 0; display: block; width: 100%; height: 100%; border: 0; background: #0b131a; }
+      #gameplay-input-surface { position: absolute; z-index: 1; inset: 0; touch-action: none; user-select: none; -webkit-user-select: none; }
+      .fps-counter { position: absolute; z-index: 3; top: max(.75rem, env(safe-area-inset-top)); left: max(.75rem, env(safe-area-inset-left)); min-width: 3.75rem; padding: .26rem .42rem; border: 1px solid #45606b88; border-radius: .32rem; background: #10242db8; color: #b7d7d5; font-size: .67rem; font-variant-numeric: tabular-nums; font-weight: 800; letter-spacing: .04em; line-height: 1; pointer-events: none; contain: layout paint; }
+      .boost-meter { position: absolute; z-index: 3; right: max(1rem, env(safe-area-inset-right)); bottom: max(1rem, env(safe-area-inset-bottom)); width: 7.2rem; aspect-ratio: 1; display: grid; place-items: center; isolation: isolate; pointer-events: none; contain: layout paint style; filter: drop-shadow(0 .4rem .7rem #02070a99); }
+      .boost-meter__dial, .boost-meter__fill { position: absolute; inset: 0; border-radius: 50%; }
+      .boost-meter__dial { border: .34rem solid #17343b; background: radial-gradient(circle at 50% 37%, #244951 0 27%, #10242c 55%, #081419 100%); box-shadow: inset 0 0 0 1px #8bcfca55, inset 0 -.32rem .5rem #02070999; }
+      .boost-meter__fill { --boost-level: 0%; --boost-sweep: 0deg; inset: .18rem; background: conic-gradient(from -112.5deg, #ffd36d 0deg var(--boost-sweep), #476c6f 0deg 225deg, transparent 225deg 360deg); -webkit-mask: radial-gradient(transparent 0 58%, #000 60%); mask: radial-gradient(transparent 0 58%, #000 60%); opacity: .98; transition: background .16s linear, filter .16s ease; }
+      .boost-meter__label, .boost-meter__value { position: relative; z-index: 1; text-align: center; font-weight: 900; font-variant-numeric: tabular-nums; text-shadow: 0 .12rem .24rem #02070acc; }
+      .boost-meter__label { align-self: end; margin-bottom: 1.45rem; color: #a9cfcd; font-size: .62rem; letter-spacing: .12em; }
+      .boost-meter__value { align-self: start; margin-top: 1.65rem; min-width: 3ch; color: #fff0bd; font-size: 1.9rem; line-height: 1; }
+      .boost-meter.is-empty .boost-meter__fill { filter: saturate(.35); opacity: .45; }
+      .boost-meter.is-unlimited .boost-meter__fill { background: conic-gradient(from -112.5deg, #83ece1 0deg 225deg, #3b7476 225deg 360deg); }
+      .boost-meter.is-unlimited .boost-meter__value { color: #a8fff5; }
+      .boost-meter.is-firing .boost-meter__fill { filter: brightness(1.3) drop-shadow(0 0 .45rem #ffb642); animation: boost-meter-pulse .3s ease-in-out infinite alternate; }
+      @keyframes boost-meter-pulse { from { transform: scale(.98); } to { transform: scale(1.025); } }
+      .arena-header { position: absolute; z-index: 4; inset: 0 0 auto; display: flex; justify-content: flex-end; align-items: flex-start; gap: .65rem; padding: max(.55rem, env(safe-area-inset-top)) max(.65rem, env(safe-area-inset-right)) .5rem; pointer-events: none; }
+      .arena-header > * { pointer-events: auto; }
+      button, select, input { min-height: 2.35rem; padding: .45rem .65rem; border: 1px solid #58717a; border-radius: .4rem; background: #12252e; color: inherit; font: inherit; }
+      button { cursor: pointer; background: #83d0c7; border-color: #83d0c7; color: #102126; font-weight: 800; }
+      button:hover:not(:disabled) { filter: brightness(1.08); }
+      button:disabled { cursor: not-allowed; opacity: .5; }
+      button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid #f4c56f; outline-offset: 2px; }
+      .secondary, .team-choice[aria-pressed="false"] { border-color: #58717a; background: #14262e; color: #e8f1f2; }
+      .menu { position: relative; }
+      .menu > summary { min-height: 2.35rem; display: grid; place-items: center; padding: .45rem .8rem; border: 1px solid #6b9697; border-radius: .45rem; background: #1e3a42; color: #edf8f6; font-weight: 800; list-style: none; cursor: pointer; user-select: none; }
+      .menu > summary::-webkit-details-marker { display: none; }
+      .menu[open] > summary { background: #83d0c7; color: #102126; }
+      .menu-panel { position: absolute; top: calc(100% + .5rem); right: 0; width: min(23rem, calc(100vw - 1.3rem)); max-height: min(72dvh, 34rem); overflow: auto; padding: .85rem; border: 1px solid #52757c; border-radius: .55rem; background: #13232cf5; box-shadow: 0 1rem 3rem #05090dcc; }
+      .menu-panel h1 { margin: 0 0 .7rem; font-size: 1.15rem; }
+      .menu-form { display: grid; gap: .6rem; }
+      .menu-form label { display: grid; gap: .24rem; color: #b7d7d5; font-size: .8rem; font-weight: 700; }
+      .menu-form input, .menu-form select { width: 100%; }
+      .menu-row { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+      .menu-actions { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+      .menu-actions button { min-width: 0; }
+      .join-panel { display: grid; gap: .45rem; margin-top: .65rem; padding-top: .65rem; border-top: 1px solid #45606b; }
+      .join-panel strong { font-size: .82rem; }
+      .join-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .45rem; }
+      .join-row input { min-width: 0; text-transform: uppercase; }
+      .status { position: absolute; z-index: 3; left: max(.75rem, env(safe-area-inset-left)); bottom: max(.75rem, env(safe-area-inset-bottom)); max-width: min(32rem, calc(100vw - 1.5rem)); margin: 0; padding: .4rem .65rem; border: 1px solid #45606b88; border-radius: .38rem; background: #10242ddd; color: #b7d7d5; font-size: .76rem; line-height: 1.35; }
+      .lobby-panel { position: absolute; z-index: 3; top: max(4.25rem, calc(env(safe-area-inset-top) + 3.5rem)); left: max(.75rem, env(safe-area-inset-left)); display: grid; gap: .55rem; width: min(22rem, calc(100vw - 1.5rem)); padding: .75rem; border: 1px solid #52757c; border-radius: .5rem; background: #10232ceF; box-shadow: 0 .8rem 2.4rem #05090d80; }
+      #multiplayer-lobby-panel:has(#room.hidden) { display: none; }
+      .lobby-disclosure > summary { display: flex; align-items: center; justify-content: space-between; gap: .75rem; min-height: 1.8rem; color: #d9eeed; font-size: .78rem; font-weight: 850; cursor: pointer; list-style: none; user-select: none; }
+      .lobby-disclosure > summary::-webkit-details-marker { display: none; }
+      .lobby-disclosure > summary::after { content: "Plegar"; padding: .2rem .45rem; border: 1px solid #58717a; border-radius: .3rem; color: #b7d7d5; font-size: .68rem; font-weight: 750; }
+      .lobby-disclosure:not([open]) > summary::after { content: "Mostrar"; }
+      .lobby-disclosure:not([open]) > summary { gap: .45rem; }
+      .lobby-panel h2 { margin: 0; font-size: .95rem; }
+      .room-info { margin: 0; color: #b7d7d5; font-size: .76rem; line-height: 1.35; }
+      .room-code-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .4rem; }
+      .room-code { min-width: 0; font-size: 1.05rem; letter-spacing: .12em; font-weight: 900; }
+      .lobby-meta { display: flex; justify-content: space-between; gap: .5rem; color: #b7d7d5; font-size: .73rem; }
+      .team-picker { display: grid; grid-template-columns: auto 1fr 1fr; align-items: center; gap: .4rem; padding-top: .5rem; border-top: 1px solid #45606b; }
+      .host-mode-control { display: grid; gap: .24rem; padding-top: .5rem; border-top: 1px solid #45606b; color: #b7d7d5; font-size: .75rem; font-weight: 800; }
+      .host-mode-control select { width: 100%; }
+      .team-picker-label { color: #b7d7d5; font-size: .75rem; font-weight: 800; }
+      .team-choice { min-height: 2rem; padding: .3rem .5rem; font-size: .75rem; }
+      .team-choice[data-team="blue"][aria-pressed="true"] { background: #4ca9d8; border-color: #74cfff; color: #071820; }
+      .team-choice[data-team="red"][aria-pressed="true"] { background: #d95d68; border-color: #ff8990; color: #220e12; }
+      .lobby-players { display: grid; grid-template-columns: 1fr 1fr; gap: .3rem; }
+      .lobby-player-slot { min-width: 0; overflow: hidden; padding: .32rem .4rem; border-left: 3px solid #83d0c7; background: #0b1a21; color: #e9f4f5; font-size: .72rem; font-weight: 750; text-overflow: ellipsis; white-space: nowrap; }
+      .lobby-player-slot[data-team="red"] { border-left-color: #f05b66; }
+      .lobby-player-slot[data-team="blue"] { border-left-color: #54b8ff; }
+      .start-match { width: 100%; }
+      .match-clock { justify-self: center; color: #ffd178; font-size: 1.5rem; font-variant-numeric: tabular-nums; font-weight: 900; letter-spacing: .05em; }
+      .scoreboard { position: absolute; z-index: 2; top: max(3.7rem, calc(env(safe-area-inset-top) + 3rem)); right: max(.75rem, env(safe-area-inset-right)); width: min(14rem, calc(100vw - 1.5rem)); padding: .45rem .6rem; border: 1px solid #45606b99; border-radius: .38rem; background: #10242db8; backdrop-filter: blur(3px); font-size: .72rem; pointer-events: none; }
+      .scoreboard-header, .scoreboard-row, .scoreboard-team-heading { display: flex; justify-content: space-between; gap: .65rem; }
+      .scoreboard-header { color: #9dc9ca; font-size: .62rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+      .scoreboard-groups { display: grid; gap: .28rem; color: #ffd178; font-weight: 900; }
+      .scoreboard-time { color: #ffd178; font-size: .9rem; font-variant-numeric: tabular-nums; font-weight: 900; letter-spacing: .05em; }
+      .scoreboard-team { display: grid; gap: .12rem; }
+      .scoreboard-team-heading { padding: .18rem .3rem; border-bottom: 1px solid #45606b; font-size: .67rem; letter-spacing: .06em; }
+      .scoreboard-team[data-team="red"] .scoreboard-team-heading { color: #ff9ba0; }
+      .scoreboard-team[data-team="blue"] .scoreboard-team-heading { color: #83d5ff; }
+      .scoreboard-row { margin-top: .18rem; padding: .2rem .3rem; background: #0f2433; color: #edf6ff; font-weight: 750; }
+      .scoreboard-row[data-team="red"] { border-left: 3px solid #ef6a73; }
+      .scoreboard-row[data-team="blue"] { border-left: 3px solid #54b8ff; }
+      .hidden { display: none !important; }
+      [hidden] { display: none !important; }
+      .fullscreen-toggle { min-height: 2.35rem; padding: .45rem .8rem; border-color: #6b9697; background: #1e3a42; color: #edf8f6; }
+      .fullscreen-toggle:disabled { opacity: .58; }
+      .renderer-error { position: absolute; z-index: 5; inset: 50% auto auto 50%; transform: translate(-50%, -50%); width: min(34rem, calc(100vw - 2rem)); padding: 1rem 1.1rem; border: 1px solid #d9a35b; border-radius: .65rem; background: #14252df5; box-shadow: 0 1rem 3rem #05090dcc; color: #edf8f6; }
+      .renderer-error strong { display: block; margin-bottom: .45rem; color: #ffd178; font-size: 1rem; }
+      .renderer-error p { margin: 0; color: #c7dedd; font-size: .82rem; line-height: 1.45; }
+      @media (max-width: 42rem) {
+        .lobby-panel { top: auto; bottom: max(3.5rem, calc(env(safe-area-inset-bottom) + 3.5rem)); }
+        .scoreboard { top: max(3.55rem, calc(env(safe-area-inset-top) + 3rem)); width: min(11rem, calc(100vw - 1.5rem)); }
+      }
+    </style>
+    <script>
+      // `combat-cars.pages.dev.` is a distinct web origin from the canonical
+      // Pages host. Redirect before the module starts so the signalling Worker
+      // sees its exact allowlisted origin and can create the personal room.
+      (() => {
+        const canonicalHost = "combat-cars.pages.dev";
+        if (window.location.hostname === `${canonicalHost}.`) {
+          const canonicalUrl = new URL(window.location.href);
+          canonicalUrl.hostname = canonicalHost;
+          window.location.replace(canonicalUrl.href);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <main id="multiplayer-arena">
+      <canvas id="scene" width="960" height="540" aria-label="Arena Combat Cars"></canvas>
+      <div id="gameplay-input-surface" data-gameplay-surface="true" aria-hidden="true"></div>
+      <output id="fps-counter" class="fps-counter" aria-label="Fotogramas por segundo" aria-live="off">FPS —</output>
+      <aside id="boost-meter" class="boost-meter" data-p2p-boost-meter role="meter" aria-label="Nitro" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <span class="boost-meter__dial" aria-hidden="true"></span>
+        <span class="boost-meter__fill" data-p2p-boost-fill aria-hidden="true"></span>
+        <span class="boost-meter__label" aria-hidden="true">NITRO</span>
+        <strong class="boost-meter__value" data-p2p-boost-value>0</strong>
+      </aside>
+      <section id="renderer-loading-overlay" class="renderer-error" role="alert" aria-live="assertive" hidden>
+        <strong>La arena visual no está disponible</strong>
+        <p id="renderer-loading-status">Preparando WebGL…</p>
+      </section>
+
+      <header class="arena-header">
+        <button id="fullscreen-toggle" class="fullscreen-toggle" type="button" aria-label="Activar pantalla completa" aria-pressed="false">Pantalla completa</button>
+        <details id="multiplayer-menu" class="menu">
+          <summary id="multiplayer-menu-toggle" aria-label="Abrir menú de partida">Menú</summary>
+          <section class="menu-panel" aria-labelledby="menu-title">
+            <h1 id="menu-title">Partida privada</h1>
+            <div class="menu-form">
+              <label>Nombre de piloto
+                <input id="name" maxlength="16" placeholder="Tu nombre" autocomplete="nickname" required>
+              </label>
+              <div class="join-panel">
+                <strong>Unirse a otra sala</strong>
+                <div class="join-row"><input id="join-code" inputmode="text" autocomplete="off" maxlength="14" placeholder="Clave de sala" aria-label="Clave de sala"><button id="join" class="secondary" type="button" disabled>Unirse</button></div>
+                <button id="return-personal-menu" class="secondary" type="button" hidden>Volver a mi sala personal</button>
+              </div>
+            </div>
+          </section>
+        </details>
+      </header>
+
+      <section id="multiplayer-lobby-panel" class="lobby-panel" aria-label="Lobby de la sala">
+        <details id="lobby-panel-disclosure" class="lobby-disclosure" open>
+          <summary aria-label="Mostrar u ocultar el panel del lobby">Lobby</summary>
+          <div id="room" class="hidden">
+            <h2 id="lobby-title">Lobby de partida</h2>
+            <p id="room-info" class="room-info"></p>
+            <div class="room-code-row"><input id="room-code" class="room-code" readonly aria-label="Clave corta de sala"><button id="copy-room-code" class="secondary" type="button">Copiar</button></div>
+            <div class="lobby-meta"><span id="lobby-player-count">Esperando jugadores</span><span id="lobby-match-state">Lobby</span></div>
+            <label id="host-mode-control" class="host-mode-control" hidden>Modo de juego
+              <select id="mode">
+                <option value="" selected>Sin modo seleccionado</option>
+                <option value="1v1">1v1</option>
+                <option value="2v2">2v2</option>
+                <option value="3v3">3v3</option>
+                <option value="ffa">Todos contra todos</option>
+              </select>
+            </label>
+            <button id="configure-room" class="start-match" type="button" hidden>Confirmar modo y abrir equipos</button>
+            <div id="team-picker" class="team-picker" aria-label="Elegir equipo">
+              <span class="team-picker-label">Equipo</span>
+              <button id="team-choice-blue" class="team-choice" type="button" data-team="blue" aria-pressed="false">Azul</button>
+              <button id="team-choice-red" class="team-choice" type="button" data-team="red" aria-pressed="false">Rojo</button>
+            </div>
+            <div id="lobby-players" class="lobby-players" aria-label="Jugadores en sala"></div>
+            <button id="retry-personal-room" class="secondary start-match" type="button" hidden>Reintentar mi sala personal</button>
+            <button id="start-match" class="start-match" type="button" hidden>Empezar partida</button>
+            <button id="return-personal-room" class="secondary start-match" type="button" hidden>Volver a mi sala personal</button>
+            <strong id="match-countdown" class="match-clock" hidden>05:00</strong>
+          </div>
+        </details>
+      </section>
+
+      <section id="scoreboard" class="scoreboard" hidden aria-label="Marcador">
+        <div class="scoreboard-header"><span>Marcador</span><span id="scoreboard-mode">1V1</span><span id="scoreboard-time" class="scoreboard-time" hidden>05:00</span></div>
+        <div id="scoreboard-groups" class="scoreboard-groups"></div>
+        <div id="scoreboard-rows"></div>
+      </section>
+      <p id="status" class="status" role="status" aria-live="polite">Entrenamiento local</p>
+    </main>
+    <script type="module" src="/src/p2p-multiplayer-entry.js"></script>
+  </body>
+</html>

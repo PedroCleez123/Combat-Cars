@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>P2P full WASM combat smoke</title><script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js"}}</script></head>
+<body><pre id="status">starting</pre><canvas id="scene" width="640" height="360"></canvas>
+<script type="module">
+  import * as THREE from "three";
+  import createRocketSimWasm from "./build/rocketsim_wasm.mjs";
+  import { createP2PFullWasmCombatHost } from "./p2p-wasm-full-combat-host.mjs";
+  import { createRocketSimWasmBridge } from "/src/rocketsim-wasm-backend.js";
+  import { createP2PWasmCausalCombatPresentationEnvelope, decodeP2PWasmCausalCombatPresentationEnvelope } from "./p2p-wasm-causal-combat-presentation-protocol.mjs";
+  import { P2PWasmPresentationRenderBuffer } from "./p2p-wasm-presentation-render-state.mjs";
+  import { createP2PWasmThreePresentationRenderer } from "./p2p-wasm-three-presentation-renderer.mjs";
+
+  const output = document.querySelector("#status");
+  const canvas = document.querySelector("#scene");
+  const context = Object.freeze({ roomId: "p2p-full-smoke", sessionId: "p2p-full-smoke-session" });
+  const idle = Object.freeze({ throttle: 0, steer: 0, pitch: 0, yaw: 0, roll: 0, boost: false, jump: false, drift: false, airRoll: false, handbrake: false });
+  const command = (overrides = {}) => ({ controls: { ...idle }, fire: false, restart: false, targetId: null, ...overrides });
+  const failIf = (condition, message) => { if (condition) throw new Error(message); };
+
+  async function run() {
+    output.textContent = "creating-host";
+    const host = await createP2PFullWasmCombatHost({
+      bridgeFactory: () => createRocketSimWasmBridge({ moduleFactory: () => createRocketSimWasm() }),
+    });
+    output.textContent = "host-ready";
+    let rendered = null;
+    try {
+      host.setHostCommand(command());
+      const pilotAccepted = host.receivePilotCommand({ sequence: 1, ...command({ controls: { ...idle, pitch: .7, yaw: -.4, roll: .25, airRoll: true, jump: true } }) }, { advance: false });
+      failIf(!pilotAccepted.accepted, "El host completo rechazó los controles aéreos del piloto.");
+      const first = await host.advance(1);
+      const firstEnvelope = decodeP2PWasmCausalCombatPresentationEnvelope(
+        createP2PWasmCausalCombatPresentationEnvelope({ ...context, sequence: 1, snapshot: host.presentationSnapshot() }),
+      );
+      const buffer = new P2PWasmPresentationRenderBuffer({ ...context, delay: 0, now: () => 0 });
+      buffer.push(firstEnvelope, 0);
+      const firstState = buffer.sample(0);
+      failIf(first.tick !== 1 || !firstState || firstState.cars.length !== 2, "El host completo no entregó dos coches en el primer tick.");
+      failIf(!firstState.cars.every(car => typeof car.jumpState === "string" && Number.isSafeInteger(car.actionSerials?.jump)), "El host completo no entregó el estado de movilidad autoritativo.");
+      rendered = createP2PWasmThreePresentationRenderer({
+        THREE,
+        canvas,
+        width: 640,
+        height: 360,
+        focusCarId: "p2p-host",
+        coordinateSpace: "arsenal-world",
+        diagnosticsReadback: true,
+      });
+      rendered.update(firstState);
+      rendered.render();
+      const metadata = host.metadataSnapshot();
+      failIf(metadata.tick !== first.tick || metadata.pads.length !== 0,
+      "El host completo volvió a proyectar pickups en el combate.");
+      failIf(rendered.setMetadata({ sequence: 1, pads: metadata.pads }) !== true,
+        "El renderer completo rechazó los metadatos de pickups.");
+
+      host.setHostCommand(command({ fire: true, targetId: "p2p-pilot" }));
+      host.receivePilotCommand({ sequence: 2, ...command() }, { advance: false });
+      const fired = await host.advance(1);
+      const firedEnvelope = decodeP2PWasmCausalCombatPresentationEnvelope(
+        createP2PWasmCausalCombatPresentationEnvelope({ ...context, sequence: 2, snapshot: host.presentationSnapshot() }),
+      );
+      buffer.push(firedEnvelope, 1 / 60);
+      const firedState = buffer.sample(1 / 60);
+      rendered.update(firedState);
+      rendered.render();
+      await rendered.ready();
+      const aimCandidates = rendered.getAimCandidates();
+      failIf(!Array.isArray(aimCandidates) || aimCandidates.length !== 1, "El renderer completo no expuso el candidato rival autoritativo para apuntado.");
+      const metrics = rendered.metrics();
+      failIf(fired.tick !== 2 || firedState.cars.length !== 2, "El host completo perdió la pareja al avanzar.");
+      failIf(firedState.rockets.length < 1, "El host completo no conservó el cohete autoritativo.");
+      failIf(metrics.arena !== "combat-alpha" || metrics.vehicleCount !== 2 || metrics.authoredVehicleCount !== 2 || metrics.authoredAssetReadyCount !== 2, "La presentación completa no usa la escena y el modelo authored.");
+      failIf(metrics.coordinateSpace !== "arsenal-world"
+        || metrics.arenaWidth !== 264
+        || metrics.arenaDepth !== 408
+        || metrics.arenaHeight !== 108,
+        "La presentación completa no conserva las unidades del juego del cliente local.");
+      failIf(metrics.rocketCount !== 1 || metrics.renderCalls < 1 || metrics.pixelDiversity < 4, "El renderer completo no presentó el disparo.");
+      failIf(metrics.effectPrewarmStatus !== "ready" || metrics.effectPrewarmCompilePasses !== 3, "El renderer completo no precalentó las variantes de efectos.");
+      failIf(metrics.pickupCount !== 0 || metrics.pickupActiveCount !== 0,
+        "El renderer completo volvió a crear pickups de suelo.");
+      const result = { ok: true, story: "P2P-WASM-FULL-01", tick: fired.tick, vehicleCount: metrics.vehicleCount, authoredAssetReadyCount: metrics.authoredAssetReadyCount, rocketCount: metrics.rocketCount, pickupCount: metrics.pickupCount, pickupActiveCount: metrics.pickupActiveCount, mobilityTelemetry: firstState.cars.every(car => typeof car.jumpState === "string" && Number.isSafeInteger(car.actionSerials?.jump)), arena: metrics.arena, arenaSurfaceContract: metrics.arenaSurfaceContract, renderCalls: metrics.renderCalls, pixelDiversity: metrics.pixelDiversity, effectPrewarmStatus: metrics.effectPrewarmStatus, effectPrewarmCompilePasses: metrics.effectPrewarmCompilePasses, aimCandidateCount: aimCandidates.length, aimEligibleTargetCount: aimCandidates.filter(candidate => candidate.eligible).length, cleanupIdempotent: true };
+      rendered.dispose();
+      rendered.dispose();
+      buffer.close();
+      return result;
+    } finally {
+      rendered?.dispose?.();
+      host.close();
+      host.close();
+    }
+  }
+
+  run().then(result => { window.__arsenalWasmBrowserP2PFullCombatSmoke = result; output.textContent = JSON.stringify(result, null, 2); })
+    .catch(error => { const result = { ok: false, story: "P2P-WASM-FULL-01", error: String(error?.message || error) }; window.__arsenalWasmBrowserP2PFullCombatSmoke = result; output.textContent = JSON.stringify(result, null, 2); console.error(error); });
+</script></body></html>

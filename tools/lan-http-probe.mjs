@@ -71,7 +71,7 @@ async function run() {
       "/server.mjs",
       "/.git/config",
       "/docs/README.md",
-      "/_bmad-output/implementation-artifacts/roadmap-current-2026-10-14.md",
+      "/_bmad-output/current-roadmap.md",
       "/tools/rocketsim-bridge/main.cpp",
       "/%2e%2e/server.mjs",
       "/src/%2e%2e/server.mjs",

@@ -10,8 +10,44 @@ import {
   rocketsimPositionToArsenal,
   rocketsimVelocityToArsenal,
 } from "../src/rocketsim-practice-match.js";
+import { rocketSimArenaProfile } from "../src/rocketsim-arena-profile.js";
 
 const identity = { x: 0, y: 0, z: 0, w: 1 };
+
+test("every host-selectable RocketSim arena has a shared presentation profile", () => {
+  for (const arena of ROCKETSIM_PRACTICE_ARENAS) assert.ok(rocketSimArenaProfile(arena), arena);
+});
+
+test("RocketSim input normalization keeps only a bounded safe targetId intent", () => {
+  const match = new RocketSimPracticeMatch({ bridgeFactory: () => new FakeBridge() });
+  match.addHuman("peer-1", "PILOTO");
+  match.input("peer-1", { targetId: "peer-2", position: { x: 9 }, direction: "bad" });
+  assert.equal(match.humans.get("peer-1").inputState.targetId, "peer-2");
+  assert.equal(Object.hasOwn(match.humans.get("peer-1").inputState, "position"), false);
+  match.input("peer-1", { targetId: { arbitrary: true } });
+  assert.equal(match.humans.get("peer-1").inputState.targetId, null);
+});
+
+test("RocketSim lobby contains a high-speed out-of-bounds contact without combat respawn", async () => {
+  const bridges = [];
+  const bridgeFactory = () => {
+    const bridge = new LobbyOutOfBoundsBridge();
+    bridges.push(bridge);
+    return bridge;
+  };
+  const match = new RocketSimPracticeMatch({ bridgeFactory, arena: "combat-alpha", combat: false, ticksPerSnapshot: 1 });
+  await match.start();
+  match.addHuman("host", "Host", { team: "blue" });
+  await match.operation;
+  const snapshot = await match.tick();
+  const car = snapshot.cars.find(candidate => candidate.id === "host");
+  assert.equal(bridges.at(-1).respawnCalls.length, 0, "lobby bumps never call the combat respawn ABI");
+  assert.deepEqual(bridges.at(-1).containCalls, [1], "lobby containment uses the movement-only native ABI");
+  assert.equal(car.actionSerials.respawn, 0, "lobby bumps never increment the respawn serial");
+  assert.equal(car.x, 75.5, "the native contact sample is clamped to the arena boundary, not a spawn point");
+  assert.ok(car.velocity.x < 0, "containment reflects the outward velocity into the arena");
+  await match.shutdown();
+});
 
 function carFrame(overrides = {}) {
   return {
@@ -95,6 +131,46 @@ class MultiCarFakeBridge {
   }
 }
 
+class LobbyOutOfBoundsBridge extends MultiCarFakeBridge {
+  constructor() {
+    super();
+    this.respawnCalls = [];
+    this.containCalls = [];
+  }
+
+  async tick(tick, cars) {
+    this.tickCalls.push({ tick, cars: structuredClone(cars) });
+    return {
+      tick,
+      cars: cars.map(car => carFrame({
+        id: car.id,
+        // Deliberately emulate one bad post-impact native sample. The lobby
+        // must contain the body through its movement-only ABI instead of
+        // invoking the combat respawn lifecycle and moving it to spawn.
+        position: { x: 5000, y: ROCKETSIM_PRACTICE_REST_HEIGHT, z: 0 },
+        velocity: { x: 2217, y: 0, z: 0 },
+      })),
+    };
+  }
+
+  async respawn(id) {
+    this.respawnCalls.push(id);
+    return { tick: this.tickCalls.at(-1)?.tick || 0, cars: [] };
+  }
+
+  async contain(id) {
+    this.containCalls.push(id);
+    return {
+      tick: this.tickCalls.at(-1)?.tick || 0,
+      cars: this.tickCalls.at(-1).cars.map(car => carFrame({
+        id: car.id,
+        position: { x: 75.5 / ROCKETSIM_PRACTICE_SCALE, y: ROCKETSIM_PRACTICE_REST_HEIGHT, z: 0 },
+        velocity: { x: -2217 * .35, y: 0, z: 0 },
+      })),
+    };
+  }
+}
+
 class DuplicateFrameBridge extends MultiCarFakeBridge {
   async tick(tick, cars) {
     this.tickCalls.push({ tick, cars: structuredClone(cars) });
@@ -130,6 +206,28 @@ class CombatFakeBridge extends MultiCarFakeBridge {
   }
 }
 
+class CentredFastRamBridge extends CombatFakeBridge {
+  async tick(tick, cars) {
+    this.tickCalls.push({ tick, cars: structuredClone(cars) });
+    const crossing = this.tickCalls.length % 2 === 0;
+    return {
+      tick,
+      cars: cars.map(car => {
+        const blue = car.id === 1;
+        return carFrame({
+          id: car.id,
+          position: {
+            x: blue ? (crossing ? 300 : -300) : (crossing ? -300 : 300),
+            y: ROCKETSIM_PRACTICE_REST_HEIGHT,
+            z: 0,
+          },
+          velocity: { x: blue ? 2217 : 0, y: 0, z: 0 },
+        });
+      }),
+    };
+  }
+}
+
 function bridgeFactoryFor(...plans) {
   const bridges = [];
   const bridgeFactory = () => {
@@ -149,6 +247,9 @@ const normalizedInput = {
   drift: false,
   airRoll: true,
   roll: -1,
+  pitch: -1,
+  yaw: 0,
+  handbrake: false,
   fire: true,
 };
 
@@ -158,7 +259,7 @@ const carViewKeys = [
   "forwardSpeed", "steer", "powerslide", "grounded", "surfaceNormal", "contacts", "wheels",
   "surfaceType", "jumpState", "jumpHoldRemaining", "jumpHeldFor", "jumpWindowRemaining",
   "dodging", "dodgeRemaining", "dodgePitchLockRemaining", "dodgeCancelling", "dodgeDirection",
-  "lastLanding", "supersonic", "hp", "boost", "jumps", "respawn", "kills", "deaths",
+  "lastLanding", "supersonic", "hp", "boost", "jumps", "respawn", "kills", "deaths", "rocketCooldown",
   "boosting", "wallNormal", "wallRide", "ceilingContact",
 ];
 
@@ -196,11 +297,12 @@ test("RocketSim practice maps native coordinates and orientation", () => {
 
 test("RocketSim practice consumes two sequential native ticks with held normalized input", async () => {
   const { bridgeFactory, bridges } = bridgeFactoryFor([carFrame(), carFrame()]);
-  const match = new RocketSimPracticeMatch({ bridgeFactory, bridgeLabel: "r19" });
+  const match = new RocketSimPracticeMatch({ bridgeFactory, bridgeLabel: "r20" });
   const initial = await match.start();
   assert.deepEqual(bridges[0].startOptions, {
     arena: ROCKETSIM_DEFAULT_ARENA,
     cars: [{ id: 1, team: "blue" }],
+    lobby: true,
   });
   assert.deepEqual(initial.cars, []);
 
@@ -234,7 +336,7 @@ test("RocketSim practice consumes two sequential native ticks with held normaliz
   assert.equal(snapshot.settings.humans, 1);
   assert.equal(snapshot.settings.bots, 0);
   assert.equal(snapshot.settings.movementBackend, "rocketsim");
-  assert.equal(snapshot.settings.bridgeLabel, "R19");
+  assert.equal(snapshot.settings.bridgeLabel, "R20");
   assert.deepEqual(snapshot.rockets, []);
   assert.deepEqual(snapshot.pads, []);
   await match.shutdown();
@@ -358,11 +460,66 @@ test("RocketSim combat mode consumes native poses while Node owns only combat ru
   const snapshot = await match.tick();
   const red = snapshot.cars.find(car => car.id === "red");
   assert.equal(snapshot.rules.combat, true);
+  assert.equal(snapshot.settings.roundState, "active");
   assert.equal(snapshot.rockets.length, 0, "the close native pose receives the projectile hit during the 120 Hz combat step");
   assert.equal(red.hp, 35);
   assert.equal(red.respawn, 0);
+  assert.ok(snapshot.cars.find(car => car.id === "blue").rocketCooldown > 0, "an active pilot keeps the fire cooldown after launching");
+  assert.equal(snapshot.events.some(item => item.kind === "fire"), true);
   assert.equal(bridges[1].tickCalls[0].cars.some(car => car.input.fire), false, "fire stays in Node combat rules and never becomes a vehicle input");
   await match.shutdown();
+});
+
+test("RocketSim turns a centred native high-speed collision into one authoritative ram kill", async () => {
+  const bridges = [];
+  const bridgeFactory = () => {
+    const bridge = new CentredFastRamBridge();
+    bridges.push(bridge);
+    return bridge;
+  };
+  const match = new RocketSimPracticeMatch({ bridgeFactory, arena: "combat-alpha", combat: true });
+  await match.start();
+  match.addHuman("blue", "Blue", { team: "blue" });
+  match.addHuman("red", "Red", { team: "red" });
+
+  const snapshot = await match.tick();
+  const blue = snapshot.cars.find(car => car.id === "blue");
+  const red = snapshot.cars.find(car => car.id === "red");
+  assert.equal(blue.kills, 1);
+  assert.equal(red.deaths, 1);
+  assert.ok(red.respawn > 0, "the victim enters the normal authoritative respawn lifecycle");
+  assert.deepEqual(bridges.at(-1).combatCalls, [{ id: 2, active: false }]);
+  await match.shutdown();
+});
+
+test("RocketSim combat lets one waiting pilot launch and preserves the fire edge", async () => {
+  const bridges = [];
+  const bridgeFactory = () => {
+    const bridge = new CombatFakeBridge();
+    bridges.push(bridge);
+    return bridge;
+  };
+  const match = new RocketSimPracticeMatch({ bridgeFactory, combat: true });
+  await match.start();
+  match.addHuman("blue", "Blue");
+  match.input("blue", { fire: true });
+
+  const fired = await match.tick();
+  assert.equal(fired.settings.roundState, "waiting");
+  assert.equal(fired.rockets.length, 1, "a lone pilot gets a visible rocket while waiting for an opponent");
+  assert.equal(fired.events.filter(item => item.kind === "fire").length, 1);
+  assert.ok(fired.cars[0].rocketCooldown > 0);
+
+  const held = await match.tick();
+  assert.equal(held.rockets.length, 1, "holding fire does not create a second rocket before the edge or cooldown");
+  assert.equal(held.events.filter(item => item.kind === "fire").length, 1);
+
+  match.input("blue", { fire: false });
+  match.addHuman("red", "Red");
+  const active = await match.tick();
+  assert.equal(active.settings.roundState, "active");
+  await match.shutdown();
+  assert.equal(bridges.length, 2, "the second pilot still promotes the native roster to active combat");
 });
 
 test("RocketSim practice can select the original curved arena profile", async () => {
@@ -373,6 +530,7 @@ test("RocketSim practice can select the original curved arena profile", async ()
   assert.deepEqual(bridges[0].startOptions, {
     arena: "arsenal-curved-practice",
     cars: [{ id: 1, team: "blue" }],
+    lobby: true,
   });
   assert.equal(initial.settings.practiceArena, "arsenal-curved-practice");
   await match.shutdown();
@@ -434,6 +592,7 @@ test("RocketSim combat can select the composed combat-alpha arena profile", asyn
 test("RocketSim combat accepts its native-only lineup profile", async () => {
   const { bridgeFactory, bridges } = bridgeFactoryFor([carFrame(), carFrame()]);
   const match = new RocketSimPracticeMatch({ bridgeFactory, arena: "combat-lineup", combat: true });
+  assert.deepEqual(match.combatBounds, { halfWidth: 62, halfDepth: 46, ceilingHeight: 24 });
   await match.start();
   assert.equal(bridges[0].startOptions.arena, "combat-lineup");
   assert.equal(match.snapshot().settings.practiceArena, "combat-lineup");
@@ -484,6 +643,7 @@ test("RocketSim practice restart replaces the bridge and raises the respawn seri
   assert.deepEqual(bridges[1].startOptions, {
     arena: ROCKETSIM_DEFAULT_ARENA,
     cars: [{ id: 1, team: "blue" }],
+    lobby: true,
   });
 
   const afterRestart = await match.tick();

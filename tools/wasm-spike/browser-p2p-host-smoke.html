@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RocketSim WASM · host P2P · P2P-WASM-07</title>
+    <style>
+      :root { color-scheme: dark; font-family: ui-monospace, Consolas, monospace; background: #0d1520; color: #d8e6f1; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+      main { width: min(48rem, calc(100vw - 3rem)); padding: 1.5rem; border: 1px solid #42617a; border-radius: .75rem; background: #132331; }
+      h1 { margin-top: 0; font-size: 1.15rem; }
+      p { color: #a9bece; line-height: 1.5; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 2rem; color: #a7eecc; }
+      .error { color: #ff9d9d; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>RocketSim WASM · host P2P · P2P-WASM-07</h1>
+      <p>Esta página ejecuta sólo el adaptador diagnóstico WASM: cuatro inputs de piloto, cuatro snapshots compactos y dos pasos WASM por tick externo.</p>
+      <pre id="status" aria-live="polite">Inicializando módulo…</pre>
+    </main>
+    <script type="module">
+      import { createP2PWasmHostMatch } from "./p2p-wasm-host-match.mjs";
+
+      const output = document.querySelector("#status");
+      const startedAt = performance.now();
+      const protocolContext = Object.freeze({
+        type: "snapshot",
+        protocolVersion: 1,
+        roomId: "p2p-wasm-room",
+        sessionId: "p2p-wasm-session",
+      });
+      const controls = Object.freeze({ throttle: 0.02, steer: 0, boost: false, jump: false });
+
+      function compactPayload(snapshot, sequence) {
+        return JSON.stringify({ ...protocolContext, sequence, snapshot });
+      }
+
+      function failIf(condition, message) {
+        if (condition) throw new Error(message);
+      }
+
+      let match;
+      try {
+        match = await createP2PWasmHostMatch();
+        const snapshots = [];
+        const payloads = [];
+        for (let sequence = 1; sequence <= 4; sequence += 1) {
+          const outcome = match.receivePilotInput({ sequence, controls });
+          failIf(!outcome?.accepted || !outcome.snapshot, `Input ${sequence} was not accepted by the WASM host adapter.`);
+          snapshots.push(outcome.snapshot);
+          payloads.push(compactPayload(outcome.snapshot, sequence));
+        }
+
+        const expectedTicks = [6, 12, 18, 24];
+        failIf(JSON.stringify(snapshots.map(snapshot => snapshot.tick)) !== JSON.stringify(expectedTicks), "External host tick cadence is not [6, 12, 18, 24].");
+        failIf(match.wasmTick !== 48, `Expected 48 internal WASM steps, received ${match.wasmTick}.`);
+        failIf(snapshots.some(snapshot => snapshot.cars.length !== 2), "A snapshot did not contain exactly two cars.");
+        failIf(snapshots.some((snapshot, index) => snapshot.lastInputSequence !== index + 1), "Snapshot input acknowledgements are not monotonic.");
+        failIf(snapshots.some(snapshot => {
+          const ids = new Set(snapshot.cars.map(car => car.id));
+          return ids.size !== 2 || !ids.has("p2p-host") || !ids.has("p2p-pilot");
+        }), "Snapshot car IDs do not map to one p2p-host and one p2p-pilot.");
+        const velocityContractValid = snapshots.every(snapshot => snapshot.cars.every(car => [car.vx, car.vz, car.vh].every(value => Number.isFinite(value) && value >= -200 && value <= 200)));
+        failIf(!velocityContractValid, "A snapshot velocity exceeded the P2P protocol range.");
+        const payloadBytes = payloads.map(payload => new TextEncoder().encode(payload).byteLength);
+        const payloadWithinLimit = payloadBytes.every(bytes => bytes <= 2048);
+        failIf(!payloadWithinLimit, "A compact snapshot payload exceeded 2048 bytes.");
+
+        match.close();
+        match.close();
+        const cleanupIdempotent = match.closed === true;
+        failIf(!cleanupIdempotent, "WASM adapter cleanup was not idempotent.");
+
+        const result = {
+          ok: true,
+          story: "P2P-WASM-07",
+          ticks: snapshots.map(snapshot => snapshot.tick),
+          internalWasmTick: match.wasmTick,
+          twoCarSnapshots: snapshots.length === 4 && snapshots.every(snapshot => snapshot.cars.length === 2),
+          velocityContractValid,
+          payloadBytes,
+          payloadWithinLimit,
+          cleanupIdempotent,
+          elapsedMs: performance.now() - startedAt,
+        };
+        window.__arsenalWasmBrowserP2PHostSmoke = result;
+        output.textContent = JSON.stringify(result, null, 2);
+      } catch (error) {
+        try { match?.close(); } catch { /* Preserve the browser smoke failure. */ }
+        const result = { ok: false, story: "P2P-WASM-07", error: String(error?.message || error) };
+        window.__arsenalWasmBrowserP2PHostSmoke = result;
+        output.classList.add("error");
+        output.textContent = JSON.stringify(result, null, 2);
+        console.error("RocketSim WASM P2P host browser smoke failed", error);
+      }
+    </script>
+  </body>
+</html>

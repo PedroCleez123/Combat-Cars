@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ONLINE-QA-24 · sesión causal local</title>
+    <style>:root{color-scheme:dark;font:14px ui-monospace,Consolas,monospace;background:#101820;color:#d8e6f1}body{margin:0;min-height:100vh;display:grid;place-items:center}main{width:min(52rem,calc(100vw - 3rem));padding:1.5rem;border:1px solid #42617a;border-radius:.75rem;background:#142638}h1{font-size:1.15rem}pre{white-space:pre-wrap;color:#a7eecc}</style>
+  </head>
+  <body><main><h1>ONLINE-QA-24 · host/pilot causal Chromium</h1><pre id="status">Inicializando…</pre></main>
+    <script type="module">
+      import { P2P_CONTROL_CHANNEL } from "/src/p2p-session-protocol.js";
+      import { ROCKETSIM_PRACTICE_SCALE } from "/src/rocketsim-practice-match.js";
+      import { createP2PWasmCombatHost } from "./p2p-wasm-combat-host.mjs";
+      import { P2PWasmCausalRoomSession } from "./p2p-wasm-causal-room-session.mjs";
+
+      const role = location.hash === "#host" ? "host" : location.hash === "#pilot" ? "pilot" : null;
+      const status = document.querySelector("#status");
+      const startedAt = performance.now();
+      const roomId = "online-qa-24-local";
+      const sessionId = "online-qa-24-causal";
+      const CAMPAIGN_ROUNDS = 10;
+      const broadcastName = `arsenal-${roomId}-${sessionId}`;
+      const idle = Object.freeze({ throttle: 0, steer: 0, boost: false, jump: false });
+      const command = (overrides = {}) => ({ controls: { ...idle }, fire: false, restart: false, targetId: null, ...overrides });
+      let roomSession = null;
+      let signaling = null;
+      let closing = false;
+      let published = false;
+      let firstCompleteSerial = null;
+      let restartSent = false;
+      let completedRounds = 0;
+      let restartedRounds = 0;
+      let restartRequestedSerial = null;
+      const completedRoundSerials = new Set();
+      let boostObserved = false;
+      let wBoostRequested = false;
+      let fireSeen = false;
+      let hitSeen = false;
+      let winnerSeen = false;
+      let latest = null;
+      let latestPresentation = [];
+      let snapshotCount = 0;
+      let lastTick = 0;
+      let lastSerial = 1;
+      let fireRelease = false;
+      let metadataCount = 0;
+      let metadataSequence = 0;
+      let metadataPads = null;
+
+      function fail(message) { const error = new Error(message); error.diagnostic = message; throw error; }
+      function publish(value) { window.__arsenalOnlineQa24Smoke = value; status.textContent = JSON.stringify(value, null, 2); }
+      function cleanup() {
+        if (closing) return { closed: true, idempotent: true };
+        closing = true;
+        try { roomSession?.close("online-qa-24-cleanup"); } catch {}
+        try { signaling?.close(); } catch {}
+        return { closed: true, idempotent: true };
+      }
+      window.__arsenalOnlineQa24Cleanup = cleanup;
+
+      class PrivateRoomSignaling {
+        constructor(selfRole) {
+          this.selfRole = selfRole; this.otherRole = selfRole === "host" ? "pilot" : "host";
+          this.listeners = new Map(); this.peerSeen = false; this.closed = false;
+          this.channel = new BroadcastChannel(broadcastName);
+          this.channel.addEventListener("message", event => this.onMessage(event?.data));
+          this.presenceTimer = setInterval(() => this.announce(), 100); this.announce();
+        }
+        on(type, listener) { const set = this.listeners.get(type) || new Set(); set.add(listener); this.listeners.set(type, set); if (type === "peer-ready" && this.peerSeen) queueMicrotask(() => !this.closed && listener({ role: this.otherRole })); return () => set.delete(listener); }
+        emit(type, event = {}) { for (const listener of this.listeners.get(type) || []) listener(event); }
+        announce() { if (!closing) this.channel.postMessage({ kind: "presence", role: this.selfRole }); }
+        onMessage(message) { if (!message || message.role !== this.otherRole) return; if (message.kind === "presence") { if (!this.peerSeen) { this.peerSeen = true; this.emit("peer-ready", { role: message.role }); } return; } if (message.kind === "signal") this.emit("signal", { payload: message.payload }); }
+        sendSignal(payload) { this.channel.postMessage({ kind: "signal", role: this.selfRole, payload }); }
+        close() { if (this.closed) return; this.closed = true; clearInterval(this.presenceTimer); this.channel.close(); }
+      }
+
+      function recordSnapshot(value) {
+        const snapshot = value?.snapshot || value;
+        latestPresentation = value?.presentation || snapshot?.presentation || [];
+        latest = snapshot; snapshotCount += 1;
+        if (!Number.isSafeInteger(snapshot.tick) || snapshot.tick <= lastTick) fail("snapshot tick did not increase");
+        lastTick = snapshot.tick;
+        // The presentation envelope exposes the compact causal snapshot
+        // directly (round/cars/rockets/events), not the host-only combat wrapper.
+        const round = snapshot.round;
+        if (!round || round.scoreToWin !== 1) fail("scoreToWin was not 1");
+        lastSerial = round.serial;
+        for (const event of snapshot.events || []) {
+          if (event.kind === "fire" && snapshot.rockets.some(rocket => rocket.targetId === "p2p-host")) fireSeen = true;
+          if (event.kind === "hit") hitSeen = true;
+          if (event.kind === "winner") winnerSeen = true;
+        }
+        const pilotTelemetry = latestPresentation.find(car => car.id === "p2p-pilot");
+        if (pilotTelemetry?.boosting === true) boostObserved = true;
+        if (round.state === "complete" && !completedRoundSerials.has(round.serial)) {
+          completedRoundSerials.add(round.serial);
+          completedRounds += 1;
+          if (firstCompleteSerial === null) firstCompleteSerial = round.serial;
+        }
+        if (restartRequestedSerial !== null && round.serial > restartRequestedSerial) {
+          restartedRounds += 1;
+          restartRequestedSerial = null;
+        }
+        // The host never sends the pilot restart command, but it observes the
+        // same authoritative round serial. Derive the completed restart count
+        // from that serial only after the first completed round is known.
+        if (firstCompleteSerial !== null && round.serial > firstCompleteSerial) {
+          restartedRounds = Math.max(restartedRounds, round.serial - firstCompleteSerial);
+        }
+        // The pilot sends the restart command; the host validates it by
+        // observing the next authoritative round serial.
+        if (role === "host" && firstCompleteSerial !== null && round.serial > firstCompleteSerial) restartSent = true;
+      }
+
+      function sendPilotCommand() {
+        if (role !== "pilot" || closing || !roomSession?.causalSession) return;
+        if (!latest) {
+          wBoostRequested = true;
+          roomSession.causalSession.sendCommand(command({ controls: { throttle: 1, steer: 0, boost: true, jump: false } }));
+          return;
+        }
+        const round = latest.round;
+        if (round.state === "complete") {
+          if (completedRounds <= CAMPAIGN_ROUNDS && restartRequestedSerial !== round.serial) {
+            restartRequestedSerial = round.serial;
+            fireRelease = false;
+            roomSession.causalSession.sendCommand(command({ restart: true }));
+          }
+          return;
+        }
+        if (completedRounds >= CAMPAIGN_ROUNDS) return;
+        const physical = latest.physical || [];
+        const host = physical.find(car => car.id === "p2p-host");
+        const pilot = physical.find(car => car.id === "p2p-pilot");
+        const targetVisible = host && pilot && host.x > pilot.x && Math.abs(host.x - pilot.x) * ROCKETSIM_PRACTICE_SCALE <= 90;
+        const pilotState = latest.cars.find(car => car.id === "p2p-pilot");
+        const cooldownReady = !pilotState || pilotState.rocketCooldown <= 0;
+        const shouldFire = Boolean(targetVisible && !fireRelease && (!fireSeen || (hitSeen && cooldownReady)));
+        fireRelease = shouldFire;
+        const boost = !boostObserved && snapshotCount < 12;
+        if (boost) wBoostRequested = true;
+        roomSession.causalSession.sendCommand(command({
+          controls: { throttle: targetVisible ? 0 : 1, steer: 0, boost, jump: false },
+          fire: shouldFire, targetId: shouldFire ? "p2p-host" : null,
+        }));
+      }
+
+      function finishIfReady() {
+        if (published || completedRounds < CAMPAIGN_ROUNDS || restartedRounds < CAMPAIGN_ROUNDS || !boostObserved || !fireSeen || !winnerSeen || metadataCount < 1) return;
+        published = true;
+        publish({ ok: true, story: "ONLINE-QA-24", role, transport: "webrtc-local", channelLabel: P2P_CONTROL_CHANNEL,
+          contract: { twoPeers: true, causalSnapshots: snapshotCount > 1, strictlyIncreasingTicks: true },
+          input: { wBoostRequested, boostObserved, throttleForW: 1 },
+          fire: { valid: fireSeen, hitObserved: hitSeen, winnerObserved: winnerSeen, targetId: "p2p-host" },
+          round: { scoreToWin: 1, campaignRounds: completedRounds, restartedRounds, completed: firstCompleteSerial !== null, restarted: restartedRounds >= CAMPAIGN_ROUNDS, serialBeforeRestart: firstCompleteSerial, serialAfterRestart: lastSerial, state: latest.round.state },
+          metadata: { received: metadataCount, sequence: metadataSequence, pads: metadataPads },
+          snapshots: { count: snapshotCount, lastTick: lastTick }, elapsedMs: performance.now() - startedAt });
+      }
+
+      function abort(error) { if (closing || published) return; const detail = error?.diagnostic || (error?.code ? `${error.code}: ${error.message || ""}` : error?.message) || (error && typeof error === "object" ? JSON.stringify(error) : String(error)); publish({ ok: false, story: "ONLINE-QA-24", role, error: detail }); cleanup(); console.error("ONLINE-QA-24 failed", detail); }
+
+      async function start() {
+        if (!role) fail("ONLINE-QA-24 requires #host or #pilot");
+        if (typeof RTCPeerConnection !== "function" || typeof BroadcastChannel !== "function") fail("Chromium lacks local WebRTC/BroadcastChannel");
+        signaling = new PrivateRoomSignaling(role);
+        roomSession = new P2PWasmCausalRoomSession({ role, signaling, context: { roomId, sessionId }, iceServers: [{ urls: "stun:stun.cloudflare.com:3478" }], RTCPeerConnection, presentation: true, metadata: true,
+          hostFactory: options => createP2PWasmCombatHost({ ...options, combatOptions: { scoreToWin: 1 } }),
+          onSnapshot: envelope => { recordSnapshot(envelope); if (role === "pilot") sendPilotCommand(); finishIfReady(); },
+          onMetadata: envelope => {
+            if (!envelope || envelope.roomId !== roomId || envelope.sessionId !== sessionId || envelope.sequence <= metadataSequence
+              || !Array.isArray(envelope.players) || envelope.players.length !== 2 || !Array.isArray(envelope.pads)) fail("metadata envelope invalid");
+            metadataCount += 1;
+            metadataSequence = envelope.sequence;
+            metadataPads = envelope.pads.length;
+            finishIfReady();
+          },
+          onEvent: event => {
+            if (event.type === "causal-message" && event.outcome?.type === "welcome" && role === "pilot") sendPilotCommand();
+            if (event.type === "error") abort(event.error || new Error("causal session error"));
+            if (event.type === "peer-left") abort(new Error("peer left"));
+          },
+        });
+        roomSession.start();
+          setTimeout(() => {
+          if (!published && !closing) abort(new Error(JSON.stringify({ phase: "timeout", role, snapshotCount, lastTick, latestRound: latest?.round || null, firstCompleteSerial, completedRounds, restartedRounds, restartRequestedSerial, restartSent, boostObserved, fireSeen, hitSeen, winnerSeen, metadataCount, metadataSequence })));
+        }, 58_000);
+      }
+      start().catch(abort);
+    </script>
+  </body>
+</html>

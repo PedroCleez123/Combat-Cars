@@ -1,4 +1,4 @@
-// Asset-free RocketSim reference probe for Car Soccer: Arsenal.
+// Asset-free RocketSim reference probe for Combat Cars.
 // It is a development oracle only. It neither launches Rocket League nor reads
 // game assets; THE_VOID receives one synthetic Bullet floor for wheel contact.
 

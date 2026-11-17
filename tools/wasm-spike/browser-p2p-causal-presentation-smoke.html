@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RocketSim WASM · presentación causal v5 · P2P-WASM-42</title>
+    <style>
+      :root { color-scheme: dark; font-family: ui-monospace, Consolas, monospace; background: #0d1520; color: #d8e6f1; }
+      body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+      main { width: min(48rem, calc(100vw - 3rem)); padding: 1.5rem; border: 1px solid #42617a; border-radius: .75rem; background: #132331; }
+      h1 { margin-top: 0; font-size: 1.15rem; }
+      p { color: #a9bece; line-height: 1.5; }
+      pre { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 2rem; color: #a7eecc; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>RocketSim WASM · presentación causal v5 · P2P-WASM-42</h1>
+      <p>Smoke aislado: verifica que la telemetría autoritativa llega al adaptador del renderer sin tocar el protocolo v1, la física ni el cliente público.</p>
+      <pre id="status" aria-live="polite">Inicializando módulo…</pre>
+    </main>
+    <script type="module">
+      import {
+        createP2PWasmCausalCombatPresentationEnvelope,
+        decodeP2PWasmCausalCombatPresentationEnvelope,
+        P2P_WASM_PRESENTATION_MAX_BYTES,
+        P2P_WASM_PRESENTATION_PROTOCOL_VERSION,
+      } from "./p2p-wasm-causal-combat-presentation-protocol.mjs";
+      import { createP2PWasmCombatHost } from "./p2p-wasm-combat-host.mjs";
+      import { P2PWasmPresentationRenderBuffer } from "./p2p-wasm-presentation-render-state.mjs";
+
+      const output = document.querySelector("#status");
+      const context = Object.freeze({ roomId: "p2p-v2-browser-room", sessionId: "p2p-v2-browser-session" });
+      const idle = Object.freeze({ throttle: 0, steer: 0, boost: false, jump: false });
+      const command = (overrides = {}) => ({ controls: { ...idle }, fire: false, restart: false, targetId: null, ...overrides });
+
+      function failIf(condition, message) { if (condition) throw new Error(message); }
+
+      async function run() {
+        const host = await createP2PWasmCombatHost();
+        let buffer = null;
+        try {
+          failIf(!host.setHostCommand(command()).accepted, "El host v2 rechazó el comando neutral.");
+          const first = host.receivePilotCommand({ sequence: 1, ...command() });
+          failIf(!first.accepted, "El host v2 rechazó el primer input.");
+          const snapshot = host.presentationSnapshot();
+          const wire = createP2PWasmCausalCombatPresentationEnvelope({ ...context, sequence: 1, snapshot });
+          const decoded = decodeP2PWasmCausalCombatPresentationEnvelope(wire);
+          buffer = new P2PWasmPresentationRenderBuffer({ ...context, delay: 0, now: () => 0 });
+          const state = buffer.push(decoded, 0);
+          const sampled = buffer.sample(0);
+          failIf(decoded.protocolVersion !== P2P_WASM_PRESENTATION_PROTOCOL_VERSION, "La versión del sobre v5 no coincide con el contrato.");
+          failIf(decoded.snapshot.tick !== state.time * 60, "El tick físico y el estado de presentación divergen.");
+          failIf(state.settings.p2pPresentationProtocol !== P2P_WASM_PRESENTATION_PROTOCOL_VERSION, "El renderer no recibió la versión de presentación.");
+          failIf(state.cars.length !== 2 || !state.cars.every(car => car.orientation && Number.isFinite(car.boost)), "Faltan campos autoritativos de actitud o boost.");
+          failIf(!state.cars.every(car => typeof car.jumpState === "string" && Number.isSafeInteger(car.actionSerials?.jump)), "Faltan estados o seriales autoritativos de movilidad.");
+          failIf(!state.cars.every(car => ["air", "ground", "wall", "ceiling"].includes(car.surfaceType)), "La clasificación de superficie no es legible.");
+          failIf(sampled.cars.some(car => !car.orientation), "El buffer perdió la actitud durante la muestra.");
+          return {
+            ok: true,
+            story: "P2P-WASM-42",
+            protocolVersion: decoded.protocolVersion,
+            type: decoded.type,
+            tick: decoded.snapshot.tick,
+            vehicleCount: state.cars.length,
+            fullAttitude: state.cars.every(car => car.orientation && Math.abs(Math.hypot(car.orientation.x, car.orientation.y, car.orientation.z, car.orientation.w) - 1) < .001),
+            boostTelemetry: state.cars.every(car => Number.isFinite(car.boost)),
+            mobilityTelemetry: state.cars.every(car => typeof car.jumpState === "string" && Number.isSafeInteger(car.actionSerials?.jump)),
+            surfaceTelemetry: state.cars.every(car => ["air", "ground", "wall", "ceiling"].includes(car.surfaceType)),
+            bufferSampled: Boolean(sampled),
+            compactSnapshotUntouched: !Object.hasOwn(first.snapshot, "presentation"),
+            bytes: new TextEncoder().encode(wire).byteLength,
+            bytesWithinLimit: new TextEncoder().encode(wire).byteLength <= P2P_WASM_PRESENTATION_MAX_BYTES,
+            cleanupIdempotent: true,
+          };
+        } finally {
+          buffer?.close();
+          host.close();
+          host.close();
+        }
+      }
+
+      run().then(result => {
+        window.__arsenalWasmBrowserP2PCausalPresentationSmoke = result;
+        output.textContent = JSON.stringify(result, null, 2);
+      }).catch(error => {
+        const result = { ok: false, story: "P2P-WASM-42", error: String(error?.message || error) };
+        window.__arsenalWasmBrowserP2PCausalPresentationSmoke = result;
+        output.textContent = JSON.stringify(result, null, 2);
+        console.error("RocketSim WASM causal presentation browser smoke failed", error);
+      });
+    </script>
+  </body>
+</html>

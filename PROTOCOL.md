@@ -1,57 +1,49 @@
-# LAN protocol
+# Contrato de ejecución
 
-El envoltorio de sesión usa `protocolVersion: 1`, `roomId` y `sessionId` en el
-primer `hello`. La sesión es efímera y solo permite recuperar la misma plaza
-durante cuatro segundos; no es autenticación. El cliente envía `heartbeat` cada
-cinco segundos y el servidor retira una conexión silenciosa después de veinte.
-El servidor rechaza mensajes antes de `hello`, salas/versiones desconocidas,
-frames sin máscara y payloads mayores de 8192 bytes. Sin configuración,
-localhost y 127.0.0.1 del puerto activo se permiten; `LAN_ALLOWED_ORIGINS`
-reemplaza esa lista por orígenes exactos. Estos controles preparan la LAN y no
-hacen seguro el despliegue público.
+## Prioridad de producto
 
-The Node process is authoritative: clients send only input and render the
-state snapshots it returns. This prevents a browser from assigning itself
-damage, score, boost, or respawns.
+El producto se llama **Combat Cars** y la migración a la versión web online con
+RocketSim WASM en el host está aceptada. Esa ruta WASM/P2P es la única versión
+prioritaria, mantenida y desplegable. La ruta local Three.js + Node + RocketSim
+nativo es una referencia histórica congelada para comportamiento, diagnóstico
+y regresión; no define el estado de publicación online. El slug técnico
+heredado `car-soccer-arsenal` sólo se conserva donde sea necesario para
+compatibilidad.
 
-| Direction | Message | Meaning |
-| --- | --- | --- |
-| client → server | `hello` | asks for a player slot with protocol version, room and ephemeral session |
-| client → server | `input` | held control state |
-| client → server | `configure` | In JavaScript, settings restart the local match. In a RocketSim LAN session, it can request only `vehicleLimit` `1…6`; the server rejects bots, invalid values and reductions below connected humans, without accepting client cars or poses. Only the session owner may configure. |
-| client → server | `restart` | starts a new local match; only the session owner may request it |
-| server → client | `welcome` | player id, assigned team and `owner` flag for the first authenticated session peer |
-| server → client | `state` | current authoritative snapshot, including car orientation quaternions, angular velocity, impact serial/spin, surface normals/types, wall-ride state, and `jumpState` (`grounded`, `first-jump`, `double-jump`, `dodge`, `airborne`, or `wall-jump`) with remaining jump, dodge and cancellation state. In CALIBRACIÓN LIMPIA, `cars[].contacts` reports nearby arena planes with `kind`, inward `normal`, world-space `point`, `wheelCount`, `normalVelocity`, and `separation`; a loaded wheel can publish a floor contact even while the chassis is clear. `cars[].wheels` contains each nearby wheel's id, plane, point, extension, compression, normal velocity and suspension force. Grounded requires two meaningfully compressed floor springs or direct chassis support. RocketSim practice adds `settings.practiceArena` (`arsenal-practice`, `arsenal-curved-practice`, `arsenal-expanded-curved-practice`, `arsenal-expanded-cornered-practice`, `arsenal-expanded-block-practice`, `arsenal-expanded-ramp-practice` or `combat-alpha`) so the client can select the matching visual training geometry while `settings.arena` remains `calibration`. RocketSim combat additionally publishes `settings.scoreToWin`, `settings.roundState` (`waiting`, `active` or `complete`) and `winner`; Node/RocketSim derive them authoritatively. | 
-| server → client | `event` | fire, hit, pad, elimination, respawn, winner |
-| client → server | `heartbeat` | keeps a quiet browser session alive |
+No se borra aún la ruta local. La retirada exige inventariar dependencias,
+fixtures, herramientas y pruebas, archivarla o excluirla de las builds y
+comprobar que la validación WASM/P2P ya no la consume.
 
-La práctica RocketSim mantiene además un canal interno JSONL entre Node y el
-bridge nativo. `respawn` reposiciona un coche configurado en su spawn nativo y
-`combat-state` lo desactiva o reactiva durante una eliminación. Ninguno acepta
-posición, velocidad u orientación desde Node; esos estados siguen siendo
-propiedad del solver RocketSim.
+## Ruta local
 
-El bridge declara `features.staticRaycast=true` cuando ofrece la consulta
-`raycast`. Node puede enviar hasta 32 segmentos con `id`, `from` y `to` en las
-coordenadas públicas RocketSim y-up. La respuesta `raycast-state` conserva el
-`tick` y devuelve un resultado por id con `hit`, `fraction`, `point`, `normal` y
-`kind:"static"`; los cuerpos dinámicos se excluyen. Esta capacidad se valida
-en COMBAT-GEO-01 y todavía no sustituye las reglas de daño ni el movimiento del
-cohete, que se integrarán en COMBAT-GEO-02.
+`server.mjs` y RocketSim nativo son la ruta local de referencia. El servidor
+recibe entradas, ejecuta la simulación autoritativa y devuelve snapshots; el
+cliente nunca asigna por sí mismo daño, score, boost, respawn o poses.
 
-La build nativa R9 se encuentra en `.rocketsim-bridge-build-r9/` y contiene
-estos comandos. La build R5 se conserva como referencia histórica, pero no
-debe usarse para arrancar el modo combate porque no conoce `respawn` ni
-`combat-state`.
+## Ruta online principal
 
-`combat-lineup` es un perfil interno de sonda: alinea dos spawns nativos para
-probar impacto, eliminación y respawn. No es una arena seleccionable desde la
-interfaz ni un mapa de partida.
+Pages sirve el cliente estático. El Worker de señalización solo intercambia
+ofertas, respuestas y candidatos ICE. Tras el handshake, WebRTC transporta las
+entradas y snapshots entre navegadores; no hay servidor de partida dedicado.
+El host ejecuta RocketSim WASM y es la única autoridad de la simulación.
 
-This is intentionally a LAN prototype. Internet deployment needs TLS, room
-authentication, rate limiting and an authoritative hosted process before it is
-made public. The browser already selects `wss://` when served over HTTPS, and
-the RocketSim sidecar remains server-only. The staged deployment boundary and
-the future room/session envelope are documented in
-`docs/web-online-compatibility.md`; no room field is added to this LAN
-protocol until that story is opened explicitly.
+La sesión privada usa una clave corta introducida desde el menú. El estado
+offline/práctica no necesita sala y permanece jugable si no hay otro piloto.
+La versión publicada está validada para 1v1; el protocolo reserva roster de
+hasta seis jugadores para 2v2, 3v3 y FFA posteriores.
+
+## Estado y autoridad
+
+Los snapshots autoritativos incluyen identidad de jugador, transformaciones,
+velocidades, contactos de arena, salto/dodge, boost, vida, proyectiles,
+eventos, score y estado de ronda. El renderer no modifica esos valores.
+Los mensajes de entrada contienen solo controles y acciones del piloto; los
+identificadores de sala y peer se validan en la señalización y no son autoridad
+física.
+
+## Referencia local
+
+Para comparar comportamiento, cámara, audio, vehículo y combate se usan los
+módulos de `src/` indicados en el README. Las pruebas WASM y P2P se encuentran
+en `tests/` y `tools/wasm-spike/`. El bridge nativo de desarrollo, cuando haga
+falta, se compila en `.rocketsim-bridge-build-r20/`; no se usa el antiguo R9.

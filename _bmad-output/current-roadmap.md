@@ -10,11 +10,11 @@ regresión. No retirarla todavía.
 
 Este archivo indica la prioridad. Trabaja en una tarea cada vez y cierra sus
 criterios antes de avanzar. **COV-01–03 están cerrados; COV-04 y COV-06 tienen
-su automatización registrada y conservan QA manual pendiente.** La tarea activa
-es **REP-02: preparar un checkpoint revisable** tras el inventario conservador
-REP-01. La auditoría adjunta encontró que el checkout actual contiene
-mucho trabajo sin consolidar, así que primero hay que clasificarlo y protegerlo
-antes de añadir CI o hacer limpieza.
+su automatización registrada y conservan QA manual pendiente.** REP-01 quedó
+completado y REP-02 está cerrado con el checkpoint local `46e9c2a`. `build:pages-beta`
+y `verify:pages-beta` terminaron correctamente con 101 archivos. La tarea activa
+pasa a **REP-03: clasificar las 23 pruebas que aún no están conectadas a los
+scripts npm**. No se desplegó nada.
 
 ## Prioridad activa — REP: recuperar estado reproducible del repositorio
 
@@ -24,8 +24,9 @@ archivos desconocidos como residuos.
 
 ### Línea base observada el 17/11/2026
 
-Lectura de `git status --short` en `master`, `HEAD a48e089`: 415 entradas
-visibles (158 borrados ya preparados, 2 borrados sin preparar, 56 modificados y
+Lectura de `git status --short` en `master`, `HEAD a48e089`, antes del
+checkpoint: 415 entradas visibles (155 borrados ya preparados, 2 borrados sin
+preparar, 59 modificados y
 199 entradas sin seguimiento). `--untracked-files=all` expande el estado a 676
 rutas y 460 ficheros sin seguimiento. No consolidar todavía los borrados
 preparados: primero se clasifica su impacto. Hay 88 módulos JS `src/` en el
@@ -39,7 +40,8 @@ ejecutar la suite durante esta revisión; el último informe adjunto declara
 
 Desglose de `git status` por carpeta (solo clasifica ubicaciones, aún no decide
 qué conservar): borrados preparados en `_bmad-output/` (82), `docs/` (45),
-`openwiki/` (30), `tools/` (2) y `archive/` (1); ficheros nuevos en `tools/`
+`openwiki/` (27) y `archive/` (1); dos borrados de `tools/` seguían sin preparar.
+Ficheros nuevos en `tools/`
 (221), `tests/` (109), `src/` (67), `docs/` (27), `assets/` (13), `openwiki/`
 (10), `cloudflare/` (3), `_bmad-output/` (2), `deploy/` (2) y seis páginas de
 diagnóstico en la raíz. Hay cambios rastreados en código, pruebas, herramientas,
@@ -62,7 +64,7 @@ La inspección de rutas confirmó estas decisiones iniciales:
 | Páginas `p2p-multiplayer.html`, `p2p-room-lobby.html`, `p2p-causal-beta.html` | **Conservar**: están incluidas en el manifiesto público de Pages (la ruta causal queda por compatibilidad). |
 | `p2p-loopback.html`, `p2p-host-loopback.html`, `p2p-session-loopback.html` y los otros HTML de diagnóstico raíz | **Conservar como diagnóstico/fixtures**: pruebas de límite estático y smoke los leen. Una futura reubicación requiere actualizar esos consumidores. |
 | `deploy/Caddyfile.online.example`, `deploy/online.env.example` | **Candidatos a retirar/archivar**: no forman parte de Pages ni tienen consumidor de runtime hallado; son de la arquitectura hosted/Caddy/JWT descartada. No configurar sus variables. Las pruebas y módulos históricos de esa arquitectura se clasifican aparte, no se borran junto con las plantillas. |
-| 158 borrados ya preparados (82 BMad, 45 `docs/`, 30 OpenWiki generado, 1 `archive/README.md`) | No son código de runtime. El barrido de 40 documentos vigentes encontró 0 enlaces locales rotos. **Mantener la intención de retirada y revisar el contenido/selección antes de consolidarla**; OpenWiki se debe regenerar, no editar manualmente. |
+| 155 borrados ya preparados (82 BMad, 45 `docs/`, 27 OpenWiki generado, 1 `archive/README.md`) | No son código de runtime. El barrido de 40 documentos vigentes encontró 0 enlaces locales rotos. **Mantener la intención de retirada y revisar el contenido/selección antes de consolidarla**; OpenWiki se debe regenerar, no editar manualmente. |
 | Borrados sin preparar `tools/start-rocketsim-combat-watch.ps1` y `tools/start-rocketsim-practice.mjs` | No se hallaron referencias en el checkout actual. **Mantener la baja propuesta** y revisar si existe uso externo antes del checkpoint; son utilidades de la referencia local, no el runtime Pages. |
 | `art06-*.log`, `wrangler-deploy.log`; `experiments/` | Cuatro logs ignorados ocupan la raíz; `experiments/` está vacía. **Artefactos locales**, sin efecto en runtime. Mover los logs solo si su evidencia sigue siendo necesaria; la carpeta vacía no requiere acción. |
 
@@ -92,15 +94,17 @@ dos utilidades locales eliminadas; su baja queda identificada como riesgo bajo,
 no como certeza universal. Este cierre no borra, restaura, prepara ni consolida
 ninguna ruta.
 
-**Siguiente tarea: REP-02 · checkpoint revisable.** Antes de crear un commit,
-revisar el conjunto exacto que se va a incluir: no aceptar los 158 borrados
-documentales de forma aislada y no dejar fuera los archivos fuente que el
-manifiesto de Pages necesita. No publicar ni desplegar durante este checkpoint.
+**REP-02 completado:** el commit local `46e9c2a` conserva junto en Git el
+runtime Pages/P2P, sus fuentes y artefactos WASM, pruebas, configuración y
+documentación activa. Se dejaron fuera los 155 borrados históricos, los cambios
+generados de OpenWiki y las salidas de build redundantes; siguen pendientes en
+el checkout para su revisión/regeneración. No se publicó ni desplegó durante el
+checkpoint.
 
 | Gate | Entrega | Criterio de salida |
 |---|---|---|
 | **REP-01 · inventario** | Clasificar cambios, archivos sin seguimiento y borrados por producto, pruebas, documentación, fixture, generación y herramienta local | Cada ruta tiene una decisión explícita (conservar/versionar, generar fuera del checkout, archivar o retirar); no hay borrados automáticos ni se descarta trabajo sin procedencia revisada. |
-| **REP-02 · checkpoint** | Crear una línea base revisable del estado que se decida conservar | Código WASM, tests, configuración y evidencia del mismo estado quedan representados juntos en Git; `HEAD` puede reconstruir la ruta Pages. No hacer el checkpoint antes de terminar REP-01. |
+| **REP-02 · checkpoint (completado: `46e9c2a`)** | Crear una línea base revisable del estado que se decida conservar | Runtime Pages/P2P, artefactos WASM, pruebas, configuración y documentación conservada están juntos en Git; build y verificación de Pages correctas (101 archivos). |
 | **REP-03 · cobertura de pruebas** | Clasificar los 23 tests no conectados a los scripts npm | Cada prueba está en una suite automatizada adecuada o marcada claramente como smoke/manual; `npm test` refleja una política deliberada, no una lista parcial accidental. |
 | **REP-04 · automatización** | Añadir CI mínima y un control de frescura del WASM empaquetado | CI se activa solo después de REP-02/03; el build alerta/falla si fuentes RocketSim cambiaron y el WASM entregado no se regeneró. No introducir runtime nuevo. |
 | **REP-05 · una verdad documental** | Corregir métricas históricas y señalar documentos activos/superseded | Roadmap y brief vigente concuerdan; los documentos históricos se etiquetan y el OpenWiki generado se regenera desde el estado consolidado, sin editar sus páginas a mano. |
@@ -112,11 +116,10 @@ externos. Mantener intacto el trabajo actual mientras se decide cada ruta.
 
 ### Siguiente paso
 
-Revisar el conjunto exacto de REP-02 y preparar un checkpoint coherente que
-incluya el código y los activos WASM/P2P necesarios para reconstruir Pages junto
-con la documentación que se conserva. No consolidar solo los borrados
-preparados. COV-04/06 queda en espera de QA manual; no se considera un fallo de
-la ruta online.
+REP-03: clasificar las 23 pruebas no conectadas a los scripts npm y decidir
+cuáles son deterministas para automatizar y cuáles requieren browser, smoke o
+bridge. COV-04/06 queda en espera de QA manual; no se considera un fallo de la
+ruta online.
 
 ## Hito pendiente — COV: cobertura industrial autoritativa
 

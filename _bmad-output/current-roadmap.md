@@ -1,4 +1,4 @@
-# Roadmap vigente — 17/11/2026
+# Roadmap vigente — 18/11/2026
 
 ## Estado actual
 
@@ -12,32 +12,36 @@ Este archivo indica la prioridad. Trabaja en una tarea cada vez y cierra sus
 criterios antes de avanzar. **COV-01–03 están cerrados; COV-04 y COV-06 tienen
 automatización, pero conservan QA manual pendiente.** REP-01–04 mantienen sus
 entregas verificables. REP-05 se completó con la corrección del contrato y la
-reconciliación de OpenWiki. REP-06 se completó localmente: el mapa, el perfil y
-ambos puentes usan el contrato geométrico generado. REP-07 quedó implementado y
-validado en local; falta un run remoto de GitHub Actions para certificar el
-workflow nuevo.
+reconciliación de OpenWiki. REP-06 y REP-07 están implementados y validados en
+local y CI remoto. El commit de checkpoint es `c7bd2dc`; la corrección
+multiplataforma del verificador generado quedó en `2c6a505`, ambos publicados
+en la rama predeterminada `codex/rep-02-reproducible-checkpoint`.
 
-REP-02 quedó cerrado con el checkpoint local `46e9c2a`. El workflow remoto
-histórico de REP-04 completó suite, Pages y reconstrucción WASM en el run
-[44176984795](https://github.com/PedroCleez123/Combat-Cars/actions/runs/44176984795)
-(commit `ea7c772`). Esa ejecución acredita únicamente ese commit, no el estado
-actual del checkout. Los conteos 650/9 y 589/7 de informes anteriores no están
-asociados a una misma ejecución durable y se retiran como métricas vigentes.
-La nueva verificación de CI aún requiere ejecutar un run en GitHub; no se ha
-desplegado ni publicado nada.
+El workflow actualizado pasó en el run
+[44203023348](https://github.com/PedroCleez123/Combat-Cars/actions/runs/44203023348)
+para `2c6a505`. El run anterior
+[44202666516](https://github.com/PedroCleez123/Combat-Cars/actions/runs/44202666516)
+falló porque el checkout Windows convirtió artefactos generados a CRLF y el
+verificador comparaba finales de línea byte a byte. El comparador ahora
+normaliza CRLF, y una prueba de regresión cubre ambos formatos. Los conteos
+650/9 y 589/7 de informes anteriores no están asociados a una ejecución durable
+vigente y no se usan como métricas actuales. No se desplegó Pages.
 
-### Verificación local de REP-06/07 — 17/11/2026
+### Verificación local y remota de REP-06/07 — 18/11/2026
 
-En el working tree actual, sin commit nuevo, pasaron `npm test` (incluidos sus
-hooks), los gates de presentación online y contacto/raycast/movilidad WASM,
-`verify:arena-contract`, `verify:assets`, `build:pages-beta` y
-`verify:pages-beta`. El paquete local contiene 102 archivos. La compilación del
-WASM con el descriptor generado también terminó correctamente. La salida limpia
-de `tools/wasm-spike/build-pages-clean/` reproduce por SHA-256 los artefactos de
-`build/` y el manifiesto de provenance (`28ACA5DC…3908` y `8A99B163…6206`); la
-marca de tiempo antigua del directorio incremental no indica por sí sola un
-binario obsoleto. Estos resultados son evidencia local del checkout y no
-sustituyen el run remoto pendiente.
+En `2c6a505`, `npm test` pasó (657 pruebas, 7 omitidas; el hook posterior del
+benchmark WASM pasó 3/3). También pasaron `verify:arena-contract`,
+`verify:assets`, `build:pages-beta` y `verify:pages-beta`; el paquete contiene
+102 archivos. El workflow remoto repitió estos gates, los contratos de
+presentación/contacto/raycast/movilidad, los cinco contratos dedicados de
+liveness, ciclo de vida, audio y traza causal, y la compilación limpia de WASM
+contra los artefactos empaquetados.
+
+La salida limpia de `tools/wasm-spike/build-pages-clean/` reproduce por SHA-256
+los artefactos de `build/` y el manifiesto de provenance (`28ACA5DC…3908` y
+`8A99B163…6206`); la marca de tiempo antigua del directorio incremental no
+indica por sí sola un binario obsoleto. El run remoto certifica el workflow y
+el commit `2c6a505`; no implica despliegue ni sustituye la aceptación humana.
 
 Las comparaciones nativas se omitieron porque `ROCKETSIM_BRIDGE_EXE` no está
 configurado. También se intentó compilar el puente nativo; la configuración
@@ -126,12 +130,13 @@ dos utilidades locales eliminadas; su baja queda identificada como riesgo bajo,
 no como certeza universal. Este cierre no borra, restaura, prepara ni consolida
 ninguna ruta.
 
-**REP-02 completado:** el commit local `46e9c2a` conserva junto en Git el
-runtime Pages/P2P, sus fuentes y artefactos WASM, pruebas, configuración y
-documentación activa. Se dejaron fuera los 155 borrados históricos, los cambios
-generados de OpenWiki y las salidas de build redundantes; siguen pendientes en
-el checkout para su revisión/regeneración. No se publicó ni desplegó durante el
-checkpoint.
+**REP-02 completado:** el checkpoint `c7bd2dc` conserva juntos en Git el runtime
+Pages/P2P, sus fuentes y artefactos WASM, pruebas, configuración, el contrato
+geométrico canónico y la documentación activa. `2c6a505` corrige el chequeo de
+finales de línea entre sistemas operativos. Ambos commits están publicados en
+la rama predeterminada; CI verde valida `2c6a505`. Los ejemplos históricos de
+Caddy y el log local de Emscripten permanecen fuera de Git. No se publicó ni
+desplegó Pages durante el checkpoint.
 
 **REP-03 · enrutamiento de pruebas:** la matriz está en
 [`docs/test-suite-inventory.md`](../docs/test-suite-inventory.md). Trece
@@ -155,17 +160,18 @@ Windows reescribió a CRLF el `model.gltf` validado por tamaño/hash; `.gitattri
 declara `text eol=lf` únicamente para ese archivo, sin cambiar el asset ni su
 manifiesto. El run remoto [44176984795](https://github.com/PedroCleez123/Combat-Cars/actions/runs/44176984795)
 pasó suite, Pages build/verify y la compilación/frescura WASM en el commit
-`ea7c772`.
+`ea7c772`. La ampliación de puertas REP-07 también pasó en el run
+`44203023348` sobre `2c6a505`.
 
 | Gate | Entrega | Criterio de salida |
 |---|---|---|
 | **REP-01 · inventario** | Clasificar cambios, archivos sin seguimiento y borrados por producto, pruebas, documentación, fixture, generación y herramienta local | Cada ruta tiene una decisión explícita (conservar/versionar, generar fuera del checkout, archivar o retirar); no hay borrados automáticos ni se descarta trabajo sin procedencia revisada. |
-| **REP-02 · checkpoint (completado: `46e9c2a`)** | Crear una línea base revisable del estado que se decida conservar | Runtime Pages/P2P, artefactos WASM, pruebas, configuración y documentación conservada están juntos en Git; build y verificación de Pages correctas (101 archivos). |
+| **REP-02 · checkpoint (completado: `c7bd2dc`; corrección: `2c6a505`)** | Crear una línea base revisable del estado que se decida conservar | Runtime Pages/P2P, artefactos WASM, contrato geométrico, pruebas, configuración y documentación activa están juntos en Git; 102 archivos en el paquete Pages. Ambos commits publicados; CI verde en `2c6a505`. |
 | **REP-03 · cobertura de pruebas (completado)** | Clasificar y enrutar los 23 tests de la lista base | Matriz documentada; contratos deterministas en `npm test`; integraciones separadas por comandos dedicados. La evidencia de cada ejecución se informa con su run/commit, sin fijar conteos mutables en el roadmap. |
 | **REP-04 · automatización (completado: CI remota verde)** | Añadir CI mínima y un control de frescura del WASM empaquetado | Workflow sin deploy; ejecuta suite y build/verificación Pages, fija dependencias y compara un build WASM limpio con los binarios versionados. Run `44176984795` verde en `ea7c772` tras fijar LF para el GLTF. No introduce runtime nuevo. |
-| **REP-05 · una verdad documental (completado: 17/11)** | Corregir contratos activos, memoria generada y métricas | El diseño inicial de 2,4 UU está marcado como histórico; OpenWiki refleja 4,8 UU y la fuente JSON/generación; conteos sin ejecución durable retirados. Ciclo OpenWiki completado. |
-| **REP-06 · contrato geométrico canónico (completado local)** | Eliminar copias divergentes de combat-alpha entre JS, puente nativo y WASM | JSON fuente y artefactos JS/C++ generados; verificación determinista; mapa y ambos puentes consumen el mismo contrato. Validación WASM y Node local pasó; compilador nativo no disponible en este entorno. |
-| **REP-07 · puertas de CI enfocadas (implementado; run remoto pendiente)** | Detectar deriva de assets, geometría y regresiones clave antes de integrar | Workflow comprueba artefactos generados, assets, presentación online, contactos/raycast de cobertura, movilidad, liveness loopback, contratos ONLINE-QA/LIFECYCLE, audio causal, traza causal, Pages y frescura WASM. Los cinco comandos dedicados añadidos el 18/11 pasaron localmente; ejecutar GitHub Actions para certificar el workflow actualizado. Browser/human QA permanece separada. |
+| **REP-05 · una verdad documental (completado: 18/11)** | Corregir contratos activos, memoria generada y métricas | El diseño inicial de 2,4 UU está marcado como histórico; OpenWiki refleja 4,8 UU y la fuente JSON/generación; conteos sin ejecución durable retirados. Estado de checkpoint y CI reconciliado con el run `44203023348`. |
+| **REP-06 · contrato geométrico canónico (completado; CI verde)** | Eliminar copias divergentes de combat-alpha entre JS, puente nativo y WASM | JSON fuente y artefactos JS/C++ generados; verificación determinista; mapa y ambos puentes consumen el mismo contrato. Node y WASM validados localmente y en CI. La compilación nativa independiente sigue limitada por el SDK local ausente. |
+| **REP-07 · puertas de CI enfocadas (completado: run `44203023348`)** | Detectar deriva de assets, geometría y regresiones clave antes de integrar | Workflow comprueba artefactos generados, assets, presentación online, contactos/raycast de cobertura, movilidad, liveness loopback, contratos ONLINE-QA/LIFECYCLE, audio causal, traza causal, Pages y frescura WASM. CI verde en `2c6a505`; browser/human QA permanece separada. |
 
 **No es parte de REP:** reescribir el juego, borrar la ruta Three.js local,
 reorganizar capturas en bloque, mover el toolchain Emscripten o eliminar

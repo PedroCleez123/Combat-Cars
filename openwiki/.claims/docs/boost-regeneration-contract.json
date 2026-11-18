@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:ba035ae1d01782b72be2bff9dc492108897a603f90d1b484684cf6fe04d3b7e1",
+  "pageVersion": "sha256:686b940c3b8a0499ec7aa3241ab81a330a3f8124a5f930ad75438714c56e53c4",
   "claims": [
     {
       "id": "claim_12f8c55bc4654fc79f8a5e6481a84529",
@@ -44,7 +44,7 @@
     },
     {
       "id": "claim_b9ffec95b09c4639a0c8529eade7a7a6",
-      "statement": "Los conteos 650/9 y 589/7 son históricos y no se usan como métricas actuales. El workflow local cubre contrato, assets, presentación, contacto/raycast, movilidad, liveness, contratos ONLINE-QA/LIFECYCLE, audio causal y traza causal. Los cinco comandos añadidos pasaron localmente el 18/11/2026, pero aún no existe un run remoto para esa versión del workflow; la QA humana COV local/P2P sigue pendiente.",
+      "statement": "Los conteos 650/9 y 589/7 son históricos y no se usan como métricas actuales. El workflow cubre contrato geométrico, assets, presentación, contacto/raycast, movilidad, liveness, contratos ONLINE-QA/LIFECYCLE, audio causal, traza causal, Pages y reconstrucción WASM. La ejecución remota 44203023348 sobre 2c6a505 pasó estos gates; la QA humana COV en local/P2P sigue pendiente y el run no desplegó Pages.",
       "evidence": [
         {
           "resource": "repo://.github/workflows/ci.yml",
@@ -52,7 +52,7 @@
         },
         {
           "resource": "repo://_bmad-output/current-roadmap.md",
-          "version": "repo-file-v1:sha256:fe2b1094252c53717c1df87efe997daf1b7cf87b08aa50a70eaf575e041f1845"
+          "version": "repo-file-v1:sha256:ecde0f09227ce5575a6097952bda6dd80d3766a9e4f25e753016684d63b9a4e9"
         },
         {
           "resource": "repo://docs/test-suite-inventory.md",
@@ -85,6 +85,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-11-17T23:26:08.247Z"
+    "at": "2026-11-18T08:37:57.448Z"
   }
 }

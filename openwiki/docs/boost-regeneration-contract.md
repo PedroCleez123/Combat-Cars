@@ -27,10 +27,10 @@ sources:
     resource: repo://tools/wasm-spike/p2p-wasm-three-presentation-renderer.mjs
   - id: openwiki-source-4054247b34f75e84088542b8
     resource: repo://tools/wasm-spike/wrapper.cpp
-generated: { by: "codex", at: "2026-11-17T23:22:26.244Z" }
+generated: { by: "codex", at: "2026-11-18T08:37:57.448Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-11-17T23:26:08.247Z
+    at: 2026-11-18T08:37:57.448Z
 ---
 # Contrato de regeneración de nitro
 
@@ -81,10 +81,11 @@ conteos históricos 650/9 y 589/7 fueron retirados del roadmap por no contar con
 una ejecución durable asociada. La CI contiene gates de contrato, assets,
 presentación online, contacto/raycast y movilidad; además ejecuta liveness por
 loopback, contratos ONLINE-QA/LIFECYCLE, audio causal y la traza causal de
-combate. Los cinco comandos dedicados nuevos pasaron localmente el 18/11/2026,
-pero el cambio de workflow aún no tiene un run remoto. La aceptación humana COV
-en local/P2P sigue siendo una puerta separada. El último run remoto registrado
-corresponde a un workflow anterior y no certifica esta actualización.
+combate. La versión actual del workflow pasó en la ejecución remota
+[44203023348](https://github.com/PedroCleez123/Combat-Cars/actions/runs/44203023348)
+del commit `2c6a505`. La aceptación humana COV en local/P2P sigue siendo una
+puerta separada. Esa ejecución valida el workflow y la reconstrucción de WASM;
+no desplegó Pages. La publicación de Pages es una acción independiente.
 
 ## Referencias
 

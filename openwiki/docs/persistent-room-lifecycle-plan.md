@@ -43,10 +43,10 @@ sources:
     resource: repo://tools/wasm-spike/p2p-wasm-multiplayer-lobby-host.mjs
   - id: openwiki-source-518363250e9dd0cf8ead827a
     resource: repo://tools/wasm-spike/wasm-build-provenance.json
-generated: { by: "codex", at: "2026-11-17T23:22:26.244Z" }
+generated: { by: "codex", at: "2026-11-18T08:37:57.448Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-11-17T23:26:08.247Z
+    at: 2026-11-18T08:37:57.448Z
 ---
 
 # Plan de salas persistentes y reconexión
@@ -123,17 +123,17 @@ se perdió con el host.
 La simulación continúa siendo autoritativa en el host WASM; el Worker solo
 señaliza y conserva metadatos de sala. La ruta local nativa no sustituye esa
 autoridad. El estado aceptado es **P2P online funcional**. El último run remoto
-registrado, `44176984795` sobre `ea7c772`, pasó suite, Pages y reconstrucción
-WASM; certifica ese commit y el workflow de entonces. El workflow local actual
-añade liveness por loopback, contratos ONLINE-QA/LIFECYCLE, audio causal y traza
-causal de combate; sus cinco comandos pasaron localmente el 18/11/2026, pero
-requieren un nuevo run remoto. Los conteos 589/7 y el paquete de 101 archivos
-son instantáneas históricas, no el estado vigente. La compilación limpia actual
-reproduce por SHA-256 los artefactos WASM fijados en provenance; la fecha del
-directorio incremental no basta para clasificarlos como obsoletos. La QA humana
-de modos/navegadores/redes y la conectividad universal entre NAT/firewalls
-siguen pendientes; COV-04/06 también conserva comprobaciones humanas de cohetes,
-contactos y rendimiento antes de publicar esas mejoras.
+registrado es [44203023348](https://github.com/PedroCleez123/Combat-Cars/actions/runs/44203023348)
+sobre `2c6a505`: pasó la suite, Pages, los contratos de liveness,
+ONLINE-QA/LIFECYCLE, audio y traza causal, además de la reconstrucción limpia de
+WASM. El run histórico `44176984795` sobre `ea7c772` certifica solo el workflow
+de entonces. Los conteos 589/7 y el paquete de 101 archivos son instantáneas
+históricas, no el estado vigente. La compilación limpia reproduce por SHA-256
+los artefactos WASM fijados en provenance; la fecha del directorio incremental
+no basta para clasificarlos como obsoletos. La QA humana de modos, navegadores,
+redes y la conectividad universal entre NAT/firewalls siguen pendientes; PR3b y
+COV-04/06 también conservan pruebas adversariales o comprobaciones humanas de
+reconexión, cohetes, contactos y rendimiento. El CI no desplegó Pages.
 
 PR3a sí existe en el código: durante `playing`, el host marca neutral y
 reemplaza la plaza desconectada, y el invitado reintenta usando su identidad y

@@ -2,25 +2,25 @@
   "schemaVersion": 1,
   "pages": {
     "/openwiki/docs/arena-scale-and-presentation-contract.md": {
-      "pageVersion": "sha256:9b23918cab98b50e7039dfa46c9d6e97351ac5c84cc60371bb6728f47adb1114",
+      "pageVersion": "sha256:b783479733fe6422f4de1ce303f49688228ed1e5b857ceb2b147bb7a541f4783",
       "completedBy": "codex",
-      "completedRunId": "4352afb8-cd57-4d4d-84a7-b5550007d20b",
-      "gitHead": "ea7c7723f71a4f000da7efcd187f68b897014d35",
-      "sourceFingerprint": "sha256:f5d75a094cf1e062a05d1beafb4059f181b5fd87193f51084e0ceb22c74df22b"
+      "completedRunId": "cff3d3c4-a46e-4f28-9744-839e1b8207ba",
+      "gitHead": "2c6a505563c0b5e8db99bec920820a28b585cea7",
+      "sourceFingerprint": "sha256:e1159d87f55e3dfa9b3d23fae832b4ab3b970b17679c4c5454d509a23995d3b7"
     },
     "/openwiki/docs/boost-regeneration-contract.md": {
-      "pageVersion": "sha256:ba035ae1d01782b72be2bff9dc492108897a603f90d1b484684cf6fe04d3b7e1",
+      "pageVersion": "sha256:686b940c3b8a0499ec7aa3241ab81a330a3f8124a5f930ad75438714c56e53c4",
       "completedBy": "codex",
-      "completedRunId": "4352afb8-cd57-4d4d-84a7-b5550007d20b",
-      "gitHead": "ea7c7723f71a4f000da7efcd187f68b897014d35",
-      "sourceFingerprint": "sha256:f5d75a094cf1e062a05d1beafb4059f181b5fd87193f51084e0ceb22c74df22b"
+      "completedRunId": "cff3d3c4-a46e-4f28-9744-839e1b8207ba",
+      "gitHead": "2c6a505563c0b5e8db99bec920820a28b585cea7",
+      "sourceFingerprint": "sha256:e1159d87f55e3dfa9b3d23fae832b4ab3b970b17679c4c5454d509a23995d3b7"
     },
     "/openwiki/docs/persistent-room-lifecycle-plan.md": {
-      "pageVersion": "sha256:dccf2b3a2443006417609a33523a8695b96215c1567a6569f54092ac2f764cda",
+      "pageVersion": "sha256:5d1344e7894ee8867ce625172f371a1b5ff61e6c3e418bd22ce0dcaad57ce6f9",
       "completedBy": "codex",
-      "completedRunId": "4352afb8-cd57-4d4d-84a7-b5550007d20b",
-      "gitHead": "ea7c7723f71a4f000da7efcd187f68b897014d35",
-      "sourceFingerprint": "sha256:f5d75a094cf1e062a05d1beafb4059f181b5fd87193f51084e0ceb22c74df22b"
+      "completedRunId": "cff3d3c4-a46e-4f28-9744-839e1b8207ba",
+      "gitHead": "2c6a505563c0b5e8db99bec920820a28b585cea7",
+      "sourceFingerprint": "sha256:e1159d87f55e3dfa9b3d23fae832b4ab3b970b17679c4c5454d509a23995d3b7"
     }
   }
 }

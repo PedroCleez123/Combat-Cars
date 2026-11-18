@@ -4,7 +4,7 @@ title: "Contrato de escala de arena y presentación"
 openwiki_generated: true
 verified:
   - by: openwiki/0.7.2
-    at: 2026-11-17T23:26:08.247Z
+    at: 2026-11-18T08:37:57.448Z
 sources:
   - id: openwiki-source-c93ff2da560ad1809a70fa1d
     resource: repo://_bmad-output/current-roadmap.md
@@ -56,7 +56,7 @@ sources:
     resource: repo://tools/wasm-spike/wasm-build-provenance.json
   - id: openwiki-source-4054247b34f75e84088542b8
     resource: repo://tools/wasm-spike/wrapper.cpp
-generated: { by: "codex", at: "2026-11-17T23:22:26.244Z" }
+generated: { by: "codex", at: "2026-11-18T08:37:57.448Z" }
 ---
 # Contrato de escala de arena y presentación
 
@@ -121,24 +121,33 @@ juego en dos navegadores.
 
 El roadmap retira como métricas actuales los conteos antiguos 650/9 y 589/7,
 porque no están asociados a una ejecución reproducible del checkout actual.
-Cada ejecución debe informarse con su commit o run. La CI verifica contrato y
-assets, presentación online, contactos/raycast COV y paridad de movilidad; ahora
-también incluye liveness por loopback, contratos ONLINE-QA/LIFECYCLE, audio
-causal y la traza causal de combate. La publicación de Pages es una acción
-separada.
+Cada ejecución debe informarse con su commit o run. El workflow verifica el
+contrato generado y los assets, presentación online, contactos/raycast COV,
+paridad de movilidad, liveness por loopback, contratos ONLINE-QA/LIFECYCLE,
+audio causal, traza causal de combate, build/verificación de Pages y
+reproducibilidad del WASM. La publicación de Pages es una acción separada.
 
-La revisión local registrada el 17/11 pasó `npm test`, las verificaciones de
-contrato/assets y Pages, y las puertas WASM de presentación, contacto, raycast y
-movilidad. El 18/11 también pasaron individualmente los cinco comandos dedicados
-añadidos a CI. La compilación limpia de WASM en
-`tools/wasm-spike/build-pages-clean/` reproduce por SHA-256 los artefactos fijados
-en provenance; la fecha antigua del directorio incremental `build/` no indica
-por sí sola que el binario sea obsoleto. El comparador nativo se omitió porque
-`ROCKETSIM_BRIDGE_EXE` no está configurado; la compilación nativa de este
-entorno tampoco quedó validada al faltar el SDK de Windows (`stdint.h`). La QA
-humana COV-04/COV-06 en local/P2P y entre navegadores sigue pendiente. La
-actualización local del workflow aún no tiene un nuevo run remoto y no se ha
-desplegado esta revisión.
+El 18/11, `npm test` pasó con 657 pruebas aprobadas y 7 omitidas; su hook
+posterior del benchmark WASM pasó 3/3. También pasaron localmente
+`verify:arena-contract`, `verify:assets`, `build:pages-beta` y
+`verify:pages-beta` (102 archivos). El run remoto
+[44203023348](https://github.com/PedroCleez123/Combat-Cars/actions/runs/44203023348)
+pasó esos gates, los cinco contratos dedicados añadidos a CI y la reconstrucción
+WASM limpia, en el commit `2c6a505`.
+
+El primer run del checkpoint, `44202666516`, reveló que Windows convertía a
+CRLF los artefactos generados mientras `--check` comparaba bytes. El generador
+normaliza CRLF al verificar y la suite incluye una regresión de checkout
+CRLF. La salida limpia de
+`tools/wasm-spike/build-pages-clean/` reproduce por SHA-256 los binarios fijados
+en provenance (`28ACA5DC…3908` y `8A99B163…6206`); una fecha antigua del build
+incremental no basta para declarar obsoleto un WASM.
+
+El comparador nativo se omitió porque `ROCKETSIM_BRIDGE_EXE` no está configurado;
+la compilación nativa de este entorno tampoco quedó validada al faltar el SDK
+de Windows (`stdint.h`). La QA humana COV-04/COV-06 en local/P2P y entre
+navegadores sigue pendiente. El CI no desplegó Pages ni sustituye la aceptación
+humana.
 
 ## Nitro regenerable
 

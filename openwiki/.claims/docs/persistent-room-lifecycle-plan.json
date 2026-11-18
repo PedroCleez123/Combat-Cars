@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:dccf2b3a2443006417609a33523a8695b96215c1567a6569f54092ac2f764cda",
+  "pageVersion": "sha256:5d1344e7894ee8867ce625172f371a1b5ff61e6c3e418bd22ce0dcaad57ce6f9",
   "claims": [
     {
       "id": "claim_1633baa160e0418eba24fe1a4e3df736",
@@ -280,7 +280,7 @@
     },
     {
       "id": "claim_b751a47d0fd6446ebf692a7e90a4082d",
-      "statement": "El estado aceptado es P2P online funcional. El último run remoto registrado (44176984795 sobre ea7c772) valida ese commit y su workflow, no los gates añadidos después. Los cinco comandos de liveness, contratos ONLINE-QA/LIFECYCLE, audio causal y traza causal pasaron individualmente en local el 18/11/2026; la CI actual aún requiere un run remoto. Los conteos 589/7 y 101 archivos son instantáneas históricas, no métricas vigentes. La compilación WASM limpia reproduce los hashes fijados en provenance. La comparación nativa, la QA humana COV local/P2P y la conectividad entre redes/NAT siguen pendientes.",
+      "statement": "El estado aceptado es P2P online funcional. El run remoto 44203023348 sobre 2c6a505 pasó la suite, Pages, los contratos de liveness/ONLINE-QA/LIFECYCLE/audio/traza causal y la reconstrucción WASM limpia; el run histórico 44176984795 solo valida el workflow de ea7c772. Los conteos 589/7 y el paquete de 101 archivos son históricos. La comparación nativa, la QA humana de modos/navegadores/redes, COV-04/06 y las pruebas adversariales PR3b siguen pendientes; CI no certifica conectividad universal ni despliega Pages.",
       "evidence": [
         {
           "resource": "repo://.github/workflows/ci.yml",
@@ -292,7 +292,7 @@
         },
         {
           "resource": "repo://_bmad-output/current-roadmap.md",
-          "version": "repo-file-v1:sha256:fe2b1094252c53717c1df87efe997daf1b7cf87b08aa50a70eaf575e041f1845"
+          "version": "repo-file-v1:sha256:ecde0f09227ce5575a6097952bda6dd80d3766a9e4f25e753016684d63b9a4e9"
         },
         {
           "resource": "repo://docs/test-suite-inventory.md",
@@ -307,6 +307,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-11-17T23:26:08.247Z"
+    "at": "2026-11-18T08:37:57.448Z"
   }
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:9b23918cab98b50e7039dfa46c9d6e97351ac5c84cc60371bb6728f47adb1114",
+  "pageVersion": "sha256:b783479733fe6422f4de1ce303f49688228ed1e5b857ceb2b147bb7a541f4783",
   "claims": [
     {
       "id": "claim_d7ea69a5a4f8403f97e4feb99336a78f",
@@ -122,7 +122,7 @@
     },
     {
       "id": "claim_7a22000754a84ec9abe39173a2daa3c4",
-      "statement": "La revisión local documentada el 17/11/2026 pasó la suite completa, las puertas WASM de presentación/contacto/raycast/movilidad, las verificaciones de contrato/assets y el build/verificación Pages de 102 archivos. El build WASM limpio reproduce los hashes fijados en provenance. Los cinco comandos dedicados incorporados a CI el 18/11 pasaron localmente, pero la modificación del workflow aún no tiene un run remoto. La comparación nativa y la QA humana COV local/P2P siguen pendientes.",
+      "statement": "El 18/11/2026, el checkpoint 2c6a505 pasó la CI remota en el run 44203023348, incluidos npm test, los contratos online/lifecycle/audio/causal, Pages y la reconstrucción WASM limpia. En local, npm test pasó con 657 pruebas aprobadas y 7 omitidas, y el hook del benchmark WASM pasó 3/3; el paquete Pages contiene 102 archivos. El primer run 44202666516 detectó la diferencia CRLF en los artefactos generados; el verificador la normaliza ahora y una prueba la cubre. La compilación nativa local y la QA humana COV-04/COV-06 siguen pendientes; el run no desplegó Pages.",
       "evidence": [
         {
           "resource": "repo://.github/workflows/ci.yml",
@@ -130,11 +130,19 @@
         },
         {
           "resource": "repo://_bmad-output/current-roadmap.md",
-          "version": "repo-file-v1:sha256:fe2b1094252c53717c1df87efe997daf1b7cf87b08aa50a70eaf575e041f1845"
+          "version": "repo-file-v1:sha256:ecde0f09227ce5575a6097952bda6dd80d3766a9e4f25e753016684d63b9a4e9"
         },
         {
           "resource": "repo://docs/test-suite-inventory.md",
           "version": "repo-file-v1:sha256:25f0d9a9541768ea32a21bcf74c136d7ca583f48553c970883225c829d6c55cc"
+        },
+        {
+          "resource": "repo://tests/arena-contract-generation.test.mjs",
+          "version": "repo-file-v1:sha256:baa955e9a048c61870c79463936bee2585bc1af16a6346df21505dcdaec26c40"
+        },
+        {
+          "resource": "repo://tools/generate-arena-contract.mjs",
+          "version": "repo-file-v1:sha256:0a75410fe640089374288c3612ec6da7495069545a626362ca05b5b02d0a8698"
         },
         {
           "resource": "repo://tools/wasm-spike/wasm-build-provenance.json",
@@ -152,7 +160,7 @@
         },
         {
           "resource": "repo://tests/arena-contract-generation.test.mjs",
-          "version": "repo-file-v1:sha256:bed6dd1f4da709369c8160c1b29573c66c00d47df8a41a4694d11ea89aae7b43"
+          "version": "repo-file-v1:sha256:baa955e9a048c61870c79463936bee2585bc1af16a6346df21505dcdaec26c40"
         },
         {
           "resource": "repo://tests/rocketsim-wasm-combat-alpha-cover-contact.test.mjs",
@@ -164,7 +172,7 @@
         },
         {
           "resource": "repo://tools/generate-arena-contract.mjs",
-          "version": "repo-file-v1:sha256:da1ec529c50e5941abb98e4e50bf553e3a1d45f1c95b1f08bb0bd0a07ad3199d"
+          "version": "repo-file-v1:sha256:0a75410fe640089374288c3612ec6da7495069545a626362ca05b5b02d0a8698"
         },
         {
           "resource": "repo://tools/rocketsim-bridge/main.cpp",
@@ -213,6 +221,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-11-17T23:26:08.247Z"
+    "at": "2026-11-18T08:37:57.448Z"
   }
 }
